@@ -199,7 +199,7 @@ export default {
 
   &__col
     width: 100%
-    max-width: 30rem
+    max-width: 24rem
     padding: 1rem 0 1rem 1.8rem
 
   &__generator-text
@@ -211,9 +211,11 @@ export default {
   &__controls
     display: flex
     justify-content: center
+    margin-top: 1.5rem
 
   &__loaded
     justify-content: space-between
+    margin-top: 0
 
     & > *
       width: 49%
