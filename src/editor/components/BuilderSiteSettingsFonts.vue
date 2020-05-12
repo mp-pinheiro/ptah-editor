@@ -705,7 +705,7 @@ export default {
     &__font
       height: 10rem
       position: relative
-      padding: 2rem 4.4rem
+      padding: 2rem
       background: rgba($main-green, 0.1)
       border-top: 2px solid $main-green
       box-sizing: border-box
@@ -722,9 +722,11 @@ export default {
         text-transform: uppercase
         color: $main-green
         text-align: left
+        margin: 0.8rem
       &-name
         font-size: 1.6rem
         line-height: 2.2rem
+        margin: 0.8rem
       &-check
         @include checkMark
 
