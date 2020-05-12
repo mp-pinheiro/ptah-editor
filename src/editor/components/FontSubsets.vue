@@ -101,6 +101,8 @@ $h: 5.5rem
     justify-content: center
     cursor: pointer
     font-size: 1.4rem
+    ._applied &
+      border-left: 1px solid $main-green
 
   &__list
     position: absolute

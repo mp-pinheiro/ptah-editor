@@ -82,9 +82,10 @@
               v-if="isLoaded"
             >
                 <ul class="b-fonts-list">
-                  <li class="b-fonts-list__item _selected"
+                  <li class="b-fonts-list__item"
                       :class="[
-                        { '_applied' : selectedEl === font.family }
+                        { '_applied' : selectedEl === font.family },
+                        { '_selected' : selectFonts[checkSpace(font.family)] !== undefined }
                       ]"
                       v-for="(font, index) in visibleFonts"
                       :key="index"
@@ -111,9 +112,10 @@
                       }">
                       {{ defText }}
                     </div>
-                    <div class="b-fonts-list__item-button">
+                    <div class="b-fonts-list__item-button"
+                      v-if="selectFonts[checkSpace(font.family)] !== undefined"
+                    >
                       <font-subsets
-                        v-if="selectFonts[checkSpace(font.family)] !== undefined"
                         :font="font"
                         :subsets="getSubsets(font)"
                         @input="toggleFontSubset($event)"
@@ -545,8 +547,8 @@ export default {
     list-style: none
 
     display: flex
-    justify-content: left
-    align-items: center
+    flex-direction: column
+    align-items: flex-start
 
     border: 2px solid $main-green
     border-radius: 10px
@@ -563,11 +565,20 @@ export default {
     &-family
       height: 5.8rem
       font-size: 1.6rem
-      line-height: 2.2rem
+      line-height: 5.8rem
       letter-spacing: 0.065em
-      display: flex
-      align-items: center
+
+      width: 100%
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
       padding: 0 1.8rem
+      ._applied &,
+      ._selected &
+        width: 50%
+      ._applied &:hover,
+      ._selected &:hover
+        width: 100%
 
     &._applied
       //color: #fff
@@ -590,6 +601,8 @@ export default {
         display: block
     &-check
       @include checkMark
+    &-family:hover ~ &-button
+      display: none
 
 .b-scrolled-content
   margin: 0
@@ -722,11 +735,12 @@ export default {
         text-transform: uppercase
         color: $main-green
         text-align: left
-        margin: 0.8rem
+        margin: 0 0.8rem 0 0
       &-name
         font-size: 1.6rem
-        line-height: 2.2rem
-        margin: 0.8rem
+        line-height: 2rem
+        margin: 0 0.8rem
+        text-align: right
       &-check
         @include checkMark
 
@@ -740,6 +754,8 @@ export default {
   border-top: 1px solid #F4F4F4
 
   overflow: hidden
+  ._applied &
+    border-top: 1px solid $main-green
 
 .change-font
   @include control
