@@ -165,10 +165,11 @@ $topBarHeight: 6rem
 
     position: relative
     z-index: 11
-    &:hover,
-    &._show-modal
+    &:hover
       z-index: 9
       width: 9rem
+    &._show-modal
+      z-index: 9
     &._expanded
       width: 9rem
 
