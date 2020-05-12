@@ -463,8 +463,8 @@ const data = new Map([
         url: 'https://www.youtube.com/watch?v=Xv1JzYDKoc8'
       },
       styles: {
-        'width': '',
-        'height': ''
+        'width': '278px',
+        'height': '152px'
       },
       media: {
         'is-mobile': {
