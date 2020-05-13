@@ -280,6 +280,9 @@ export default {
       </div>
     </transition>
 
+    <!-- wizard -->
+    <router-view></router-view>
+
     <!-- confirm windows -->
     <base-confirm
       title="Delete landing"

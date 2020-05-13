@@ -7,6 +7,9 @@ import BuilderSiteSettingsIntegrationsGoogleTag from '@editor/components/Builder
 import BuilderSiteSettingsIntegrationsGoogleAnalitycs from '@editor/components/BuilderSiteSettingsIntegrationsGoogleAnalitycs'
 import BuilderSiteSettingsIntegrationsMailchimp from '@editor/components/BuilderSiteSettingsIntegrationsMailchimp'
 import BuilderSiteSettingsFonts from '@editor/components/BuilderSiteSettingsFonts'
+import TheWizardModal from '@src/components/pages/wizard/TheWizardModal'
+import TheProjectNamePage from '@src/components/pages/wizard/TheProjectNamePage'
+import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcomePage'
 
 const routes = [
   {
@@ -26,7 +29,24 @@ const routes = [
           title: 'Dashboard - Ptah'
         },
         component: () => lazyLoadView(import(/* webpackChunkName: "Dashboard" */ '@components/pages/Dashboard')),
-        name: 'Dashboard'
+        name: 'Dashboard',
+        children: [
+          {
+            path: 'wizard',
+            component: TheWizardModal,
+            redirect: { name: TheProjectNamePage },
+            children: [
+              {
+                path: 'name',
+                component: TheProjectNamePage
+              },
+              {
+                path: 'welcome',
+                component: TheProjectWelcomePage
+              }
+            ]
+          }
+        ]
       }
     ]
   },

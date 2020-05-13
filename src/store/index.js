@@ -5,9 +5,10 @@ import api from '@store/api'
 import Sidebar from './Sidebar'
 import Landing from './Landing'
 import User from './User'
-import vOutsideEvents from 'vue-outside-events'
+import Onboarding from './Onboarding'
 import PageTweaks from './PageTweaks/PageTweaks'
 import Vuebar from 'vuebar'
+import vOutsideEvents from 'vue-outside-events'
 
 Vue.use(Vuex)
 Vue.use(vOutsideEvents)
@@ -505,7 +506,8 @@ const modules = {
   Sidebar,
   PageTweaks,
   Landing,
-  User
+  User,
+  Onboarding
 }
 
 export default new Vuex.Store({
