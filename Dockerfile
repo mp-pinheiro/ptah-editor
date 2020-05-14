@@ -1,4 +1,4 @@
-FROM node:10.12-alpine AS node
+FROM node:lts-alpine AS node
 
 #RUN apk update && apk add libpng-dev
 RUN apk update && apk add --no-cache --update make gcc g++ libc-dev libpng-dev automake autoconf libtool git

@@ -1,4 +1,4 @@
-FROM node:10.12-alpine AS node
+FROM node:lts-alpine AS node
 
 #RUN apk update && apk add libpng-dev
 RUN apk update && apk add --no-cache --update make gcc g++ libc-dev libpng-dev automake autoconf libtool git
@@ -13,7 +13,7 @@ RUN yarn install
 COPY . /app/
 RUN yarn cjs && gulp locale_sync && gulp public-image && yarn build
 
-FROM nginx:1.15.4
+FROM nginx:stable
 
 WORKDIR /usr/share/nginx/html
 COPY --from=node /app/dist /usr/share/nginx/html
