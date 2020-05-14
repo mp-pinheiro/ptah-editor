@@ -15,5 +15,6 @@ RUN yarn cjs && gulp locale_sync && gulp public-image && yarn build
 
 FROM nginx:stable
 
-WORKDIR /usr/share/nginx/html
-COPY --from=node /app/dist /usr/share/nginx/html
+WORKDIR /var/www/static
+COPY --from=node /app/dist /var/www/static
+COPY ./etc/static.conf /etc/nginx/conf.d/default.conf
