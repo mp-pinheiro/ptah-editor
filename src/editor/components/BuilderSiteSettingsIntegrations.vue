@@ -7,6 +7,7 @@
             v-for="integration in integrations"
             :key="integration.name"
             @click="selectIntegration(integration.name)"
+            v-if="integration.name !== 'mailchimp' || (isGuest === false && integration.name === 'mailchimp')"
           >
             <div class="b-integrations__item-icon"
               :style="{'background-image': 'url(' + integration.icon + ')'}"
@@ -70,6 +71,10 @@ export default {
 
     isIntegrationVisible () {
       return last(this.$route.path.split('/')) !== 'integrations'
+    },
+
+    isGuest () {
+      return localStorage.getItem('guest') !== null
     }
   },
 
