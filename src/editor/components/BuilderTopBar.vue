@@ -51,6 +51,7 @@
             />
           </BaseButton>
           <BaseButton
+            class="b-on-boarding-tips-step-8"
             @click="$emit('preview', $event)"
             color="main-green-transparent"
             size="small"
@@ -59,6 +60,7 @@
             {{ $t('nav.preview') }}
           </BaseButton>
           <BaseButton
+            class="b-on-boarding-tips-step-9"
              @click="$emit('export', $event)"
              color="main-green"
              size="small"

@@ -6,6 +6,7 @@ import Sidebar from './Sidebar'
 import Landing from './Landing'
 import User from './User'
 import Onboarding from './Onboarding'
+import OnBoardingTips from './OnBoardingTips'
 import PageTweaks from './PageTweaks/PageTweaks'
 import Vuebar from 'vuebar'
 import vOutsideEvents from 'vue-outside-events'
@@ -507,7 +508,8 @@ const modules = {
   PageTweaks,
   Landing,
   User,
-  Onboarding
+  Onboarding,
+  OnBoardingTips
 }
 
 export default new Vuex.Store({

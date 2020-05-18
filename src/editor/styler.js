@@ -21,6 +21,7 @@ function installStyler ({ builder, Vue }) {
 
       rootApp.appendChild(newNode)
       el.classList.add('is-editable')
+      el.setAttribute('section', section.id)
 
       if (binding.arg === 'for' || binding.arg === 'galleryItem' || binding.arg === 'product') {
         name = binding.value.path
@@ -30,6 +31,7 @@ function installStyler ({ builder, Vue }) {
 
       if (binding.value.type !== undefined) {
         type = binding.value.type
+        el.classList.add('b-ptah-element')
       }
 
       if (binding.value.el && binding.value.el.link && binding.value.el.link.behavior) {

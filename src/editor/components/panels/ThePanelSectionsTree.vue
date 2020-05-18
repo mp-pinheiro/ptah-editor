@@ -32,6 +32,7 @@
         color="main-green"
         size="middle"
         :disabled="isAddSectionExpanded"
+        class="b-on-boarding-tips-step-2"
       >
         Add section
       </BaseButton>

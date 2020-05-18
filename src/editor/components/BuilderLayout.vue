@@ -1,5 +1,9 @@
 <template>
-  <div class="b-builder-layout">
+  <div class="b-builder-layout"
+    :class="[
+      {'_is-show-tips': isShowTips}
+    ]"
+  >
     <BuilderTopBar
       class="b-builder-layout__top-bar"
       :class="{
@@ -53,6 +57,7 @@
         </base-scroll-container>
       </main>
     </div>
+    <div class="tips-layout" @mousedown.stop @click.stop />
   </div>
 </template>
 
@@ -93,6 +98,10 @@ export default {
       'device',
       'isShowModal',
       'isShowModalButton'
+    ]),
+
+    ...mapState('OnBoardingTips', [
+      'isShowTips'
     ]),
 
     isShowSettingsPage () {
@@ -142,6 +151,16 @@ $topBarHeight: 6rem
 
     transition: all .2s ease-out
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+  &._is-show-tips
+    .tips-layout
+      content: ''
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      background: rgba(#000000, 0.4)
+      z-index: 1000
 
 .b-builder-layout-content
   position: absolute

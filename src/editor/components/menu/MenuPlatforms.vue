@@ -59,7 +59,7 @@ export default {
 </script>
 
 <template>
-  <div class="b-menu-platforms">
+  <div class="b-menu-platforms b-on-boarding-tips-step-7">
     <button
       v-for="(item, index) in items"
       class="b-menu-platforms__button"

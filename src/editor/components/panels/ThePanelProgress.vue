@@ -29,12 +29,16 @@
           </radial-progress-bar>
         </div>
 
-        <div class="b-progress__title">Basic steps</div>
+        <div class="b-progress__title b-on-boarding-tips-step-6">
+          Basic steps
+        </div>
         <check-list-item v-for="(item, index) in basic" :key="index" :active="item.status" class="b-progress__i">
           {{ item.text }}
         </check-list-item>
 
-        <div class="b-progress__title">Advanced steps</div>
+        <div class="b-progress__title">
+          Advanced steps
+        </div>
         <check-list-item v-for="(item, index) in advanced" :key="'#'+index" :active="item.status" class="b-progress__i">
           {{ item.text }}
         </check-list-item>
@@ -151,6 +155,8 @@ export default {
     text-transform: uppercase
 
     color: #575A5F
+    &.b-on-boarding-tips-step-6
+      width: 95%
 
   &__circle
     display: flex

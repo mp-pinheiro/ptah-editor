@@ -1,8 +1,10 @@
 <template>
-  <div class="b-slot"
+  <div class="b-slot b-slot b-on-boarding-tips-step-4"
     @mouseleave.self="mouseleave"
     @mouseover="mouseover"
-    :class="[{ '_hover' : hoverBy === 'block' }]"
+    :class="[
+      { '_hover' : hoverBy === 'block' }
+    ]"
     :style="{
       '--mobile-slot-flex-direction': mediaStyles['is-mobile']['flex-direction'],
       '--mobile-slot-align-items': mediaStyles['is-mobile']['align-items'],
@@ -72,6 +74,11 @@ export default {
       'settingObjectSection',
       'device',
       'hoverBy'
+    ]),
+
+    ...mapState('OnBoardingTips', [
+      'isShowTips',
+      'stepTips'
     ]),
 
     slot () {

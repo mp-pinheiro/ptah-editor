@@ -16,6 +16,7 @@
   .is-editable
     &
       height: 100%
+  .is-editable &._show-slot-tip,
   .is-editable &._hover:hover
     border: 0.3rem solid #0C71C3
     background: rgba(12, 113, 195, 0.3)
@@ -43,6 +44,9 @@
 
     opacity: 0
     transition: opacity 0.25s
+    &._show-slot-tip
+      display: flex
+      opacity: 1
     &-item
       display: flex
       align-items: center
@@ -69,6 +73,12 @@
     #{$this}__settings
       opacity: 1
       display: flex
+
+  .is-editable  &._show-tip
+    border: 0.3rem solid #0C71C3
+    background: rgba(12, 113, 195, 0.3)
+
+    min-height: 3.6rem !important
 
   .is-mobile & .b-draggable-slot
     flex-direction: var(--mobile-slot-flex-direction) !important

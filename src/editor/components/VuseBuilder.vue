@@ -18,7 +18,7 @@
       :class="{
         'is-editable': $builder.isEditing,
         'fp-scroll': currentLanding.settings.fullPageScroll === 'yes',
-        'is-expanded': isExpanded,
+        'is-expanded': isExpanded
       }"
       id="artboard"
       class="artboard"
@@ -136,6 +136,7 @@
       />
     </base-confirm>
   </div>
+  <onboarding-tips :builder="builder" />
 </builder-layout>
 </template>
 
@@ -149,6 +150,7 @@ import { getFontsSetup } from '../util'
 
 import { sectionsGroups } from '@cscripts/sectionsGroups'
 import BaseLoading from '../../components/base/BaseLoading'
+import OnboardingTips from './OnboardingTips'
 
 export default {
   name: 'VuseBuilder',
@@ -157,7 +159,8 @@ export default {
     BaseLoading,
     VuseIcon,
     BuilderLayout,
-    ModalButton
+    ModalButton,
+    OnboardingTips
   },
 
   props: {
@@ -193,6 +196,7 @@ export default {
 
   computed: {
     ...mapState(['currentLanding']),
+
     ...mapState('Sidebar', [
       'isExpanded',
       'device',
@@ -204,7 +208,9 @@ export default {
       'controlPanel',
       'sandbox'
     ]),
-    ...mapState('Landing', ['currentStateNumber']),
+    ...mapState('Landing', [
+      'currentStateNumber'
+    ]),
 
     builder () {
       return this.$builder
@@ -329,7 +335,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['clearLandingData', 'activateCheckListItem']),
+    ...mapActions([
+      'clearLandingData',
+      'activateCheckListItem'
+    ]),
     ...mapActions('Sidebar', [
       'updateBuilderSections',
       'updateBuilderGroups',
@@ -353,7 +362,10 @@ export default {
     ...mapActions('User', [
       'getUser'
     ]),
-    ...mapMutations('Landing', ['clearStateStack', 'undoFlag']),
+    ...mapMutations('Landing', [
+      'clearStateStack',
+      'undoFlag'
+    ]),
 
     parsing (textCss) {
       let self = this
@@ -745,6 +757,7 @@ export default {
 
   display: flex
   flex-direction: column
+
   &.is-editable div.is-editable,
   &.is-editable a.is-editable,
   &.is-editable table.is-editable
@@ -759,7 +772,7 @@ export default {
       background-color: rgba(255, 230, 0, 0.1) !important
       border-radius: .5rem !important
 
-    &:not(.b-button).styler-active
+    &:not(.b-button):not(._show-el-tip).styler-active
       border-color: transparent !important
       background-color: rgba(255, 230, 0, 0.1) !important
       border-radius: .5rem !important
@@ -951,4 +964,9 @@ export default {
   z-index: 1000
   position: absolute
   background: #fff
+
+.b-ptah-element._show-el-tip,
+.b-ptah-element._show-el-tip.styler-active
+  border: .4rem solid $main-yellow !important
+  border-color: $main-yellow !important
 </style>

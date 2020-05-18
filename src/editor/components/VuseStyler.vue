@@ -251,7 +251,13 @@ export default {
       'isShowModalButton',
       'hoverBy'
     ]),
-    ...mapState('Landing', ['textEditorActive']),
+    ...mapState('Landing', [
+      'textEditorActive'
+    ]),
+
+    ...mapState('OnBoardingTips', [
+      'isShowTips'
+    ]),
 
     // find path to element
     path () {
@@ -775,6 +781,7 @@ export default {
   display: none
   justify-content: center
   align-items: flex-start
+
   height: 3.8rem
   z-index: 20
   margin: -0.6rem 0 0
@@ -782,7 +789,8 @@ export default {
   &.is-show-modal
     z-index: -1
 
-  &.is-visible
+  &.is-visible,
+  &._show-el-tip
     display: flex
 
   &__controls

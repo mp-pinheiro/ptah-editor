@@ -16,7 +16,8 @@
           { '_open' : isExpanded && isSectionsTreeExpanded && item.name === 'Sections' &&  modalContentID === '' },
           { '_open' : isExpanded &&  controlPanel.expanded && item.name === 'Sections' &&  modalContentID === '' && !isSectionsTreeExpanded },
           { '_open' : isExpanded &&  isAddSectionExpanded && item.name === 'Sections' &&  modalContentID === '' && isSectionsTreeExpanded },
-          { '_open' : isExpanded && modalContentID === item.panel }
+          { '_open' : isExpanded && modalContentID === item.panel },
+          { 'b-on-boarding-tips-step-1' : item.name === 'Sections' }
         ]"
       >
         <span
