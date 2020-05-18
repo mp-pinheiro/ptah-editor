@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <div slot="controls" class="b-integrations-google-analitycs__controls">
-      <BaseButton size="middle" color="gray" :transparent="true" @click="back()">{{ $t('nav.back') }}</BaseButton>
-      <BaseButton size="middle" color="blue" @click="applySettings">{{ $t('nav.apply') }}</BaseButton>
+    <div slot="controls">
+      <BaseButton size="small" color="gray" :transparent="true" @click="back()">{{ $t('nav.back') }}</BaseButton>
+      <BaseButton size="small" color="blue" @click="applySettings">{{ $t('nav.apply') }}</BaseButton>
     </div>
   </builder-modal-content-layout>
 </template>
@@ -95,10 +95,6 @@ export default {
 .b-integrations-google-analitycs
   &__inner
     padding: 0
-
-  &__controls
-    justify-content: flex-start !important
-    border-top: none !important
 
   .help
     position: absolute

@@ -2,27 +2,27 @@
   <div class="b-integrations">
     <base-scroll-container>
       <div class="b-integrations__padd">
-        <div class="b-integrations__item"
-             v-if="!isIntegrationVisible"
-             v-for="integration in integrations"
-             :key="integration.name"
-             @click="selectIntegration(integration.name)"
-        >
-          <div class="b-integrations__item-icon"
-            :style="{'background-image': 'url(' + integration.icon + ')'}"
-          />
-          <div class="b-integrations__item-label">
-            {{ integration.label }}
+        <div class="b-integrations__list" v-if="!isIntegrationVisible">
+          <div class="b-integrations__item"
+            v-for="integration in integrations"
+            :key="integration.name"
+            @click="selectIntegration(integration.name)"
+          >
+            <div class="b-integrations__item-icon"
+              :style="{'background-image': 'url(' + integration.icon + ')'}"
+            />
+            <div class="b-integrations__item-label">
+              {{ integration.label }}
+            </div>
+            <span class="b-integrations__item-settings">
+              <icon-base name="settings" color="#00ADB6" />
+            </span>
           </div>
-          <span class="b-integrations__item-settings">
-            <icon-base name="settings" color="#00ADB6" />
-          </span>
         </div>
-
-        <div class="b-integrations__component"
-          v-if="isIntegrationVisible"
-        >
-          <router-view />
+        <div class="b-integrations__content" v-if="isIntegrationVisible" >
+          <div class="b-integrations__component">
+            <router-view />
+          </div>
         </div>
       </div>
     </base-scroll-container>
@@ -127,8 +127,11 @@ export default {
   display: flex
   flex-direction: column
   align-items: center
-  &__padd
+  &__list
     padding: 1rem 5rem 0 3rem
+  &__content,
+  &__padd
+    height: 100%
   &__item
     width: 100%
     height: $size-step*5
@@ -184,4 +187,9 @@ export default {
     &:hover
       & svg
         fill: $main-green
+  /deep/
+    .b-builder-modal-content-layout__content
+      padding: 1rem 5rem 0 3rem
+    .b-builder-modal-content-layout__controls
+      padding: 0 3.2rem 0 0
 </style>
