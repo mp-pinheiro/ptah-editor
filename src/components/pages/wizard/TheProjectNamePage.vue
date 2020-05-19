@@ -62,7 +62,7 @@ export default {
     ...mapMutations('Onboarding', ['setName']),
 
     onSubmit () {
-      this.$router.push({ path: `/dashboard/wizard/welcome` })
+      this.$router.push({ path: `/dashboard/wizard/goals` })
     }
   }
 }

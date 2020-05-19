@@ -1,7 +1,7 @@
 <template>
   <transition name="slide-fade">
     <div class="b-wizard-modal__overlay">
-      <div class="b-wizard-modal__content">
+      <div class="b-wizard-modal__content" :style="customSize">
         <router-view></router-view>
       </div>
     </div>
@@ -10,7 +10,21 @@
 
 <script>
 export default {
-  name: 'TheWizardModal'
+  name: 'TheWizardModal',
+
+  computed: {
+    customSize () {
+      let styles = {}
+
+      if (this.$route.meta.width) {
+        styles.width = this.$route.meta.width
+      }
+      if (this.$route.meta.height) {
+        styles.height = this.$route.meta.height
+      }
+      return styles
+    }
+  }
 }
 </script>
 
@@ -26,6 +40,8 @@ export default {
     right: 0
     bottom: 0
     left: 0
+    z-index: 99
+
     background: rgba(0,0,0, .4)
   &__content
     background: #FFFFFF
