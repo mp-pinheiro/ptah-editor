@@ -10,6 +10,8 @@ import BuilderSiteSettingsFonts from '@editor/components/BuilderSiteSettingsFont
 import TheWizardModal from '@src/components/pages/wizard/TheWizardModal'
 import TheProjectNamePage from '@src/components/pages/wizard/TheProjectNamePage'
 import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcomePage'
+import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
+import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
 
 const routes = [
   {
@@ -39,6 +41,18 @@ const routes = [
               {
                 path: 'name',
                 component: TheProjectNamePage
+              },
+              {
+                path: 'goals',
+                component: TheProjectGoals,
+                meta: {
+                  width: '100vw',
+                  height: '100vh'
+                }
+              },
+              {
+                path: 'templates',
+                component: TheProjectTemplatesPage
               },
               {
                 path: 'welcome',
