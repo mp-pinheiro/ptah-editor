@@ -32,7 +32,6 @@
 
 <script>
 import api from '@store/api'
-import { mapState } from 'vuex'
 
 export default {
   model: {
@@ -41,20 +40,10 @@ export default {
   },
 
   props: {
-    progress: Boolean
-  },
-
-  data () {
-    return {
-      url: this.value
-    }
-  },
-
-  computed: {
-    ...mapState(['currentLanding']),
-
-    palette () {
-      return this.currentLanding.settings.palette
+    progress: Boolean,
+    palette: {
+      type: Array,
+      default: null
     }
   },
 

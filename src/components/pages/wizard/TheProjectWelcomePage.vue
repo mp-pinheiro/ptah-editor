@@ -10,7 +10,9 @@
       <div>
         <base-button
           color="main-green"
-          size="small">
+          size="small"
+          @click="start"
+        >
           Let’s start
         </base-button>
       </div>
@@ -27,7 +29,13 @@
 
 <script>
 export default {
-  name: 'TheProjectWelcomePage'
+  name: 'TheProjectWelcomePage',
+
+  methods: {
+    start () {
+      this.$router.push({ path: `/dashboard/wizard/logo` })
+    }
+  }
 }
 </script>
 

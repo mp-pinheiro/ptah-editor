@@ -10,6 +10,9 @@ import BuilderSiteSettingsFonts from '@editor/components/BuilderSiteSettingsFont
 import TheWizardModal from '@src/components/pages/wizard/TheWizardModal'
 import TheProjectNamePage from '@src/components/pages/wizard/TheProjectNamePage'
 import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcomePage'
+import TheOnboardingLogoPage from '@src/components/pages/wizard/TheOnboardingLogoPage'
+import TheOnboardingBackgroundPage from '@src/components/pages/wizard/TheOnboardingBackgroundPage'
+import TheOnboardingColorsPage from '@src/components/pages/wizard/TheOnboardingColorsPage'
 import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
 import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
 
@@ -57,6 +60,18 @@ const routes = [
               {
                 path: 'welcome',
                 component: TheProjectWelcomePage
+              },
+              {
+                path: 'logo',
+                component: TheOnboardingLogoPage
+              },
+              {
+                path: 'background',
+                component: TheOnboardingBackgroundPage
+              },
+              {
+                path: 'colors',
+                component: TheOnboardingColorsPage
               }
             ]
           }

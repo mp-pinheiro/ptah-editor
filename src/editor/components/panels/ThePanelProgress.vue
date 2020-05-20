@@ -137,47 +137,4 @@ export default {
     transition: background 0.3s cubic-bezier(0.2, 0.85, 0.4, 1.275)
     &:hover
       background: rgba(0, 0, 0, 0.05)
-
-.b-progress
-  height: calc(100% - 7rem)
-  &__title
-    background: #F3F6F6
-    width: 100%
-    height: 3.5rem
-    display: flex
-    align-items: center
-    justify-content: center
-    margin-bottom: 1.5rem
-
-    font-size: 1.2rem
-    font-weight: bold
-    letter-spacing: 0.065em
-    text-transform: uppercase
-
-    color: #575A5F
-    &.b-on-boarding-tips-step-6
-      width: 95%
-
-  &__circle
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 5rem
-    height: 5rem
-    border-radius: 50%
-
-    background: #fff
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1)
-
-  &__header
-    display: flex
-    justify-content: center
-    margin-bottom: 2rem
-
-    font-size: 1.2rem
-    font-weight: bold
-    color: #575A5F
-
-  &__i
-    margin-left: 4.5rem
 </style>

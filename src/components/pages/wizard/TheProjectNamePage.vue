@@ -12,7 +12,8 @@
         label="Project name"
         placeholder="Enter a project name"
         :hasError="invalid"
-        :errorText="$t('d.cmodalErrorText')"></base-text-field>
+        :errorText="$t('d.cmodalErrorText')"
+      />
 
       <base-button
         type="submit"

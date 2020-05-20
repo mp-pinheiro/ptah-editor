@@ -2,7 +2,7 @@
   <div class="b-picker">
     <div class="b-picker__row">
       <div class="b-picker__label">
-        <base-label v-if="label != ''">
+        <base-label v-if="label !== ''">
           {{ label }}
         </base-label>
       </div>
