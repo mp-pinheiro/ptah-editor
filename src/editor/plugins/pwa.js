@@ -10,6 +10,7 @@ import {
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
+  getPoneStyles
 } from '../util'
 
 /**
@@ -133,6 +134,7 @@ function download (assets) {
       let fontsSetup = getFontsSetup(this.settings.setupFonts)
       let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
       let parallaxSetup = getParallaxSetup(this.sections)
+      let stylePoneList = getPoneStyles(frag)
 
       output.file('index.html',
         `<!DOCTYPE html>
@@ -145,13 +147,14 @@ function download (assets) {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="shortcut icon" href="${icon}"/>
             <link rel="manifest" href="/manifest.json">
-            <link rel="stylesheet" href="css/styles.css"> 
+            <link rel="stylesheet" href="css/styles.css">
             <link href="https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}" rel="stylesheet">
             ${scrollSetup.style}
             ${og}
             <style>
               ${customCss}
             </style>
+            ${stylePoneList}
           </head>
           <body class="b-body_export" style="${bodyStyles}">
             ${gtm.body}
