@@ -1,81 +1,14 @@
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import BaseScrollContainer from '../base/BaseScrollContainer'
 
 export default {
-  components: { BaseScrollContainer },
+  components: {
+    BaseScrollContainer
+  },
+
   data () {
     return {
-      createWindow: false,
-      presets: [
-        {
-          type: 'Blank page',
-          sections: [],
-          image: 'https://s3.protocol.one/images/BlankPage.png',
-          description: ''
-        },
-        {
-          type: 'Simple page',
-          sections: [
-            'FirstScreenSpace01',
-            'FooterSpace'
-          ],
-          url: 'https://s3.protocol.one/files/Simple-page-2020-v3.json',
-          image: 'https://s3.protocol.one/images/1_r.jpg',
-          description: 'Simple Sci-fi template width video background. Sections: First Screen, Footer'
-        },
-        {
-          type: 'Ptah page',
-          sections: [],
-          url: 'https://s3.protocol.one/files/Ptah-page-2020-v3.json',
-          image: 'https://s3.protocol.one/images/2ptah_r1.jpg',
-          description: 'Look at how the landing page was created which stands on the main page of the Ptah page builder'
-        },
-        {
-          type: 'Page with subscription form',
-          sections: [
-            'FirstScreenSpaceVideoBack',
-            'Columns',
-            'GalleryPopup',
-            'FormCenter',
-            'FooterSpace'
-          ],
-          image: 'https://s3.protocol.one/images/3_r.jpg',
-          description: 'Sci-fi template width video background and subscription form. Sections: First screen, columns, gallery, form, footer'
-        },
-        {
-          type: 'Space page',
-          sections: [
-            'SmmHeader',
-            'FirstScreenSpace02',
-            'Columns',
-            'Slider',
-            'Products',
-            'SystemRequirements',
-            'FrequentlyAskedQuestions',
-            'FooterSpace'
-          ],
-          url: 'https://s3.protocol.one/files/Space-page-2020-v3.json',
-          image: 'https://s3.protocol.one/images/4_r.jpg',
-          description: 'Sci-fi styled template with: Menu, First screen, columns, slider, products, system requirments, FAQ and footer'
-        },
-        {
-          type: 'Fantasy page',
-          sections: [
-            'SmmFantasyHeader',
-            'FirstScreenFantasy02',
-            'ColumnsFantasy',
-            'ProductsFantasy',
-            'SliderFantasy',
-            'SystemRequirementsFantasy',
-            'FooterFantasy'
-          ],
-          image: 'https://s3.protocol.one/images/5_r.jpg',
-          description: 'Fantasy styled template with: Menu, First screen, columns, slider, products, system requirments, FAQ and footer'
-        }
-      ],
-      presetSelected: 0,
-      newPageTitle: '',
       invalid: false,
       createProgress: false,
       showConfirmDelete: false,
@@ -87,6 +20,12 @@ export default {
   computed: {
     ...mapState([
       'landings'
+    ]),
+
+    ...mapState('Onboarding', [
+      'name',
+      'goal',
+      'preset'
     ])
   },
 
@@ -101,6 +40,10 @@ export default {
       'copyLanding'
     ]),
 
+    ...mapMutations('Onboarding', [
+      'resetState'
+    ]),
+
     openLanding (item) {
       // add log
       this.$Progress.start()
@@ -113,9 +56,9 @@ export default {
     },
 
     openWindow () {
-      this.createWindow = true
+      this.resetState()
       this.$nextTick(() => {
-        document.querySelector('.b-base-text-field__input').focus()
+        this.$router.push({ path: `/dashboard/wizard/name` })
       })
     },
 
@@ -130,24 +73,27 @@ export default {
     },
 
     newLanding () {
-      if (this.newPageTitle.length > 0 && !this.createProgress) {
+      if (this.name.length > 0 && !this.createProgress) {
         this.createProgress = true
         this.$Progress.start()
         this.invalid = false
-        this.createLanding({ name: this.newPageTitle, sections: this.presets[this.presetSelected].sections })
+        this.createLanding({ name: this.name, sections: this.preset.sections })
           .then((response) => {
-            let url = this.presets[this.presetSelected].url
+            let url = this.preset.url
 
             if (url === undefined || url === '') {
               response['slug'] = response._id
 
               return Promise.resolve(response)
             } else {
-              return this.fetchLandingFromFile({ slug: response._id, url: url, name: this.newPageTitle })
+              return this.fetchLandingFromFile({ slug: response._id, url: url, name: this.name })
             }
           })
           .then((data) => {
-            this.$router.push({ path: `/editor/${data.slug}` })
+            this.resetState()
+            this.$nextTick(() => {
+              this.$router.push({ path: `/editor/${data.slug}` })
+            })
           })
       } else {
         this.invalid = true
@@ -177,6 +123,10 @@ export default {
 
     getItemCover (item) {
       return item.cover || 'https://s3.protocol.one/images/placeholder.png'
+    },
+
+    skipSteps () {
+      this.newLanding()
     }
   },
   created () {
@@ -226,62 +176,8 @@ export default {
       </figure>
     </div>
 
-    <!-- modal window -->
-    <transition name="slide-fade">
-      <div class="b-create" v-if="createWindow" @click.self="createWindow = false">
-        <div class="b-create__inner">
-          <div class="b-create__close"
-               @click="createWindow = false">
-            <icon-base
-              name="close"
-              color="#c4c4c4"
-              width="14"
-              height="14"
-            />
-          </div>
-          <div class="b-create__header">
-            <base-text-field
-              v-model="newPageTitle"
-              placeholder="New Landing Page"
-              :hasError="invalid"
-              :errorText="$t('d.cmodalErrorText')">
-            </base-text-field>
-          </div>
-
-          <base-scroll-container backgroundBar="#999">
-            <div class="b-presets">
-              <div class="b-presets__item"
-                   v-for="(item, index) in presets"
-                   :key="index"
-                   :style="{ 'background-image': `url(${item.image})` }"
-                   :class="{ 'selected': presetSelected == index, 'first': index === 0 }"
-                   @click="presetSelected = index">
-                <div class="b-presets__item-inner">
-                  <div class="b-presets__item-name">
-                    {{item.type}}
-                  </div>
-                  <div class="b-presets__item-description">
-                    {{item.description}}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </base-scroll-container>
-
-          <div class="b-create__footer">
-            <base-button color="gray" size="middle" @click="createWindow = false" :disabled="createProgress">
-              {{ $t('nav.cancel') }}
-            </base-button>
-            <base-button color="blue" size="middle" @click="newLanding" :disabled="createProgress">
-              {{ $t('nav.create') }}
-            </base-button>
-          </div>
-        </div>
-      </div>
-    </transition>
-
     <!-- wizard -->
-    <router-view></router-view>
+    <router-view @skipSteps="skipSteps" />
 
     <!-- confirm windows -->
     <base-confirm

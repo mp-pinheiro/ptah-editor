@@ -91,25 +91,13 @@ export default {
       return this.builder.sections
     },
 
-    widthSlot () {
-      let container = this.sandbox.container
-      let name = ''
-
-      if (container) {
-        name = container.split('.')[1]
-        return this.settingObjectSection.data[name]
-      } else {
-        return ''
-      }
+    isSections () {
+      return this.sections.length !== 0
     }
   },
 
   watch: {
     sections: function (val) {
-      if (val.length === 0) {
-        return this.destroyTips()
-      }
-
       if (this.isShowTips) {
         this.initTips()
       }
@@ -155,16 +143,6 @@ export default {
     },
 
     settingObjectOptions: {
-      handler: function (val, oldVal) {
-        if (this.isShowTips) {
-          this.destroyTips()
-          this.initTips()
-        }
-      },
-      deep: true
-    },
-
-    widthSlot: {
       handler: function (val, oldVal) {
         if (this.isShowTips) {
           this.destroyTips()
@@ -338,7 +316,7 @@ export default {
       }// end // step 4 - block settings
 
       // step 5 - element settings
-      if (className === '.b-on-boarding-tips-step-5' && Number(this.stepTips) === 5) {
+      if (className === '.b-on-boarding-tips-step-5' && Number(this.stepTips) === 5 && this.isSections) {
         let node = null
 
         node = container.querySelector('.b-ptah-element')
@@ -362,7 +340,12 @@ export default {
     },
 
     changeStep () {
-      const step = Number(this.stepTips) + 1
+      let step = Number(this.stepTips) + 1
+
+      if (!this.isSections && step === 4) {
+        step = 6
+      }
+
       this.activeStep(step)
     },
 
@@ -392,6 +375,8 @@ export default {
 
       if (step === 6) {
         this.removeClassByNode('._show-el-tip', '_show-el-tip')
+        this.toggleSectionsTreeMenu(false)
+        this.toggleAddSectionMenu(false)
         this.toggleSidebar(true)
         this.toggleProgressPanelExpanded(true)
       }

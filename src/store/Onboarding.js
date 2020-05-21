@@ -11,20 +11,23 @@ const COLORS = {
   buttonText: ''
 }
 
+const defaultState = {
+  name: '', // new project name
+  logo: '',
+  background: '',
+  colors: COLORS,
+  imageForPalette: null,
+  palette: null,
+  checkList: CheckList, // onboarding check-list
+  activeStep: '',
+  goal: '', // selected goal id
+  preset: '', // selected preset
+  goals: Goals,
+  presets: Presets
+}
+
 export default {
-  state: {
-    name: '', // new project name
-    logo: '',
-    background: '',
-    colors: COLORS,
-    imageForPalette: null,
-    palette: null,
-    checkList: CheckList, // onboarding check-list
-    activeStep: '',
-    goal: '', // selected goal id
-    goals: Goals,
-    presets: Presets
-  },
+  state: defaultState,
 
   mutations: {
     setName (state, value) {
@@ -65,6 +68,14 @@ export default {
 
     setGoal (state, value) {
       state.goal = value
+    },
+
+    setPreset (state, value) {
+      state.preset = value
+    },
+
+    resetState (state) {
+      state = defaultState
     }
   },
 

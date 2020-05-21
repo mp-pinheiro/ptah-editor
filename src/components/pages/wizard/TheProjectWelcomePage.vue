@@ -19,7 +19,9 @@
       <div>
         <base-button
           color="transparent"
-          size="small">
+          size="small"
+          @click="skipSteps"
+        >
           Skip tour
         </base-button>
       </div>
@@ -34,6 +36,10 @@ export default {
   methods: {
     start () {
       this.$router.push({ path: `/dashboard/wizard/logo` })
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
     }
   }
 }

@@ -17,11 +17,12 @@
       <base-scroll-container>
         <div class="b-project-templates__container--list">
             <figure
-              @click="selectedPreset = template.id"
               class="b-project-templates__template"
               :class="{ selected:  selectedPreset === template.id}"
               v-for="(template, index) in presetsList"
-              :key="index">
+              :key="index"
+              @click="selectPreset(template)"
+            >
               <img :src="template.image" :alt="template.type">
               <ul class="b-project-templates__template-palette">
                 <li><icon-base name="palette" width="14" color="#A2A5A5"></icon-base></li>
@@ -70,11 +71,16 @@ export default {
   },
 
   methods: {
-    ...mapMutations('Onboarding', ['setGoal']),
+    ...mapMutations('Onboarding', ['setGoal', 'setPreset']),
 
     selectGoal (goal) {
       this.selectedPreset = null
       this.setGoal(goal.id)
+    },
+
+    selectPreset (preset) {
+      this.selectedPreset = preset.id
+      this.setPreset(preset)
     }
   }
 }

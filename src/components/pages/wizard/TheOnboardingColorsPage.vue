@@ -1,5 +1,5 @@
 <template>
-  <TheOnboardingStepLayout>
+  <TheOnboardingStepLayout @skipSteps="skipSteps">
     <template v-if="palette === null">
       <div class="b-panel__control">
         <base-caption>
@@ -192,6 +192,10 @@ export default {
     applyPalette () {
       this.activateCheckListItem('colors')
       this.updateColors(this.palette)
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
     }
   },
 
@@ -203,10 +207,5 @@ export default {
 
 <style lang="sass" scoped>
   .b-instruction
-    width: 25rem
-    height: 15rem
-
-    margin: 0 auto
     background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/1b89b804-5109-4dd1-a102-81516fc6dfb8.png)
-    background-size: contain
 </style>

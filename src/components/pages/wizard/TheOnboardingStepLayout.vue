@@ -12,6 +12,7 @@
           <base-button
             color="transparent"
             size="small"
+            @click="skipSteps"
           >
             Skip tour
           </base-button>
@@ -23,7 +24,7 @@
             @click="nextStep"
             :disabled="!checkList[activeStep].status"
           >
-            Next step
+            {{ activeStep === 'colors' ? 'Done' : 'Next step' }}
           </base-button>
         </div>
       </div>
@@ -56,7 +57,15 @@ export default {
         next = 'colors'
       }
 
-      this.$router.push({ path: `/dashboard/wizard/${next}` })
+      if (this.activeStep === 'colors') {
+        this.skipSteps()
+      } else {
+        this.$router.push({ path: `/dashboard/wizard/${next}` })
+      }
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
     }
   }
 }
@@ -88,4 +97,14 @@ export default {
       display: flex
       justify-content: flex-end
       align-items: center
+
+  .b-instruction
+    width: 25rem
+    height: 15rem
+
+    border: .2rem solid #00ADb6
+    border-radius: .5rem
+
+    margin: 0 auto 4.5rem
+    background-size: contain
 </style>

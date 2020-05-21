@@ -198,7 +198,7 @@ const actions = {
           gtag: '',
           favicon: state.defaultFavicon,
           styles: {
-            backgroundImage: '',
+            backgroundImage: state.Onboarding.background,
             backgroundColor: '',
             backgroundPositionX: 0,
             backgroundPositionY: 0,
@@ -217,7 +217,8 @@ const actions = {
           name: data.name,
           fonts: FONTS,
           setupFonts: SETUP_FONTS,
-          colors: COLORS
+          colors: COLORS,
+          logo: state.Onboarding.logo
         })
 
         landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)
@@ -272,8 +273,24 @@ const actions = {
           data.settings['fonts'] = FONTS
         }
 
+        if (!data.settings.logo) {
+          data.settings['logo'] = state.Onboarding.logo
+        }
+
+        if (!data.settings.colors) {
+          data.settings['colors'] = _.merge(state.currentLanding.settings.colors, state.Onboarding.colors)
+        }
+
         if (!data.settings.setupFonts) {
           data.settings['setupFonts'] = SETUP_FONTS
+        }
+
+        if (!data.settings.checkList) {
+          data['checkList'] = DEFAULT_CHECK_LIST
+        }
+
+        if (!data.settings.styles.backgroundImage) {
+          data.settings['styles']['backgroundImage'] = state.Onboarding.background
         }
 
         commit('slug', slug)

@@ -2,7 +2,7 @@
   <transition name="slide-fade">
     <div class="b-wizard-modal__overlay">
       <div class="b-wizard-modal__content" :style="customSize">
-        <router-view></router-view>
+        <router-view @skipSteps="skipSteps" />
       </div>
     </div>
   </transition>
@@ -23,6 +23,12 @@ export default {
         styles.height = this.$route.meta.height
       }
       return styles
+    }
+  },
+
+  methods: {
+    skipSteps () {
+      this.$emit('skipSteps')
     }
   }
 }

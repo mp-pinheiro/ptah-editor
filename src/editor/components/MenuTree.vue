@@ -5,7 +5,7 @@
     :class="[
       { '_short': menuTree.length > 0 && settingObjectSection.id && selectedSections.length === 1 },
       { '_short': selectedGroup.length > 0 },
-      { '_long': selectedSections.length > 1 }
+      { '_scroll': menuTree.length  > 10 }
     ]"
   >
     <base-scroll-container backgroundBar="#999">
@@ -91,7 +91,7 @@
 
       <div
         class="b-delete-section"
-        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2"
+        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2 && selectedSections.length !== 0"
       >
         <BaseButton
           @click.stop="showConfirmDelete = true"
@@ -700,6 +700,7 @@ export default {
       height: 9rem
   &._short,
   &._long
+  &._scroll
     .b-menu-tree__bottom
       box-shadow: 0 2px 16px rgba($black, 0.1)
 

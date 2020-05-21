@@ -1,5 +1,5 @@
 <template>
-  <TheOnboardingStepLayout>
+  <TheOnboardingStepLayout @skipSteps="skipSteps">
     <base-caption>
       Instruction
     </base-caption>
@@ -52,6 +52,10 @@ export default {
       } else {
         this.activateCheckListItem('logo')
       }
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
     }
   },
 
@@ -63,10 +67,5 @@ export default {
 
 <style lang="sass" scoped>
   .b-instruction
-    width: 25rem
-    height: 15rem
-
-    margin: 0 auto 4.5rem
-    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/1b89b804-5109-4dd1-a102-81516fc6dfb8.png)
-    background-size: contain
+    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/c8687195-e928-4178-a81b-212211f7a879.gif)
 </style>
