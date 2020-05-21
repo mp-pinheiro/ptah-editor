@@ -772,7 +772,7 @@ export default {
       background-color: rgba(255, 230, 0, 0.1) !important
       border-radius: .5rem !important
 
-    &:not(.b-button):not(._show-el-tip).styler-active
+    &:not(.b-button).styler-active
       border-color: transparent !important
       background-color: rgba(255, 230, 0, 0.1) !important
       border-radius: .5rem !important
