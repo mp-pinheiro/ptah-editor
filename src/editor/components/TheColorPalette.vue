@@ -191,7 +191,6 @@ export default {
     .b-base-upload-button
       width: 8rem
     .b-pth-base-button
-      width: auto
       text-transform: none
       font-size: 1.1rem
       white-space: nowrap
