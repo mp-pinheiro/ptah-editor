@@ -181,3 +181,18 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.b-palette
+  /deep/
+    .loader-container
+      width: 2rem
+      height: 2rem
+    .b-base-upload-button
+      width: 8rem
+    .b-pth-base-button
+      width: auto
+      text-transform: none
+      font-size: 1.1rem
+      white-space: nowrap
+</style>
