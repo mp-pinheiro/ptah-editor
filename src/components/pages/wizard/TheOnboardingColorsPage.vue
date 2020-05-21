@@ -9,49 +9,50 @@
       </div>
     </template>
     <div class="b-panel__control">
-      <BaseCaption>
-        Color palette generator
-      </BaseCaption>
-      <div class="b-palette__col">
-        <p class="b-palette__generator-text">
-          Simply upload an image, and we’ll use the hues in the image to create your palette.
-        </p>
+      <div class="b-palette">
+        <BaseCaption>
+          Color palette generator
+        </BaseCaption>
+        <div class="b-palette__col">
+          <p class="b-palette__generator-text">
+            Simply upload an image, and we’ll use the hues in the image to create your palette.
+          </p>
 
-        <div class="b-palette__col" v-if="palette !== null">
-          <div class="b-gen-palette">
-            <ul class="b-gen-palette__list">
-              <li class="b-gen-palette__list-item b-gen-palette__list-item_palette">
-                <IconBase
-                  width="24"
-                  height="24"
-                  name="palette"
-                  color="#A2A5A5"
+          <div class="b-palette__col" v-if="palette !== null">
+            <div class="b-gen-palette">
+              <ul class="b-gen-palette__list">
+                <li class="b-gen-palette__list-item b-gen-palette__list-item_palette">
+                  <IconBase
+                    width="24"
+                    height="24"
+                    name="palette"
+                    color="#A2A5A5"
+                  />
+                </li>
+                <li
+                  v-for="(color, index) in palette"
+                  :key="color + index"
+                  :style="{'background-color' : color}"
+                  class="b-gen-palette__list-item"
                 />
-              </li>
-              <li
-                v-for="(color, index) in palette"
-                :key="color + index"
-                :style="{'background-color' : color}"
-                class="b-gen-palette__list-item"
-              />
-            </ul>
+              </ul>
+            </div>
+          </div>
+
+          <div class="b-palette__controls" :class="{ 'b-palette__loaded': palette !== null }">
+            <base-upload-button
+              :value="imageForPalette"
+              @upload="getInputSrcFiles"
+              :progress="progress"
+              @startProgress="startProgress"
+              :palette="palette"
+            >
+            </base-upload-button>
+            <base-button v-if="palette !== null" color="main-green" size="small" @click="applyPalette">
+              Apply palette
+            </base-button>
           </div>
         </div>
-
-        <div class="b-palette__controls" :class="{ 'b-palette__loaded': palette !== null }">
-          <base-upload-button
-            :value="imageForPalette"
-            @upload="getInputSrcFiles"
-            :progress="progress"
-            @startProgress="startProgress"
-            :palette="palette"
-          >
-          </base-upload-button>
-          <base-button v-if="palette !== null" color="main-green" size="small" @click="applyPalette">
-            Apply palette
-          </base-button>
-        </div>
-
       </div>
     </div>
     <template v-if="palette !== null">
@@ -207,5 +208,5 @@ export default {
 
 <style lang="sass" scoped>
   .b-instruction
-    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/1b89b804-5109-4dd1-a102-81516fc6dfb8.png)
+    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/93b68633-8196-4703-a11c-de751fe8a2de.gif)
 </style>
