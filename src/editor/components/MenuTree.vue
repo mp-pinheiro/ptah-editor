@@ -154,6 +154,7 @@ import { mapState, mapActions } from 'vuex'
 import MenuTreeItem from './MenuTreeItem'
 import Sortable from 'sortablejs'
 import { resetIndents } from '@editor/util'
+import { sectionsGroups as setStylesForSectionsInGroup } from '@cscripts/sectionsGroups'
 
 export default {
   name: 'menuTree',
@@ -195,8 +196,11 @@ export default {
   },
 
   watch: {
-    sectionsGroups (value, oldValue) {
+    sectionsGroups () {
       this.buildTree()
+      setTimeout(() => {
+        setStylesForSectionsInGroup()
+      }, 300)
     },
 
     inc () {
