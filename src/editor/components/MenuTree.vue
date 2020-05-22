@@ -3,7 +3,7 @@
     class="b-menu-tree"
     ref="tree"
     :class="[
-      { '_short': menuTree.length > 0 && settingObjectSection.id && selectedSections.length === 1 },
+      { '_short': menuTree.length > 0 && settingObjectSection.id && selectedSections.length < 2 },
       { '_short': selectedGroup.length > 0 },
       { '_long': selectedSections.length > 1 }
     ]"
@@ -91,7 +91,7 @@
 
       <div
         class="b-delete-section"
-        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2 && selectedSections.length !== 0"
+        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2 && selectedGroup.length === 0"
       >
         <BaseButton
           @click.stop="showConfirmDelete = true"
