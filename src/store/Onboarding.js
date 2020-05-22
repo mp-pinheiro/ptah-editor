@@ -8,7 +8,8 @@ export default {
     background: '',
     goal: '', // selected goal id
     goals: Goals,
-    presets: Presets
+    presets: Presets,
+    preset: null // selected preset object
   },
 
   mutations: {
@@ -26,6 +27,10 @@ export default {
 
     setGoal (state, value) {
       state.goal = value
+    },
+
+    setPreset (state, value) {
+      state.preset = value
     }
   },
 

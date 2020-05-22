@@ -12,6 +12,7 @@ import TheProjectNamePage from '@src/components/pages/wizard/TheProjectNamePage'
 import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcomePage'
 import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
 import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
+import TheProjectPreviewPage from '@src/components/pages/wizard/TheProjectPreviewPage'
 
 const routes = [
   {
@@ -53,6 +54,14 @@ const routes = [
               {
                 path: 'templates',
                 component: TheProjectTemplatesPage
+              },
+              {
+                path: 'preview',
+                component: TheProjectPreviewPage,
+                meta: {
+                  width: '100vw',
+                  height: '100vh'
+                }
               },
               {
                 path: 'welcome',
