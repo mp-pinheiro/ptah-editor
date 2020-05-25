@@ -22,15 +22,16 @@ export default {
   name: 'TheProjectGoals',
 
   computed: {
-    ...mapState('Onboarding', ['goals'])
+    ...mapState('Onboarding', ['goals', 'presets'])
   },
 
   methods: {
-    ...mapMutations('Onboarding', ['setGoal']),
+    ...mapMutations('Onboarding', ['setGoal', 'setPreset']),
 
     selectGoal (goal) {
       this.setGoal(goal.id)
       if (goal.id === 0) { // blank page
+        this.setPreset(0)
         this.$router.push({ path: `/dashboard/wizard/welcome` })
       } else {
         this.$router.push({ path: `/dashboard/wizard/templates` })

@@ -78,7 +78,7 @@ export default {
 
     resetState (state) {
       for (let prop in state) {
-        prop = defaultState[prop]
+        state[prop] = defaultState[prop]
       }
     }
   },

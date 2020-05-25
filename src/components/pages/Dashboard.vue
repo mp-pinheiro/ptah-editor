@@ -56,7 +56,6 @@ export default {
     },
 
     openWindow () {
-      this.resetState()
       this.$nextTick(() => {
         this.$router.push({ path: `/dashboard/wizard/name` })
       })
