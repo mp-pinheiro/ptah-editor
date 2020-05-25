@@ -574,29 +574,19 @@ export function getJquerySetup (parallax = '', fullPageScroll ='') {
   return ``
 }
 
-function setFontSizesList () {
-  let sizes = []
+/**
+ * search and return the styles for the elements
+ */
+export function getPoneStyles (frag) {
+  let defStyles = ''
+  const stylesElements = frag.querySelectorAll('style[id^=pone]');
 
-  for (let i = 8; i < 73; i++) {
-    sizes.push({ name: `${i}px`, value: `${i/10}rem` })
-  }
+  Array.from(stylesElements).forEach(node => {
+    defStyles += `<style>${node.innerHTML}</style>`
+  })
 
-  return sizes
+  return defStyles
 }
-
-export const FONT_SIZES_LIST = setFontSizesList()
-
-function setLinesHeightList () {
-  let sizes = []
-
-  for (let i = 10; i < 31; i++) {
-    sizes.push({ name: i/10, value: i/10 })
-  }
-
-  return sizes
-}
-
-export const LINES_HEIGHT_LIST = setLinesHeightList()
 
 export const LIST_ICONS = [
   'checkMark',

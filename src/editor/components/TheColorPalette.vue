@@ -42,7 +42,8 @@
 
       <div class="b-palette__controls" :class="{ 'b-palette__loaded': palette }">
         <base-upload-button
-          v-model="imagePalette"
+          :value="imagePalette"
+          :palette="palette"
           @change="changeImagePalette"
           @upload="getInputSrcFiles"
           :progress="progress"
@@ -129,7 +130,7 @@ export default {
           return this.getRgbaFromArray(c)
         })
 
-        this.storeSaveSettingsPalette({ palette: _.uniqBy(palette), image: this.imagePalette })
+        this.storeSaveSettingsPalette({ palette: _.uniqBy(palette) })
         this.progress = false
       }, 1000)
     },
@@ -180,60 +181,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-
-.b-palette
-  height: 100%
-  position: relative
-
-  &__row
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-
-    margin: 0 0 3rem
-    padding: 0
-
-  &__col
-    width: 100%
-    max-width: 24rem
-    padding: 1rem 0 1rem 1.8rem
-
-  &__generator-text
-    font-size: 1.2rem
-    line-height: 1.4
-    color: #575A5F
-    font-weight: 600
-
-  &__controls
-    display: flex
-    justify-content: center
-    margin-top: 1.5rem
-
-  &__loaded
-    justify-content: space-between
-    margin-top: 0
-
-    & > *
-      width: 49%
-
-.b-gen-palette
-  &__list
-    display: flex
-    justify-content: center
-
-    margin: 0 0 $size-step / 4 0
-    padding: 0
-
-    &-item
-      list-style: none
-      width: 2rem
-      height: 2rem
-      border-radius: 100%
-      margin: 4px
-      &_palette
-        margin: 2px 14px 4px 4px
-</style>

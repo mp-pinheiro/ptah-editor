@@ -129,7 +129,7 @@ const C_CUSTOM_3 = [
   {
     element: {
       styles: {
-        'margin-top': '120px'
+        'margin-top': '20px'
       },
       socialNetworks: {
         'facebook': {

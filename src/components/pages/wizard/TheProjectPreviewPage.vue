@@ -37,6 +37,7 @@ export default {
 
     selectPreset () {
       this.setPreset(this.preset)
+      this.$router.push({ path: `/dashboard/wizard/welcome` })
     },
 
     close () {

@@ -30,7 +30,11 @@ export default {
 
     selectGoal (goal) {
       this.setGoal(goal.id)
-      this.$router.push({ path: `/dashboard/wizard/templates` })
+      if (goal.id === 0) { // blank page
+        this.$router.push({ path: `/dashboard/wizard/welcome` })
+      } else {
+        this.$router.push({ path: `/dashboard/wizard/templates` })
+      }
     }
   }
 }

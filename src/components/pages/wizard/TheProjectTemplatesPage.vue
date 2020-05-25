@@ -26,12 +26,12 @@
                   <div class="control" @click="selectPreset(template)">
                     <icon-base name="select" width="40" height="40"></icon-base>
                   </div>
-                  <div class="control" @click="preview(template)">
+                  <div class="control" @click="preview(template)" v-if="template.id !== 0">
                     <icon-base name="previewTemplate" width="40" height="40"></icon-base>
                   </div>
                 </div>
               </div>
-              <ul class="b-project-templates__template-palette">
+              <ul class="b-project-templates__template-palette" v-if="template.id !== 0">
                 <li><icon-base name="palette" width="14" color="#A2A5A5"></icon-base></li>
                 <li
                   class="color"
@@ -88,6 +88,7 @@ export default {
     selectPreset (preset) {
       this.selectedPreset = preset.id
       this.setPreset(preset)
+      this.$router.push({ path: `/dashboard/wizard/welcome` })
     },
 
     preview (preset) {

@@ -12,6 +12,7 @@ import {
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
+  getPoneStyles
 } from './util'
 import * as _ from 'lodash-es'
 
@@ -290,10 +291,10 @@ class Vuse {
 
     let { video, title } = this.settings
     let customCss = this.getCustomCss()
-    let script = this.getJsScript()
+    let customJS = this.getJsScript()
     let bodyStyles = this.getBodyStyles()
     let scrollSetup = getScrollSetup(this.settings.fullPageScroll)
-
+    let stylePoneList = getPoneStyles(frag)
     let fontsNameStr = getFontsNameStr(this.settings.fonts)
     let fontsLanguages = getFontsLanguages(this.settings.fonts)
     let fontsSetup = getFontsSetup(this.settings.setupFonts)
@@ -314,6 +315,7 @@ class Vuse {
             <style>
               ${customCss}
             </style>
+            ${stylePoneList}
           </head>
           <body class="b-body_preview" style="${bodyStyles}">
             ${(video) ? this.getVideoBg(video) : ''}
@@ -325,6 +327,7 @@ class Vuse {
             ${scrollSetup.setup}
             ${parallaxSetup}
             <script src="${window.location.origin + '/js/cjs.js'}"></script>
+            <script>${customJS}</script>
           </body>
         </html>`
     )

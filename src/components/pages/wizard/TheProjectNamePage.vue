@@ -5,24 +5,31 @@
     <p class="b-project-name__intro">You’re just one step away from starting your landing! <br>
     Create a new project.</p>
 
-    <form @submit.prevent="onSubmit" class="b-project-name__form">
+    <div class="b-project-name__form">
       <base-text-field
         class="b-project-name__input"
         v-model="projectName"
         label="Project name"
         placeholder="Enter a project name"
         :hasError="invalid"
-        :errorText="$t('d.cmodalErrorText')"></base-text-field>
-
+        :errorText="$t('d.cmodalErrorText')"
+      />
       <base-button
-        type="submit"
+        color="transparent"
+        size="small"
+        @click="back"
+       >
+        Cancel
+      </base-button>
+      <base-button
         color="main-green"
         size="small"
-        :disabled="projectName.length === 0">
+        :disabled="projectName.length === 0"
+        @click="onSubmit"
+      >
         Create
       </base-button>
-    </form>
-
+    </div>
   </div>
 </template>
 
@@ -63,6 +70,11 @@ export default {
 
     onSubmit () {
       this.$router.push({ path: `/dashboard/wizard/goals` })
+    },
+
+    back () {
+      this.projectName = ''
+      this.$router.push({ path: `/dashboard/` })
     }
   }
 }

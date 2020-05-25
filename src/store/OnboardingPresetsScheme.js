@@ -2,12 +2,12 @@ export default [
   {
     type: 'Blank page',
     sections: [],
-    image: 'https://s3.protocol.one/images/BlankPage.png',
+    image: 'https://s3.protocol.one/files/Blank_page.png',
     description: '',
     categories: [0],
     palette: [],
     id: 0,
-    preview: 'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/c8610565-955b-4a48-b446-2c73e5d97759.jpg'
+    preview: ''
   },
   {
     type: 'Simple page',

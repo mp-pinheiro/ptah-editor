@@ -261,6 +261,11 @@ export default {
       this.updateSettings()
     },
 
+    logo  () {
+      this.activateCheckListItem('logo')
+      this.applySettings()
+    },
+
     pageBackgroundUrl  () {
       this.activateCheckListItem('bg')
       this.applySettings()

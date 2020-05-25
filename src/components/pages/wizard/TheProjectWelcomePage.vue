@@ -10,14 +10,18 @@
       <div>
         <base-button
           color="main-green"
-          size="small">
+          size="small"
+          @click="start"
+        >
           Let’s start
         </base-button>
       </div>
       <div>
         <base-button
           color="transparent"
-          size="small">
+          size="small"
+          @click="skipSteps"
+        >
           Skip tour
         </base-button>
       </div>
@@ -27,7 +31,17 @@
 
 <script>
 export default {
-  name: 'TheProjectWelcomePage'
+  name: 'TheProjectWelcomePage',
+
+  methods: {
+    start () {
+      this.$router.push({ path: `/dashboard/wizard/logo` })
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
+    }
+  }
 }
 </script>
 

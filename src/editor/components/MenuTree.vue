@@ -91,7 +91,7 @@
 
       <div
         class="b-delete-section"
-        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2"
+        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2 && selectedSections.length !== 0"
       >
         <BaseButton
           @click.stop="showConfirmDelete = true"
@@ -685,11 +685,13 @@ export default {
   padding-bottom: 0
 
 .b-menu-tree
-  padding: 0 0 12rem
+  padding: 0 0 9rem
   margin: 0
   height: 100%
 
   width: calc(100% + .5rem)
+  .b-menu-tree__bottom
+    height: 9rem
   &._short
     padding: 0 0 12rem
     .b-menu-tree__bottom
@@ -698,10 +700,6 @@ export default {
     padding: 0 0 9rem
     .b-menu-tree__bottom
       height: 9rem
-  &._short,
-  &._long
-    .b-menu-tree__bottom
-      box-shadow: 0 2px 16px rgba($black, 0.1)
 
   &__group
     .menu-tree-item:nth-child(2)
