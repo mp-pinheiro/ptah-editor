@@ -1,11 +1,11 @@
 <template>
-  <transition name="slide-fade">
-    <div class="b-wizard-modal__overlay">
+  <div class="b-wizard-modal__overlay">
+    <transition name="slide-fade">
       <div class="b-wizard-modal__content" :style="customSize">
         <router-view @skipSteps="skipSteps" />
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>

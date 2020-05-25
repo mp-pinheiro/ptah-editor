@@ -8,7 +8,9 @@ const COLORS = {
   headers: '',
   text: '',
   button: '',
-  buttonText: ''
+  buttonText: '',
+  add1: '',
+  add2: ''
 }
 
 const defaultState = {
@@ -21,9 +23,9 @@ const defaultState = {
   checkList: CheckList, // onboarding check-list
   activeStep: '',
   goal: '', // selected goal id
-  preset: '', // selected preset
   goals: Goals,
-  presets: Presets
+  presets: Presets,
+  preset: null // selected preset object
 }
 
 export default {
@@ -75,7 +77,9 @@ export default {
     },
 
     resetState (state) {
-      state = defaultState
+      for (let prop in state) {
+        prop = defaultState[prop]
+      }
     }
   },
 
