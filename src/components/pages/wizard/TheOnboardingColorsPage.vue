@@ -97,7 +97,9 @@ export default {
         headers: 'Main title',
         text: 'Plain text',
         button: 'Button background',
-        buttonText: 'Button text'
+        buttonText: 'Button text',
+        add1: 'Additional color',
+        add2: 'Additional color'
       }
     }
   },

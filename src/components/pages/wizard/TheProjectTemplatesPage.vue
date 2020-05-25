@@ -20,11 +20,18 @@
               class="b-project-templates__template"
               :class="{ selected:  selectedPreset === template.id}"
               v-for="(template, index) in presetsList"
-              :key="index"
-              @click="selectPreset(template)"
-            >
-              <img :src="template.image" :alt="template.type">
-              <ul class="b-project-templates__template-palette">
+              :key="index">
+              <div class="b-project-templates__template-image" :style="{'background-image': `url(${template.image})`}">
+                <div class="b-project-templates__template-controls">
+                  <div class="control" @click="selectPreset(template)">
+                    <icon-base name="select" width="40" height="40"></icon-base>
+                  </div>
+                  <div class="control" @click="preview(template)" v-if="template.id !== 0">
+                    <icon-base name="previewTemplate" width="40" height="40"></icon-base>
+                  </div>
+                </div>
+              </div>
+              <ul class="b-project-templates__template-palette" v-if="template.id !== 0">
                 <li><icon-base name="palette" width="14" color="#A2A5A5"></icon-base></li>
                 <li
                   class="color"
@@ -81,6 +88,12 @@ export default {
     selectPreset (preset) {
       this.selectedPreset = preset.id
       this.setPreset(preset)
+      this.$router.push({ path: `/dashboard/wizard/welcome` })
+    },
+
+    preview (preset) {
+      this.selectPreset(preset)
+      this.$router.push({ path: `/dashboard/wizard/preview` })
     }
   }
 }
@@ -159,18 +172,42 @@ export default {
     padding: 0
     margin: 0 0 3.3rem
     width: 20rem
-    cursor: pointer
+    $this: &
 
-    img
+    &:hover #{$this}-controls
+      opacity: 1
+
+    &-image
       width: 20rem
       height: 13.5rem
       transition: all .2s ease-out
       border-radius: 3px
       margin-bottom: 1rem
+      background-size: cover
+      overflow: hidden
 
-    &.selected img
+    &.selected #{$this}-image
       border: 3px solid $main-green
       box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.2)
+
+    &-controls
+      display: flex
+      justify-content: center
+      align-items: center
+      background: rgba($dark-grey, .9)
+      height: 13.5rem
+      opacity: 0
+      transition: all .2s ease-out
+
+      .control
+        cursor: pointer
+        margin: 0 1.5rem
+
+        svg
+          opacity: .8
+
+        &:hover svg
+          opacity: 1
 
     &-palette
       display: flex

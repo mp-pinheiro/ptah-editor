@@ -15,6 +15,7 @@ import TheOnboardingBackgroundPage from '@src/components/pages/wizard/TheOnboard
 import TheOnboardingColorsPage from '@src/components/pages/wizard/TheOnboardingColorsPage'
 import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
 import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
+import TheProjectPreviewPage from '@src/components/pages/wizard/TheProjectPreviewPage'
 
 const routes = [
   {
@@ -56,6 +57,14 @@ const routes = [
               {
                 path: 'templates',
                 component: TheProjectTemplatesPage
+              },
+              {
+                path: 'preview',
+                component: TheProjectPreviewPage,
+                meta: {
+                  width: '100vw',
+                  height: '100vh'
+                }
               },
               {
                 path: 'welcome',

@@ -91,7 +91,7 @@ export default {
         align-items: stretch
     &__padding
       height: 100%
-      padding: 7.5rem 9.9rem 0
+      padding: 4.5rem 9.9rem 0
     &__controls
       padding: 0 2.3rem 3.3rem 0
       display: flex
@@ -99,8 +99,8 @@ export default {
       align-items: center
 
   .b-instruction
-    width: 25rem
-    height: 15rem
+    width: 40rem
+    height: 23.8rem
 
     border: .2rem solid #00ADb6
     border-radius: .5rem
