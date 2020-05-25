@@ -1,6 +1,6 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import { camelCase, merge } from 'lodash-es'
+import { camelCase, merge, uniq } from 'lodash-es'
 
 export default {
   name: 'ControlBox',
@@ -205,19 +205,17 @@ export default {
 
     getLock (group) {
       let lock = false
-      let value
+      let values = []
 
       Object.keys(this[group]).forEach((key, index) => {
-        if (index === 0) {
-          value = this[key]
-        }
-
-        if (value !== this[key]) {
-          lock = false
-        } else {
-          lock = true
-        }
+        values.push(this[key])
       })
+
+      if (uniq(values).length === 1) {
+        lock = true
+      } else {
+        lock = false
+      }
 
       return lock
     }
