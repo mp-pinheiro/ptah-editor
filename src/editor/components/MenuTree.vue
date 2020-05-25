@@ -72,7 +72,7 @@
               @select="onSelect"
               v-scroll-to="`#section_${section.id}`"
               @click="setActive(section, $event)"
-              class="tree-node group-node draggable" />
+              class="tree-node group-node node-sortable draggable" />
           </div>
         </template>
       </div>
@@ -253,7 +253,7 @@ export default {
             }
           })
         }
-      }, 300)
+      }, 150)
     },
 
     destroySortable () {

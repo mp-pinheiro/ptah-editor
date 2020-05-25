@@ -128,12 +128,6 @@ export default {
       if (value) {
         // TODO: toggle others
       }
-    },
-
-    controlPanel () {
-      setTimeout(() => {
-        this.increment = this.increment + 1
-      }, 100)
     }
   },
 
