@@ -188,7 +188,8 @@ const C_CUSTOM_CONTAINER = {
     'justify-content': 'flex-start',
     'align-items': 'flex-start',
     'padding-left': '230px',
-    'padding-top': '120px'
+    'padding-top': '120px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {
@@ -207,7 +208,8 @@ const C_CUSTOM_CONTAINER2 = {
     'justify-content': 'flex-start',
     'align-items': 'flex-start',
     'padding-left': '230px',
-    'padding-top': '120px'
+    'padding-top': '120px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {
@@ -226,7 +228,8 @@ const C_CUSTOM_CONTAINER3 = {
     'justify-content': 'flex-start',
     'align-items': 'flex-start',
     'padding-left': '230px',
-    'padding-top': '120px'
+    'padding-top': '120px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {

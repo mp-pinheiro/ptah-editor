@@ -449,7 +449,7 @@ export default {
       setTimeout(() => {
         if (this.$props.type === 'section') {
           // Do not show section settings on click
-          // this.toggleSectionsTreeMenu(true)
+          this.toggleSectionsTreeMenu(true)
         } else {
           // --- if section has components or slots
           let keys = Object.keys(this.section.data)
@@ -602,7 +602,7 @@ export default {
 
       // hide panel
       this.setControlPanel(false)
-      // this.toggleSidebar(true)
+      this.toggleSidebar(true)
       this.toggleSectionsTreeMenu(true)
 
       this.el.contentEditable = 'false'
