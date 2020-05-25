@@ -8,7 +8,9 @@ const COLORS = {
   headers: '',
   text: '',
   button: '',
-  buttonText: ''
+  buttonText: '',
+  add1: '',
+  add2: ''
 }
 
 const defaultState = {
