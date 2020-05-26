@@ -1,6 +1,9 @@
 <template>
   <div class="b-project-welcome">
-    <img src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/2a0b5386-028b-425f-a1f4-bb3ccd5088bb.png" alt="">
+    <img
+      src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/2a0b5386-028b-425f-a1f4-bb3ccd5088bb.png"
+      class="b-project-welcome__pic"
+      alt="">
 
     <h1>First, let’s upload your elements!</h1>
 
@@ -61,4 +64,8 @@ export default {
     line-height: 1.8rem
     margin: 2rem 0 4rem
     color: #A2A5A5
+
+  &__pic
+    width: 19rem
+    height: 14rem
 </style>
