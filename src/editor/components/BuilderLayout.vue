@@ -33,7 +33,8 @@
         :class="{
           'b-builder-layout-content__sidebar_expanded': isExpanded,
           'b-builder-layout-content__sidebar_expanded-content': isShowSettingsPage,
-          '_show-modal': isShowModal || isShowModalButton
+          '_show-modal': isShowModal || isShowModalButton,
+          '_ultra-wide': isUltraWide
         }"
       >
         <BuilderSidebar
@@ -46,7 +47,8 @@
         :class="[
           {'b-builder-layout-content__main_expanded': isExpanded && !isShowSettingsPage},
           {'b-builder-layout-content__main_expanded-setting': isExpanded && isShowSettingsPage},
-          {'b-builder-layout-content__main_show-modal': isShowModal || isShowModalButton}
+          {'b-builder-layout-content__main_show-modal': isShowModal || isShowModalButton},
+          {'b-builder-layout-content__main_ultra-wide': isUltraWide }
         ]"
       >
         <base-scroll-container
@@ -106,6 +108,10 @@ export default {
 
     isShowSettingsPage () {
       return this.$route.path.split('/').indexOf('settings') > 0
+    },
+
+    isUltraWide () {
+      return this.$route.meta.ultraWide
     }
   },
 
@@ -212,6 +218,8 @@ $topBarHeight: 6rem
       &-content
         z-index: 9
         width: 30.5rem
+    &._ultra-wide
+      width: 48rem
   &__main
     position: absolute
     top: $topBarHeight
@@ -244,6 +252,8 @@ $topBarHeight: 6rem
     &_show-modal
       &:after
         z-index: 4
+    &_ultra-wide
+      left: 55.5rem
 
     &-layout
       transition: width 0.2s

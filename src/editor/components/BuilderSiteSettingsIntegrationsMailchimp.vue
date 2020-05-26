@@ -2,24 +2,33 @@
   <div
     class="b-integrations-mailchimp"
     >
-    <div class="b-integrations-mailchimp__inner">
-      <template v-if="integrationComplete">
-        <img
-          class="b-integrations-mailchimp__logo"
-          src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/64004e89-19d2-4ce4-84d6-6d0df226d8af.png">
-        <base-select
-          :options="lists"
-          :value="selectedList"
-          @input="setList($event)"
-          label="Select a list to collect leads"/>
+    <div class="layout _top-0">
+      <div class="layout-padding">
+        <template v-if="integrationComplete">
+          <img
+            class="b-integrations-mailchimp__logo"
+            src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/64004e89-19d2-4ce4-84d6-6d0df226d8af.png"
+          >
+          <div class="b-panel__control">
+            <base-caption>
+              Select a list to collect leads
+            </base-caption>
+            <base-select
+              :options="lists"
+              :value="selectedList"
+              @input="setList($event)"
+            />
+          </div>
 
-        <br>
-        <p class="b-integrations-mailchimp__descr">E-mail addresses from the "Form" section will now be sent to this list</p>
-      </template>
+          <p class="b-integrations-mailchimp__descr">
+            E-mail addresses from the "Form" section will now be sent to this list
+          </p>
+        </template>
 
-      <template v-if="!integrationComplete">
-        <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
-      </template>
+        <template v-if="!integrationComplete">
+          <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
+        </template>
+      </div>
     </div>
   </div>
 </template>
