@@ -1,5 +1,4 @@
 {{- $configMapName := printf "%s-%s" .Release.Name .Values.frontend.name }}
-{{/* {{ $backendSvc := printf "%s-%s" .Release.Name .Values.backend.name }} */}}
 {{ $deployment := .Values.frontend }}
 apiVersion: v1
 kind: ConfigMap
@@ -9,7 +8,7 @@ metadata:
     app: {{ .Chart.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }} 
+    heritage: {{ .Release.Service }}
     role: {{ $deployment.role }}
 data:
   {{ .Values.ingress.hostname }}.conf: |
