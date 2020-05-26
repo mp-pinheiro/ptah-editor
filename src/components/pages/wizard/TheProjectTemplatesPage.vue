@@ -88,7 +88,6 @@ export default {
     selectPreset (preset) {
       this.selectedPreset = preset.id
       this.setPreset(preset)
-      this.$router.push({ path: `/dashboard/wizard/welcome` })
     },
 
     preview (preset) {
