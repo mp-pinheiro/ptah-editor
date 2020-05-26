@@ -99,12 +99,12 @@ export default {
       align-items: center
 
   .b-instruction
-    width: 40rem
-    height: 23.8rem
+    width: 45rem
+    height: 26.9rem
 
     border: .2rem solid #00ADb6
     border-radius: .5rem
 
     margin: 0 auto 4.5rem
-    background-size: contain
+    background-size: cover
 </style>

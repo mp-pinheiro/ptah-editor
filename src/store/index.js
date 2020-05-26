@@ -217,7 +217,7 @@ const actions = {
           name: data.name,
           fonts: FONTS,
           setupFonts: SETUP_FONTS,
-          colors: COLORS,
+          colors: state.Onboarding.colors,
           logo: state.Onboarding.logo
         })
 
