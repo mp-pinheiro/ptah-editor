@@ -1,8 +1,20 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import * as _ from 'lodash-es'
+import { get, merge } from 'lodash-es'
+import ControlTypography from './TheControlTypography'
 
 export default {
+  data () {
+    return {
+      buttonBorderRadiusValue: 0,
+      elHeightValue: 0
+    }
+  },
+
+  components: {
+    ControlTypography
+  },
+
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
@@ -21,9 +33,9 @@ export default {
 
     mediaFormStylesHeight: {
       get () {
-        let w = _.get(this.settingObjectOptions, `media['is-mobile']['formStyles']['height']`)
+        let w = get(this.settingObjectOptions, `media['is-mobile']['formStyles']['height']`)
 
-        if (w === undefined) w = _.get(this.settingObjectOptions, `formStyles['height']`)
+        if (w === undefined) w = get(this.settingObjectOptions, `formStyles['height']`)
 
         return w
       },
@@ -41,7 +53,7 @@ export default {
 
         this.isMobile ? props = { 'media': media } : props = { 'formStyles': formStyles }
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, props))
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, props))
       }
     },
 
@@ -75,7 +87,7 @@ export default {
       set (value) {
         const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             'button-color': color
           }
@@ -91,7 +103,7 @@ export default {
       set (value) {
         const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             buttonHoverColor: color
           }
@@ -107,7 +119,7 @@ export default {
       set (value) {
         const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             buttonTextColor: color
           }
@@ -123,7 +135,7 @@ export default {
       set (value) {
         const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             buttonHoverTextColor: color
           }
@@ -139,7 +151,7 @@ export default {
       set (value) {
         const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
 
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             inputBgColor: color
           }
@@ -149,11 +161,11 @@ export default {
 
     buttonBorderRadius: {
       get () {
-        return parseInt(this.formStyles['border-radius'])
+        return parseInt(this.formStyles['border-radius']) || 0
       },
 
       set (value) {
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
           formStyles: {
             'border-radius': value
           }
@@ -165,53 +177,131 @@ export default {
   methods: {
     ...mapActions('Sidebar', [
       'updateSettingOptions'
-    ])
+    ]),
+
+    setButtonBorderRadius (value) {
+      this.buttonBorderRadiusValue = value
+    },
+
+    setButtonBorderRadiusValue (value) {
+      this.buttonBorderRadius = value
+    },
+
+    setElHeight (value) {
+      this.elHeightValue = value
+    },
+
+    setElHeightValue (value) {
+      this.elHeight = value
+    }
+  },
+
+  mounted () {
+    this.buttonBorderRadiusValue = this.buttonBorderRadius
+    this.elHeightValue = this.elHeight
   }
 }
 </script>
 
 <template>
   <div>
-    <div class="b-bg-controls" v-if="!isMobile">
-      <div class="b-bg-controls__control">
-        <base-color-picker label="Background text" v-model="inputBgColor"/>
+    <div v-if="!isMobile">
+      <div class="b-panel__control">
+        <base-caption>
+          Text style
+        </base-caption>
+
+        <control-typography/>
+
+        <div class="b-panel__col">
+          <base-color-picker
+            label="Background color"
+            v-model="inputBgColor"
+          />
+        </div>
       </div>
-      <div class="b-bg-controls__control">
-        <base-color-picker label="Button text color" v-model="buttonTextColor"/>
+
+      <div class="b-panel__control">
+        <base-caption>
+          Button style
+        </base-caption>
+        <div class="b-panel__col">
+          <div class="b-panel__control">
+            <base-color-picker
+              label="Text color"
+              v-model="buttonTextColor"
+            />
+          </div>
+          <div class="b-panel__control">
+            <base-color-picker
+              label="Button color"
+              v-model="buttonColor"
+            />
+          </div>
+          <div class="b-panel__control">
+            <base-range-slider
+              position-label="left"
+              v-model="buttonBorderRadius"
+              min="0"
+              max="100"
+              label="Corner"
+              @change="setButtonBorderRadius"
+            >
+              <base-number-input
+                :value="buttonBorderRadiusValue"
+                :minimum="0"
+                :maximum="100"
+                unit="%"
+                @input="setButtonBorderRadiusValue"
+              />
+            </base-range-slider>
+          </div>
+        </div>
       </div>
-      <div class="b-bg-controls__control">
-        <base-color-picker label="Button hover text color" v-model="buttonHoverTextColor"/>
-      </div>
-      <div class="b-bg-controls__control">
-        <base-color-picker label="Button color" v-model="buttonColor"/>
-      </div>
-      <div class="b-bg-controls__control">
-        <base-color-picker label="Button hover color" v-model="buttonHoverColor"/>
-      </div>
-      <div class="b-bg-controls__control">
-        <base-range-slider v-model="buttonBorderRadius" min="0" max="50" label="Button border radius">
-          {{ buttonBorderRadius }}px
-        </base-range-slider>
+      <div class="b-panel__control">
+        <base-caption>
+          Button hover style
+        </base-caption>
+        <div class="b-panel__col">
+          <div class="b-panel__control">
+            <base-color-picker
+              label="Text color"
+              v-model="buttonHoverTextColor"
+            />
+          </div>
+          <div class="b-panel__control">
+            <base-color-picker
+              label="Button color"
+              v-model="buttonHoverColor"
+            />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="b-bg-controls">
-      <div class="b-bg-controls__control">
-        <base-range-slider v-model="elHeight" min="30" max="100" label="Form height">
-          {{ elHeight }}px
-        </base-range-slider>
+    <div class="b-panel">
+      <div class="b-panel__control">
+        <base-caption>
+          Form style
+        </base-caption>
+        <div class="b-panel__col">
+          <base-range-slider
+            position-label="left"
+            v-model="elHeight"
+            min="32"
+            max="100"
+            label="Height"
+            @change="setElHeight"
+          >
+            <base-number-input
+              :value="elHeightValue"
+              :minimum="32"
+              :maximum="100"
+              unit="px"
+              @input="setElHeightValue"
+            />
+          </base-range-slider>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-bg-controls
-  margin-top: 2.2rem
-  padding: 0 0 $size-step/2
-  border-bottom: 0.2rem dotted rgba($black, 0.15)
-  &__control
-    margin-bottom: $size-step/2
-</style>

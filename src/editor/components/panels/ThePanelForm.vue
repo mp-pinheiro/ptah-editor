@@ -10,25 +10,16 @@
       <div class="layout _top-2 _pr-05">
         <base-scroll-container>
           <div class="layout-padding">
-            <!-- Columns settings -->
+            <!-- Form styles-->
             <div class="b-panel__control">
-              <base-caption>
-                Form settings
-              </base-caption>
-
-              <!-- Control typography -->
-              <div class="b-panel__control">
-                <control-typography/>
-              </div>
-
-              <!-- Background Color -->
+              <!-- All styles -->
               <div class="b-panel__control">
                 <control-form-styles/>
               </div>
 
               <!-- Padding/Margin -->
               <div class="b-panel__control">
-                <control-box></control-box>
+                <control-box />
               </div>
             </div>
           </div>
@@ -41,7 +32,6 @@
 <script>
 import { mapState } from 'vuex'
 import ControlFormStyles from './../controls/TheControlFormStyles'
-import ControlTypography from './../controls/TheControlTypography'
 import ControlBox from '../controls/TheControlBox'
 import IndicatorPlatform from '../IndicatorPlatform'
 
@@ -58,7 +48,6 @@ export default {
   components: {
     IndicatorPlatform,
     ControlFormStyles,
-    ControlTypography,
     ControlBox
   },
 
