@@ -345,7 +345,7 @@ export default {
             </draggable>
           </sandbox>
         </div>
-        <div class="b-grid__col-m-12 hidden-m" :class="`b-grid__col-${$sectionData.container2.width}`">
+        <div class="b-grid__col-m-12" :class="`b-grid__col-${$sectionData.container2.width}`">
           <sandbox
               container-path="$sectionData.container2"
               components-path="$sectionData.components2"
