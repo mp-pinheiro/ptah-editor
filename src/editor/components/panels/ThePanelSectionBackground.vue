@@ -319,7 +319,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.updateProps()
   },
 
@@ -363,6 +363,7 @@ export default {
 
       this.sectionOverlayColor = this.overlay.color
       this.sectionOverlayOpacity = parseInt(this.overlay.opacity * 100)
+      this.numOverlayValue = this.sectionOverlayOpacity
 
       this.bgRepeat = styles['background-repeat'] || 'no-repeat'
       this.bgSize = styles['background-size'] || 'cover'
