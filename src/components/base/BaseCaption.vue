@@ -4,12 +4,12 @@
       <slot />
     </span>
     <span
+      v-show="help !== ''"
       class="b-caption__help"
       :tooltip="help"
       tooltip-position="bottom"
     >
     <IconBase
-      v-show="help !== ''"
       width="12"
       height="12"
       name="info"
