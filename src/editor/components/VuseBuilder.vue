@@ -274,14 +274,11 @@ export default {
 
     showConfirmElementDelete (value) {
       this.toggleModal(value)
-
-      const video = document.getElementById('video_bg')
-      video.classList.toggle('_hide')
+      this.toggleHidePageBackgroundVideo()
     },
 
     isShowModalButton () {
-      const video = document.getElementById('video_bg')
-      video.classList.toggle('_hide')
+      this.toggleHidePageBackgroundVideo()
     }
   },
 
@@ -747,6 +744,12 @@ export default {
       }
 
       list.forEach(item => this.activateCheckListItem(item))
+    },
+
+    toggleHidePageBackgroundVideo () {
+      const video = document.getElementById('video_bg')
+
+      if (video) video.classList.toggle('_hide')
     }
   }
 }
