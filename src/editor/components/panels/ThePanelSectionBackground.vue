@@ -222,7 +222,7 @@ export default {
       fullScreen: false,
 
       sectionOverlayColor: '',
-      sectionOverlayOpacity: '',
+      sectionOverlayOpacity: 0,
       sectionBgUrl: '',
       bgRepeat: '',
       bgSize: '',
@@ -319,7 +319,7 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     this.updateProps()
   },
 

@@ -52,7 +52,7 @@ export default {
 
     openSettigs (item) {
       this.$Progress.start()
-      this.$router.push({ path: `/editor/${item._id}/settings` })
+      this.$router.push({ path: `/editor/${item._id}/settings/pageStyle` })
     },
 
     openWindow () {
