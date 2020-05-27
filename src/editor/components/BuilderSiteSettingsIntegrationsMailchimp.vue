@@ -2,8 +2,8 @@
   <div
     class="b-integrations-mailchimp"
     >
-    <div class="layout _top-0">
-      <div class="layout-padding">
+    <div class="b-integrations-mailchimp__inner">
+      <div class="b-integrations-mailchimp__layout-padding">
         <template v-if="integrationComplete">
           <img
             class="b-integrations-mailchimp__logo"
@@ -140,13 +140,17 @@ export default {
 
 <style lang="sass" scoped>
 .b-integrations-mailchimp
-  height: 100%
-  min-height: 60rem
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 0
 
   &__inner
     position: absolute
     top: 0
-    right: 0
+    right: 1rem
     bottom: 0
     left: 0
     z-index: 0
