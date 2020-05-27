@@ -191,10 +191,10 @@ $topBarHeight: 6rem
     position: relative
     z-index: 11
     &:hover
-      z-index: 9
+      z-index: 11
       width: 9rem
     &._show-modal
-      z-index: 9
+      z-index: 11
     &._expanded
       width: 9rem
 
@@ -209,14 +209,14 @@ $topBarHeight: 6rem
     flex-shrink: 0
     transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out
     &._show-modal
-      z-index: 9
+      z-index: 11
     &_expanded
       opacity: 1
       width: 30.5rem
       display: flex
       z-index: 11
       &-content
-        z-index: 9
+        z-index: 11
         width: 30.5rem
     &._ultra-wide
       width: 48rem
@@ -250,6 +250,7 @@ $topBarHeight: 6rem
       &:after
         display: none
     &_show-modal
+      z-index: 12
       &:after
         z-index: 4
     &_ultra-wide

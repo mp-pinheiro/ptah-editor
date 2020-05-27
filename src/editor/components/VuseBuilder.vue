@@ -72,7 +72,7 @@
         -->
 
         <video
-          v-if="section.data.mainStyle.backgroundVideo"
+          v-if="section.data.mainStyle.backgroundVideo && !showConfirmElementDelete && !isShowModalButton"
           :id="`bg-video-${ section.id }`"
           slot="video"
           autoplay="true"
@@ -274,6 +274,14 @@ export default {
 
     showConfirmElementDelete (value) {
       this.toggleModal(value)
+
+      const video = document.getElementById('video_bg')
+      video.classList.toggle('_hide')
+    },
+
+    isShowModalButton () {
+      const video = document.getElementById('video_bg')
+      video.classList.toggle('_hide')
     }
   },
 
