@@ -22,7 +22,7 @@
         <a href="#" class="b-styler__control"
            @click.stop="setPanels('Button', true)"
           >
-          <icon-base name="edit" width="12" height="15" />
+          <icon-base name="editStyle" width="12" height="15" />
         </a>
 
         <a href="#" class="b-styler__control"
@@ -36,7 +36,7 @@
         <a href="#" class="b-styler__control b-styler__control_text"
           @click.stop="setPanels('Text', true)"
           >
-          <icon-base name="edit" width="12" height="15" />
+          <icon-base name="editStyle" width="12" height="15" />
         </a>
       </template>
 
@@ -44,14 +44,14 @@
       <a href="#" class="b-styler__control"
          @click.stop="setPanels(false, true)"
          v-if="type === 'inline'">
-        <icon-base name="edit" width="12" height="15" />
+        <icon-base name="editStyle" width="12" height="15" />
       </a>
 
       <!-- Networks settings -->
       <template v-if="type === 'networks'">
         <a href="#" class="b-styler__control"
            @click.stop="setControlPanel('Networks')">
-          <icon-base name="edit" width="16" height="16" />
+          <icon-base name="editStyle" width="16" height="16" />
         </a>
       </template>
 
@@ -59,7 +59,7 @@
       <template v-if="type === 'available'">
         <a href="#" class="b-styler__control"
            @click.stop="setControlPanel('Available')">
-          <icon-base name="edit" width="16" height="16" />
+          <icon-base name="editStyle" width="16" height="16" />
         </a>
       </template>
 
@@ -67,7 +67,7 @@
       <template v-if="type === 'restrictions'">
         <a href="#" class="b-styler__control"
            @click.stop="setControlPanel('Restrictions')">
-          <icon-base name="edit" width="16" height="16" />
+          <icon-base name="editStyle" width="16" height="16" />
         </a>
       </template>
 
@@ -75,7 +75,7 @@
       <template v-if="type === 'timer'">
         <a href="#" class="b-styler__control"
            @click.stop="setControlPanel('Timer')">
-          <icon-base name="edit" width="16" height="16" />
+          <icon-base name="editStyle" width="16" height="16" />
         </a>
       </template>
 
@@ -83,11 +83,15 @@
       <template v-if="type === 'image'">
         <a href="#" class="b-styler__control"
           @click.stop="setControlPanel('Image')">
-          <icon-base name="edit" width="14" height="16" />
+          <icon-base name="editStyle" width="14" height="16" />
         </a>
         <a href="#" class="b-styler__control"
            @click.stop="toggleModalButton" v-if="!options.belongsGallery">
           <icon-base name="link" width="18" height="18" />
+        </a>
+        <a href="#" class="b-styler__control"
+           @click.stop="upload" ref="upload">
+          <icon-base name="cloudUpload" width="24" height="18" />
         </a>
       </template>
 
@@ -95,21 +99,21 @@
       <a href="#" class="b-styler__control"
          @click.stop="setControlPanel('Video')"
          v-if="type === 'video'">
-        <icon-base name="edit" width="14" height="16" />
+        <icon-base name="editStyle" width="14" height="16" />
       </a>
 
       <!-- Iframe -->
       <a href="#" class="b-styler__control"
          @click.stop="setControlPanel('Iframe')"
          v-if="type === 'iframe'">
-        <icon-base name="edit" width="14" height="16" />
+        <icon-base name="editStyle" width="14" height="16" />
       </a>
 
       <!-- Icon with text -->
       <template v-if="type === 'iconWithText'">
         <a href="#" class="b-styler__control"
            @click.stop="setPanels('IconWithText', true)">
-          <icon-base name="edit" width="12" height="15" />
+          <icon-base name="editStyle" width="12" height="15" />
         </a>
       </template>
 
@@ -117,7 +121,7 @@
       <template v-if="type === 'toggleElement'">
         <a href="#" class="b-styler__control"
            @click.stop="setPanels('ToggleElement', true)">
-          <icon-base name="edit" width="12" height="15" />
+          <icon-base name="editStyle" width="12" height="15" />
         </a>
       </template>
 
@@ -125,7 +129,7 @@
       <template v-if="type === 'form'">
         <a href="#" class="b-styler__control"
            @click.stop="setPanels('Form', true)">
-          <icon-base name="edit" width="16" height="16" />
+          <icon-base name="editStyle" width="16" height="16" />
         </a>
       </template>
 
@@ -768,6 +772,12 @@ export default {
     mouseleaveDelEl () {
       this.el.classList.remove('_hover-red')
       this.setHoverBy('element')
+    },
+
+    upload (e) {
+      e.stopPropagation()
+      let input = this.el.querySelectorAll('input')[1]
+      input.click()
     }
   }
 }
