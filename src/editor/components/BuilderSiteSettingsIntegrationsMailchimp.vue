@@ -117,7 +117,9 @@ export default {
             list = this.lists[0]
           }
 
-          this.setList(list)
+          if (list !== undefined) {
+            this.setList(list)
+          }
         })
     },
 
