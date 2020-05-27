@@ -454,6 +454,7 @@ export default {
 
     setParallax () {
       this.toggleBackgroundAttachment(this.isParallax)
+
       this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
         parallax: this.isParallax
       }))
