@@ -38,7 +38,7 @@
     </div>
 
     <div
-      v-if="!emptySections"
+      v-show="!emptySections"
       :class="{
         'is-editable': $builder.isEditing,
         'fp-scroll': currentLanding.settings.fullPageScroll === 'yes',
