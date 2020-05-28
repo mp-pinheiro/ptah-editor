@@ -707,7 +707,7 @@ export default {
           display: flex
 
     &__sample
-      height: 10rem
+      min-height: 10rem
       display: flex
       align-items: center
       padding: 1.3rem
