@@ -7,6 +7,7 @@
   @save="save">
 
   <div
+    class="b-layout"
     :style="`${fontsSetup}`"
   >
     <base-loading
@@ -14,7 +15,30 @@
       class="preloader"
     />
 
+    <IconBase
+      v-if="emptySections && !isExpanded"
+      name="share"
+      color="#00ADB6"
+      width="38"
+      height="30"
+      class="b-intro-arrow"
+    />
+
+    <div v-if="emptySections"
+      class="b-intro"
+      :class="{ '_add': isAddSectionExpanded }"
+    >
+      <div class="b-intro__image" />
+      <div class="b-intro__chapter">
+        Lets start the magic
+      </div>
+      <div class="b-intro__text">
+        Open the side bar to select a Section for your landing page
+      </div>
+    </div>
+
     <div
+      v-if="!emptySections"
       :class="{
         'is-editable': $builder.isEditing,
         'fp-scroll': currentLanding.settings.fullPageScroll === 'yes',
@@ -22,7 +46,8 @@
       }"
       id="artboard"
       class="artboard"
-      ref="artboard">
+      ref="artboard"
+    >
 
       <component
         v-if="headerSection"
@@ -91,10 +116,6 @@
         </div>
 
       </component>
-
-      <div v-if="emptySections" class="controller-intro">
-        <h3>&larr; Choose section from the menu</h3>
-      </div>
 
       <v-style>
         {{ parsedCss.content }}
@@ -206,7 +227,8 @@ export default {
       'isShowModal',
       'isShowModalButton',
       'controlPanel',
-      'sandbox'
+      'sandbox',
+      'isAddSectionExpanded'
     ]),
     ...mapState('Landing', [
       'currentStateNumber'
@@ -759,6 +781,8 @@ export default {
 @import '../../assets/sass/_colors.sass'
 @import '../../assets/sass/_variables.sass'
 
+.b-layout
+  height: 100%
 .artboard
   transform-origin: top center
   margin: 0 auto
@@ -881,36 +905,43 @@ export default {
       border-color: #0072FF
       box-shadow: 0 0 0 0.2rem rgba(#0072FF, 50%)
 
-  &-intro
-    width: 100%
-    max-width: 50rem
-    margin: auto
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    padding: 7rem 5rem
-    text-align: center
-    font-size: 3rem
-    color: #323c47
+.b-intro
+  width: 100%
+  height: 100%
+  max-width: 50rem
+  margin: auto
 
-  &-themes
-    display: flex
-    flex-direction: column
-    width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
 
-  &-theme
-    background-color: #fff
-    color: #323c47
-    border: 0.1rem solid #c1c1c1
-    margin: 0.5rem
-    padding: 2rem
-    border-radius: 0.4rem
-    width: 100%
-    cursor: pointer
-    font-size: 1.6rem
-    &:hover
-      border-color: #0072FF
+  transition: all .2s ease-out
+  &._add
+    padding-left: 29rem
+  &__image
+    width: 30rem
+    height: 27rem
+
+    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/07ac25c3-94ba-4eaf-9829-70c827395747.png)
+    background-size: cover
+  &__chapter
+    font-size: 1.8rem
+    line-height: 2.6rem
+    font-weight: 600
+    letter-spacing: -0.06em
+    color: #575A5F
+
+    margin: 3.5rem 0 1.5rem
+  &__text
+    font-size: 1.2rem
+    line-height: 2rem
+    color: #A2A5A5
+  &-arrow
+    position: absolute
+    top: 2.3rem
+    left: 2.9rem
+    transition: all .2s ease-out
 
 .b-landing-constructor__button
   width: 100%

@@ -233,7 +233,7 @@ $topBarHeight: 6rem
 
     min-height: 5rem
     transition: all .2s ease-out
-    background-color: $ligth-grey
+    background-color: #fafafa
     &:after
       content: ""
       position: absolute
