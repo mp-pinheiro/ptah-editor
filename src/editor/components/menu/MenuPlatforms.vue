@@ -2,6 +2,12 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
   data: () => ({
     inactiveColor: '#A2A5A5',
     items: [
@@ -61,6 +67,7 @@ export default {
 <template>
   <div class="b-menu-platforms b-on-boarding-tips-step-7">
     <button
+      :disabled="disabled"
       v-for="(item, index) in items"
       class="b-menu-platforms__button"
       tooltip-position="bottom"
@@ -68,14 +75,15 @@ export default {
       :tooltip="`on ${item.name}`"
       :class="[
         `b-menu-platforms__button_${item.name}`,
-        {'b-menu-platforms__button_active': device === item.name}
+        { '_active': device === item.name },
+        { '_disabled': disabled }
       ]"
       @click.prevent="selectDevice(item.name)">
       <icon-base
         :name="item.icon.name"
         :width="item.icon.width"
         :height="item.icon.height"
-        :color="device === item.name ? mainGreenColor : inactiveColor">
+        :color="device === item.name && !disabled ? mainGreenColor : inactiveColor">
       </icon-base>
     </button>
   </div>
@@ -106,10 +114,10 @@ export default {
     cursor: pointer
     & svg
       transition: 0.3s ease-in-out
-    &:hover
+    &:not(._disabled):hover
       svg
         fill: $main-green
-    &_active
+    &:not(._disabled)._active
       color: $main-green
     &_mobile
       border-right: none

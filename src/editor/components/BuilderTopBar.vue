@@ -34,6 +34,7 @@
           :class="{'b-top-bar-menu__middle-margin' : isExpanded }"
           >
           <MenuPlatforms
+            :disabled="emptySections"
             @setDevice="setDevice"
           />
         </div>
@@ -117,6 +118,10 @@ export default {
 
     homeTooltipText () {
       return this.isGuest ? 'Back to main' : this.$t('nav.backToDashbord')
+    },
+
+    emptySections () {
+      return !this.builder.sections.length
     }
   },
 
