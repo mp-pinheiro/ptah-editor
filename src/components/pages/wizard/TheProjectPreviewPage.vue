@@ -65,6 +65,7 @@ export default {
     width: 64rem
     height: calc(100vh - 9rem)
     background-size: cover
+    flex-shrink: 1
 
   &__select
     width: 11.4rem
