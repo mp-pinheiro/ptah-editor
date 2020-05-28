@@ -357,9 +357,6 @@ $main-font-size: 6rem
   user-select: none
   transition: all 200ms
 
-  &:hover .b-load
-    display: flex
-
   & span
     display: block
   .is-tablet &
@@ -412,9 +409,6 @@ $main-font-size: 6rem
   user-select: none
   transition: all 200ms
 
-  &:hover .b-load
-    display: flex
-
   & span
     display: block
   .is-tablet &
@@ -434,26 +428,6 @@ $main-font-size: 6rem
     @media only screen and (max-width: 768px)
       &
         display: none
-
-.b-load
-  position: absolute
-  top: 0
-  right: 0
-  z-index: 1000
-
-  display: none
-  justify-content: center
-  align-items: center
-  width: 2.6rem
-  height: 2.6rem
-
-  cursor: pointer
-  background: $white
-  color: $main-green
-
-  &:hover
-    color: $white
-    background: $main-green
 
 .b-social-networks
   width: auto

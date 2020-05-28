@@ -222,7 +222,7 @@ export default {
       fullScreen: false,
 
       sectionOverlayColor: '',
-      sectionOverlayOpacity: '',
+      sectionOverlayOpacity: 0,
       sectionBgUrl: '',
       bgRepeat: '',
       bgSize: '',
@@ -363,6 +363,7 @@ export default {
 
       this.sectionOverlayColor = this.overlay.color
       this.sectionOverlayOpacity = parseInt(this.overlay.opacity * 100)
+      this.numOverlayValue = this.sectionOverlayOpacity
 
       this.bgRepeat = styles['background-repeat'] || 'no-repeat'
       this.bgSize = styles['background-size'] || 'cover'
@@ -454,6 +455,7 @@ export default {
 
     setParallax () {
       this.toggleBackgroundAttachment(this.isParallax)
+
       this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
         parallax: this.isParallax
       }))

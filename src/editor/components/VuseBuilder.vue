@@ -72,7 +72,7 @@
         -->
 
         <video
-          v-if="section.data.mainStyle.backgroundVideo"
+          v-if="section.data.mainStyle.backgroundVideo && !showConfirmElementDelete && !isShowModalButton"
           :id="`bg-video-${ section.id }`"
           slot="video"
           autoplay="true"
@@ -274,6 +274,11 @@ export default {
 
     showConfirmElementDelete (value) {
       this.toggleModal(value)
+      this.toggleHidePageBackgroundVideo()
+    },
+
+    isShowModalButton () {
+      this.toggleHidePageBackgroundVideo()
     }
   },
 
@@ -739,6 +744,12 @@ export default {
       }
 
       list.forEach(item => this.activateCheckListItem(item))
+    },
+
+    toggleHidePageBackgroundVideo () {
+      const video = document.getElementById('video_bg')
+
+      if (video) video.classList.toggle('_hide')
     }
   }
 }

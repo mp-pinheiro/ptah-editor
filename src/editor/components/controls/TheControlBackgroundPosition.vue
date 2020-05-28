@@ -133,6 +133,10 @@ export default {
       'device'
     ]),
 
+    isParallax () {
+      return this.settingObjectOptions.parallax || false
+    },
+
     isMobile () {
       return this.device === 'is-mobile'
     },
@@ -194,6 +198,14 @@ export default {
       if (bgimage) {
         bgimage = bgimage[0].replace(/^url[(]/, '').replace(/[)]$/, '')
         this.bgImage = bgimage || ''
+      }
+    },
+
+    isParallax (value) {
+      if (value) {
+        this.setPosition('50%', '50%')
+        this.backgroundFill = 'cover'
+        this.changeSize()
       }
     }
   },

@@ -100,7 +100,7 @@ const routes = [
       {
         path: 'settings',
         component: BuilderModalContent,
-        redirect: { name: BuilderSiteSettingsPageStyle },
+        redirect: 'settings/pageStyle',
         children: [
           {
             path: 'pageStyle',

@@ -11,11 +11,6 @@
       {'js-element-link' : isSetUrlImage }
     ]"
   >
-
-    <i class="b-load pth-uploader" @click.stop="upload" ref="upload">
-      <icon-base name="loadTo"></icon-base>
-    </i>
-
     <uploader
       :diameter="40"
       :path="path"
@@ -120,12 +115,6 @@ export default {
       }
 
       this.file = files[0]
-    },
-
-    upload (e) {
-      e.stopPropagation()
-      let input = this.$refs.upload.nextElementSibling.querySelectorAll('input')[1]
-      input.click()
     }
   }
 }
