@@ -15,45 +15,47 @@
             </span>
           </span>
         </div>
-        <base-scroll-container
-          class="b-scrolled-content"
-          v-if="isLoaded"
-        >
-        <div class="b-setup-fonts-list">
-          <div v-for="(el, key) in setupFonts" :key="key" class="b-setup-fonts-list__item">
-            <div class="b-setup-fonts-list__sample" :style="{
-              'font-family': `${setupFonts[key]}`
-            }">
-              Lorem ipsum dolor amet, consectetur adipisicing elit.
-            </div>
-            <div class="b-setup-fonts-list__font">
-              <div class="b-setup-fonts-list__font-row">
-                <div class="b-setup-fonts-list__font-usage">{{ textFonts[key] }}</div>
-                <div class="b-setup-fonts-list__font-name">{{ setupFonts[key] }}</div>
+        <div class="b-setup-fonts-content">
+          <base-scroll-container
+            class="b-scrolled-content"
+            v-if="isLoaded"
+          >
+            <div class="b-setup-fonts-list">
+              <div v-for="(el, key) in setupFonts" :key="key" class="b-setup-fonts-list__item">
+                <div class="b-setup-fonts-list__sample" :style="{
+                  'font-family': `${setupFonts[key]}`
+                }">
+                  Lorem ipsum dolor amet, consectetur adipisicing elit.
+                </div>
+                <div class="b-setup-fonts-list__font">
+                  <div class="b-setup-fonts-list__font-row">
+                    <div class="b-setup-fonts-list__font-usage">{{ textFonts[key] }}</div>
+                    <div class="b-setup-fonts-list__font-name">{{ setupFonts[key] }}</div>
+                  </div>
+                  <span class="b-setup-fonts-list__item-buttons">
+                    <div class="b-setup-fonts-list__font-check">
+                      <icon-base
+                        name="check-mark"
+                        color="#fff"
+                        width="15"
+                        height="15"
+                      />
+                    </div>
+                    <div class="change-font" @click="changeFont(el, key)">
+                      <icon-base
+                        name="recycle"
+                        color="#fff"
+                        width="20"
+                        height="20"
+                      />
+                      <span>change my font</span>
+                    </div>
+                  </span>
+                </div>
               </div>
-              <span class="b-setup-fonts-list__item-buttons">
-                <div class="b-setup-fonts-list__font-check">
-                  <icon-base
-                    name="check-mark"
-                    color="#fff"
-                    width="15"
-                    height="15"
-                  />
-                </div>
-                <div class="change-font" @click="changeFont(el, key)">
-                  <icon-base
-                    name="recycle"
-                    color="#fff"
-                    width="20"
-                    height="20"
-                  />
-                  <span>change my font</span>
-                </div>
-              </span>
             </div>
-          </div>
+          </base-scroll-container>
         </div>
-        </base-scroll-container>
       </base-fieldset>
       <base-fieldset class="library" v-if="isChange">
 
@@ -674,6 +676,8 @@ export default {
 .b-setup-fonts
   margin: 0
   height: 100%
+
+  position: relative
   &-header
     display: flex
     justify-content: center
@@ -681,8 +685,15 @@ export default {
     padding: 1rem
     font-size: 1.8rem
     line-height: 2.2rem
+  &-content
+    position: absolute
+
+    top: 5rem
+    right: 0
+    bottom: 0
+    left: 0
   &-list
-    padding: 0
+    padding: 0 1rem 0 0
     margin: 0
     width: 100%
     display: flex
@@ -695,7 +706,7 @@ export default {
       box-sizing: border-box
       border-radius: 10px
       margin-bottom: 1.5rem
-      width: 26rem
+      width: 27rem
 
       .change-font
         display: none
