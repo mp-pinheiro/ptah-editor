@@ -47,6 +47,14 @@ export default {
     ])
   },
 
+  watch: {
+    disabled (value) {
+      if (value) {
+        this.selectDevice('is-desktop')
+      }
+    }
+  },
+
   methods: {
     ...mapActions('Sidebar', [
       'setControlPanel',
