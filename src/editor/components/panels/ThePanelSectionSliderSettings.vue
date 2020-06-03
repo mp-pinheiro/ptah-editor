@@ -11,13 +11,15 @@
         <base-scroll-container>
           <div class="layout-padding _pr-0">
             <!-- Columns settings -->
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <base-caption>
                 Slider settings
               </base-caption>
 
               <control-section-slider />
             </div>
+
+            <disabled-mobile-mode v-else />
           </div>
         </base-scroll-container>
       </div>
@@ -29,11 +31,13 @@
 import { mapState } from 'vuex'
 import ControlSectionSlider from '../controls/TheControlSectionSlider'
 import IndicatorPlatform from '../IndicatorPlatform'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 export default {
   components: {
     IndicatorPlatform,
-    ControlSectionSlider
+    ControlSectionSlider,
+    DisabledMobileMode
   },
   name: 'ThePanelSectionSliderSettings',
 

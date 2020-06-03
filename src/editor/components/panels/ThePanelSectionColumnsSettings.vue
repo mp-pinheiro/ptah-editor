@@ -11,7 +11,7 @@
         <base-scroll-container>
           <div class="layout-padding _pr-0">
             <!-- Columns settings -->
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <base-caption>
                 Columns settings
               </base-caption>
@@ -26,6 +26,8 @@
                 </div>
               </div>
             </div>
+
+            <disabled-mobile-mode v-else />
           </div>
         </base-scroll-container>
       </div>
@@ -37,6 +39,8 @@
 import ControlSectionColumns from './../controls/TheControlSectionColumns.vue'
 import ControlVerticalAlign from './../controls/TheControlVerticalAlign.vue'
 import IndicatorPlatform from '../IndicatorPlatform'
+import DisabledMobileMode from '../DisabledMobileMode'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ThePanelSectionColumnsSettings',
@@ -44,7 +48,14 @@ export default {
   components: {
     IndicatorPlatform,
     ControlSectionColumns,
-    ControlVerticalAlign
+    ControlVerticalAlign,
+    DisabledMobileMode
+  },
+
+  computed: {
+    ...mapState('Sidebar', [
+      'isMobile'
+    ])
   }
 }
 </script>

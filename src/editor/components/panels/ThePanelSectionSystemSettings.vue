@@ -13,7 +13,7 @@
         class="b-panel__tabs"
       />
       <div class="layout layout__bg" v-if="activeTab === 'settings'">
-        <base-scroll-container>
+        <base-scroll-container v-if="!isMobile">
           <div class="layout-padding">
             <div class="b-panel__control">
               <!-- System requirements -->
@@ -21,6 +21,8 @@
             </div>
           </div>
         </base-scroll-container>
+
+        <disabled-mobile-mode v-else />
       </div>
       <div class="layout layout__bg" v-if="activeTab === 'style'">
         <base-scroll-container>
@@ -37,9 +39,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import ControlSystemRequirements from './../controls/TheControlSystemRequirements.vue'
 import ControlSystemRequirementsStyle from './../controls/TheControlSystemRequirementsStyle.vue'
 import IndicatorPlatform from '../IndicatorPlatform'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 export default {
   name: 'ThePanelSectionSystemSettings',
@@ -47,7 +51,8 @@ export default {
   components: {
     IndicatorPlatform,
     ControlSystemRequirements,
-    ControlSystemRequirementsStyle
+    ControlSystemRequirementsStyle,
+    DisabledMobileMode
   },
 
   props: {
@@ -65,6 +70,12 @@ export default {
       ],
       activeTab: 'settings'
     }
+  },
+
+  computed: {
+    ...mapState('Sidebar', [
+      'isMobile'
+    ])
   }
 }
 </script>
@@ -76,4 +87,7 @@ export default {
 .b-system-requirements
   height: 100%
   position: relative
+  /deep/
+    .b-disabled-mobile-mode
+      margin: 0
 </style>

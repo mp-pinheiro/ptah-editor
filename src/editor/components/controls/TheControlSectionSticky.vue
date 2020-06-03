@@ -3,6 +3,12 @@ import { mapState, mapActions } from 'vuex'
 import { get, set, merge } from 'lodash-es'
 
 export default {
+  data () {
+    return {
+      hamPositionValue: 0
+    }
+  },
+
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
@@ -40,8 +46,15 @@ export default {
 
     toggleSticky () {
       this.sticky = !this.sticky
-    }
+    },
 
+    setHamPosition (value) {
+      this.hamPositionValue = value
+    },
+
+    setHamPositionValue (value) {
+      this.positionValue = value
+    }
   }
 }
 </script>
@@ -49,7 +62,7 @@ export default {
 <template>
   <div class="b-panel__control">
     <BaseCaption>
-      Header position
+      Menu icon position
     </BaseCaption>
     <div class="b-panel__col" v-if="!isMobile">
       <base-switcher
@@ -57,19 +70,22 @@ export default {
         label="Sticky position"
         @change="toggleSticky"/>
     </div>
-    <div class="b-panel__control" v-if="isMobile">
-      <base-range-slider v-model="hamPosition" :label="`Menu icon position`" step="1" min="0" max="64">
-        {{ hamPosition }} <span class="b-border-radius-control__px">px</span>
+    <div class="b-panel__col" v-if="isMobile">
+      <base-range-slider
+        v-model="hamPosition"
+        step="1"
+        min="0"
+        max="64"
+        @change="setHamPosition"
+      >
+        <base-number-input
+          :value="hamPositionValue"
+          :minimum="0"
+          :maximum="64"
+          unit="px"
+          @input="setHamPositionValue"
+        />
       </base-range-slider>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-control-sticky
-  &__control
-    margin: 0 0 2.1rem 1rem
-</style>

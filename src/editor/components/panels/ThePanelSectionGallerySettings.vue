@@ -6,7 +6,7 @@
 
     <IndicatorPlatform />
 
-    <div class="b-gallery-settings">
+    <div class="b-gallery-settings" v-if="!isMobile">
       <base-button-tabs
         :list="tabs"
         v-model="activeTab"
@@ -15,7 +15,7 @@
       <div class="layout layout__bg" v-if="activeTab === 'settings'">
         <base-scroll-container>
           <div class="layout-padding">
-            <div class="b-panel__control" v-if="!isCarousel && !isMobile">
+            <div class="b-panel__control" v-if="!isCarousel">
               <base-caption>
                 Gallery settings
               </base-caption>
@@ -24,7 +24,7 @@
             </div>
 
             <!-- Carousel Images Multiple Upload -->
-            <div class="b-panel__control" v-if="isCarousel && !isMobile">
+            <div class="b-panel__control" v-if="isCarousel">
               <base-caption>
                 Carousel  settings
               </base-caption>
@@ -36,7 +36,7 @@
       <div class="layout layout__bg" v-if="activeTab === 'style'">
         <base-scroll-container>
           <div class="layout-padding">
-            <div class="b-panel__control" v-if="!isCarousel && !isMobile">
+            <div class="b-panel__control" v-if="!isCarousel">
               <control-section-gallery-style />
             </div>
           </div>
@@ -45,7 +45,7 @@
       <div class="layout layout__bg" v-if="activeTab === 'images'">
         <base-scroll-container>
           <div class="layout-padding">
-            <div class="b-panel__control" v-if="isCarousel && !isMobile">
+            <div class="b-panel__control" v-if="isCarousel">
               <base-uploader
                 :value="galleryImages"
                 @change="updateGalleryImages"
@@ -57,6 +57,10 @@
         </base-scroll-container>
       </div>
     </div>
+
+    <div class="b-gallery-settings" v-else>
+      <disabled-mobile-mode />
+    </div>
   </div>
 </template>
 
@@ -67,6 +71,7 @@ import ControlCarousel from './../controls/TheControlCarousel.vue'
 import { cloneDeep } from 'lodash-es'
 import { mapActions, mapState } from 'vuex'
 import IndicatorPlatform from '../IndicatorPlatform'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 export default {
   name: 'ThePanelSectionGallerySettings',
@@ -75,7 +80,8 @@ export default {
     IndicatorPlatform,
     ControlSectionGallery,
     ControlSectionGalleryStyle,
-    ControlCarousel
+    ControlCarousel,
+    DisabledMobileMode
   },
 
   props: {

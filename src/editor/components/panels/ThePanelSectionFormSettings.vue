@@ -8,7 +8,7 @@
 
     <div class="b-panel__layout _top-9">
       <div class="layout _top-2">
-        <base-scroll-container>
+        <base-scroll-container v-if="!isMobile">
           <div class="layout-padding _pr-0">
             <!-- Form settings -->
             <div class="b-panel__control">
@@ -20,6 +20,8 @@
             </div>
           </div>
         </base-scroll-container>
+
+        <disabled-mobile-mode v-else />
       </div>
     </div>
 
@@ -30,6 +32,7 @@
 import { mapState } from 'vuex'
 import ControlSectionFormSettings from '../controls/TheControlSectionFormSettings'
 import IndicatorPlatform from '../IndicatorPlatform'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 export default {
   name: 'ThePanelSectionFormSettings',
@@ -42,7 +45,8 @@ export default {
 
   components: {
     IndicatorPlatform,
-    ControlSectionFormSettings
+    ControlSectionFormSettings,
+    DisabledMobileMode
   },
 
   computed: {
