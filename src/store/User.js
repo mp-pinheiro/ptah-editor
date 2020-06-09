@@ -1,6 +1,6 @@
 import axios from 'axios'
-import router from '@src/router'
 import api from './api'
+import { deleteCookie, getCookie, setCookie } from '@editor/util'
 
 export default {
   state: {
@@ -40,15 +40,40 @@ export default {
 
   actions: {
     /**
+     * User login
+     * @param commit
+     * @param dispatch
+     * @param data {Object} {email, password}
+     * @return {Promise.<T>|Promise<any>|Promise}
+     */
+    login ({ commit, dispatch }, data) {
+      return axios.post(`${process.env.VUE_APP_API}auth/login`, data)
+        .then((response) => {
+          commit('setUser', response.data)
+          dispatch('setToken', response.data)
+          return response.data
+        })
+    },
+
+    /**
      * Set new access token to store and localeStorage
      * @param commit
      * @param token
      */
     setToken ({ commit }, token) {
-      localStorage.setItem('token', token)
-      commit('setGuestUser', false)
+      let options
+
+      if (process.env.NODE_ENV === 'production') {
+        options = {
+          domain: `${process.env.VUE_APP_COOKIE_DOMAIN}`,
+          secure: true
+        }
+      }
+
+      setCookie('token', token.accessToken, options)
+      setCookie('refreshToken', token.refreshToken, options)
       commit('setAuth', true)
-      commit('setToken', token)
+      commit('setGuestUser', false)
     },
 
     /**
@@ -59,14 +84,11 @@ export default {
      * @returns {Promise.<T>|Promise<any>|Promise}
      */
     refreshToken ({ state, dispatch }) {
-      return axios.get(`${process.env.VUE_APP_DOMAIN}/auth1/refresh`, {
-        // this method requires only cookies for authrization
-        withCredentials: true
-      })
+      return axios.post(`${process.env.VUE_APP_API}auth/refresh`, { refreshToken: getCookie('refreshToken') })
         .then((response) => {
-          dispatch('setToken', response.data.access_token)
+          dispatch('setToken', response.data)
 
-          return response
+          return response.data
         })
         .catch((error) => {
           console.warn(error)
@@ -75,13 +97,11 @@ export default {
     },
 
     logout ({ commit }) {
-      axios.get(`${process.env.VUE_APP_DOMAIN}/auth1/logout`, {
-        withCredentials: true
-      })
-      localStorage.removeItem('token')
+      axios.get(`${process.env.VUE_APP_API}/auth/logout`)
+      deleteCookie('token')
+      deleteCookie('refreshToken')
       commit('setAuth', false)
-      commit('setToken', '')
-      router.push({ path: `/login` })
+      window.location.href = `${process.env.VUE_APP_DOMAIN}/login`
     },
 
     /**
