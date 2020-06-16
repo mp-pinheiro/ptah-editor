@@ -80,7 +80,7 @@ export default {
     uploadFileAndHandleData (event) {
       this.uploadFile(event)
         .then((response) => {
-          this.url = `${process.env.VUE_APP_S3BUCKET}${response.data.relative_path}`
+          this.url = response.cdnUrl
         })
         .catch((error) => console.warn(error))
     },
