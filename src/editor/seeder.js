@@ -437,8 +437,8 @@ const data = new Map([
       resizable: true,
       removable: true,
       styles: {
-        'width': '',
-        'height': ''
+        'width': '32px',
+        'height': '32px'
       },
       media: {
         'is-mobile': {
