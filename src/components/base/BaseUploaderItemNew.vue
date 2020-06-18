@@ -112,6 +112,7 @@
 <script>
 import RadialProgressBar from 'vue-radial-progress'
 import * as _ from 'lodash-es'
+import { getCookie } from '@editor/util'
 
 function getFormData (file) {
   let formData = new FormData()
@@ -174,14 +175,15 @@ export default {
         let xhr = new XMLHttpRequest()
 
         xhr.upload.onprogress = this.loadingProgress // --- uploading progress
-        xhr.open('POST', `${process.env.VUE_APP_S3}`)
+        xhr.open('POST', `${process.env.VUE_APP_API}upload`)
+        xhr.setRequestHeader('Authorization', `Bearer ${getCookie('token')}`)
         xhr.send(getFormData(file))
 
         xhr.onload = xhr.onerror = () => {
           if (xhr.status === 200) {
             try {
               let response = JSON.parse(xhr.response)
-              let path = `${process.env.VUE_APP_S3BUCKET}${response.relative_path}`
+              let path = response.cdnUrl
               this.clearProgress(path)
               resolve({ name: response.file, path })
             } catch (error) {

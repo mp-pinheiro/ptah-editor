@@ -38,7 +38,7 @@ Ptah can be used as a separate product or as an editor inside a CMS to empower l
 
 At this point you have a functional Ptah editor that allow you to edit a template and do most things Ptah can do. Very similar to [our provided demo](https://ptah.super.com/), but on your local machine.
 
-However, you cannot export a PWA yet, since you're not logged in. You need to set up a [thin backend](/develop/backend) and this may require quite a bit of setting up. We have a dedicated document to [Ptah backend](backend.md) for your convenience.
+However, you cannot export a PWA yet, since you're not logged in. You need to set up a ptah-api.
 
 ## Next steps
 

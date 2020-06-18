@@ -27,6 +27,8 @@ import { truncate } from '@src/filters/truncate'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
+import { getCookie, deleteCookie } from '@editor/util'
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueI18n)
@@ -50,7 +52,7 @@ Vue.use(VueScrollTo, {
   y: true
 })
 
-if (process.env.VUE_APP_GTAG !== undefined) {
+if (process.env.VUE_APP_GTAG !== undefined && process.env.NODE_ENV === 'production') {
   Vue.use(VueGtag, {
     config: { id: process.env.VUE_APP_GTAG }
   })
@@ -85,13 +87,13 @@ Vue.use(VueProgressBar, {
 
 // request interceptor
 const createSetAuthInterceptor = options => config => {
-  if (localStorage.getItem('token') !== null) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+  if (getCookie('token') !== null) {
+    config.headers.Authorization = `Bearer ${getCookie('token')}`
   }
   return config
 }
 
-const setAuthCb = createSetAuthInterceptor(localStorage.getItem('token'))
+const setAuthCb = createSetAuthInterceptor(getCookie('token'))
 axios.interceptors.request.use(setAuthCb)
 
 // response interceptor
@@ -100,7 +102,7 @@ let refreshTokenPromise
 const createUpdateAuthInterceptor = (store, http) => async error => {
   if (error.response.status === 500 &&
     (error.response.config.url.indexOf('refresh') > -1 || error.response.config.url.indexOf('logout'))) {
-    localStorage.removeItem('token')
+    deleteCookie('token')
     window.location.href = '/login'
   }
   if (error.response.data.error.code !== 401) {

@@ -1,5 +1,3 @@
-{{- $endpointBack := .Values.backend -}}
-{{- $endpointBackSvc := printf "%s-%s" .Release.Name $endpointBack.name}}
 {{- $endpointFront := .Values.frontend -}}
 {{- $endpointFrontSvc := printf "%s-%s" .Release.Name $endpointFront.name}}
 apiVersion: extensions/v1beta1
@@ -31,10 +29,4 @@ spec:
             backend:
               serviceName: {{ $endpointFrontSvc }}
               servicePort: {{ $endpointFront.service.port }}
-          {{- end }}
-          {{- range .Values.ingress.pathBackend }}
-          - path: {{ . }}
-            backend:
-              serviceName: {{ $endpointBackSvc }}
-              servicePort: {{ $endpointBack.service.port }}
           {{- end }}

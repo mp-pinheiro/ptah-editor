@@ -20,11 +20,11 @@
       </div>
 
       <div class="b-login__form">
-        <div class="b-login__already" v-if="alreadyLogged">
-          You are already authorized <br>
-          <router-link to="/dashboard">Go to dashboard</router-link>
-        </div>
-        <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
+        <form @submit.prevent="submit">
+          <div><input type="email" v-model="email" placeholder="email"></div>
+          <div><input type="password" v-model="password" placeholder="password" /></div>
+          <div><button type="submit">Submit</button></div>
+        </form>
       </div>
 
     </div>
@@ -39,49 +39,26 @@ export default {
 
   data () {
     return {
-      alreadyLogged: false
+      email: '',
+      password: ''
     }
   },
 
-  computed: {
-    frameSrc () {
-      return `${window.location.protocol}//${window.location.hostname}/auth1/login`
+  beforeRouteEnter (to, from, next) {
+    if (process.env.NODE_ENV === 'production') {
+      window.location.href = `${process.env.VUE_APP_DOMAIN}/login`
     }
-  },
-
-  created () {
-    this.listenFrame()
+    next()
   },
 
   methods: {
-    ...mapActions('User', ['setToken', 'logout']),
+    ...mapActions('User', ['login']),
 
-    listenFrame () {
-      window.addEventListener('message', (e) => {
-        let data = {}
-
-        try {
-          data = JSON.parse(e.data)
-        } catch (e) { }
-
-        if (data.access_token && data.success) {
-          this.setToken(data.access_token)
-          this.$router.push({ path: `/dashboard` })
-        }
-
-        // the client has lost the token
-        // logout & reload
-        if (data.error === 'user-already-logged') {
-          if (localStorage.getItem('token') !== null) {
-            this.alreadyLogged = true
-          } else {
-            this.logout()
-            setTimeout(() => {
-              window.location.reload()
-            }, 500)
-          }
-        }
-      })
+    submit () {
+      this.login({ email: this.email, password: this.password })
+        .then(() => {
+          this.$router.push('/dashboard')
+        })
     }
   }
 }
@@ -95,6 +72,12 @@ export default {
   display: flex
   justify-content: center
   align-items: center
+
+  &__form
+    div
+      padding: 1rem 0
+    input, button
+      padding: .5rem
 
   &__inner
     height: 50rem
