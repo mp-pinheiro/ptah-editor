@@ -1,5 +1,5 @@
-{{- $configMapName := printf "%s-%s" .Release.Name .Values.frontend.name }}
-{{ $deployment := .Values.frontend }}
+{{- $configMapName := printf "%s-%s" .Release.Name .Values.backend.name }}
+{{ $deployment := .Values.backend }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

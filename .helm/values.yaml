@@ -13,7 +13,7 @@ ingress:
 certIssuer:
   email: admin@protocol.one
 
-frontend:
+backend:
   name: nginx
   role: frontend
   image: "p1hub/storefront.protocol.one-nginx"
