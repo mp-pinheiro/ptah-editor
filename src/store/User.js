@@ -1,6 +1,6 @@
 import axios from 'axios'
 import api from './api'
-import { deleteCookie, getCookie, setCookie } from '@editor/util'
+import { getCookie, setCookie } from '@editor/util'
 
 export default {
   state: {
@@ -61,13 +61,17 @@ export default {
      * @param token
      */
     setToken ({ commit }, token) {
-      let options
+      let options = {}
 
       if (process.env.NODE_ENV === 'production') {
         options = {
           domain: `${process.env.VUE_APP_COOKIE_DOMAIN}`,
           secure: true
         }
+      }
+
+      if (token.clear) {
+        options['max-age'] = -1
       }
 
       setCookie('token', token.accessToken, options)
@@ -96,12 +100,15 @@ export default {
         })
     },
 
-    logout ({ commit }) {
-      axios.get(`${process.env.VUE_APP_API}/auth/logout`)
-      deleteCookie('token')
-      deleteCookie('refreshToken')
+    logout ({ commit, dispatch }) {
+      dispatch('setToken', {
+        accessToken: '',
+        refreshToken: '',
+        clear: true
+      })
+
       commit('setAuth', false)
-      window.location.href = `${process.env.VUE_APP_DOMAIN}/login`
+      window.location.href = '/login'
     },
 
     /**

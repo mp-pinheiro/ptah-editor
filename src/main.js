@@ -27,7 +27,7 @@ import { truncate } from '@src/filters/truncate'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-import { getCookie, deleteCookie } from '@editor/util'
+import { getCookie } from '@editor/util'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -102,7 +102,7 @@ let refreshTokenPromise
 const createUpdateAuthInterceptor = (store, http) => async error => {
   if (error.response.status === 500 &&
     (error.response.config.url.indexOf('refresh') > -1 || error.response.config.url.indexOf('logout'))) {
-    deleteCookie('token')
+    store.dispatch('User/logout')
     window.location.href = '/login'
   }
   if (error.response.data.error.code !== 401) {
