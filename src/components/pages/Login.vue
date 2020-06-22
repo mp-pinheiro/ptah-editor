@@ -45,7 +45,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.VUE_APP_PROD === '1') {
       window.location.href = `${process.env.VUE_APP_DOMAIN}/login`
     }
     next()

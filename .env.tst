@@ -1,5 +1,6 @@
-VUE_APP_API=https://ptahapi.tst.protocol.one/api/v1/
+VUE_APP_API=https://authtst-ptahapi.tst.protocol.one/api/v1/
 VUE_APP_DOMAIN=https://storefront.tst.protocol.one
-VUE_APP_S3=https://ptahs3.tst.protocol.one/upload
-VUE_APP_S3BUCKET=https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com
+VUE_APP_EDITOR_DOMAIN=https://storefront.tst.protocol.one
+VUE_APP_COOKIE_DOMAIN=storefront.tst.protocol.one
 VUE_APP_HELP=https://docs.stg.ptah.super.com/
+VUE_APP_PROD=0

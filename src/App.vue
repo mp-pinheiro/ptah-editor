@@ -1,13 +1,13 @@
 <template>
-    <div id="app">
-        <router-view v-if="!loading"></router-view>
-        <vue-progress-bar></vue-progress-bar>
-        <v-style>
-          <template>
-            {{ `@import url("https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}")` }}
-          </template>
-        </v-style>
-    </div>
+  <div id="app">
+      <router-view v-if="!loading"></router-view>
+      <vue-progress-bar></vue-progress-bar>
+      <v-style>
+        <template>
+          {{ `@import url("https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}")` }}
+        </template>
+      </v-style>
+  </div>
 </template>
 
 <script>

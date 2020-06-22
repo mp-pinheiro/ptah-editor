@@ -52,11 +52,6 @@ Vue.use(VueScrollTo, {
   y: true
 })
 
-if (process.env.VUE_APP_GTAG !== undefined && process.env.NODE_ENV === 'production') {
-  Vue.use(VueGtag, {
-    config: { id: process.env.VUE_APP_GTAG }
-  })
-}
 if (process.env.NODE_ENV === 'production') {
   Raven
     .config(process.env.PUBLIC_HOST === 'http://ptah.super.com/' ? process.env.VUE_APP_SENTRY : process.env.VUE_APP_SENTRYTST,
@@ -123,6 +118,17 @@ const updateAuthCb = createUpdateAuthInterceptor(store, axios)
 axios.interceptors.response.use(null, updateAuthCb)
 
 Vue.filter('truncate', truncate)
+
+if (process.env.VUE_APP_PROD === '1') {
+  Vue.use(VueGtag, {
+    config: {
+      id: process.env.VUE_APP_GTAG
+    },
+    linker: {
+      domains: ['ptah.pro', 'docs.ptah.pro']
+    }
+  })
+}
 
 new Vue(
   {
