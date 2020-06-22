@@ -40,15 +40,9 @@ let router = new VueRouter(
 
 router.beforeEach(
   (to, from, next) => {
-    if (!allowedPaths.includes(to.path) && (getCookie('token') === null)) {
+    if (!allowedPaths.includes(to.path) && (getCookie('token') === null || getCookie('token') === undefined)) {
       next('/login')
       return
-    } else if ( // you can go to the direct link to the demo
-      allowedPaths.includes(to.path)
-      && getCookie('token') === null
-      && localStorage.getItem('guest') === null
-    ) {
-      localStorage.setItem('guest', true)
     }
 
     next()
