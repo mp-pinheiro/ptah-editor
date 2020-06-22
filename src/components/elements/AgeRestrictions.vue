@@ -1,8 +1,10 @@
 <template>
   <div class="b-age-restrictions b-border"
-      :path="path"
-      :style="objVarsMedia"
-    >
+    :path="path"
+    :style="objVarsMedia"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+  >
     <div class="b-age-restrictions__item"
       v-for="(value, key) in restrictions" :key="key"
       v-if="restrictions[key].visible"
@@ -25,12 +27,14 @@
 <script>
 import VuseIcon from '@editor/components/VuseIcon'
 import elementMedia from '../mixins/elementMedia'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'AgeRestrictions',
 
   mixins: [
-    elementMedia
+    elementMedia,
+    elementHover
   ],
 
   components: {

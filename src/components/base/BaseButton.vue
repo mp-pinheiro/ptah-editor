@@ -15,7 +15,12 @@ export default {
           'light-gray',
           'orange',
           'transparent',
-          'white'
+          'white',
+          'main-green',
+          'main-green-transparent',
+          'main-red',
+          'yellow-transparent',
+          'main-red-transparent'
         ]
         return values.indexOf(value) !== -1
       }
@@ -92,41 +97,44 @@ export default {
 @import '../../assets/sass/_variables.sass'
 
 .b-pth-base-button
-  font-family: 'Lato', Helvetica, Arial, sans-serif
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif
   font-size: 1.6rem
-  line-height: 0
-  padding: 1.8rem 0
+  text-transform: uppercase
+  font-weight: 800
+  line-height: 1
+  padding: .8rem 0
+  letter-spacing: 0.1em
 
-  margin: 0.4rem
-  border-radius: 1000px
-  border: 0.2rem transparent solid
+  margin: 0.5rem
+  border-radius: 10px
 
   transition: all .3s cubic-bezier(.2,.85,.4,1.275)
   outline: none
+  border: none
   =active
-    background-color: $dark-blue-krayola
-    border-color: $dark-blue-krayola
+    background-color: $main-green
     color: $white
+  > svg
+    position: relative
+    top: .15rem
   &[disabled]
     cursor: not-allowed
-    background-color: rgba($white, 0.1)
-    border-color: rgba($white, 0.1)
+    background-color: rgba($black, 0.2)
     color: rgba($white, 0.1)
     > svg
       fill: rgba($white, 0.1)
   &:hover:not([disabled])
     cursor: pointer
-    border-color: $blue
   &_default
     width: 20.8rem
   &_middle
-    width: 11rem
-    font-size: 1.4rem
+    width: 18rem
+    font-size: 1.2rem
     padding: 1.4rem 0
   &_small
     font-size: 1.2rem
-    padding: 1rem 0
-    width: 8rem
+    padding: 1.2rem
+    min-width: 8.8rem
     height: auto
   &_circle
     width: 4rem
@@ -141,39 +149,114 @@ export default {
    +active
   &_gray
     background: $white
-    color: $dark-blue-krayola
-    border: 0.2rem rgba($black, 0.1) solid
-    border: 0.2rem rgba($black, 0.1) solid
+    color: $main-green
   &_gray-full
     color: rgba($black, 0.1)
-    border: 0.2rem rgba($black, 0.1) solid
     & svg
       fill: rgba($black, 0.1) !important
     &:hover,
     &:active
-      color: $dark-blue-krayola
-      border: 0.2rem $dark-blue-krayola solid
+      color: $main-green
       & svg
-        fill: $dark-blue-krayola !important
+        fill: $main-green !important
   &_light-gray
     color: $white
     background-color: rgba($white, 0.1)
-    border: 0.2rem rgba($white, 0.1) solid
   &_orange
     color: #fff
     background-color: $orange-down500
     border-radius: .4rem
     &:hover
       background-color: $orange-down200 !important
-      border-color: $orange-down200 !important
       opacity: .8
   &_transparent
-    background-color: transparent
+    color: #A2A5A5
+    font-weight: 600
+    background: none transparent
+    &:hover
+      background: rgba(#A2A5A5, 0.12)
+    &:active
+      background: rgba(#A2A5A5, 0.4)
   &_white
-    border: 0.2rem white solid
-    color: $dark-blue-krayola
+    color: $main-green
     background: $white
     box-shadow: 0px 4px 16px rgba($black, 0.25)
+
+  /* new color main green */
+  &_main-green
+    color: $white
+    background: $main-green
+    text-transform: uppercase
+    font-weight: 800
     &:hover
-      border: 0.2rem $dark-blue-krayola solid
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12)
+    &:active
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14)
+    &[disabled]
+      cursor: not-allowed
+      background-color: rgba($black, 0.12)
+      color: $white
+
+  /* new color main red */
+  &_main-red
+    color: $white
+    background: $main-red
+    text-transform: uppercase
+    font-weight: 800
+    &:hover
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12)
+    &:active
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14)
+    &[disabled]
+      cursor: not-allowed
+      background-color: rgba($black, 0.12)
+      color: $white
+  /* new color main red transparent */
+  &_main-red-transparent
+    color: $main-red
+    background: transparent
+    text-transform: uppercase
+    font-weight: 600
+    &:hover
+      background: rgba($main-red, 0.12)
+    &:active
+      background: rgba($main-red, 0.4)
+    &[disabled]
+      cursor: not-allowed
+      background-color: transparent
+      color: #A2A5A5
+  /* new color main green transparent */
+  &_main-green-transparent
+    color: $main-green
+    background: transparent
+    text-transform: uppercase
+    font-weight: 600
+    &:hover
+      background: rgba($main-green, 0.12)
+    &:active
+      background: rgba($main-green, 0.4)
+    &[disabled]
+      cursor: not-allowed
+      background-color: transparent
+      color: #A2A5A5
+  /* new color main green transparent */
+  &_yellow-transparent
+    color: $yellow
+    background: transparent
+    text-transform: uppercase
+    font-weight: 600
+    &:hover
+      background: rgba($yellow, 0.12)
+    &:active
+      background: rgba($yellow, 0.4)
+    &[disabled]
+      cursor: not-allowed
+      background-color: transparent
+      color: $yellow
+    & svg
+      fill: $yellow
+  @media only screen and (max-width: 1100px)
+    width: auto
+    padding: 1rem 1.4rem
+
 </style>

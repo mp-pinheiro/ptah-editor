@@ -1,42 +1,29 @@
 <template>
-  <transition name="slide-fade">
-    <div class="b-builder-modal"
-      @mousedown.self="closeContent"
-      >
+  <div class="b-builder-modal"
+    @mousedown.self="closeContent"
+   >
       <div
         class="b-builder-modal-content"
-        >
-        <div class="b-builder-modal-content__close"
-          @click="closeContent">
-          <icon-base
-            name="close"
-            color="#c4c4c4"
-            width="14"
-            height="14"
-            />
-        </div>
+        :class="{
+          'b-builder-modal-content--wide': isWide,
+          'b-builder-modal-content--ultrawide': isUltraWide,
+          'b-builder-modal-content--show-modal': isShowModal
+        }"
+      >
         <div class="b-builder-modal-content__padd">
           <div class="b-builder-modal-content__chapter">
-            {{ $t('menu.siteSettings') }}
+            {{ title }}
+            <div class="b-builder-modal-content__close"
+              @click="closeContent">
+              <icon-minimize />
+            </div>
           </div>
-          <div class="b-builder-modal-content__menu">
-            <!-- Site settings CONTENTS -->
-            <TabItem
-              v-for="siteSetting in siteSettingsMenu"
-              :key="siteSetting.id"
-              :isSelected="contentID === siteSetting.id"
-              @click="toggleSiteSettings(siteSetting.id)">
-              {{ $t(siteSetting.name) }}
-            </TabItem>
-          </div>
-
           <div class="b-builder-modal-content__layout">
             <router-view></router-view>
           </div>
         </div>
       </div>
     </div>
-  </transition>
 </template>
 
 <script>
@@ -60,34 +47,75 @@ export default {
   },
 
   computed: {
-    ...mapState('Sidebar', ['isAddSectionExpanded', 'siteSettingsMenu']),
+    ...mapState('Sidebar', [
+      'isAddSectionExpanded',
+      'siteSettingsMenu',
+      'isShowModal',
+      'controlPanel'
+    ]),
 
     contentID () {
       return this.$route.path.split('/')[4] || ''
+    },
+
+    title () {
+      let title = this.siteSettingsMenu.find(item => item.id === this.contentID).name
+      return this.$t(title)
+    },
+
+    isWide () {
+      return this.$route.meta.wide
+    },
+
+    isUltraWide () {
+      return this.$route.meta.ultraWide
+    }
+  },
+
+  watch: {
+    'controlPanel.name': {
+      handler (value) {
+        if (value !== '') {
+          this.$router.push(`/editor/${this.$route.params.slug}`)
+        }
+      },
+      deep: true
     }
   },
 
   mounted () {
     if (_.last(this.$route.path.split('/')) === 'settings') {
-      this.toggleSiteSettings('visualSettings')
+      this.toggleSiteSettings('pageStyle')
     }
-    this.toggleSidebar(false)
     this.setScrollbarVisible(false)
+    this.$nextTick(function () {
+      this.toggleSidebar(true)
+      this.toggleSectionsTreeMenu(false)
+    })
   },
 
   methods: {
-    ...mapActions('PageTweaks', ['setScrollbarVisible']),
-    ...mapActions('Sidebar', ['toggleAddSectionMenu', 'clearSettingObjectLight', 'toggleSidebar']),
+    ...mapActions('PageTweaks', [
+      'setScrollbarVisible'
+    ]),
+    ...mapActions('Sidebar', [
+      'toggleAddSectionMenu',
+      'clearSettingObjectLight',
+      'toggleSidebar',
+      'toggleSectionsTreeMenu'
+    ]),
 
     closeContent () {
       this.$router.push(`/editor/${this.$route.params.slug}`)
       if (this.isAddSectionExpanded) {
         this.toggleAddSectionMenu(false)
       }
+      this.toggleSidebar(false)
     },
 
     closeSettingsBar () {
       this.clearSettingObjectLight()
+      this.toggleSidebar(false)
     },
 
     toggleSiteSettings (contentID) {
@@ -108,27 +136,21 @@ export default {
 @import '../../assets/sass/_variables.sass'
 
 .b-builder-modal
+  position: relative
+  width: 100%
+  height: 100%
+
   background-color: rgba($dark-blue, 0.2)
-
-  position: fixed
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
-  z-index: 999
-  overflow: auto
-
   display: flex
-  justify-content: center
+  justify-content: flex-start
   align-items: center
 
   @media only screen and (max-height: 600px)
     &
       display: block
   &-content
-    width: 90%
-    min-height: 90%
-    min-width: 750px
+    width: 30.5rem
+    min-height: 100%
     z-index: 10
     position: relative
 
@@ -138,10 +160,13 @@ export default {
     flex-direction: column
     justify-content: stretch
 
-    @media only screen and (max-height: 600px)
-      &
-        width: 100%
-        min-height: 100%
+    &--wide
+      width: 30.5rem
+
+    &--ultrawide
+      width: 68rem
+    &--show-modal
+      z-index: 5
     &__padd
       display: flex
       flex-direction: column
@@ -153,36 +178,57 @@ export default {
       right: 0
       bottom: 0
       left: 0
-      @media only screen and (max-height: 600px)
-        &
-          position: relative
     &__chapter
-      font-size: 2rem
-      line-height: $size-step*2
-
-      height: $size-step*2
-      padding: 0 $size-step
-    &__menu
-      width: 100%
-      height: $size-step
-      padding: 0 $size-step
+      font-family: 'Open Sans', Helvetica Neue, Helvetica, Arial, sans-serif
+      font-size: 1.8rem
+      font-weight: 600
+      line-height: 1
+      text-transform: uppercase
+      text-align: center
+      letter-spacing: 0.065em
+      color: #575A5F
 
       display: flex
-      justify-content: stretch
+      align-items: center
+      justify-content: center
 
-      border-bottom: 1px solid $ligth-grey
-
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      height: 7rem
+      padding: 0.5rem 2rem 0
     &__layout
-      position: relative
-      height: 100%
+      position: absolute
+      top: 7rem
+      right: 0
+      bottom: 0
+      left: 0
     &__close
       position: absolute
-      top: $size-step
-      right: $size-step
+      top: 1.9rem
+      right: 1.7rem
       cursor: pointer
-      z-index: 10
-      &:hover svg
-        fill: $dark-blue-krayola
+
+      width: 3.6rem
+      height: 3.6rem
+
+      display: flex
+      justify-content: center
+      align-items: center
+
+      border-radius: 100%
+      transition: background .3s cubic-bezier(.2,.85,.4,1.275)
+      & svg
+        transition: fill .3s cubic-bezier(.2,.85,.4,1.275)
+      &:hover
+        cursor: pointer
+        background: rgba(#000000, 0.05)
+      &:active
+        cursor: pointer
+        background: rgba(#00ADB6, 0.05)
+        & svg
+          fill: $main-green
 
 // Animations
 .slide-fade

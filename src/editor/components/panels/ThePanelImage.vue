@@ -3,29 +3,46 @@
     <h6 class="b-panel__title">
       {{ settingObjectLabel }}
     </h6>
-    <!-- image -->
-    <div class="b-panel__control" v-if="!isMobile">
-      <control-image/>
-    </div>
 
-    <div class="b-panel__control" v-if="settingObjectOptions.hasLink && !isMobile">
-      <control-image-link/>
-    </div>
+    <IndicatorPlatform />
 
-    <div class="b-panel__control">
-      <control-box :hidePadding="true"></control-box>
-    </div>
+    <div class="b-panel__layout _top-9">
+      <div class="layout _top-2 _pr-05">
+        <base-scroll-container>
+          <div class="layout-padding">
+            <!-- image -->
+            <div class="b-panel__control" v-if="!isMobile">
+              <base-caption>
+                Image
+              </base-caption>
+              <control-image/>
+            </div>
 
-    <!-- Width / Height -->
-    <div class="b-panel__control" v-if="settingObjectOptions.resizable">
-       <control-size></control-size>
+            <div class="b-panel__control" v-if="settingObjectOptions.hasLink && !isMobile">
+              <control-image-link/>
+            </div>
+
+            <!-- Width / Height -->
+            <div class="b-panel__control" v-if="settingObjectOptions.resizable">
+              <base-caption v-if="isMobile">
+                Image size
+              </base-caption>
+              <control-size />
+            </div>
+
+            <div class="b-panel__control">
+              <control-box :hidePadding="true" />
+            </div>
+            <!-- Alt prop for image -->
+            <!-- TODO: We're still not using <img>
+            <div class="b-panel__control">
+              <control-alt/>
+            </div>
+            -->
+          </div>
+        </base-scroll-container>
+      </div>
     </div>
-    <!-- Alt prop for image -->
-    <!-- TODO: We're still not using <img>
-    <div class="b-panel__control">
-      <control-alt/>
-    </div>
-    -->
   </div>
 </template>
 
@@ -36,6 +53,7 @@ import ControlImage from './../controls/TheControlImage'
 import ControlBox from '../controls/TheControlBox'
 import ControlSize from '../controls/TheControlSize'
 import ControlImageLink from './../controls/TheControlImageLink'
+import IndicatorPlatform from '../IndicatorPlatform'
 
 export default {
   name: 'ThePanelImageSettings',
@@ -48,6 +66,7 @@ export default {
   },
 
   components: {
+    IndicatorPlatform,
     ControlAlt,
     ControlImage,
     ControlBox,
@@ -59,12 +78,8 @@ export default {
     ...mapState('Sidebar', [
       'settingObjectOptions',
       'settingObjectLabel',
-      'device'
-    ]),
-
-    isMobile () {
-      return this.device === 'is-mobile'
-    }
+      'isMobile'
+    ])
   }
 }
 </script>

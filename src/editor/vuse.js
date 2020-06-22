@@ -12,6 +12,7 @@ import {
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
+  getPoneStyles
 } from './util'
 import * as _ from 'lodash-es'
 
@@ -80,10 +81,9 @@ class Vuse {
    * Removes a section with the specified id.
    * @param {String|Number} id
    */
-  remove (section) {
-    const id = this.sections.findIndex(s => s.id === section.id)
-    this.sections.splice(id, 1)
-    section.destroy()
+  remove (sectionId) {
+    const index = this.sections.findIndex(s => s.id === sectionId)
+    this.sections.splice(index, 1)
   }
 
   /**
@@ -291,10 +291,10 @@ class Vuse {
 
     let { video, title } = this.settings
     let customCss = this.getCustomCss()
-    let script = this.getJsScript()
+    let customJS = this.getJsScript()
     let bodyStyles = this.getBodyStyles()
     let scrollSetup = getScrollSetup(this.settings.fullPageScroll)
-
+    let stylePoneList = getPoneStyles(frag)
     let fontsNameStr = getFontsNameStr(this.settings.fonts)
     let fontsLanguages = getFontsLanguages(this.settings.fonts)
     let fontsSetup = getFontsSetup(this.settings.setupFonts)
@@ -315,6 +315,7 @@ class Vuse {
             <style>
               ${customCss}
             </style>
+            ${stylePoneList}
           </head>
           <body class="b-body_preview" style="${bodyStyles}">
             ${(video) ? this.getVideoBg(video) : ''}
@@ -326,7 +327,8 @@ class Vuse {
             ${scrollSetup.setup}
             ${parallaxSetup}
             <script src="${window.location.origin + '/js/cjs.js'}"></script>
-          <body>
+            <script>${customJS}</script>
+          </body>
         </html>`
     )
   }

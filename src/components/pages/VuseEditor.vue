@@ -234,12 +234,15 @@ export default {
 
   created () {
     Vue.use(Vuse, {
-      js: './../js/cjs.js',
-      css: './../ptah_sections.css'
+      js: '/js/cjs.js',
+      css: '/ptah_sections.css'
     })
   },
 
   mounted () {
+    const body = document.querySelector('body')
+    body.classList.add('b-body_app')
+
     this.$Progress.finish()
   },
 

@@ -1,12 +1,13 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import * as _ from 'lodash-es'
+import { camelCase, merge, uniq } from 'lodash-es'
 
 export default {
   name: 'ControlBox',
 
   data () {
     return {
+      isLoading: false,
       lockMargins: false,
       lockPaddings: false,
       padding: {
@@ -20,7 +21,9 @@ export default {
         marginRight: 'margin-right',
         marginBottom: 'margin-bottom',
         marginLeft: 'margin-left'
-      }
+      },
+      max: 999,
+      min: -999
     }
   },
 
@@ -137,14 +140,6 @@ export default {
 
     tooltipMain () {
       return this.isMain ? 'tooltip' : ''
-    },
-
-    isTextTooltipChild () {
-      return this.isChild ? this.$t('s.sectionOfGroup') : ''
-    },
-
-    tooltipChild () {
-      return this.isChild ? 'tooltip' : ''
     }
   },
 
@@ -173,11 +168,17 @@ export default {
 
       s = props[prop]
 
-      if (s === undefined || this.isMain || this.isChild) {
+      if (s === undefined) {
         // get values from node
         let style = window.getComputedStyle(this.settingObjectElement)
-        s = style[_.camelCase(prop)]
+        s = style[camelCase(prop)]
       }
+
+      if (this.isMain && prop === 'padding-bottom') {
+        let style = window.getComputedStyle(this.settingObjectElement)
+        s = style[camelCase(prop)]
+      }
+
       return parseInt(s)
     },
 
@@ -199,67 +200,94 @@ export default {
 
       this.isMobile ? props = { 'media': media } : props = { 'styles': styles }
 
-      this.updateSettingOptions(_.merge({}, this.settingObjectOptions, props))
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, props))
+    },
+
+    getLock (group) {
+      let lock = false
+      let values = []
+
+      Object.keys(this[group]).forEach((key, index) => {
+        values.push(this[key])
+      })
+
+      if (uniq(values).length === 1) {
+        lock = true
+      } else {
+        lock = false
+      }
+
+      return lock
     }
+  },
+
+  mounted () {
+    setTimeout(() => {
+      this.isLoading = true
+      this.lockPaddings = this.getLock('padding')
+      this.lockMargins = this.getLock('margin')
+    }, 150)
   }
 }
 </script>
 
 <template>
 <div>
-  <base-label>
-    {{ $t('c.editIndents') }}
-  </base-label>
-  <div class="control-box">
+  <div v-if="isLoading">
+    <base-caption help="Set margins and paddings">
+      {{ $t('c.editIndents') }}
+    </base-caption>
+    <div class="control-box">
 
-    <!-- preview -->
-    <div class="control-box__element-edge">
-      <div class="control-box__content-edge">
+      <!-- preview -->
+      <div class="control-box__element-edge">
+        <div class="control-box__content-edge">
+          <IconBase name="backgroundGrey" />
+        </div>
       </div>
-    </div>
-    <div class="control-box__title-m" v-if="!hideMargin">{{ $t('c.margin') }}</div>
-    <div class="control-box__title-p" v-if="!hidePadding">{{ $t('c.padding') }}</div>
-    <!-- CONTROLS -->
-    <!-- margin -->
-    <template v-if="!hideMargin">
-      <base-number-field v-model="marginLeft" class="ctrl ctrl__m-left" pattern=""></base-number-field>
-      <base-number-field v-model="marginRight" class="ctrl ctrl__m-right"></base-number-field>
-      <base-number-field v-model="marginTop" class="ctrl ctrl__m-top"></base-number-field>
-      <base-number-field v-model="marginBottom" class="ctrl ctrl__m-bottom"
-        :disabled="isChild"
-        :[tooltipChild]="isTextTooltipChild"
-        tooltip-position="bottom"
+      <div class="control-box__title-m" v-if="!hideMargin">
+        {{ $t('c.margin') }}
+      </div>
+      <div class="control-box__title-p" v-if="!hidePadding">
+        {{ $t('c.padding') }}
+      </div>
+      <!-- CONTROLS -->
+      <!-- margin -->
+      <template v-if="!hideMargin">
+        <base-number-field v-model="marginLeft" :maximum="max" :minimum="min" class="ctrl ctrl__m-left" />
+        <base-number-field v-model="marginRight" :maximum="max" :minimum="min" class="ctrl ctrl__m-right" />
+        <base-number-field v-model="marginTop" :maximum="max" :minimum="min" class="ctrl ctrl__m-top"/>
+        <base-number-field v-model="marginBottom" :maximum="max" :minimum="min" class="ctrl ctrl__m-bottom" />
+      </template>
+      <!-- padding -->
+      <template v-if="!hidePadding">
+        <base-number-field v-model="paddingLeft" :maximum="max" :minimum="min" class="ctrl ctrl__p-left" />
+        <base-number-field v-model="paddingRight" :maximum="max" :minimum="min" class="ctrl ctrl__p-right" />
+        <base-number-field v-model="paddingTop" :maximum="max" :minimum="min" class="ctrl ctrl__p-top" />
+        <base-number-field v-model="paddingBottom" :maximum="max" :minimum="min" class="ctrl ctrl__p-bottom"
+          :disabled="isMain"
+          :[tooltipMain]="isTextTooltipMain"
+          tooltip-position="bottom"
+        />
+      </template>
+      <!-- locks -->
+      <a href="#"
+         class="control-box__lock control-box__lock--margin"
+         :class="{ 'active': lockMargins }"
+         @click.prevent="lockMargins = !lockMargins"
+         v-if="!hideMargin"
         >
-      </base-number-field>
-    </template>
-    <!-- padding -->
-    <template v-if="!hidePadding">
-      <base-number-field v-model="paddingLeft" class="ctrl ctrl__p-left"></base-number-field>
-      <base-number-field v-model="paddingRight" class="ctrl ctrl__p-right"></base-number-field>
-      <base-number-field v-model="paddingTop" class="ctrl ctrl__p-top"></base-number-field>
-      <base-number-field v-model="paddingBottom" class="ctrl ctrl__p-bottom"
-        :disabled="isMain"
-        :[tooltipMain]="isTextTooltipMain"
-        tooltip-position="bottom"
-        ></base-number-field>
-    </template>
-    <!-- locks -->
-    <a href="#"
-       class="control-box__lock control-box__lock--margin"
-       :class="{ 'active': lockMargins }"
-       @click.prevent="lockMargins = !lockMargins"
-       v-if="!hideMargin"
-      >
-      <icon-base name="lock"></icon-base>
-    </a>
-    <a href="#"
-       class="control-box__lock control-box__lock--padding"
-       :class="{ 'active': lockPaddings }"
-       @click.prevent="lockPaddings = !lockPaddings"
-       v-if="!hidePadding"
-      >
-      <icon-base name="lock"></icon-base>
-    </a>
+        <IconBase name="chain" />
+      </a>
+      <a href="#"
+         class="control-box__lock control-box__lock--padding"
+         :class="{ 'active': lockPaddings }"
+         @click.prevent="lockPaddings = !lockPaddings"
+         v-if="!hidePadding"
+        >
+        <IconBase name="chain" />
+      </a>
+    </div>
   </div>
 </div>
 </template>
@@ -273,10 +301,13 @@ export default {
 
   width: 100%
   max-width: 24rem
-  height: 21rem
+  height: 22rem
+  margin: 0 0 0 1rem
 
   box-sizing: border-box
-  border: 2px dotted #999999
+  border: 1px dashed #00ADB6
+  border-radius: 5px
+  background: rgba(88, 199, 205, 0.1)
 
   position: relative
 
@@ -284,17 +315,19 @@ export default {
   justify-content: center
   align-items: center
 
-  font-size: 1.4rem
+  font-size: 1rem
   transition: border-color 0.1s ease
   &:hover
-    border-color: $dark-blue-krayola
+    border-color: $main-green
     #{$this}__element-edge
-      border-color: $dark-blue-krayola
+      border-color: $main-green
 
   &__element-edge
-    width: 153px
-    height: 126px
-    border: 2px solid #6D6D6D
+    width: 17.4rem
+    height: 13.6rem
+    background: #FFFFFF
+    border-radius: .5rem
+    border: .2rem solid #00ADB6
 
     display: flex
     justify-content: center
@@ -302,19 +335,27 @@ export default {
     transition: border-color 0.1s ease
 
   &__content-edge
-    width: 68px
-    height: 38px
-    border: 2px dotted #999999
+    width: 9.4rem
+    height: 4.0rem
+    background: rgba(88, 199, 205, 0.3)
+    border: .1rem dashed #00ADB6
+    border-radius: .5rem
+
+    display: flex
+    justify-content: center
+    align-items: center
+    & svg
+      fill: $main-green
 
   &__title-m
     position: absolute
-    top: 4px
-    left: 5px
+    top: .7rem
+    left: 1.5rem
 
   &__title-p
     position: absolute
-    top: 45px
-    left: 45px
+    top: 5.2rem
+    left: 6rem
 
   &__lock
     position: absolute
@@ -322,52 +363,59 @@ export default {
     text-decoration: none
     transition: color 0.1s ease
     &.active
-      color: $dark-blue-krayola
+      color: $main-green
+      &:hover
+        color: $main-green
 
     &:hover
-      color: rgba($dark-blue-krayola, 0.8)
+      color: rgba(#000, 0.8)
 
     &--margin
-      right: 8px
-      bottom: 8px
+      right: .8rem
+      bottom: .8rem
 
     &--padding
-      right: 49px
-      bottom: 52px
+      right: 4.9rem
+      bottom: 5.2rem
 
 .ctrl
   position: absolute
   width: 2.6rem
 
+  /deep/
+    input
+      font-size: 1.2rem
+      text-align: center
+
   &__m-left
-    left: 7px
-    top: calc(50% - 13px)
+    left: .5rem
+    top: calc(50% - 1.3rem)
 
   &__m-right
-    right: 7px
-    top: calc(50% - 13px)
+    right: .5rem
+    top: calc(50% - 1.3rem)
 
   &__m-top
-    right: calc(50% - 13px)
-    top: 4px
+    right: calc(50% - 1.3rem)
+    top: 1.1rem
 
   &__m-bottom
-    right: calc(50% - 13px)
-    bottom: 4px
+    right: calc(50% - 1.3rem)
+    bottom: 1.6rem
 
   &__p-left
-    top: calc(50% - 13px)
-    left: 49px
+    top: calc(50% - 1.3rem)
+    left: 4rem
 
   &__p-right
-    top: calc(50% - 13px)
-    right: 47px
+    top: calc(50% - 1.3rem)
+    right: 4rem
 
   &__p-top
-    right: calc(50% - 13px)
-    top: 51px
+    right: calc(50% - 1.3rem)
+    top: 5.8rem
 
   &__p-bottom
-    right: calc(50% - 13px)
-    bottom: 52px
+    right: calc(50% - 1.3rem)
+    bottom: 6.3rem
 </style>

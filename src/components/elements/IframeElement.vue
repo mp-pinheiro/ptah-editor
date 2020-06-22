@@ -2,7 +2,9 @@
 <div class="b-iframe"
   :path="path"
   :style="[objVarsMedia, objVarsResize]"
-  >
+  @mouseleave="mouseleave"
+  @mouseover.stop="mouseover"
+>
   <div class="b-iframe__padd">
     <iframe
       frameborder="0"
@@ -33,13 +35,15 @@
 <script>
 import elementMedia from '../mixins/elementMedia'
 import elementResize from '../mixins/elementResize'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'IframeElement',
 
   mixins: [
     elementMedia,
-    elementResize
+    elementResize,
+    elementHover
   ],
 
   props: {

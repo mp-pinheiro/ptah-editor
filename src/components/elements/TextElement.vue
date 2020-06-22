@@ -2,7 +2,9 @@
   <div class="b-text is-editable b-border" ref="text" @click.stop.stop=""
     :path="path"
     :style="[objVarsMedia, objVarsTypo]"
-    >
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+  >
 
     <slot v-if="!isActive"></slot>
 
@@ -128,12 +130,14 @@
 import { EditorContent, EditorMenuBar } from 'tiptap'
 import elementMedia from '../mixins/elementMedia'
 import textElement from '../mixins/textElement'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'TextElement',
 
   mixins: [
     elementMedia,
+    elementHover,
     textElement
   ],
 

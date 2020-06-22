@@ -19,7 +19,7 @@ html
   background: $black !important
 
 body
-  font-family: Lato, Helvetica, Arial, sans-serif
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif
   font-size: 1.6rem
   line-height: 1
   font-weight: 400
@@ -35,12 +35,18 @@ body
   -moz-osx-font-smoothing: antialiased !important
   font-smooth: always
 .b-body
+  min-width: 980px
+  min-height: 600px
+  overflow: auto
+  overflow-y: hidden
   &_preview,
   &_export
     background-color: $white
     position: relative
     overflow: auto
     overflow-x: hidden
+  &_app
+    overflow: hidden
 
 .b-page
   min-height: 100vh
@@ -74,6 +80,8 @@ body
   width: 120%
   margin: 0 0 0 -60%
   height: auto
+  &._hide
+    display: none
   .is-tablet &,
   .is-mobile &
     position: absolute
@@ -147,4 +155,4 @@ body
 
 .drag-start
   .b-logo, .b-image, .b-gallery-item
-    border: .2rem dotted $dark-blue-krayola !important
+    border: .2rem dotted $main-green !important

@@ -106,6 +106,10 @@ export default {
     ...mapMutations('Landing', ['textEditor']),
 
     save: throttle(function () {
+      if (this.settingObjectElement !== this.currentEl) {
+        return
+      }
+
       this.updateSettingOptions(merge({}, this.settingObjectOptions, set({}, this.savePath, this.text)))
     }, 100),
 

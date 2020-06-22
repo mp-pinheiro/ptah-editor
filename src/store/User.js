@@ -7,7 +7,7 @@ export default {
     access_token: '',
     isAuth: false,
     mcLists: [], // user mailchimp lists,
-    user: null,
+    user: {},
     guest: false
   },
 

@@ -2,18 +2,24 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
   data: () => ({
-    activeColor: '#2275D7',
-    inactiveColor: 'rgba(51, 51, 51, 0.3)',
+    inactiveColor: '#A2A5A5',
     items: [
       {
         name: 'is-mobile',
         icon: {
           name: 'platformMobile',
-          width: 10,
-          height: 17
+          width: 25,
+          height: 25
         }
       },
+      /*
       {
         name: 'is-laptop',
         icon: {
@@ -22,12 +28,13 @@ export default {
           height: 13.7
         }
       },
+      */
       {
         name: 'is-desktop',
         icon: {
           name: 'platformDesktop',
-          width: 16,
-          height: 12.5
+          width: 28,
+          height: 25
         }
       }
     ]
@@ -35,28 +42,40 @@ export default {
 
   computed: {
     ...mapState('Sidebar', [
-      'device'
+      'device',
+      'mainGreenColor'
     ])
+  },
+
+  watch: {
+    disabled (value) {
+      if (value) {
+        this.selectDevice('is-desktop')
+      }
+    }
   },
 
   methods: {
     ...mapActions('Sidebar', [
       'setControlPanel',
-      'setDevice'
+      'setDevice',
+      'toggleSidebar',
+      'toggleSectionsTreeMenu'
     ]),
 
     selectDevice (type) {
       this.setControlPanel(false)
+      this.toggleSectionsTreeMenu(true)
       this.setDevice(type)
     }
   }
-
 }
 </script>
 
 <template>
-  <div class="b-menu-platforms">
+  <div class="b-menu-platforms b-on-boarding-tips-step-7">
     <button
+      :disabled="disabled"
       v-for="(item, index) in items"
       class="b-menu-platforms__button"
       tooltip-position="bottom"
@@ -64,14 +83,15 @@ export default {
       :tooltip="`on ${item.name}`"
       :class="[
         `b-menu-platforms__button_${item.name}`,
-        {'b-menu-platforms__button_active': device === item.name}
+        { '_active': device === item.name },
+        { '_disabled': disabled }
       ]"
       @click.prevent="selectDevice(item.name)">
       <icon-base
         :name="item.icon.name"
         :width="item.icon.width"
         :height="item.icon.height"
-        :color="device === item.name ? activeColor : inactiveColor">
+        :color="device === item.name && !disabled ? mainGreenColor : inactiveColor">
       </icon-base>
     </button>
   </div>
@@ -100,16 +120,22 @@ export default {
 
     outline: none
     cursor: pointer
-    &:hover
+    & svg
+      transition: 0.3s ease-in-out
+    &:not(._disabled):hover
       svg
-        fill: $dark-blue-krayola
-    &_active
-      color: $dark-blue-krayola
-      opacity: 1
+        fill: $main-green
+    &:not(._disabled)._active
+      color: $main-green
     &_mobile
       border-right: none
-    &_laptop
+    &_laptop,
     &_desktop
       border-left: none
+    @media only screen and (max-width: 1280px)
+      &
+        width: 2rem
+        height: 2rem
+        margin: 0 .5rem
 
 </style>

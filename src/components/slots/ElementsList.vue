@@ -1,16 +1,15 @@
 <template>
   <div class="b-elements is-editable">
     <aside class="b-elements__list ptah-control">
-      <div class="b-elements__header">
-        {{ $t('c.elementsLibrary') }}
-        <div class="b-elements__close" @click="hideList">
-          <icon-base name="close" width="14" height="14"/>
-        </div>
-      </div>
       <ul>
-        <li v-for="(el, name) in elSrc" :key="name" @click.prevent="addEl(name)" class="b-elements__button">
+        <li
+          v-for="(el, name) in elSrc"
+          :key="name"
+          @click.prevent="addEl(name)"
+          class="b-elements__button"
+        >
           <div class="b-elements__icon">
-            <icon-base :name="el.ico" :width="el.width" />
+            <icon-base :name="el.ico" width="24px" />
           </div>
           <div class="b-elements__title">
             <div class="b-elements__title--name">
@@ -65,13 +64,13 @@ export default {
           width: 20
         },
         platforms: {
-          name: 'Available platforms',
+          name: 'Platforms',
           descr: this.$t('el.platformsDescr'),
           ico: 'elPlatforms',
           width: 22
         },
         restrictions: {
-          name: 'Age restrictions',
+          name: 'Age restriction',
           descr: this.$t('el.ageDescr'),
           ico: 'elAge',
           width: 20
@@ -83,7 +82,7 @@ export default {
           width: 17
         },
         icontext: {
-          name: 'Icon with text',
+          name: 'Icon & text',
           descr: this.$t('el.icontextDescr'),
           ico: 'elIconText',
           width: 19
@@ -111,11 +110,16 @@ export default {
   },
 
   computed: {
+    ...mapState(['currentLanding']),
     ...mapState('Sidebar', [
       'settingObjectOptions',
       'settingObjectSection',
       'sandbox']
     ),
+
+    colors () {
+      return this.currentLanding.settings.colors
+    },
 
     components: {
       set (value) {
@@ -132,9 +136,11 @@ export default {
     this.elements = Seeder.seed(this.elements)
   },
   methods: {
+    ...mapActions(['activateCheckListItem']),
     ...mapActions('Sidebar', ['clearSettingObjectLight', 'setControlPanel']),
 
     addElement (element) {
+      this.activateCheckListItem('element')
       element.element.removable = true
       element.key = randomPoneId()
       this.components = [...this.components, element]
@@ -185,13 +191,37 @@ export default {
     },
 
     addEl (name) {
-      const el = _.merge({}, Seeder.seed(this.elements[name]))
+      const el = _.merge({}, Seeder.seed(this.elements[name]), {
+        element: {
+          styles: this.fillColors(name)
+        }
+      })
       this.addElement(el)
     },
 
     hideList () {
       this.setControlPanel(false)
       document.removeEventListener('click', this.hideList, true)
+    },
+
+    fillColors (name) {
+      let colors = {}
+
+      if ((name === 'text' || name === 'icontext') && this.colors.text !== '') {
+        colors.color = this.colors.text
+      }
+
+      if (name === 'button') {
+        if (this.colors.button) {
+          colors['background-color'] = this.colors.button
+        }
+
+        if (this.colors.buttonText) {
+          colors['color'] = this.colors.buttonText
+        }
+      }
+
+      return colors
     }
   }
 }
@@ -199,56 +229,25 @@ export default {
 
 <style lang="sass">
 .b-elements
-  &__show-list
-    border: none
-    background: #D8D8D8
-    width: 3.5rem
-    height: 3.5rem
-    display: flex
-    justify-content: center
-    align-items: center
-    padding: 0.5rem
-    margin-top: .1rem
-    cursor: pointer
-    color: #474747
-
-    &:hover, &.active
-      background: #fff
-      color: #355CCC
-
-    img
-      width: 2rem
-      height: 2rem
   &__list
-    position: absolute
-    top: 0
-    right: 0
-    left: 0
-    bottom: 0
-    background: $white
-    overflow: auto
-    overflow-x: hidden
-    z-index: 20
     ul
       margin: 0
       padding: 0
       list-style: none
-  &__header
-    padding: 1.7rem 3.1rem
-    color: $black
-    font-weight: normal
-    font-size: 2rem
-    line-height: 2.4rem
-    letter-spacing: -0.02em
-    text-align: left
-    position: relative
 
   &__button
     display: flex
+    align-items: center
+    justify-content: flex-start
+
     background: transparent
-    padding: .3rem 3rem 0 2rem
+
+    padding: .6rem 2.5rem .6rem 2rem
+    margin: .5rem 0
     width: 100%
-    height: 6.6rem
+    max-width: 27rem
+    min-height: 5.5rem
+
     text-align: left
     box-sizing: border-box
     cursor: pointer
@@ -256,29 +255,35 @@ export default {
       fill: $grey-middle
 
     &:hover
-      background-color: rgba(116, 169, 230, 0.25)
+      background-color: rgba($main-green, 0.25)
       svg
         fill: $dark-grey
+      .b-elements__title--name,
+      .b-elements__title--description
+        color: #575A5F
   &__title
+    padding-left: 2.4rem
     &--name
-      font-size: 1.6rem
+      font-size: 1.4rem
       line-height: 1.9rem
-      letter-spacing: -0.02em
-      color: #4F4F4F
+      letter-spacing: 0.065em
+      color: #A2A5A5
       padding-bottom: .6rem
+      text-transform: uppercase
+      font-weight: 600
 
     &--description
-      font-size: 1.4rem
-      line-height: 1.7rem
-      color: $grey-middle
+      font-size: 1.1rem
+      line-height: 1.4rem
+      color: #A2A5A5
 
   &__icon
-    width: 4.6rem
+    width: 3.2rem
+    height: 3.2rem
+
     display: flex
     justify-content: center
-    flex-shrink: 0
-    padding-top: .5rem
-
+    align-items: center
   &__close
     color: $grey-middle
     position: absolute

@@ -1,0 +1,61 @@
+﻿.b-palette
+  height: 100%
+  position: relative
+
+  &__row
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+
+    margin: 0 0 3rem
+    padding: 0
+
+  &__col
+    width: 100%
+    max-width: 24rem
+    padding: 1rem 0 1rem 1.8rem
+
+  &__generator-text
+    font-size: 1.2rem
+    line-height: 1.4
+    color: #575A5F
+    font-weight: 600
+
+  &__controls
+    display: flex
+    justify-content: center
+    margin-top: 1.5rem
+
+  &__loaded
+    justify-content: space-between
+    margin-top: 0
+
+    & > *
+      width: 49%
+  /deep/
+    .loader-container
+      width: 2rem
+      height: 2rem
+    .b-base-upload-button
+      width: 8rem
+    .b-pth-base-button
+      text-transform: none
+      font-size: 1.1rem
+      white-space: nowrap
+
+.b-gen-palette
+  &__list
+    display: flex
+    justify-content: center
+
+    margin: 0 0 .8rem 0
+    padding: 0
+
+    &-item
+      list-style: none
+      width: 2rem
+      height: 2rem
+      border-radius: 100%
+      margin: 4px
+      &_palette
+        margin: .2rem 1.4rem .4rem .4rem

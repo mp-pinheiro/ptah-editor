@@ -1,11 +1,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import * as _ from 'lodash-es'
+import { get, set, merge } from 'lodash-es'
 
 export default {
   data () {
     return {
-
+      hamPositionValue: 0
     }
   },
 
@@ -17,7 +17,7 @@ export default {
 
     sticky: {
       get: function () {
-        return _.get(this.settingObjectOptions, 'sticky') || false
+        return get(this.settingObjectOptions, 'sticky') || false
       },
       set: function (newValue) {
         this.setPosition('sticky', newValue)
@@ -26,7 +26,7 @@ export default {
 
     hamPosition: {
       get: function () {
-        return _.get(this.settingObjectOptions, 'hamPosition') || 12
+        return get(this.settingObjectOptions, 'hamPosition') || 12
       },
       set: function (newValue) {
         this.setPosition('hamPosition', newValue)
@@ -40,39 +40,52 @@ export default {
     ]),
 
     setPosition (path, value) {
-      let obj = _.set({}, path, value)
-      this.updateSettingOptions(_.merge({}, this.settingObjectOptions, obj))
+      let obj = set({}, path, value)
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, obj))
     },
 
     toggleSticky () {
       this.sticky = !this.sticky
-    }
+    },
 
+    setHamPosition (value) {
+      this.hamPositionValue = value
+    },
+
+    setHamPositionValue (value) {
+      this.positionValue = value
+    }
   }
 }
 </script>
 
 <template>
-  <div class="b-control-sticky">
-    <div class="b-control-sticky__control" v-if="!isMobile">
+  <div class="b-panel__control">
+    <BaseCaption>
+      Menu icon position
+    </BaseCaption>
+    <div class="b-panel__col" v-if="!isMobile">
       <base-switcher
         :value="sticky"
         label="Sticky position"
         @change="toggleSticky"/>
     </div>
-    <div class="b-control-sticky__control" v-if="isMobile">
-      <base-range-slider v-model="hamPosition" :label="`Menu icon position`" step="1" min="0" max="64">
-        {{ hamPosition }} <span class="b-border-radius-control__px">px</span>
+    <div class="b-panel__col" v-if="isMobile">
+      <base-range-slider
+        v-model="hamPosition"
+        step="1"
+        min="0"
+        max="64"
+        @change="setHamPosition"
+      >
+        <base-number-input
+          :value="hamPositionValue"
+          :minimum="0"
+          :maximum="64"
+          unit="px"
+          @input="setHamPositionValue"
+        />
       </base-range-slider>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-control-sticky
-  &__control
-    margin-top: $size-step/2
-</style>

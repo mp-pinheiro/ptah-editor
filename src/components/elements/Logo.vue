@@ -2,15 +2,15 @@
   <div class="b-logo is-editable"
     @dragover.prevent
     @drop="onDrop"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
     :data-href="link.href"
-    :class="{'js-element-link' : isSetUrlImage }"
+    :class="[
+      {'js-element-link' : isSetUrlImage }
+    ]"
     :path="path"
     :style="[objVarsMedia, objVarsResize]"
     >
-
-    <i class="b-load pth-uploader" @click.stop="upload" ref="upload">
-      <icon-base name="loadTo"></icon-base>
-    </i>
 
     <uploader
       :diameter="40"
@@ -42,13 +42,15 @@
 import Uploader from '@editor/plugins/Uploader.vue'
 import elementMedia from '../mixins/elementMedia'
 import elementResize from '../mixins/elementResize'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'Logo',
 
   mixins: [
     elementMedia,
-    elementResize
+    elementResize,
+    elementHover
   ],
 
   components: {
@@ -110,12 +112,6 @@ export default {
       }
 
       this.file = files[0]
-    },
-
-    upload (e) {
-      e.stopPropagation()
-      let input = this.$refs.upload.nextElementSibling.querySelectorAll('input')[1]
-      input.click()
     }
   }
 }

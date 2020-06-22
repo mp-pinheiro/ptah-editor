@@ -1,57 +1,46 @@
 <template>
   <div class="b-builder-sidebar" :class="{'b-builder-sidebar_expanded': isExpanded}">
-    <div class="b-builder-sidebar__content" id="sections_contents">
-      <!-- Sections -->
-      <div class="b-builder-sidebar__header">
-        <span>
-          {{ $t('menu.sections') }}
-        </span>
+    <!-- Show Sections panel -->
+    <PanelSectionsTree
+      v-show="isExpanded && isSectionsTreeExpanded && !isShowSettingsPage"
+      :builder="builder"
+      :increment="increment"
+    />
 
-        <span class="b-builder-sidebar__icon-add"
-          slot="icon"
-          :tooltip="$t('nav.addSection')"
-          tooltip-position="bottom"
-          @click.stop="showAddSectionBar">
-           <IconBase
-             name="plus"
-             strokeColor="transparent"
-           />
-        </span>
-
-        <span class="b-builder-sidebar__icon-close" @click="toggleSidebarSection">
-          <icon-base
-            name="close"
-            width="14"
-            height="14"
-          />
-        </span>
-      </div>
-      <div class="b-builder-sidebar__content-outer">
-      <menu-tree
-        v-if="!controlPanel.expanded && isExpanded"
-        :sections="this.builder.sections"
+    <!-- Shows Control panel -->
+    <div
+      v-show="controlPanel.expanded"
+      class="b-builder-sidebar-settings"
+    >
+      <ControlPanel
         :builder="builder"
-        :inc="increment"/>
-      </div>
+      />
     </div>
 
-    <transition name="slide-fade">
-      <div v-if="controlPanel.expanded" class="b-builder-sidebar-settings">
-        <control-panel
-          :builder="builder" />
-      </div>
-    </transition>
+    <!-- Showed Add Section panel -->
+    <div
+      v-show="isExpanded && isAddSectionExpanded"
+      class="b-builder-sidebar-add-section"
+    >
+      <BuilderAddSectionBar
+        v-if="isAddSectionExpanded"
+        :builder="builder"
+        :title="$t('nav.addSection')"
+        @add="onAddSection"
+        @requestClose="closeAddSectionBar">
+      </BuilderAddSectionBar>
+    </div>
 
-    <transition name="slide-fade">
-      <div class="b-builder-sidebar-add-section" v-if="isExpanded && isAddSectionExpanded">
-        <BuilderAddSectionBar
-          :builder="builder"
-          :title="$t('nav.addSection')"
-          @add="onAddSection"
-          @requestClose="closeAddSectionBar">
-        </BuilderAddSectionBar>
-      </div>
-    </transition>
+    <!-- Show Progress panel -->
+    <div class="b-builder-sidebar__content" v-if="isExpanded && isProgressPanelExpanded">
+      <PanelProgress />
+    </div>
+
+    <!-- Show Page settings panel -->
+    <router-view
+      v-show="isShowSettingsPage"
+      :builder="builder"
+    />
 
   </div>
 </template>
@@ -65,6 +54,8 @@ import BuilderAddSectionBar from './BuilderAddSectionBar'
 import { mapActions, mapState } from 'vuex'
 import ControlPanel from './panels/TheControlPanel'
 import MenuTree from './MenuTree'
+import PanelSectionsTree from './panels/ThePanelSectionsTree.vue'
+import PanelProgress from './panels/ThePanelProgress.vue'
 
 export default {
   name: 'BuilderSidebar',
@@ -76,7 +67,9 @@ export default {
     MenuSubitem,
     BuilderSettingsBar,
     BuilderSettingsSlots,
-    BuilderAddSectionBar
+    BuilderAddSectionBar,
+    PanelSectionsTree,
+    PanelProgress
   },
 
   props: {
@@ -89,12 +82,19 @@ export default {
     }
   },
 
+  data () {
+    return {
+      increment: 0
+    }
+  },
+
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
       'settingObjectSection',
-      'siteSettingsMenu',
       'isAddSectionExpanded',
+      'isSectionsTreeExpanded',
+      'isProgressPanelExpanded',
       'settingObjectType',
       'sectionsGroups',
       'sandbox',
@@ -113,15 +113,8 @@ export default {
       return this.builder.sections.filter(section => !section.isHeader)
     },
 
-    isSlotsSettings () {
-      return this.settingObjectType !== 'section'
-    }
-  },
-
-  data () {
-    return {
-      isSettingsOpenedisSettingsOpened: false,
-      increment: 0
+    isShowSettingsPage () {
+      return this.$route.path.split('/').indexOf('settings') > 0
     }
   },
 
@@ -135,23 +128,18 @@ export default {
       if (value) {
         // TODO: toggle others
       }
-    },
-
-    controlPanel () {
-      setTimeout(() => {
-        this.increment = this.increment + 1
-      }, 100)
     }
   },
 
   methods: {
-
     ...mapActions('Sidebar', [
       'setSettingSection',
       'clearSettingObject',
       'clearSettingObjectLight',
       'toggleSidebar',
       'toggleAddSectionMenu',
+      'toggleSectionsTreeMenu',
+      'toggleProgressPanelExpanded',
       'setControlPanel',
       'setElement'
     ]),
@@ -162,6 +150,10 @@ export default {
 
     showAddSectionBar () {
       this.toggleAddSectionMenu()
+    },
+
+    showSectionsTreeBar () {
+      this.toggleSectionsTreeMenu()
     },
 
     async onAddSection (section) {
@@ -190,6 +182,7 @@ export default {
 
     closeAddSectionBar () {
       this.toggleAddSectionMenu(false)
+      this.toggleSectionsTreeMenu(true)
     }
   }
 }
@@ -202,34 +195,22 @@ export default {
 $top-panel-height: 7.2rem
 
 .b-builder-sidebar
-  width: $size-step*9
-  background: $white
-  position: fixed
-  top: 0
-  left: 0
+  position: relative
   opacity: 0
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25)
-  color: $black
-  transition: left 0.3s ease-in-out
-  height: 100vh
+
   display: flex
   flex-direction: column
 
+  height: auto
+  width: 0
+
+  background: $white
+  color: $black
+  transition: width, opacity 0.3s cubic-bezier(.2,.85,.4,1.275)
   &_expanded
     opacity: 1
-
-  &__header
-    position: relative
-
-    display: flex
-    align-items: center
-    justify-content: flex-start
-
     width: 100%
-    padding: 1.7rem 3.1rem
-    font-size: 2rem
-    line-height: 1.2
-    letter-spacing: -0.02em
+
   &__content
     height: 100%
 
@@ -241,62 +222,38 @@ $top-panel-height: 7.2rem
     &-inner
       padding: 0
     /deep/
-      .vb.vb-invisible .vb-content
-        padding-right: 0 !important
-        overflow: hidden !important
-        width: 100% !important
+      .vb.vb-invisible .vb-content,
       .vb.vb-visible .vb-content
-        padding-right: 0 !important
-        width: calc(100% + 17px) !important
+        // padding-right: 0 !important
+        // width: 100% !important
     &-outer
-      height: 90vh
-      padding: 0 0 0 0
+      height: 100%
+      padding: 0
 
   &-settings
     position: absolute
-    right: -24.8rem
-    top: 0.8rem
-    bottom: 0.8rem
+    left: 0
+    top: 0
+    bottom: 0
+
     display: flex
     flex-direction: column
     flex-grow: 1
-    box-shadow: 0px 0.4rem 1rem rgba($black, 0.35)
+
+    transition: display .3s cubic-bezier(.2,.85,.4,1.275)
     &.slots-settings
       flex-direction: row
       .slots-settings__list
         margin-right: .8rem
 
-  &__icon-add
-    width: $size-step/2
-    height: $size-step/2
-    color: $grey
-
-    display: flex
-    align-items: center
-    justify-content: center
-
-    border-radius: 100%
-    cursor: pointer
-    margin: 1px 0 0 11px
-    &:hover
-      color: $dark-blue-krayola
-
-  &__icon-close
-    color: $grey
-    position: absolute
-    top: 18px
-    right: 17px
-    cursor: pointer
-    &:hover
-      color: $dark-blue-krayola
-
-  &-settings,
   &-add-section
-    width: $size-step*9
+    width: 100%
     position: absolute
-    left: 0
+    left: 30.5rem
     top: 0
     bottom: 0
+    z-index: 20
+
     display: flex
 
 // Animations down here

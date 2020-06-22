@@ -1,13 +1,21 @@
 <template>
   <!-- @click.stop was here. this breaks down the color picker -->
-  <div class="b-control-panel">
-    <span class="b-control-panel__close" @click="close()">
-      <icon-base width="14" height="14" name="close"/>
+  <div class="b-control-panel" v-show="controlPanel.name">
+    <span class="b-control-panel__close" @click="close">
+      <IconBase
+        name="close"
+        width="13"
+        height="12"
+        color="#a2a5a5"
+      />
     </span>
-    <div class="b-control-panel__mobile" v-if="isMobile">
-      Settings for mobile devices
-    </div>
-    <component :is="panelName" :builder="builder"/>
+
+    <component
+      class="b-control-panel__c"
+      v-if="controlPanel.name"
+      :is="panelName"
+      :builder="builder"
+    />
   </div>
 </template>
 
@@ -23,17 +31,13 @@ import ThePanelNetworks from './ThePanelNetworks'
 import ThePanelText from './ThePanelText'
 import ThePanelTimer from './ThePanelTimerSettings'
 import ThePanelImage from './ThePanelImage'
-import ThePanelImageLink from './ThePanelImageLink'
 import ThePanelAvailable from './ThePanelAvailable'
 import ThePanelRestrictions from './ThePanelRestrictions'
-import ThePanelInline from './ThePanelInlineEdit'
 import ThePanelIconWithText from './ThePanelIconWithText'
 import ThePanelSectionBackground from './ThePanelSectionBackground'
 import ThePanelSlotBackground from './ThePanelSlotBackground'
 import ThePanelSectionSystemSettings from './ThePanelSectionSystemSettings'
-import ThePanelSectionSystemStyle from './ThePanelSectionSystemStyle'
 import ThePanelSectionGallerySettings from './ThePanelSectionGallerySettings'
-import ThePanelSectionGalleryStyle from './ThePanelSectionGalleryStyle'
 import ThePanelVideo from './ThePanelVideo'
 import ThePanelIframe from './ThePanelIframe'
 import ThePanelForm from './ThePanelForm'
@@ -41,6 +45,8 @@ import ThePanelSectionProductsColumnsSettings from './ThePanelSectionProductsCol
 import ThePanelSectionColumnsSettings from './ThePanelSectionColumnsSettings'
 import ThePanelToggleElement from './ThePanelToggleElement'
 import ThePanelGroupBackground from './ThePanelGroupBackground'
+import ThePanelSectionSliderSettings from './ThePanelSectionSliderSettings'
+import ThePanelSectionFormSettings from './ThePanelSectionFormSettings'
 
 export default {
   name: 'TheControlPanel',
@@ -55,8 +61,7 @@ export default {
   computed: {
     ...mapState('Sidebar', [
       'settingObjectType',
-      'controlPanel',
-      'isMobile'
+      'controlPanel'
     ]),
 
     panelName () {
@@ -65,10 +70,15 @@ export default {
   },
 
   methods: {
-    ...mapActions('Sidebar', ['setControlPanel']),
+    ...mapActions('Sidebar', [
+      'toggleSidebar',
+      'setControlPanel',
+      'toggleSectionsTreeMenu'
+    ]),
 
     close () {
       this.setControlPanel(false)
+      this.toggleSectionsTreeMenu(true)
     }
   },
 
@@ -83,23 +93,21 @@ export default {
     ThePanelSlotSettings,
     ThePanelAvailable,
     ThePanelRestrictions,
-    ThePanelInline,
     ThePanelImage,
-    ThePanelImageLink,
     ThePanelIconWithText,
     ThePanelSectionBackground,
     ThePanelSlotBackground,
     ThePanelSectionSystemSettings,
-    ThePanelSectionSystemStyle,
     ThePanelForm,
     ThePanelVideo,
     ThePanelIframe,
     ThePanelSectionProductsColumnsSettings,
     ThePanelSectionGallerySettings,
-    ThePanelSectionGalleryStyle,
     ThePanelSectionColumnsSettings,
     ThePanelToggleElement,
-    ThePanelGroupBackground
+    ThePanelGroupBackground,
+    ThePanelSectionSliderSettings,
+    ThePanelSectionFormSettings
   }
 }
 </script>
@@ -110,25 +118,21 @@ export default {
 
 .b-control-panel
   position: relative
-  width: $size-step*9
+  width: 30.5rem
   height: 100%
-  padding: 1.7rem 1rem 1.7rem 1.6rem
 
   display: flex
   flex-direction: column
 
   background: $white
-  box-shadow: 0px 0.4rem 1rem rgba($black, 0.35)
 
   color: $dark-grey
   font-size: 1.4rem
   letter-spacing: -0.01em
 
-  &__mobile
-    font-size: 1.2rem
-
-    padding: $size-step/8 0
-    color: $dark-blue-krayola
+  transition: display .3s cubic-bezier(.2,.85,.4,1.275)
+  &__c
+    transition: display .3s cubic-bezier(.2,.85,.4,1.275)
   &__title
     color: $black
     font-size: 2rem
@@ -141,11 +145,30 @@ export default {
       text-transform: uppercase
 
   &__close
-    color: $grey
     position: absolute
-    top: 24px
-    right: 17px
+    top: 1.9rem
+    right: 1.7rem
+    z-index: 1
+
     cursor: pointer
+
+    width: 3.6rem
+    height: 3.6rem
+
+    display: flex
+    justify-content: center
+    align-items: center
+
+    border-radius: 100%
+    transition: background .3s cubic-bezier(.2,.85,.4,1.275)
+    & svg
+      transition: fill .3s cubic-bezier(.2,.85,.4,1.275)
     &:hover
-      color: $dark-blue-krayola
+      cursor: pointer
+      background: rgba(#000000, 0.05)
+    &:active
+      cursor: pointer
+      background: rgba(#00ADB6, 0.05)
+      & svg
+        fill: $main-green
 </style>

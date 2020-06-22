@@ -24,7 +24,7 @@ const DEFAULT_OPTIONS = {
     href: '#',
     target: '_blank',
     behavior: 'auto',
-    action: ''
+    action: { name: 'Open URL', value: '' }
   },
   textLinkStyles: false, // styling links in text
   removable: false,
@@ -239,7 +239,6 @@ const data = new Map([
         'background-size': 'cover',
         'background-color': '',
         'color': '#000',
-        'border-color': '',
         'font-size': '1.6rem',
         'line-height': '1.4',
         'border-radius': 0,
@@ -438,8 +437,8 @@ const data = new Map([
       resizable: true,
       removable: true,
       styles: {
-        'width': '',
-        'height': ''
+        'width': '32px',
+        'height': '32px'
       },
       media: {
         'is-mobile': {
@@ -464,8 +463,8 @@ const data = new Map([
         url: 'https://www.youtube.com/watch?v=Xv1JzYDKoc8'
       },
       styles: {
-        'width': '',
-        'height': ''
+        'width': '278px',
+        'height': '152px'
       },
       media: {
         'is-mobile': {
@@ -483,8 +482,8 @@ const data = new Map([
         url: 'https://ptah.super.com/'
       },
       styles: {
-        'width': '',
-        'height': ''
+        'width': '278px',
+        'height': '152px'
       },
       media: {
         'is-mobile': {

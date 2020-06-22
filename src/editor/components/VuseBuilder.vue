@@ -7,18 +7,47 @@
   @save="save">
 
   <div
+    class="b-layout"
     :style="`${fontsSetup}`"
   >
-    <base-loading v-if="loading" class="preloader"></base-loading>
+    <base-loading
+      v-if="loading"
+      class="preloader"
+    />
+
+    <IconBase
+      v-if="emptySections && !isExpanded"
+      name="share"
+      color="#00ADB6"
+      width="38"
+      height="30"
+      class="b-intro-arrow"
+    />
+
+    <div v-if="emptySections"
+      class="b-intro"
+      :class="{ '_add': isAddSectionExpanded }"
+    >
+      <div class="b-intro__image" />
+      <div class="b-intro__chapter">
+        Lets start the magic
+      </div>
+      <div class="b-intro__text">
+        Open the side bar to select a Section for your landing page
+      </div>
+    </div>
+
     <div
+      v-show="!emptySections"
       :class="{
         'is-editable': $builder.isEditing,
         'fp-scroll': currentLanding.settings.fullPageScroll === 'yes',
-        'is-expanded': isExpanded,
+        'is-expanded': isExpanded
       }"
       id="artboard"
       class="artboard"
-      ref="artboard">
+      ref="artboard"
+    >
 
       <component
         v-if="headerSection"
@@ -27,7 +56,10 @@
         :class="[ $builder.isEditing ? device: '' ]"
         @click.native="selectSidebarSection(headerSection)">
 
+        <!-- TODO: -->
+        <!-- hide section's menu in all sections
         <menu-settings slot="menu" :section="headerSection"/>
+        -->
 
         <div
           class="b-overlay"
@@ -50,7 +82,7 @@
         :is="section.name"
         :id="section.id"
         :class="[
-          { 'video-background': section.data.mainStyle.backgroundType === 'video' },
+          { 'video-background': section.data.mainStyle.backgroundVideo },
           $builder.isEditing ? device: '',
           isActiveSection(section.id) ? '_section-active' : '',
           section.data.mainStyle.parallax ? '_parallax' : ''
@@ -59,10 +91,13 @@
         :data-image-src="getImageFromBgStyles(section.data.mainStyle.styles['background-image'])"
         @click.native="selectSidebarSection(section)">
 
+        <!-- TODO: -->
+        <!-- hide section's menu in all sections
         <menu-settings slot="menu" :section="section"/>
+        -->
 
         <video
-          v-if="section.data.mainStyle.backgroundType === 'video' && section.data.mainStyle.backgroundVideo"
+          v-if="section.data.mainStyle.backgroundVideo && !showConfirmElementDelete && !isShowModalButton"
           :id="`bg-video-${ section.id }`"
           slot="video"
           autoplay="true"
@@ -82,12 +117,15 @@
 
       </component>
 
-      <div v-if="emptySections" class="controller-intro">
-        <h3>&larr; Choose layout from the menu</h3>
-      </div>
-
       <v-style>
         {{ parsedCss.content }}
+
+        <!-- apply headers color -->
+        <template v-if="currentLanding.settings.colors && currentLanding.settings.colors.headers !== ''">
+          h1, h2, h3 {
+            color: {{currentLanding.settings.colors.headers}} !important;
+          }
+        </template>
       </v-style>
 
     </div>
@@ -102,9 +140,24 @@
       v-if="showConfirmElementDelete"
       button="Delete"
     >
-      You are going to delete <b class="b-modal-delete-element__name">{{ settingObjectLabel }}</b>, this cannot be undone. Confirm deleting?
+      You are going to delete <span class="b-modal-delete-element__name">{{ settingObjectLabel }}</span>, this cannot be undone. Confirm deleting?
+    </base-confirm>
+
+    <base-confirm
+      class="b-modal-button"
+      :class="{'is-expanded': isExpanded }"
+      title="Set target"
+      @confirm="toggleModalButton(false)"
+      @close="toggleModalButton(false)"
+      v-if="isShowModalButton"
+      button="Done"
+    >
+      <ModalButton
+        :builder="$builder"
+      />
     </base-confirm>
   </div>
+  <onboarding-tips :builder="builder" />
 </builder-layout>
 </template>
 
@@ -113,11 +166,12 @@ import VuseIcon from './VuseIcon'
 import BuilderLayout from './BuilderLayout.vue'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import * as _ from 'lodash-es'
-import MenuSettings from '@components/slots/MenuSettings'
+import ModalButton from './modals/TheModalButton'
 import { getFontsSetup } from '../util'
 
 import { sectionsGroups } from '@cscripts/sectionsGroups'
 import BaseLoading from '../../components/base/BaseLoading'
+import OnboardingTips from './OnboardingTips'
 
 export default {
   name: 'VuseBuilder',
@@ -126,7 +180,8 @@ export default {
     BaseLoading,
     VuseIcon,
     BuilderLayout,
-    MenuSettings
+    ModalButton,
+    OnboardingTips
   },
 
   props: {
@@ -162,6 +217,7 @@ export default {
 
   computed: {
     ...mapState(['currentLanding']),
+
     ...mapState('Sidebar', [
       'isExpanded',
       'device',
@@ -169,10 +225,14 @@ export default {
       'settingObjectOptions',
       'settingObjectLabel',
       'isShowModal',
+      'isShowModalButton',
       'controlPanel',
-      'sandbox'
+      'sandbox',
+      'isAddSectionExpanded'
     ]),
-    ...mapState('Landing', ['currentStateNumber']),
+    ...mapState('Landing', [
+      'currentStateNumber'
+    ]),
 
     builder () {
       return this.$builder
@@ -236,6 +296,11 @@ export default {
 
     showConfirmElementDelete (value) {
       this.toggleModal(value)
+      this.toggleHidePageBackgroundVideo()
+    },
+
+    isShowModalButton () {
+      this.toggleHidePageBackgroundVideo()
     }
   },
 
@@ -266,6 +331,7 @@ export default {
 
     this.$builder.rootEl = this.$refs.artboard
     this.initSettings()
+    this.fillCheckList()
 
     this.parsing(css)
 
@@ -294,8 +360,12 @@ export default {
     this.clearStateStack()
     document.removeEventListener('keyup', this.keyUp)
   },
+
   methods: {
-    ...mapActions(['clearLandingData']),
+    ...mapActions([
+      'clearLandingData',
+      'activateCheckListItem'
+    ]),
     ...mapActions('Sidebar', [
       'updateBuilderSections',
       'updateBuilderGroups',
@@ -303,11 +373,14 @@ export default {
       'setSettingSection',
       'toggleSidebar',
       'setControlPanel',
-      'toggleSidebar',
       'toggleAddSectionMenu',
       'clearSettingObject',
       'clearSettingObjectLight',
-      'toggleModal'
+      'toggleModal',
+      'toggleSectionsTreeMenu',
+      'toggleAddSectionMenu',
+      'toggleProgressPanelExpanded',
+      'toggleModalButton'
     ]),
     ...mapActions('Landing', [
       'saveState',
@@ -316,7 +389,10 @@ export default {
     ...mapActions('User', [
       'getUser'
     ]),
-    ...mapMutations('Landing', ['clearStateStack', 'undoFlag']),
+    ...mapMutations('Landing', [
+      'clearStateStack',
+      'undoFlag'
+    ]),
 
     parsing (textCss) {
       let self = this
@@ -411,18 +487,20 @@ export default {
       this.styleArtboard(settings.styles)
       this.updateVideo()
 
-      if (this.emptySections) {
+      /* if (this.emptySections) {
         this.toggleSidebar(true)
+        this.toggleSectionsTreeMenu(true)
         this.toggleAddSectionMenu(true)
-      }
+      } else {
+        this.toggleSidebar(true)
+        this.toggleSectionsTreeMenu(true)
+        this.toggleAddSectionMenu(false)
+        this.toggleProgressPanelExpanded(false)
+      } */
     },
+
     addTheme (theme) {
       this.$builder.set(theme)
-    },
-    toggleGroupVisibility (e) {
-      const element = e.target
-      const group = element.closest('.menu-group')
-      group.classList.toggle('is-visiable')
     },
     save () {
       this.$emit('save', this.$builder)
@@ -451,7 +529,7 @@ export default {
             !isNaN(Number(value)) &&
             value
         ) {
-          value = `${value}rem`
+          value = `${value}px`
         }
         this.$refs.artboard.style[styleName] = value
       })
@@ -528,6 +606,7 @@ export default {
       menuItem.scrollIntoView()
 
       this.setControlPanel(false)
+      this.toggleSectionsTreeMenu(true)
     },
 
     showSettingsBar (event, section) {
@@ -581,7 +660,12 @@ export default {
     removeGroupClasses (nodes) {
       nodes.forEach((node) => {
         node.classList.remove('ptah-g-main')
-        node.classList.remove('ptah-g-child')
+
+        if (node.classList.contains('ptah-g-child')) {
+          node.classList.remove('ptah-g-child')
+          node.style.position = 'relative'
+          node.style.top = '0'
+        }
       })
     },
 
@@ -659,6 +743,35 @@ export default {
         return
       }
       return bg.replace(/^url[(]/, '').replace(/[)]$/, '')
+    },
+
+    fillCheckList () {
+      let settings = this.currentLanding.settings
+      let list = []
+
+      if (settings.title !== '') {
+        list.push('title')
+      }
+
+      if (settings.favicon !== '') {
+        list.push('favicon')
+      }
+
+      if (settings.styles.backgroundImage !== '' || settings.styles.backgroundColor !== '') {
+        list.push('bg')
+      }
+
+      if (settings.css !== '' || settings.script !== '') {
+        list.push('code')
+      }
+
+      list.forEach(item => this.activateCheckListItem(item))
+    },
+
+    toggleHidePageBackgroundVideo () {
+      const video = document.getElementById('video_bg')
+
+      if (video) video.classList.toggle('_hide')
     }
   }
 }
@@ -668,46 +781,97 @@ export default {
 @import '../../assets/sass/_colors.sass'
 @import '../../assets/sass/_variables.sass'
 
+.b-layout
+  height: 100%
 .artboard
   transform-origin: top center
   margin: 0 auto
   transition: 0.2s
   position: relative
+  min-height: calc(100vh - 6rem)
 
   display: flex
   flex-direction: column
+
   &.is-editable div.is-editable,
   &.is-editable a.is-editable,
   &.is-editable table.is-editable
     outline: none
     transition: border 0.25s
-    border: .2rem dotted transparent
-    &:hover
+    border: .4rem solid transparent
+    &.b-button:not(.styler-active):hover
+      border: .4rem solid $main-yellow !important
+    &:not(.b-button):hover
       cursor: pointer
-      border-color: $dark-blue-krayola !important
-    &.styler-active
+      border-color: $main-yellow !important
+      background-color: rgba(255, 230, 0, 0.1) !important
+      border-radius: .5rem !important
+
+    &:not(.b-button).styler-active
       border-color: transparent !important
+      background-color: rgba(255, 230, 0, 0.1) !important
+      border-radius: .5rem !important
       &:hover
         border-color: transparent !important
       .is-mobile &.b-image,
       .is-mobile &.b-logo,
       .is-tablet &.b-image,
-      .is-tablet &.b-logo,
-        border-color: $dark-blue-krayola !important
+      .is-tablet &.b-logo
+        border-color: $main-yellow !important
         &:hover
-          border-color: $dark-blue-krayola !important
+          border-color: $main-yellow !important
+    &._hover-red:not(.b-button).styler-active
+      border-color: transparent !important
+      background-color: rgba(#D36083, 0.1) !important
+      border-radius: .5rem !important
+      &:hover
+        border-color: transparent !important
+      .is-mobile &.b-image,
+      .is-mobile &.b-logo,
+      .is-tablet &.b-image,
+      .is-tablet &.b-logo
+        border-color: #D36083 !important
+        &:hover
+          border-color: #D36083 !important
   &.is-editable div.b-border,
   &.is-editable table.b-border
     outline: none
     transition: border 0.25s
-    border: .2rem dotted transparent
-    &:hover
+    border: .4rem solid transparent
+    &.b-button:not(.styler-active):hover
+      border: .4rem solid $main-yellow !important
+    &:not(.b-button):hover
       cursor: pointer
-      border-color: $dark-blue-krayola !important
-    &.styler-active
-      border-color: $dark-blue-krayola !important
+      border: .4rem solid $main-yellow !important
+      background-color: rgba(255, 230, 0, 0.1) !important
+      border-radius: .5rem !important
+    &:not(.b-button).styler-active
+      border: .4rem solid $main-yellow !important
+      background-color: rgba(255, 230, 0, 0.1) !important
+      border-radius: .5rem !important
       &:hover
-        border-color: $dark-blue-krayola !important
+        border: .4rem solid $main-yellow !important
+      &.b-text
+        cursor: pointer
+
+  &.is-editable div.b-border,
+  &.is-editable table.b-border
+    outline: none
+    transition: border 0.25s
+    border: .4rem solid transparent
+    &._hover-red.b-button:not(.styler-active):hover
+      border: .4rem solid #D36083 !important
+    &._hover-red:not(.b-button):hover
+      cursor: pointer
+      border: .4rem solid #D36083 !important
+      background-color: rgba(#D36083, 0.1) !important
+      border-radius: .5rem !important
+    &._hover-red:not(.b-button).styler-active
+      border: .4rem solid #D36083 !important
+      background-color: rgba(#D36083, 0.1) !important
+      border-radius: .5rem !important
+      &:hover
+        border: .4rem solid #D36083 !important
       &.b-text
         cursor: pointer
   &.fp-scroll section:not(.b-section-header):not(.b-section-footer):not(.is-mobile)
@@ -741,36 +905,43 @@ export default {
       border-color: #0072FF
       box-shadow: 0 0 0 0.2rem rgba(#0072FF, 50%)
 
-  &-intro
-    width: 100%
-    max-width: 50rem
-    margin: auto
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    padding: 7rem 5rem
-    text-align: center
-    font-size: 3rem
-    color: #323c47
+.b-intro
+  width: 100%
+  height: 100%
+  max-width: 50rem
+  margin: auto
 
-  &-themes
-    display: flex
-    flex-direction: column
-    width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
 
-  &-theme
-    background-color: #fff
-    color: #323c47
-    border: 0.1rem solid #c1c1c1
-    margin: 0.5rem
-    padding: 2rem
-    border-radius: 0.4rem
-    width: 100%
-    cursor: pointer
-    font-size: 1.6rem
-    &:hover
-      border-color: #0072FF
+  transition: all .2s ease-out
+  &._add
+    padding-left: 29rem
+  &__image
+    width: 30rem
+    height: 27rem
+
+    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/07ac25c3-94ba-4eaf-9829-70c827395747.png)
+    background-size: cover
+  &__chapter
+    font-size: 1.8rem
+    line-height: 2.6rem
+    font-weight: 600
+    letter-spacing: -0.06em
+    color: #575A5F
+
+    margin: 3.5rem 0 1.5rem
+  &__text
+    font-size: 1.2rem
+    line-height: 2rem
+    color: #A2A5A5
+  &-arrow
+    position: absolute
+    top: 2.3rem
+    left: 2.9rem
+    transition: all .2s ease-out
 
 .b-landing-constructor__button
   width: 100%
@@ -821,13 +992,23 @@ export default {
     background: lighten(#18d88b, 40%)
 
 .b-modal-delete-element
-  &.is-expanded
-    margin-left: $size-step * 9
   &__name
+    font-weight: 600
     text-transform: capitalize
+
+.b-modal-button
+  text-align: left
+  /deep/
+    .b-confirm__footer
+      justify-content: center
 
 .preloader
   z-index: 1000
   position: absolute
   background: #fff
+
+.b-ptah-element._show-el-tip,
+.b-ptah-element._show-el-tip.styler-active
+  border: .4rem solid $main-yellow !important
+  border-color: $main-yellow !important
 </style>

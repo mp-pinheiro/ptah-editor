@@ -2,16 +2,14 @@
   <builder-modal-content-layout
     class="b-integrations-google-analitycs"
     >
-    <div>
-      <base-heading level="2">Google Analitycs</base-heading>
-      <base-fieldset-row width="short">
-        <BaseTextField label="Google site tag" v-model="gtag" placeholder="UA-XXXXXXXX-X" />
-      </base-fieldset-row>
+    <div class="b-integrations-google-analitycs__inner">
+      <base-caption>Google Analitycs</base-caption>
+      <BaseTextField label="Google site tag" v-model="gtag" placeholder="UA-XXXXXXXX-X" />
     </div>
 
-    <div slot="controls" class="b-integrations-google-analitycs__controls">
-      <BaseButton size="middle" color="gray" :transparent="true" @click="back()">{{ $t('nav.back') }}</BaseButton>
-      <BaseButton size="middle" color="gray" @click="applySettings">{{ $t('nav.apply') }}</BaseButton>
+    <div slot="controls">
+      <BaseButton size="small" color="gray" :transparent="true" @click="back()">{{ $t('nav.back') }}</BaseButton>
+      <BaseButton size="small" color="blue" @click="applySettings">{{ $t('nav.apply') }}</BaseButton>
     </div>
   </builder-modal-content-layout>
 </template>
@@ -49,7 +47,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'storeSettings'
+      'storeSettings',
+      'activateCheckListItem'
     ]),
 
     updateGoogleTag () {
@@ -62,6 +61,8 @@ export default {
       const data = {
         gtag: this.gtag
       }
+
+      this.activateCheckListItem('integrations')
 
       this.storeSettings(data)
       this.back()
@@ -76,9 +77,7 @@ export default {
 
 <style lang="sass" scoped>
 .b-integrations-google-analitycs
-  height: auto
-  &__controls
-    justify-content: flex-start !important
-    border-top: none !important
+  &__inner
+    padding: 0
 
 </style>

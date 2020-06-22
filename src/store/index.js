@@ -5,15 +5,17 @@ import api from '@store/api'
 import Sidebar from './Sidebar'
 import Landing from './Landing'
 import User from './User'
-import vOutsideEvents from 'vue-outside-events'
+import Onboarding from './Onboarding'
+import OnBoardingTips from './OnBoardingTips'
 import PageTweaks from './PageTweaks/PageTweaks'
 import Vuebar from 'vuebar'
+import vOutsideEvents from 'vue-outside-events'
 
 Vue.use(Vuex)
 Vue.use(vOutsideEvents)
 Vue.use(Vuebar)
 
-const demoLanding = 'https://s3.protocol.one/files/Demo-page-2020-v5.json'
+const demoLanding = 'https://s3.protocol.one/files/demoLanding080520_v1.json'
 const FONTS = {
   'Lato': {
     variants: ['regular'],
@@ -26,10 +28,85 @@ const FONTS = {
 }
 const SETUP_FONTS = {
   'h1': 'Montserrat',
-  'h2': 'Montserrat',
-  'h3': 'Lato',
   'p': 'Lato',
   'btn': 'Montserrat'
+}
+
+const DEFAULT_CHECK_LIST = {
+  logo: {
+    status: false,
+    text: 'Add logo',
+    level: 0
+  },
+  bg: {
+    status: false,
+    text: 'Page background',
+    level: 0
+  },
+  title: {
+    status: false,
+    text: 'Page title',
+    level: 0
+  },
+  favicon: {
+    status: false,
+    text: 'Favicon',
+    level: 0
+  },
+  content: {
+    status: false,
+    text: 'Edit content',
+    level: 0
+  },
+  colors: {
+    status: false,
+    text: 'Change colors',
+    level: 0
+  },
+  section: {
+    status: false,
+    text: 'Add section',
+    level: 1
+  },
+  element: {
+    status: false,
+    text: 'Add elements',
+    level: 1
+  },
+  seo: {
+    status: false,
+    text: 'SEO options',
+    level: 1
+  },
+  integrations: {
+    status: false,
+    text: 'Integrations',
+    level: 1
+  },
+  domain: {
+    status: false,
+    text: 'Connect domain',
+    level: 1
+  },
+  fonts: {
+    status: false,
+    text: 'Add new Fonts',
+    level: 1
+  },
+  code: {
+    status: false,
+    text: 'Add custom JS/CSS',
+    level: 1
+  }
+}
+
+const COLORS = {
+  headers: '',
+  text: '',
+  button: '',
+  buttonText: '',
+  add1: '',
+  add2: ''
 }
 
 const state = {
@@ -39,19 +116,34 @@ const state = {
     settings: {
       fonts: FONTS,
       setupFonts: SETUP_FONTS,
+      colors: COLORS,
       imageForPalette: null,
-      palette: []
-    }
+      palette: [],
+      logo: ''
+    },
+    checkList: DEFAULT_CHECK_LIST // landing check-list in navigation menu
   },
   isSaved: false,
   slug: '', // landing ID
   name: '',
-  version: null // landing version
+  version: null, // landing version
+  defaultFavicon: 'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/7b750777-57ba-4757-b864-140ac77e3395.png'
 }
 
 const getters = {
   storefrontPreview: (state) => {
     return state.storefrontPreview
+  },
+
+  progress: (state) => {
+    let all = Object.keys(state.currentLanding.checkList).length
+    let checked = _.filter(state.currentLanding.checkList, 'status').length
+
+    return (checked / all * 100).toFixed(0)
+  },
+
+  colorsPalette: (state) => {
+    return Object.values(state.currentLanding.settings.colors).filter(c => c !== '')
   }
 }
 
@@ -91,19 +183,9 @@ const actions = {
     })
       .then((data) => {
         let landing = data.landing
-        let fonts = {}
-        let setupFonts = {}
 
         if (typeof landing === 'string') {
           landing = JSON.parse(landing)
-        }
-
-        if (!landing.settings.fonts) {
-          fonts = FONTS
-        }
-
-        if (!landing.settings.setupFonts) {
-          setupFonts = SETUP_FONTS
         }
 
         landing.settings = _.defaultsDeep(landing.settings, {
@@ -114,12 +196,12 @@ const actions = {
           fullPageScroll: 'no',
           gtmId: '',
           gtag: '',
-          favicon: 'https://protocol.one/wp-content/uploads/2018/09/03.png',
+          favicon: state.defaultFavicon,
           styles: {
-            backgroundImage: '',
+            backgroundImage: state.Onboarding.background,
             backgroundColor: '',
-            backgroundPositionX: '',
-            backgroundPositionY: '',
+            backgroundPositionX: 0,
+            backgroundPositionY: 0,
             backgroundAttachment: 'fixed',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'
@@ -133,9 +215,14 @@ const actions = {
           mailchimpUrl: false,
           mailchimpList: false,
           name: data.name,
-          fonts: fonts,
-          setupFonts: setupFonts
+          fonts: FONTS,
+          setupFonts: SETUP_FONTS,
+          colors: state.Onboarding.colors,
+          logo: state.Onboarding.logo
         })
+
+        landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)
+
         commit('isSaved', false)
         commit('updateCurrentLanding', landing)
         commit('name', data.name)
@@ -186,8 +273,24 @@ const actions = {
           data.settings['fonts'] = FONTS
         }
 
+        if (!data.settings.logo) {
+          data.settings['logo'] = state.Onboarding.logo
+        }
+
+        if (!data.settings.colors) {
+          data.settings['colors'] = _.merge(state.currentLanding.settings.colors, state.Onboarding.colors)
+        }
+
         if (!data.settings.setupFonts) {
           data.settings['setupFonts'] = SETUP_FONTS
+        }
+
+        if (!data.settings.checkList) {
+          data['checkList'] = DEFAULT_CHECK_LIST
+        }
+
+        if (!data.settings.styles.backgroundImage) {
+          data.settings['styles']['backgroundImage'] = state.Onboarding.background
         }
 
         commit('slug', slug)
@@ -252,7 +355,8 @@ const actions = {
     const parsedData = JSON.parse(data)
     const mergedData = {
       ...parsedData,
-      settings: state.currentLanding.settings
+      settings: state.currentLanding.settings,
+      checkList: state.currentLanding.checkList
     }
     const resultDataString = JSON.stringify(mergedData)
 
@@ -350,6 +454,15 @@ const actions = {
     commit('isSaved', false)
   },
 
+  storeColorSettings ({ state, commit }, colors) {
+    const settings = _.merge({}, state.currentLanding.settings)
+    Object.keys(settings.colors).forEach((key, index) => {
+      settings.colors[key] = colors[index]
+    })
+    commit('updateCurrentLandingSettings', settings)
+    commit('isSaved', false)
+  },
+
   clearSlug ({ commit }) {
     commit('slug', '')
   },
@@ -362,6 +475,10 @@ const actions = {
       settings: lnd.settings,
       sections: []
     })
+  },
+
+  activateCheckListItem ({ state, commit }, item) {
+    commit('activateCheckListItem', item)
   }
 }
 
@@ -396,6 +513,10 @@ const mutations = {
 
   version (state, value) {
     state.version = value
+  },
+
+  activateCheckListItem (state, item) {
+    state.currentLanding.checkList[item].status = true
   }
 }
 
@@ -403,7 +524,9 @@ const modules = {
   Sidebar,
   PageTweaks,
   Landing,
-  User
+  User,
+  Onboarding,
+  OnBoardingTips
 }
 
 export default new Vuex.Store({

@@ -123,9 +123,6 @@ $main-font-size: 6rem
   display: flex
   justify-content: center
   align-items: center
-  &.styler-active
-    border: 0.2rem $white dotted
-    border-radius: 0.5rem
   .is-tablet &, .is-mobile &
     flex-wrap: wrap
     height: auto !important
@@ -183,9 +180,6 @@ $main-font-size: 6rem
   & .contenteditable
     position: relative
     z-index: 9999
-  &.is-editable
-    .styler-active
-      border-color: $white
   & span
     display: block
   .is-mobile &,
@@ -207,7 +201,7 @@ $main-font-size: 6rem
   align-items: center
   justify-content: center
   &.is-editable
-    border: .1rem dashed rgba($dark-blue-krayola, 0.5) !important
+    border: .1rem dashed rgba($main-green, 0.5) !important
   & span
     display: block
   &:hover
@@ -363,9 +357,6 @@ $main-font-size: 6rem
   user-select: none
   transition: all 200ms
 
-  &:hover .b-load
-    display: flex
-
   & span
     display: block
   .is-tablet &
@@ -398,10 +389,6 @@ $main-font-size: 6rem
     @media only screen and (max-width: 768px)
       &
         display: none
-  .styler-active
-    .is-mobile &,
-    .is-tablet &
-      border: .2rem dotted $dark-blue-krayola
 
 .b-logo
   $this: &
@@ -421,9 +408,6 @@ $main-font-size: 6rem
 
   user-select: none
   transition: all 200ms
-
-  &:hover .b-load
-    display: flex
 
   & span
     display: block
@@ -445,26 +429,6 @@ $main-font-size: 6rem
       &
         display: none
 
-.b-load
-  position: absolute
-  top: 0
-  right: 0
-  z-index: 1000
-
-  display: none
-  justify-content: center
-  align-items: center
-  width: 2.6rem
-  height: 2.6rem
-
-  cursor: pointer
-  background: $white
-  color: $dark-blue-krayola
-
-  &:hover
-    color: $white
-    background: $dark-blue-krayola
-
 .b-social-networks
   width: auto
   max-width: 100%
@@ -475,9 +439,6 @@ $main-font-size: 6rem
   justify-content: center
   align-items: center
   flex-wrap: wrap
-  &.styler-active
-    border: 0.2rem $white dotted
-    border-radius: 0.5rem
   .is-tablet &, .is-mobile &
     flex-wrap: wrap
     height: auto !important
@@ -543,9 +504,9 @@ $main-font-size: 6rem
   & h1
     font-family: var(--global-font-h1) !important
   & h2
-    font-family: var(--global-font-h2) !important
+    font-family: var(--global-font-h1) !important
   & h3
-    font-family: var(--global-font-h3) !important
+    font-family: var(--global-font-h1) !important
 
 // Timer
 
@@ -685,9 +646,9 @@ $main-font-size: 6rem
             & h1
               font-family: var(--global-font-h1) !important
             & h2
-              font-family: var(--global-font-h2) !important
+              font-family: var(--global-font-h1) !important
             & h3
-              font-family: var(--global-font-h3) !important
+              font-family: var(--global-font-h1) !important
             .is-mobile &
               text-align: var(--mobile-text-align) !important
               font-size: var(--mobile-font-size) !important

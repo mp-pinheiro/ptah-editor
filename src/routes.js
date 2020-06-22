@@ -1,15 +1,21 @@
 import BuilderModalContent from '@editor/components/BuilderModalContent'
 import BuilderSiteSettingsSeo from '@editor/components/BuilderSiteSettingsSeo'
-import BuilderSiteSettingsCookies from '@editor/components/BuilderSiteSettingsCookies'
-import BuilderSiteSettingsVisual from '@editor/components/BuilderSiteSettingsVisual'
+import BuilderSiteSettingsPageStyle from '@editor/components/BuilderSiteSettingsPageStyle'
 import BuilderSiteSettingsAddJsScripts from '@editor/components/BuilderSiteSettingsAddJsScripts'
-import BuilderSiteSettingsAddCss from '@editor/components/BuilderSiteSettingsAddCss'
 import BuilderSiteSettingsIntegrations from '@editor/components/BuilderSiteSettingsIntegrations'
-import BuilderSiteSettingsOpenGraph from '@editor/components/BuilderSiteSettingsOpenGraph'
 import BuilderSiteSettingsIntegrationsGoogleTag from '@editor/components/BuilderSiteSettingsIntegrationsGoogleTag'
 import BuilderSiteSettingsIntegrationsGoogleAnalitycs from '@editor/components/BuilderSiteSettingsIntegrationsGoogleAnalitycs'
 import BuilderSiteSettingsIntegrationsMailchimp from '@editor/components/BuilderSiteSettingsIntegrationsMailchimp'
 import BuilderSiteSettingsFonts from '@editor/components/BuilderSiteSettingsFonts'
+import TheWizardModal from '@src/components/pages/wizard/TheWizardModal'
+import TheProjectNamePage from '@src/components/pages/wizard/TheProjectNamePage'
+import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcomePage'
+import TheOnboardingLogoPage from '@src/components/pages/wizard/TheOnboardingLogoPage'
+import TheOnboardingBackgroundPage from '@src/components/pages/wizard/TheOnboardingBackgroundPage'
+import TheOnboardingColorsPage from '@src/components/pages/wizard/TheOnboardingColorsPage'
+import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
+import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
+import TheProjectPreviewPage from '@src/components/pages/wizard/TheProjectPreviewPage'
 
 const routes = [
   {
@@ -29,7 +35,56 @@ const routes = [
           title: 'Dashboard - Ptah'
         },
         component: () => lazyLoadView(import(/* webpackChunkName: "Dashboard" */ '@components/pages/Dashboard')),
-        name: 'Dashboard'
+        name: 'Dashboard',
+        children: [
+          {
+            path: 'wizard',
+            component: TheWizardModal,
+            redirect: { name: TheProjectNamePage },
+            children: [
+              {
+                path: 'name',
+                component: TheProjectNamePage
+              },
+              {
+                path: 'goals',
+                component: TheProjectGoals,
+                meta: {
+                  width: '100vw',
+                  height: '100vh'
+                }
+              },
+              {
+                path: 'templates',
+                component: TheProjectTemplatesPage
+              },
+              {
+                path: 'preview',
+                component: TheProjectPreviewPage,
+                meta: {
+                  width: '100vw',
+                  height: '100vh'
+                }
+              },
+              {
+                path: 'welcome',
+                component: TheProjectWelcomePage
+              },
+              {
+                path: 'logo',
+                component: TheOnboardingLogoPage
+              },
+              {
+                path: 'background',
+                component: TheOnboardingBackgroundPage
+              },
+              {
+                path: 'colors',
+                component: TheOnboardingColorsPage
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -45,26 +100,19 @@ const routes = [
       {
         path: 'settings',
         component: BuilderModalContent,
+        redirect: 'settings/pageStyle',
         children: [
           {
-            path: 'visualSettings',
-            component: BuilderSiteSettingsVisual
+            path: 'pageStyle',
+            component: BuilderSiteSettingsPageStyle
           },
           {
             path: 'seoSettings',
             component: BuilderSiteSettingsSeo
           },
           {
-            path: 'cookiesSettings',
-            component: BuilderSiteSettingsCookies
-          },
-          {
             path: 'addJsScrips',
             component: BuilderSiteSettingsAddJsScripts
-          },
-          {
-            path: 'addCss',
-            component: BuilderSiteSettingsAddCss
           },
           {
             path: 'integrations',
@@ -80,17 +128,19 @@ const routes = [
               },
               {
                 path: 'mailchimp',
-                component: BuilderSiteSettingsIntegrationsMailchimp
+                component: BuilderSiteSettingsIntegrationsMailchimp,
+                meta: {
+                  ultraWide: true
+                }
               }
             ]
           },
           {
-            path: 'openGraph',
-            component: BuilderSiteSettingsOpenGraph
-          },
-          {
             path: 'fonts',
-            component: BuilderSiteSettingsFonts
+            component: BuilderSiteSettingsFonts,
+            meta: {
+              wide: true
+            }
           }
         ]
       }

@@ -4,14 +4,13 @@
     @drop="onDrop"
     :data-href="link.href"
     :path="path"
-    :class="{'js-element-link' : isSetUrlImage }"
     :style="[objVarsMedia, objVarsResize]"
-    >
-
-    <i class="b-load pth-uploader" @click.stop="upload" ref="upload">
-      <icon-base name="loadTo"></icon-base>
-    </i>
-
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+    :class="[
+      {'js-element-link' : isSetUrlImage }
+    ]"
+  >
     <uploader
       :diameter="40"
       :path="path"
@@ -46,13 +45,15 @@
 import Uploader from '@editor/plugins/Uploader.vue'
 import elementMedia from '../mixins/elementMedia'
 import elementResize from '../mixins/elementResize'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'Pic',
 
   mixins: [
     elementMedia,
-    elementResize
+    elementResize,
+    elementHover
   ],
 
   components: {
@@ -114,12 +115,6 @@ export default {
       }
 
       this.file = files[0]
-    },
-
-    upload (e) {
-      e.stopPropagation()
-      let input = this.$refs.upload.nextElementSibling.querySelectorAll('input')[1]
-      input.click()
     }
   }
 }

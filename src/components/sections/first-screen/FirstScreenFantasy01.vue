@@ -96,7 +96,9 @@ const C_CUSTOM_2 = [
         'text-align': 'center',
         'width': '240px',
         'height': '64px',
-        'border': '1px solid #000000',
+        'border-width': '1px',
+        'border-style': 'solid',
+        'border-color': '#000000',
         'margin-top': '25px',
         'margin-bottom': '70px',
         'margin-left': '38px'
@@ -104,8 +106,9 @@ const C_CUSTOM_2 = [
       pseudo: {
         'hover': {
           'background-color': '#333333 !important',
-          'border': '1px solid #AF2E12 !important',
-          'margin-left': '20px'
+          'border-width': '1px',
+          'border-style': 'solid',
+          'border-color': '#000000'
         }
       }
     }
@@ -126,7 +129,7 @@ const C_CUSTOM_3 = [
   {
     element: {
       styles: {
-        'margin-top': '120px'
+        'margin-top': '20px'
       },
       socialNetworks: {
         'facebook': {
@@ -266,7 +269,7 @@ export default {
     <slot name="overlay"/>
     <div class="b-grid">
       <div class="b-grid__row">
-        <div class="b-grid__col-m-12 hidden-m" :class="`b-grid__col-${$sectionData.container.width}`">
+        <div class="b-grid__col-m-12" :class="`b-grid__col-${$sectionData.container.width}`">
           <sandbox
             container-path="$sectionData.container"
             components-path="$sectionData.components"

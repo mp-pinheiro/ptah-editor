@@ -182,7 +182,9 @@ const C_CUSTOM_CONTAINER = {
   styles: {
     'background-color': '#000000',
     'background-image': 'url(https://s3.protocol.one/images/slider_ash_1.jpg)',
-    'background-size': 'cover'
+    'background-size': 'cover',
+    'padding-top': '32px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {
@@ -196,7 +198,9 @@ const C_CUSTOM_CONTAINER2 = {
   styles: {
     'background-color': '#000000',
     'background-image': 'url(https://s3.protocol.one/images/slider_ash_2.jpg)',
-    'background-size': 'cover'
+    'background-size': 'cover',
+    'padding-top': '32px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {
@@ -210,7 +214,9 @@ const C_CUSTOM_CONTAINER3 = {
   styles: {
     'background-color': '#000000',
     'background-image': 'url(https://s3.protocol.one/images/slider_ash_3.jpg)',
-    'background-size': 'cover'
+    'background-size': 'cover',
+    'padding-top': '32px',
+    'padding-bottom': '64px'
   },
   media: {
     'is-mobile': {
@@ -297,7 +303,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  inject: ['device'],
+  inject: ['device', 'isExpanded'],
 
   cover: 'https://s3.protocol.one/images/ZCAexs7b_cover_s.jpg',
 
@@ -334,10 +340,18 @@ export default {
     },
 
     'device.type': {
-      handler () {
+      handler (value) {
         setTimeout(() => {
           this.swiper.update()
-        }, 500)
+        }, 250)
+      }
+    },
+
+    'isExpanded.status': {
+      handler (value) {
+        setTimeout(() => {
+          this.swiper.update()
+        }, 250)
       }
     }
   },

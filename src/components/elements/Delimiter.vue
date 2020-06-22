@@ -2,7 +2,9 @@
     <div class="b-delimiter is-editable"
       :path="path"
       :style="[objVarsMedia, objVarsResize]"
-      >
+      @mouseleave="mouseleave"
+      @mouseover.stop="mouseover"
+    >
       <vue-draggable-resizable
       class="b-delimiter__resize"
       class-name-active="b-delimiter__resize_active"
@@ -24,13 +26,15 @@
 <script>
 import elementMedia from '../mixins/elementMedia'
 import elementResize from '../mixins/elementResize'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'Delimiter',
 
   mixins: [
     elementMedia,
-    elementResize
+    elementResize,
+    elementHover
   ],
 
   props: {

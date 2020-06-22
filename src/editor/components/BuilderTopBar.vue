@@ -1,3 +1,80 @@
+<template>
+  <div class="b-top-bar" id="topbar">
+    <div class="b-top-bar__padd">
+      <div class="b-top-bar-menu">
+        <div class="b-top-bar-menu__left">
+          <div class="b-top-bar-menu__crumbs">
+            <span class="b-top-bar-menu__crumbs-home b-top-bar-menu__crumbs-link"
+              :tooltip="homeTooltipText"
+              tooltip-position="bottom"
+              @click="backToLandings"
+              >
+              <IconBase
+                name="home"
+                width="20"
+                height="17"
+                color="#575A5F"
+              />
+              <span>My board</span>
+            </span>
+            <span class="b-top-bar-menu__crumbs-arrow">
+              <IconBase
+                name="arrowToRight"
+                width="16"
+                height="8"
+                color="#575A5F"
+              />
+            </span>
+            <span :title="landingName">
+              {{ landingName | truncate(35, '...') }}
+            </span>
+          </div>
+        </div>
+        <div class="b-top-bar-menu__middle"
+          :class="{'b-top-bar-menu__middle-margin' : isExpanded }"
+          >
+          <MenuPlatforms
+            :disabled="emptySections"
+            @setDevice="setDevice"
+          />
+        </div>
+        <div class="b-top-bar-menu__right">
+          <BaseButton
+            @click="openHelpPage"
+            color="yellow-transparent"
+            size="small"
+          >
+            {{ $t('nav.help') }}
+            <IconBase
+              name="help"
+              width="12"
+              height="12"
+            />
+          </BaseButton>
+          <BaseButton
+            class="b-on-boarding-tips-step-8"
+            @click="$emit('preview', $event)"
+            color="main-green-transparent"
+            size="small"
+            :disabled="builder.sections.length === 0"
+          >
+            {{ $t('nav.preview') }}
+          </BaseButton>
+          <BaseButton
+            class="b-on-boarding-tips-step-9"
+             @click="$emit('export', $event)"
+             color="main-green"
+             size="small"
+             :disabled="builder.sections.length === 0"
+          >
+            {{ $t('nav.publish') }}
+          </BaseButton>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 import MenuPlatforms from './menu/MenuPlatforms.vue'
 import { mapState, mapActions } from 'vuex'
@@ -9,6 +86,10 @@ export default {
 
   props: {
     landingName: {
+      required: true
+    },
+    builder: {
+      type: Object,
       required: true
     }
   },
@@ -37,14 +118,17 @@ export default {
 
     homeTooltipText () {
       return this.isGuest ? 'Back to main' : this.$t('nav.backToDashbord')
+    },
+
+    emptySections () {
+      return !this.builder.sections.length
     }
   },
 
   methods: {
     ...mapActions('Sidebar', [
       'clearSettingObject',
-      'clearSettingObjectLight',
-      'toggleSidebar'
+      'setControlPanel'
     ]),
 
     setDevice (type) {
@@ -52,105 +136,27 @@ export default {
     },
 
     backToLandings ($event) {
+      this.setControlPanel(false)
       this.clearSettingObject()
       this.$emit('backToLandings', $event)
-    },
-
-    toggleMenuItem () {
-      this.toggleSiteSettings('visualSettings')
-    },
-
-    closeSettingsBar () {
-      this.clearSettingObjectLight()
     },
 
     closeSiteSettings () {
       this.$router.push(`/editor/${this.$route.params.slug}`)
     },
 
-    toggleSiteSettings (contentID) {
-      this.toggleSidebar(false)
-      if (this.isAddSectionExpanded) {
-        this.toggleAddSectionMenu()
-      }
-      if (this.modalContentID === contentID) {
-        this.closeSiteSettings()
-      } else {
-        this.$router.push(`/editor/${this.$route.params.slug}/settings`)
-      }
-    },
-
-    toggleSidebarSection () {
-      this.toggleSidebar()
-    },
-
     async itemClick (item, event) {
       await this.$nextTick()
 
       this.$emit(item, event)
+    },
+
+    openHelpPage () {
+      window.open(process.env.VUE_APP_HELP)
     }
   }
 }
 </script>
-
-<template>
-<div class="b-top-bar" id="topbar">
-
-  <div class="b-top-bar__padd">
-    <div class="b-top-bar-menu">
-      <div class="b-top-bar-menu__left">
-        <div class="b-top-bar-menu__ham"
-          :tooltip="$t('menu.sections')"
-          tooltip-position="bottom"
-          @click="toggleSidebarSection" v-if="!isExpanded"
-          >
-          <icon-base name="hamburgerDot"/>
-        </div>
-        <div class="b-top-bar-menu__crumbs">
-          <span class="b-top-bar-menu__crumbs-home b-top-bar-menu__crumbs-link"
-            :tooltip="homeTooltipText"
-            tooltip-position="bottom"
-            @click="backToLandings"
-            >
-            <icon-base name="home" width="20" height="17" color="rgba(51, 51, 51, 0.45)"/>
-          </span>
-          <span class="b-top-bar-menu__crumbs-arrow">
-            →
-          </span>
-          <span :title="landingName">
-            {{ landingName | truncate(35, '...') }}
-          </span>
-        </div>
-      </div>
-      <div class="b-top-bar-menu__middle"
-        :class="{'b-top-bar-menu__middle-margin' : isExpanded }"
-        >
-        <MenuPlatforms
-          @setDevice="setDevice"
-          ></MenuPlatforms>
-      </div>
-      <div class="b-top-bar-menu__right">
-        <span :tooltip="$t('menu.siteSettings')" tooltip-position="bottom"
-              @click="toggleMenuItem('siteSettings')">
-          <icon-base name="cog"></icon-base>
-        </span>
-
-        <span :tooltip="$t('nav.preview')" tooltip-position="bottom"
-              @click="$emit('preview', $event)">
-          <icon-base name="preview">
-          </icon-base>
-        </span>
-
-        <span :tooltip="$t('nav.export')" tooltip-position="bottom"
-              @click="$emit('export', $event)">
-          <icon-base name="export">
-          </icon-base>
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-</template>
 
 <style lang="sass" scoped>
 @import '../../assets/sass/_colors.sass'
@@ -159,11 +165,13 @@ export default {
 .b-top-bar
   width: 100%
   height: 100%
-  padding: 2.4rem 3.2rem
+  padding: 0 0 0 2.4rem
 
   display: flex
   align-items: center
   justify-content: center
+
+  min-width: 98rem
   &__padd
     width: 100%
   &-menu
@@ -178,44 +186,39 @@ export default {
       justify-content: flex-start
     &__middle
       order: 2
-      width: 14rem
+      width: 8rem
       &-margin
-        // margin: 0 0 0 $size-step*9
+        margin: 0 0 0 33rem
     &__right
       order: 3
       width: 45%
       text-align: right
-      .active
-        svg
-          color: $dark-blue-krayola
-      span
-        margin-left: 1.6rem
-      svg
-        color: $grey
-        cursor: pointer
-        &:hover
-          color: $dark-blue-krayola
+      padding-right: 2.1rem
 
-    &__ham
-      cursor: pointer
-      color: $grey
-      &:hover
-        color: $dark-blue-krayola
+      display: flex
+      justify-content: flex-end
+      button
+        margin: 0 1rem
+        @media only screen and (max-width: 1100px)
+          &
+            margin: 0.5rem
+            padding: 0.5rem
+
     &__crumbs
       display: flex
 
       color: $dark-grey
-      padding: 0 $size-step
+      font-weight: 600
+      padding: 0
       white-space: nowrap
       &-home
         padding: 0 $size-step/4
-        &:hover
-          color: $dark-blue-krayola
+        & svg
+          margin-right: 2rem
       &-arrow
         padding: 0 1rem
       &-link
-        opacity: 0.5
+        display: flex
         &:hover
-          opacity: 1 !important
           cursor: pointer
 </style>

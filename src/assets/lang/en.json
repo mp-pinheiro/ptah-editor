@@ -2,14 +2,16 @@
     "menu": {
         "siteSettings":                 "Settings",
         "sections":                     "Sections",
-        "visualSettings":               "Visual",
+        "visualSettings":               "Style settings",
         "seo":                          "SEO",
         "cookie":                       "Cookies",
         "addJs":                        "Add JS ",
         "integrations":                 "Integrations",
         "openGraph":                    "Open Graph",
         "addCss":                       "Add custom CSS",
-        "fonts":                        "Fonts"
+        "fonts":                        "Fonts",
+        "pageStyle":                    "Page style",
+        "code":                         "Code injection"
     },
     "nav": {
         "backToDashbord":               "Back to landings",
@@ -21,7 +23,9 @@
         "apply":                        "Apply",
         "back":                         "Back",
         "create":                       "Create",
-        "addSection":                   "Add section"
+        "addSection":                   "Add section",
+        "publish":                      "Publish",
+        "help":                         "Help"
     },
     "s": {
         "background":                   "Background",
@@ -32,8 +36,8 @@
         "fill":                         "Fill",
         "fixedScrolling":               "Fixed while scrolling",
         "fpScroll":                     "Full page scroll",
-        "posX":                         "X position",
-        "poxY":                         "Y position",
+        "posX":                         "Left",
+        "poxY":                         "Top",
         "tile":                         "Tile",
         "addImage":                     "Add image",
         "addVideo":                     "Add Video",
@@ -60,10 +64,10 @@
         "setupFonts":                   "Setup fonts"
     },
     "c": {
-        "elementsLibrary":              "Elements library",
+        "elementsLibrary":              "Elements",
         "margin":                       "Margin",
         "padding":                      "Padding",
-        "editIndents":                  "Edit indents",
+        "editIndents":                  "Indents setting",
         "stretch":                      "Stretch to fit",
         "width":                        "Width",
         "height":                       "Height",
@@ -111,7 +115,13 @@
         "navShow":                      "Show/hide navigation arrows",
         "navColor":                     "Navigation color",
         "transDelay":                   "Transition delay (ms)",
-        "carouselWidth":                "Carousel width (columns)"
+        "carouselWidth":                "Carousel width (columns)",
+        "textColor":                    "Text color",
+        "hoverColor":                   "Hover color",
+        "style":                        "Style",
+        "color":                        "Color",
+        "corner":                       "Corner",
+        "radius":                       "Radius"
     },
     "d": {
         "createNew":                    "Create new landing",
@@ -156,11 +166,11 @@
         "toggle":                       "Change text and icons by double clicking"
     },
     "font": {
-        "h1":                           "Header H1",
+        "h1":                           "Header",
         "h2":                           "Header H2",
         "h3":                           "Header H3",
         "p":                            "Plain text",
-        "btn":                          "Text for buttons",
+        "btn":                          "Buttons",
         "defText":                      "Sample text of this font"
     }
 }
