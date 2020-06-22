@@ -20,10 +20,7 @@ import TheProjectPreviewPage from '@src/components/pages/wizard/TheProjectPrevie
 const routes = [
   {
     path: '/',
-    component: () => import(/* webpackChunkName: "Intro" */'@components/Intro'),
-    meta: {
-      title: 'Ptah — landing page builder for games'
-    }
+    redirect: '/dashboard/'
   },
   {
     path: '/dashboard/',

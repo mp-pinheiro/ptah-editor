@@ -1,18 +1,19 @@
 <template>
-    <header class="b-page__header b-header" v-if="this.isStorefrontPreview == false">
+  <header class="b-page__header b-header" v-if="this.isStorefrontPreview == false">
 
-      <div class="b-header__logo">
-        <img src="https://s3.protocol.one/images/ptah_logo_dashboard.png" alt="Ptah logo">
-      </div>
+    <div class="b-header__logo">
+      <img src="https://s3.protocol.one/images/ptah_logo_dashboard.png" alt="Ptah logo">
+    </div>
 
-      <div class="b-locale-changer">
-        <BaseSelect
-          :options="select.options"
-          v-model="select.selected"
-          >
-        </BaseSelect>
-      </div>
-    </header>
+    <!-- TODO: need translations -->
+    <!--<div class="b-locale-changer">
+      <BaseSelect
+        :options="select.options"
+        v-model="select.selected"
+        >
+      </BaseSelect>
+    </div>-->
+  </header>
 </template>
 
 <script>

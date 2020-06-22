@@ -99,6 +99,9 @@
     "not ie <= 8"
   ],
   "description": "ProtocolOne site builder",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
   "lint-staged": {
     "*.js": [
       "vue-cli-service lint",

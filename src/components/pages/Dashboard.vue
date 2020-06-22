@@ -132,6 +132,10 @@ export default {
     this.$Progress.start()
     this.fetchLandings().then(() => {
       this.$Progress.finish()
+
+      if (!this.landings.length) {
+        this.openWindow()
+      }
     })
   },
 
