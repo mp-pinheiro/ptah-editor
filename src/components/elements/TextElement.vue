@@ -1,7 +1,10 @@
 <template>
   <div class="b-text is-editable b-border" ref="text" @click.stop.stop=""
     :path="path"
-    >
+    :style="[objVarsMedia, objVarsTypo]"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+  >
 
     <slot v-if="!isActive"></slot>
 
@@ -58,7 +61,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-            @click.stop="setHeading({ level: 1 })"
+            @click.stop="$_setHeading({ level: 1 })"
           >
             H1
           </button>
@@ -66,7 +69,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-            @click.stop="setHeading({ level: 2 })"
+            @click.stop="$_setHeading({ level: 2 })"
           >
             H2
           </button>
@@ -74,7 +77,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-            @click.stop="setHeading({ level: 3 })"
+            @click.stop="$_setHeading({ level: 3 })"
           >
             H3
           </button>
@@ -82,7 +85,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.bullet_list() }"
-            @click.stop="setList('bullet', 'ordered')"
+            @click.stop="$_setList('bullet', 'ordered')"
           >
             <icon-base name="bulletList"></icon-base>
           </button>
@@ -90,7 +93,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.ordered_list() }"
-            @click.stop="setList('ordered', 'bullet')"
+            @click.stop="$_setList('ordered', 'bullet')"
           >
             <icon-base name="orderedList"></icon-base>
           </button>
@@ -107,12 +110,12 @@
         </template>
 
         <!-- Link form -->
-        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-          <button class="menubar__button" @click.stop="setLinkUrl(commands.link, null)" type="button">
+        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="$_setLinkUrl(commands.link, linkUrl)">
+          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="$_hideLinkMenu"/>
+          <button class="menubar__button" @click.stop="$_setLinkUrl(commands.link, null)" type="button">
             <icon-base name="remove"></icon-base>
           </button>
-          <base-button class="menubar__button" color="blue" size="small" @click.stop="setLinkUrl(commands.link, linkUrl)">
+          <base-button class="menubar__button" color="blue" size="small" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
             Done
           </base-button>
         </form>
@@ -125,13 +128,18 @@
 
 <script>
 import { EditorContent, EditorMenuBar } from 'tiptap'
-
+import elementMedia from '../mixins/elementMedia'
 import textElement from '../mixins/textElement'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'TextElement',
 
-  mixins: [textElement],
+  mixins: [
+    elementMedia,
+    elementHover,
+    textElement
+  ],
 
   components: {
     EditorContent,
@@ -188,61 +196,4 @@ export default {
 </script>
 
 <style lang="sass">
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-@import '../../assets/sass/_menubar.sass'
-
-.b-text
-  color: #000
-
-  font-family: 'Lato'
-  font-size: 1.4rem
-  line-height: 1.4
-  text-align: center
-
-  position: relative
-  display: block
-
-  letter-spacing: -0.02em
-  .is-mobile &,
-  .is-tablet &
-    margin: 0 auto 8px !important
-    text-align: center !important
-  @media only screen and (width: 768px) and (height: 1024px)
-    &
-      padding: 0px 0px 0px 40px !important
-  @media only screen and (max-width: 840px)
-    &
-      margin: 0 auto 8px !important
-  @media only screen and (max-width: 500px)
-    &
-      text-align: center !important
-  @media only screen and (max-width: 900px) and (max-height: 450px)
-    &
-      text-align: left !important
-
-  &::selection, & ::selection
-    color: #ff0
-    background: #000
-
-  ul,
-  ol
-    margin: 0
-    padding: 0 1em
-  p
-    .is-mobile &
-      font-size: 1.6rem !important
-    @media (max-width: 800px)
-      font-size: 1.6rem !important
-  h1
-    .is-mobile &
-      font-size: 3.6rem !important
-    @media (max-width: 800px)
-      font-size: 3.6rem !important
-  h2
-    .is-mobile &
-      font-size: 2.6rem !important
-    @media (max-width: 800px)
-      font-size: 2.6rem !important
-
 </style>

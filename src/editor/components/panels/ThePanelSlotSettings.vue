@@ -1,76 +1,196 @@
 <template>
   <div class="b-panel">
     <h6 class="b-panel__title">
-      Slot
+      Block
     </h6>
 
-    <div class="direction">
-      <div class="b-panel__control">
-        <h6 class="">Section direction</h6>
+    <IndicatorPlatform />
 
-        <ul>
-          <li :class="{ active: isRowDir }" @click="changeDirection('row')">
-            <icon-base name="groupRow"/>
-          </li>
-          <li :class="{ active: isColumnDir }" @click="changeDirection('column')">
-            <icon-base name="groupColumn"/>
-          </li>
-        </ul>
+    <div class="b-panel__layout _top-9">
+      <div class="layout _top-2 _pr-05">
+        <base-scroll-container>
+          <div class="layout-padding _pr-2">
+            <div class="b-panel__control direction">
+              <div class="b-panel__control">
+                <base-caption>
+                  Block settings
+                </base-caption>
+
+                <div class="b-panel__control">
+                  <div class="b-panel__col">
+                    <div class="b-panel__row _v-center">
+                      <base-label>
+                        Direction
+                      </base-label>
+                      <div class="b-panel__col">
+                        <ul>
+                          <li
+                            :class="{ active: isRowDir }"
+                            @click="changeDirection('row')"
+                          >
+                            <icon-base name="groupRow"/>
+                          </li>
+                          <li
+                            :class="{ active: isColumnDir }"
+                            @click="changeDirection('column')"
+                          >
+                            <icon-base name="groupColumn"/>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="b-panel__col">
+                <div class="b-panel__control">
+                  <div class="b-panel__row _v-center" v-show="isRowDir">
+                    <base-label>
+                      Position
+                    </base-label>
+
+                    <div class="b-panel__col">
+                      <ul>
+                        <li
+                          :class="{ active: align === 'flex-start' }"
+                          @click="changeAlign('flex-start')"
+                        >
+                          <icon-base name="groupToTop"/>
+                        </li>
+                        <li
+                          :class="{ active: align === 'flex-end' }"
+                          @click="changeAlign('flex-end')"
+                        >
+                          <icon-base name="groupToBottom"/>
+                        </li>
+                        <li
+                          :class="{ active: align === 'center' }"
+                          @click="changeAlign('center')"
+                        >
+                          <icon-base name="groupToVerticalCenter"/>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="b-panel__control">
+                  <div class="b-panel__row _v-center" v-show="isRowDir">
+                    <base-label>
+                      Content
+                    </base-label>
+                    <div class="b-panel__col">
+                      <ul>
+                        <li
+                          :class="{ active: justify === 'flex-start' }"
+                          @click="changeJustify('flex-start')"
+                        >
+                          <icon-base name="groupLeft"/>
+                        </li>
+
+                        <li
+                          :class="{ active: justify === 'flex-end' }"
+                          @click="changeJustify('flex-end')"
+                        >
+                          <icon-base name="groupRight"/>
+                        </li>
+
+                        <li
+                          :class="{ active: justify === 'center' }"
+                          @click="changeJustify('center')"
+                        >
+                          <icon-base name="groupCenterHorizontal"/>
+                        </li>
+
+                        <li
+                          :class="{ active: justify === 'space-between' }"
+                          @click="changeJustify('space-between')"
+                        >
+                          <icon-base name="groupSpaceBetween"/>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="b-panel__control">
+                  <div class="b-panel__row _v-center" v-show="isColumnDir">
+                    <base-label>
+                      Position
+                    </base-label>
+                    <div class="b-panel__col">
+                      <ul>
+                        <li
+                          :class="{ active: align === 'flex-start' }"
+                          @click="changeAlign('flex-start')"
+                        >
+                          <icon-base name="groupLeft"/>
+                        </li>
+                        <li
+                          :class="{ active: align === 'center' }"
+                          @click="changeAlign('center')"
+                        >
+                          <icon-base name="groupCenterHorizontal"/>
+                        </li>
+                        <li
+                          :class="{ active: align === 'flex-end' }"
+                          @click="changeAlign('flex-end')"
+                        >
+                          <icon-base name="groupRight"/>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="b-panel__control">
+                  <div class="b-panel__row _v-center" v-show="isColumnDir">
+                    <base-label>
+                      Content
+                    </base-label>
+                    <div class="b-panel__col">
+                      <ul>
+                        <li
+                          :class="{ active: justify === 'flex-start' }"
+                          @click="changeJustify('flex-start')"
+                        >
+                          <icon-base name="groupTop"/>
+                        </li>
+                        <li
+                          :class="{ active: justify === 'center' }"
+                          @click="changeJustify('center')"
+                        >
+                          <icon-base name="groupCenterVertical"/>
+                        </li>
+                        <li
+                          :class="{ active: justify === 'flex-end' }"
+                          @click="changeJustify('flex-end')"
+                        >
+                          <icon-base name="groupBottom"/>
+                        </li>
+                        <li
+                          :class="{ active: justify === 'space-between' }"
+                          @click="changeJustify('space-between')"
+                        >
+                          <icon-base class="b-groupSpaceBetween" name="groupSpaceBetween"/>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="b-panel__control" v-if="settingObjectOptions.width && !isMobile">
+                  <control-slot-width />
+                </div>
+              </div> <!-- /_b-panel__control-->
+            </div><!-- /_direction-->
+
+            <div class="b-panel__control">
+              <control-box />
+            </div>
+          </div>
+        </base-scroll-container>
       </div>
-
-      <div class="b-panel__control">
-        <h6 v-show="direction" class="">Content direction</h6>
-
-        <ul v-show="isRowDir">
-          <li :class="{ active: align === 'flex-start' }" tooltip="Top" @click="changeAlign('flex-start')">
-            <icon-base name="groupTop"/>
-          </li>
-          <li :class="{ active: align === 'center' }" tooltip="Vertical align center" @click="changeAlign('center')">
-            <icon-base name="groupCenterVertical"/>
-          </li>
-          <li :class="{ active: align === 'flex-end' }" tooltip="Bottom" @click="changeAlign('flex-end')">
-            <icon-base name="groupBottom"/>
-          </li>
-        </ul>
-
-        <ul v-show="isRowDir">
-          <li :class="{ active: justify === 'flex-start' }" tooltip="Left" @click="changeJustify('flex-start')">
-            <icon-base name="groupLeft"/>
-          </li>
-
-          <li :class="{ active: justify === 'flex-end' }" tooltip="Right" @click="changeJustify('flex-end')">
-            <icon-base name="groupRight"/>
-          </li>
-
-          <li :class="{ active: justify === 'center' }" tooltip="Center" @click="changeJustify('center')">
-            <icon-base name="groupCenterHorizontal"/>
-          </li>
-
-          <li :class="{ active: justify === 'space-between' }" tooltip="Space between" @click="changeJustify('space-between')">
-            <icon-base name="groupSpaceBetween"/>
-          </li>
-        </ul>
-
-        <ul v-show="isColumnDir">
-          <li :class="{ active: align === 'flex-start' }" @click="changeAlign('flex-start')">
-            <icon-base name="groupLeft"/>
-          </li>
-          <li :class="{ active: align === 'center' }" @click="changeAlign('center')">
-            <icon-base name="groupCenterHorizontal"/>
-          </li>
-          <li :class="{ active: align === 'flex-end' }" @click="changeAlign('flex-end')">
-            <icon-base name="groupRight"/>
-          </li>
-        </ul>
-      </div> <!-- /_b-panel__control-->
-    </div><!-- /_direction-->
-
-    <div class="b-panel__control" v-if="settingObjectOptions.width">
-      <control-slot-width></control-slot-width>
-    </div>
-
-    <div class="b-panel__control">
-      <control-box></control-box>
     </div>
   </div>
 </template>
@@ -80,10 +200,11 @@ import { mapState } from 'vuex'
 import * as _ from 'lodash-es'
 import ControlBox from '../controls/TheControlBox'
 import ControlSlotWidth from '../controls/TheControlSlotWidth'
+import IndicatorPlatform from '../IndicatorPlatform'
 
 export default {
   name: 'ThePanelSlotSettings',
-  components: { ControlSlotWidth, ControlBox },
+  components: { IndicatorPlatform, ControlSlotWidth, ControlBox },
   props: {
     builder: {
       type: Object,
@@ -92,7 +213,16 @@ export default {
   },
 
   computed: {
-    ...mapState('Sidebar', ['sandbox', 'settingObjectSection', 'settingObjectOptions']),
+    ...mapState('Sidebar', [
+      'sandbox',
+      'settingObjectSection',
+      'settingObjectOptions',
+      'device'
+    ]),
+
+    isMobile () {
+      return this.device === 'is-mobile'
+    },
 
     options () {
       return this.settingObjectOptions
@@ -122,6 +252,15 @@ export default {
       return (this.settingObjectSection.get(this.sandbox.container) || {}).styles
     },
 
+    mediaStyles () {
+      let media = (this.settingObjectSection.get(this.sandbox.container) || {}).media
+
+      if (media === undefined) {
+        media = { 'is-mobile': {} }
+      }
+      return media
+    },
+
     components: {
       set (value) {
         this.settingObjectSection.set(this.sandbox.components, value)
@@ -133,35 +272,29 @@ export default {
 
     direction: {
       set (value) {
-        this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, {
-          styles: { 'flex-direction': value }
-        }))
+        this.update('flex-direction', value)
       },
       get () {
-        return this.styles['flex-direction']
+        return this.getPropValue('flex-direction')
       }
     },
 
     align: {
       set (value) {
-        this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, {
-          styles: { 'align-items': value }
-        }))
+        this.update('align-items', value)
       },
       get () {
-        return this.styles['align-items']
+        return this.getPropValue('align-items')
       }
     },
 
     justify: {
-      get () {
-        return this.styles['justify-content']
+      set (value) {
+        this.update('justify-content', value)
       },
 
-      set (value) {
-        this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, {
-          styles: { ...this.styles, 'justify-content': value }
-        }))
+      get () {
+        return this.getPropValue('justify-content')
       }
     }
   },
@@ -198,6 +331,35 @@ export default {
         return
       }
       this.justify = value
+    },
+
+    update (prop, value) {
+      let props = {}
+      let styles = {}
+      let media = {}
+      let device = 'is-mobile'
+
+      styles[prop] = value
+
+      media[device] = {}
+      media[device][prop] = value
+
+      this.isMobile ? props = { 'media': media } : props = { 'styles': styles }
+
+      this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, props))
+    },
+
+    getPropValue (prop) {
+      let s = ''
+      let device = 'is-mobile'
+
+      if (this.isMobile && this.mediaStyles[device] && this.mediaStyles[device][prop]) {
+        s = this.mediaStyles[device][prop]
+      } else {
+        s = this.styles[prop]
+      }
+
+      return s
     }
   }
 }
@@ -215,40 +377,43 @@ export default {
     overflow: hidden
     margin-bottom: .8rem
 
-    h6
-      font-size: 1.4rem
-      font-weight: normal
-      line-height: 1.8rem
-      color: $grey-middle
-      letter-spacing: -0.01em
-
-      padding: 0 0 0.5rem 0
-      margin: 0
-      display: inline-block
-
     ul
       width: 100%
       display: flex
       align-items: center
       list-style-type: none
-      margin: 0 0 1.5rem
+      margin: 0
       padding: 0
       &:last-child
         border-bottom: none
       li
-        padding: .8rem
-        cursor: pointer
-        color: $blue
-        border-radius: 3px
-        margin-right: 6px
+        width: 3.4rem
+        height: 3.4rem
 
-        transition: all .3s cubic-bezier(.2,.85,.4,1.275)
+        display: flex
+        justify-content: center
+        align-items: center
+
+        cursor: pointer
+        color: #A2A5A5
+        border-radius: 3px
+        margin-left: .6rem
+        background: #F3F6F6
+
+        transition: background .3s linear
         &:hover,
         &.active
-          background: $dark-blue-krayola
+          background: $main-green
         &:hover
-          color: #ffffff
+          color: #575A5F
         &.active
-          color: #ffffff
+          color: #575A5F
           cursor: default
+
+    /deep/
+      .range-slider
+        width: 10.5rem
+
+.b-groupSpaceBetween
+  transform: rotate(90deg)
 </style>

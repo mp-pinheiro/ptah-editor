@@ -1,8 +1,18 @@
 <template>
-  <div class="b-menu-tree">
+  <div
+    class="b-menu-tree"
+    ref="tree"
+    :class="[
+      { '_short': menuTree.length > 0 && settingObjectSection.id && selectedSections.length < 2 },
+      { '_short': selectedGroup.length > 0 },
+      { '_long': selectedSections.length > 1 }
+    ]"
+  >
     <base-scroll-container backgroundBar="#999">
       <!-- header section -->
+
       <menu-tree-item
+        ref="header"
         v-if="headerSection()"
         :section="headerSection()"
         :builder="builder"
@@ -10,10 +20,11 @@
         :class="{ 'selected' : itemSelected(headerSection())}"
         class="isHeader"
         @click="setActive(headerSection(), $event)"
-        v-scroll-to="`#section_${headerSection().id}`" />
+        v-scroll-to="`#section_${headerSection().id}`"
+      />
 
       <!-- tree menu -->
-      <div class="node-sortable tree-root" ref="tree">
+      <div class="node-sortable tree-root">
         <template v-for="(item, index) in menuTree">
           <menu-tree-item
             v-if="!isGroup(item)"
@@ -23,26 +34,31 @@
             :data-id="item.id"
             :class="{ 'selected' : itemSelected(item) }"
             @click="setActive(item, $event)"
-            v-on:select="onSelect"
-            v-on:delete="onDelete"
+            @select="onSelect"
             v-scroll-to="`#section_${item.id}`"
-            class="tree-node draggable" />
-          <div class="b-menu-tree__group node-sortable tree-branch draggable" :key="index" v-if="isGroup(item)">
-            <div class="b-menu-tree__group-name">
-              <span>Group</span>
+            class="tree-node draggable"
+          />
+          <div
+            class="b-menu-tree__group node-sortable tree-branch draggable"
+            :key="index"
+            v-if="isGroup(item)"
+          >
+            <div
+              class="b-menu-tree__group-name"
+              @click="onSelectGroup(item)"
+              :class="[
+                { 'selected' : selectedGroup.length > 0 && selectedGroup[0].id === item[0].id }
+              ]"
+            >
+              <span>
+                Group
+              </span>
               <div class="b-menu-tree__group-controls">
-              <span
-                @click="showBackgroundPanel(item[0])"
-                tooltip="Group background"
-                tooltip-position="bottom">
-                <icon-base name="background"></icon-base>
-              </span>
                 <span
-                  @click="ungroup(item[0])"
-                  tooltip="Ungroup"
-                  tooltip-position="bottom">
-                <icon-base name="remove"></icon-base>
-              </span>
+                  @click="showBackgroundPanel(item[0])"
+                >
+                  <IconBase name="backgroundGrey" />
+                </span>
               </div>
             </div>
             <menu-tree-item
@@ -53,30 +69,82 @@
               :data-id="section.id"
               :class="{ 'selected' : itemSelected(section) }"
               is-group-item="true"
-              v-on:select="onSelect"
-              v-on:delete="onDelete"
+              @select="onSelect"
               v-scroll-to="`#section_${section.id}`"
               @click="setActive(section, $event)"
-              class="tree-node group-node draggable" />
+              class="tree-node group-node node-sortable draggable" />
           </div>
         </template>
       </div>
     </base-scroll-container>
 
-    <div class="b-menu-tree__group-control">
-      <div class="b-menu-tree__group-control--description" v-show="selectedSections.length <= 1">
-        <icon-base name="pling"></icon-base>
+    <div class="b-menu-tree__bottom">
+      <base-button
+        v-if="selectedSections.length > 1"
+        @click="showConfirm = true"
+        size="small"
+        color="main-green-transparent"
+        class="b-menu-tree__group-together"
+      >
+        Create group
+      </base-button>
+
+      <div
+        class="b-delete-section"
+        v-if="sections.length > 0 && settingObjectSection.id && selectedSections.length < 2 && selectedGroup.length === 0"
+      >
+        <BaseButton
+          @click.stop="showConfirmDelete = true"
+          color="main-red-transparent"
+          size="small"
+        >
+          Delete section
+        </BaseButton>
+      </div>
+      <div
+        class="b-delete-section"
+        v-if="selectedGroup.length > 0"
+      >
+        <BaseButton
+          @click.stop="ungroup"
+          color="main-red-transparent"
+          size="small"
+        >
+          Delete group
+        </BaseButton>
+      </div>
+      <div class="b-menu-tree__bottom-description" v-if="selectedSections.length < 2">
+        <IconBase
+          width="12"
+          height="12"
+          name="info"
+          color="#A2A5A5"
+        />
         <div>
-          To group sections select them both holding “Ctrl” key
+          To create group select both section holding “Ctrl” key
         </div>
       </div>
-      <base-button
-        v-show="selectedSections.length > 1"
-        @click="groupSections"
-        size="middle"
-        color="gray"
-        class="b-menu-tree__group-together">Group selected</base-button>
     </div>
+
+    <base-confirm
+      title="Group selected"
+      @confirm="groupSections"
+      @close="showConfirm = false"
+      v-if="showConfirm"
+      button="Group"
+    >
+      After grouping, the background of all child sections will be deleted
+    </base-confirm>
+
+    <base-confirm
+      title="Delete section"
+      @confirm="deleteSection"
+      @close="showConfirmDelete = false"
+      v-if="showConfirmDelete"
+      button="Delete"
+    >
+      You are going to delete <span class="b-menu-tree__modal-name-section">{{ settingObjectSection.name }}</span>, this cannot be undone. Confirm deleting?
+    </base-confirm>
   </div>
 </template>
 
@@ -86,10 +154,13 @@ import { mapState, mapActions } from 'vuex'
 import MenuTreeItem from './MenuTreeItem'
 import Sortable from 'sortablejs'
 import { resetIndents } from '@editor/util'
+import { sectionsGroups as setStylesForSectionsInGroup } from '@cscripts/sectionsGroups'
 
 export default {
   name: 'menuTree',
-  components: { MenuTreeItem },
+  components: {
+    MenuTreeItem
+  },
   props: {
     sections: {
       required: true
@@ -108,9 +179,12 @@ export default {
       menuTree: [],
       lastIndexes: [],
       selectedSections: [],
+      selectedGroup: [],
       absorbed: [],
       init: false,
-      nested: []
+      nested: [],
+      showConfirm: false,
+      showConfirmDelete: false
     }
   },
 
@@ -122,8 +196,11 @@ export default {
   },
 
   watch: {
-    sectionsGroups (value, oldValue) {
+    sectionsGroups () {
       this.buildTree()
+      setTimeout(() => {
+        setStylesForSectionsInGroup()
+      }, 300)
     },
 
     inc () {
@@ -153,7 +230,8 @@ export default {
       'clearSettingObject',
       'clearSettingObjectLight',
       'setControlPanel',
-      'setElement'
+      'setElement',
+      'toggleAddSectionMenu'
     ]),
 
     ...mapActions('Landing', [
@@ -175,7 +253,7 @@ export default {
             }
           })
         }
-      }, 300)
+      }, 150)
     },
 
     destroySortable () {
@@ -340,12 +418,41 @@ export default {
     },
 
     onSelect (section) {
+      let isInGroup = false
       let i = this.selectedSections.indexOf(section.id)
+      this.selectedGroup = []
+
+      this.menuTree.forEach(item => {
+        if (this.isGroup(item) && item.findIndex(i => i.Id === section.id)) {
+          isInGroup = true
+        }
+      })
+
+      // header can't be grouped
+      if (this.headerSection() !== undefined) {
+        const idHeader = this.headerSection().id
+        const indexHeader = this.selectedSections.indexOf(idHeader)
+
+        if (indexHeader > -1) {
+          this.selectedSections.splice(indexHeader, 1)
+        }
+      }
+
       if (i > -1) {
         this.selectedSections.splice(i, 1)
+      }
+
+      if (!isInGroup) {
+        this.selectedSections.push(section.id)
       } else {
+        this.selectedSections.splice(0, 1)
         this.selectedSections.push(section.id)
       }
+    },
+
+    onSelectGroup (group) {
+      this.selectedGroup = group
+      this.selectedSections = []
     },
 
     onDelete () {
@@ -355,6 +462,9 @@ export default {
     },
 
     itemSelected (section) {
+      if (this.selectedGroup.length !== 0) {
+        return false
+      }
       return this.selectedSections.indexOf(section.id) > -1 || this.isActiveSection(section.id)
     },
 
@@ -363,13 +473,23 @@ export default {
       this.setSettingSection(section)
     },
 
-    ungroup (section) {
+    ungroup () {
+      const section = this.selectedGroup[0]
+
+      this.selectedGroup.forEach((s) => {
+        s['data']['mainStyle']['styles']['padding-bottom'] = '0'
+        s['data']['mainStyle']['styles']['top'] = '0'
+        s['data']['mainStyle']['styles']['position'] = 'relative'
+      })
+
       this.setSectionData(section, 'absorb', 0)
       resetIndents()
+
       setTimeout(() => {
         this.destroySortable()
         this.buildTree(true)
         this.initSortable()
+        this.selectedGroup = []
       }, 300)
     },
 
@@ -381,9 +501,12 @@ export default {
       let newMain = _.head(group)
       this.absorbed = _.tail(group)
 
+      this.clearBackgrounds(this.absorbed)
+      this.autoHeightToMain(newMain)
       this.applyGroup(newMain)
 
       await this.$nextTick()
+
       this.destroySortable()
       this.buildTree(true)
       this.initSortable()
@@ -394,6 +517,8 @@ export default {
       this.moveSections(this.sIndex(newMain.id))
       // apply changes
       this.setSectionData(newMain, 'absorb', this.absorbed.length)
+      // set active
+      this.setActive(newMain)
 
       resetIndents()
 
@@ -454,9 +579,27 @@ export default {
 
     setActive (section, event) {
       this.setSettingSection(section)
-      if (!event.ctrlKey) {
-        this.selectedSections = [section.id]
+
+      if (event && !event.ctrlKey) {
+        if (this.headerSection()) {
+          if (this.headerSection().id === section.id) {
+            this.selectedSections = []
+          } else {
+            this.selectedSections = [section.id]
+          }
+        } else {
+          this.selectedSections = [section.id]
+        }
+      } else {
+        if (this.headerSection()) {
+          if (this.headerSection().id === section.id) {
+            this.selectedSections = []
+          }
+        }
       }
+
+      this.selectedGroup = []
+      this.toggleAddSectionMenu(false)
     },
 
     isActiveSection (id) {
@@ -481,10 +624,61 @@ export default {
       document.addEventListener('click', e => {
         const target = e.target
 
-        if (target === tree || tree.contains(target)) {
+        if (target.classList.contains('b-menu-tree__group-together')) {
+          return
+        }
+
+        if (target !== tree && !tree.contains(target)) {
           this.selectedSections = []
         }
       })
+    },
+
+    /**
+     * Clear background from absorbed secitons
+     * @param sections {Array} - list of absorbed sections
+     */
+    clearBackgrounds (sections) {
+      sections.forEach((section) => {
+        section.set(`$sectionData.mainStyle.styles['background-image']`, 'none')
+        section.set(`$sectionData.mainStyle.media['is-mobile']['background-image']`, 'none')
+        section.set(`$sectionData.mainStyle.styles['background-color']`, 'transparent')
+        section.set(`$sectionData.mainStyle.media['is-mobile']['background-color']`, 'transparent')
+      })
+    },
+
+    autoHeightToMain (mainSection) {
+      mainSection.set(`$sectionData.mainStyle.styles['height']`, 'auto')
+      mainSection.set(`$sectionData.mainStyle.media['is-mobile']['height']`, 'auto')
+
+      if (mainSection.group === 'Slider') {
+        mainSection.set(`$sectionData.mainStyle.styles['height']`, '80vh')
+        mainSection.set(`$sectionData.mainStyle.media['is-mobile']['height']`, '80vh')
+      }
+    },
+
+    deleteSection () {
+      const sectionId = this.settingObjectSection.id
+
+      // update group
+      if (this.isSlaveSection(sectionId)) {
+        let master = _.find(this.sectionsGroups, o => o.children.indexOf(sectionId) > -1).main
+        let absorb = master.data.mainStyle.absorb
+        master.set('$sectionData.mainStyle', _.merge({}, master.data.mainStyle, { absorb: absorb - 1 }))
+      }
+
+      this.builder.remove(sectionId)
+      this.clearSettingObject()
+
+      resetIndents()
+
+      this.onDelete()
+
+      this.saveState(this.builder.export('JSON'))
+    },
+
+    isSlaveSection (sectionId) {
+      return !!_.find(this.sectionsGroups, o => o.children.indexOf(sectionId) > -1)
     }
   }
 }
@@ -492,18 +686,36 @@ export default {
 
 <style lang="sass" scoped>
 .tree-root
-  padding-bottom: 5rem
+  padding-bottom: 0
 
 .b-menu-tree
-  padding: 0 0 5rem
+  padding: 0 0 9rem
   margin: 0
   height: 100%
 
-  &__group
-    background: rgba($grey-middle, .1)
+  width: calc(100% + .5rem)
+  .b-menu-tree__bottom
+    height: 9rem
+  &._short
+    padding: 0 0 12rem
+    .b-menu-tree__bottom
+      height: 12rem
+  &._long
+    padding: 0 0 9rem
+    .b-menu-tree__bottom
+      height: 9rem
 
-    .tree-node
-      padding-left: 3.2rem
+  &__group
+    .menu-tree-item:nth-child(2)
+      /deep/
+        .menu-tree-item__controls > span:last-child
+          visibility: hidden
+    & .tree-node
+      padding-left: 6.4rem
+      /deep/
+        .menu-tree-item__name,
+        .menu-tree-item__name > span
+          width: 9.5rem !important
 
   &__group-name
     color: $gray300
@@ -514,36 +726,63 @@ export default {
 
     display: flex
     justify-content: space-between
-    padding: 1.6rem 1.6rem 1.6rem 3.1rem
+    max-width: 28rem
+    padding: 1.3rem 1.1rem 1.3rem 1.6rem
+    margin: 0 0 0 1.3rem
 
+    cursor: pointer
+    &:active
+      box-shadow: 0 4px 16px rgba($black, 0.25)
+    &.selected
+      background: rgba(0, 173, 182, 0.1)
+      & *
+        color: #575A5F
   &__group-controls
     opacity: .7
     svg
-      width: 1.5rem
-      height: 1.5rem
       margin-left: 1.5rem
       cursor: pointer
+    &-ungroup
+      margin-right: 0.3rem
 
-  &__group-control
+  &__bottom
     position: absolute
+    left: 0
+    right: 1.5rem
     bottom: 0
-    width: 100%
-    padding: 0 4.4rem 1.8rem 2.1rem
+    padding: 0 1rem 2.4rem
+    height: 12rem
 
-    &--description
-      color: $grey-middle
-      font-size: 1.4rem
-      line-height: 1.7rem
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    align-items: center
+
+    &-description
+      color: #A2A5A5
+      font-size: 1.2rem
+      line-height: 1.6rem
       display: flex
       justify-content: flex-start
       align-items: center
+
+      padding: 0 .8rem 0 1.6rem
 
       svg
         width: 2.4rem
         height: 2.4rem
         margin-right: 1.1rem
+  &__modal-name-section
+    font-weight: 600
 
-  &__group-together
-    width: 100% !important
-    background: transparent !important
+.b-delete-section
+  width: 100%
+  text-align: center
+  padding: 0 0 .9rem
+
+  & svg
+    transition: fill 0.3s cubic-bezier(.2,.85,.4,1.275)
+    cursor: pointer
+    &:hover
+      fill: #FFCF0D
 </style>

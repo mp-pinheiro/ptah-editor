@@ -103,7 +103,7 @@ export default {
   height: 2.5rem
 
   background-color: transparent
-  font-family: Lato, Helvetica, Arial, sans-serif
+  font-family: 'Lato', Helvetica, Arial, sans-serif
   cursor: pointer
   & *
     user-select: none
@@ -210,9 +210,9 @@ export default {
           cursor: pointer
       &:hover
         background-color: $blue-krayola
-        color: $dark-blue-krayola
+        color: $main-green
         & svg
-          fill: $dark-blue-krayola
+          fill: $main-green
       & svg
         margin: 0 $size-step 0 0
       &._right-icon

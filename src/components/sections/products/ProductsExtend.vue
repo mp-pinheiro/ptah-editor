@@ -3,102 +3,135 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
-import { mapActions } from 'vuex'
+import sectionMedia from '../../mixins/sectionMedia'
 
-const C_CUSTOM_1 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn787.cdn.stg.gamenet.ru/0/8hwOK/o_G1wMi.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '157px',
-        'height': '194px'
+let prev = [
+  'https://s3.protocol.one/src/o_1O03Wg.png',
+  'https://s3.protocol.one/src/o_1FdGcD.png',
+  'https://s3.protocol.one/src/o_2FiQhB.png',
+  'https://s3.protocol.one/src/o_1ZxHzN.png'
+]
+
+let label = [
+  'Start', 'Full', 'Delux', 'Ultimate'
+]
+
+let price = [
+  '10', '19', '29', '39'
+]
+
+const [
+  C_CUSTOM_1,
+  C_CUSTOM_2,
+  C_CUSTOM_3,
+  C_CUSTOM_4
+] = Array.from(new Array(4), (x, i) => {
+  return [
+    {
+      element: {
+        styles: {
+          'background-image': `url(${prev[i]})`,
+          'background-color': 'rgba(0, 0, 0, 0)',
+          'background-repeat': 'no-repeat',
+          'background-size': 'contain',
+          'width': '120px',
+          'height': '143px'
+        },
+        media: {
+          'is-mobile': {
+            'width': '120px',
+            'height': '143px'
+          }
+        }
       }
     },
-    key: 0
-  },
-  {
-    element: {
-      text: '<b>Start Edition</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
+    {
+      element: {
+        text: `<h1><strong>${label[i]} edition</strong></h1>`,
+        styles: {
+          'font-size': '2.8rem',
+          'color': '#ffffff'
+        },
+        media: {
+          'is-mobile': {
+            'font-size': '3rem'
+          }
+        }
       }
     },
-    key: 1
-  },
-  {
-    element: {
-      text: '<b>10$</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
+    {
+      element: {
+        text: `<b>${price[i]}$</b>`,
+        styles: {
+          'color': '#fff',
+          'font-size': '3.2rem'
+        },
+        media: {
+          'is-mobile': {
+            'font-size': '3.2rem'
+          }
+        }
       }
     },
-    key: 2
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
+    {
+      element: {
+        text: '<strong>BUY NOW</strong>',
+        styles: {
+          'background-color': 'transparent',
+          'color': '#F4BC64',
+          'font-size:': '1.6rem',
+          'text-align': 'center',
+          'width': '190px',
+          'height': '64px',
+          'border-radius': '100px',
+          'border-width': '2px',
+          'border-style': 'solid',
+          'border-color': '#F4BC64'
+        },
+        pseudo: {
+          hover: {
+            'color': '#FFFFFF !important',
+            'border-width': '2px !important',
+            'border-style': 'solid !important',
+            'border-color': '#FFFFFF !important'
+          }
         }
       }
     }
-  }
-]
+  ]
+})
 
-const C_CUSTOM_1_M = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn257.cdn.stg.gamenet.ru/0/8dAso/o_1O03Wg.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '120px',
-        'height': '143px'
+const [
+  C_CUSTOM_1_M,
+  C_CUSTOM_2_M,
+  C_CUSTOM_3_M,
+  C_CUSTOM_4_M
+] = Array.from(new Array(4), (x, i) => {
+  return [
+    {
+      element: {
+        styles: {
+          'background-image': `url(${prev[i]})`,
+          'background-color': 'rgba(0, 0, 0, 0)',
+          'background-repeat': 'no-repeat',
+          'background-size': 'contain',
+          'width': '120px',
+          'height': '143px'
+        }
       }
     },
-    key: 4
-  },
-  {
-    element: {
-      text: '<b>Start Edition</b>',
-      styles: {
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size': '24px',
-        'line-height': '29px',
-        'padding': '30px 0 0 0'
+    {
+      element: {
+        text: `<b>${label[i]} Edition</b>`,
+        styles: {
+          'color': '#F4BC64',
+          'font-size': '2.2rem',
+          'padding-top': '30px'
+        }
       }
-    },
-    key: 5
-  }
-]
+    }
+  ]
+})
 
 const C_CUSTOM_1D = [
   {
@@ -160,101 +193,6 @@ const C_CUSTOM_1D = [
         color: '#818181'
       }
     }
-  }
-]
-
-const C_CUSTOM_2 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn936.cdn.stg.gamenet.ru/0/8hwOw/o_AtAIl.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '219px',
-        'height': '194px'
-      }
-    },
-    key: 10
-  },
-  {
-    element: {
-      text: '<b>Full Edition</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 11
-  },
-  {
-    element: {
-      text: '<b>19$</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 12
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
-      }
-    }
-  }
-]
-
-const C_CUSTOM_2_M = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn292.cdn.stg.gamenet.ru/0/8dAtJ/o_1FdGcD.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '161px',
-        'height': '143px'
-      }
-    },
-    key: 14
-  },
-  {
-    element: {
-      text: '<b>Full Edition</b>',
-      styles: {
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size': '24px',
-        'line-height': '29px',
-        'padding': '30px 0 0 0'
-      }
-    },
-    key: 15
   }
 ]
 
@@ -321,101 +259,6 @@ const C_CUSTOM_2D = [
   }
 ]
 
-const C_CUSTOM_3 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn128.cdn.stg.gamenet.ru/0/8hwPz/o_1fOpA2.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '215px',
-        'height': '194px'
-      }
-    },
-    key: 20
-  },
-  {
-    element: {
-      text: '<b>Deluxe Edition</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 21
-  },
-  {
-    element: {
-      text: '<b>29$</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 22
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
-      }
-    }
-  }
-]
-
-const C_CUSTOM_3_M = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn546.cdn.stg.gamenet.ru/0/8dAtZ/o_2FiQhB.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '157px',
-        'height': '143px'
-      }
-    },
-    key: 24
-  },
-  {
-    element: {
-      text: '<b>Deluxe Edition</b>',
-      styles: {
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size': '24px',
-        'line-height': '29px',
-        'padding': '30px 0 0 0'
-      }
-    },
-    key: 25
-  }
-]
-
 const C_CUSTOM_3D = [
   {
     element: {
@@ -476,101 +319,6 @@ const C_CUSTOM_3D = [
         color: '#818181'
       }
     }
-  }
-]
-
-const C_CUSTOM_4 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn573.cdn.stg.gamenet.ru/0/8hwQa/o_pphTq.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '213px',
-        'height': '194px'
-      }
-    },
-    key: 30
-  },
-  {
-    element: {
-      text: '<b>Ultimate Edition</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 31
-  },
-  {
-    element: {
-      text: '<b>39$</b>',
-      styles: {
-        'color': '#fff',
-        'font-family': 'Montserrat',
-        'font-size': '32px',
-        'line-height': '39px'
-      }
-    },
-    key: 32
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
-      }
-    }
-  }
-]
-
-const C_CUSTOM_4_M = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn452.cdn.stg.gamenet.ru/0/8dAtj/o_1ZxHzN.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '157px',
-        'height': '143px'
-      }
-    },
-    key: 34
-  },
-  {
-    element: {
-      text: '<b>Ultimate Edition</b>',
-      styles: {
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size': '24px',
-        'line-height': '29px',
-        'padding': '30px 0 0 0'
-      }
-    },
-    key: 35
   }
 ]
 
@@ -655,16 +403,23 @@ const C_CUSTOM_CONTAINER_D = {
   styles: {
     'flex-direction': 'column',
     'align-items': 'flex-start',
-    'padding': '10px 0 0 85px'
+    'padding-top': '10px',
+    'padding-left': '85px'
+  },
+  media: {
+    'is-mobile': {
+      'padding-left': '70px'
+    }
   }
 }
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://gn870.cdn.stg.gamenet.ru/0/8coGJ/o_u02v0.jpg)',
+      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
       'background-color': 'rgba(21,28,68,1)',
-      'padding': '30px 0'
+      'padding-top': '30px',
+      'padding-bottom': '30px'
     }
   },
   containerStandart: _.merge({}, C_CUSTOM_CONTAINER),
@@ -782,9 +537,9 @@ export default {
 
   description: 'Product list side expanded view',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
-  cover: 'https://gn199.cdn.stg.gamenet.ru/0/8iE9h/o_2BSWcG.jpg',
+  cover: 'https://s3.protocol.one/src/o_2BSWcG.jpg',
 
   $schema: {
     mainStyle: types.ProductSection,
@@ -817,18 +572,6 @@ export default {
   },
 
   methods: {
-    ...mapActions('Sidebar', ['setControlPanel', 'setSettingSection']),
-
-    async showSettings (panel) {
-      let index = _.findIndex(this.$builder.sections, ['group', GROUP_NAME])
-
-      this.setSettingSection(this.$builder.sections[index])
-
-      await this.$nextTick()
-
-      this.setControlPanel(panel)
-    },
-
     selectProduct (key) {
       this.$sectionData.mainStyle.selectProduct.name = key
     },
@@ -877,7 +620,7 @@ export default {
   <section
     class="b-products-columns-extend"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -885,21 +628,8 @@ export default {
     <slot name="overlay"/>
 
     <div class="b-grid">
-      <div class="b-products-columns-extend__padd">
-
-        <div class="b-products-columns-extend__padd-border">
-          <!-- Setting controls -->
-          <div class="b-products-columns-extend__controls">
-            <div>
-              <a href="#" class="b-products-columns-extend__control"
-                 tooltip="Products"
-                 tooltip-position="bottom"
-                 @click.stop="showSettings('SectionProductsColumnsSettings')">
-                <icon-base name="cog" width="12" height="15" />
-              </a>
-            </div>
-          </div>
-
+      <div class="b-section-padd">
+        <div class="b-section-padd-border">
           <div class="b-grid__row b-products-columns-extend__row"
                :style="{
                  'align-items' : $sectionData.mainStyle.styles['align-items'],
@@ -921,16 +651,15 @@ export default {
                     class="b-sandbox"
                     :container-path="`$sectionData.container${key}M`"
                     :components-path="`$sectionData.components${key}M`"
-                    direction="column"
                     >
 
-                    <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}M`].styles" @change="dragStop">
+                    <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}M`].styles" @start="$_drag(`components${key}M`)" @change="$_dragStop">
                           <div
                             v-for="(component, index) in $sectionData[`components${key}M`]"
                             v-if="$sectionData[`components${key}M`].length !== 0"
                             :key="index"
                             >
-                            <component class="b-products-colums-component"
+                            <component class="b-products-columns-component"
                               v-styler:for="{ el: $sectionData[`components${key}M`][index].element, path: `$sectionData.components${key}M[${index}].element`, type: $sectionData[`components${key}M`][index].type, label: $sectionData[`components${key}M`][index].label }"
                               :is="component.name"
                               :href="$sectionData[`components${key}M`][index].element.link.href"
@@ -963,15 +692,14 @@ export default {
                       class="b-sandbox"
                       :container-path="`$sectionData.container${key}`"
                       :components-path="`$sectionData.components${key}`"
-                      direction="column"
                       >
-                      <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}`].styles" @change="dragStop">
+                      <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}`].styles" @start="$_drag(`$sectionData.components${key}`)" @change="$_dragStop">
                       <div
                         v-for="(component, index) in $sectionData[`components${key}`]"
                         v-if="$sectionData[`components${key}`].length !== 0"
                         :key="index"
                         >
-                        <component class="b-products-colums-component"
+                        <component class="b-products-columns-component"
                           v-styler:for="{ el: $sectionData[`components${key}`][index].element, path: `$sectionData.components${key}[${index}].element`, type: $sectionData[`components${key}`][index].type, label: $sectionData[`components${key}`][index].label }"
                           :is="component.name"
                           :href="$sectionData[`components${key}`][index].element.link.href"
@@ -989,15 +717,14 @@ export default {
                       class="b-sandbox"
                       :container-path="`$sectionData.container${key}D`"
                       :components-path="`$sectionData.components${key}D`"
-                      direction="column"
                       >
-                      <draggable v-model="$sectionData['components' + key + 'D']" class="b-draggable-slot" :style="$sectionData[`container${key}D`].styles" @change="dragStop">
+                      <draggable v-model="$sectionData['components' + key + 'D']" class="b-draggable-slot" :style="$sectionData[`container${key}D`].styles" @start="$_drag(`components${key}D`)" @change="$_dragStop">
                         <div
                           v-for="(component, index) in $sectionData[`components${key}D`]"
                           v-if="$sectionData[`components${key}D`].length !== 0"
                           :key="index"
                           >
-                          <component class="b-products-colums-component"
+                          <component class="b-products-columns-component"
                             v-styler:for="{ el: $sectionData[`components${key}D`][index].element, path: `$sectionData.components${key}D[${index}].element`, type: $sectionData[`components${key}D`][index].type, label: $sectionData[`components${key}D`][index].label }"
                             :is="component.name"
                             :href="$sectionData[`components${key}D`][index].element.link.href"
@@ -1022,146 +749,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-@import '../../../assets/sass/_variables.sass'
-@import '../../../assets/sass/_flex.sass'
-
-.b-products-columns-extend
-  $this: &
-  &__row
-    justify-content: center
-    align-items: center
-    flex-wrap: wrap
-  &__icon-with-text
-    color: inherit
-    font-family: inherit
-  &__padd
-    padding: $size-step/4
-
-    transition: border 0.25s
-    border: 0.2rem dotted transparent
-
-    position: relative
-    .is-mobile &
-      padding: 0
-    @media only screen and (max-width: 540px)
-      &
-        padding: 0
-    &-border
-      padding: $size-step/4
-      transition: border 0.25s
-      border: 1px dotted transparent
-      .is-editable #{$this}__padd:hover &
-        border: 1px dashed $dark-blue-krayola
-
-  &__controls
-    position: absolute
-    top: -14px
-    left: $size-step/3.4
-
-    display: flex
-    align-items: flex-end
-    justify-content: flex-start
-
-    display: none
-    .is-editable #{$this}__padd:hover &
-      display: flex !important
-  &__control
-    display: flex
-    align-items: center
-    justify-content: center
-
-    width: $size-step/1.5
-    height: $size-step/1.5
-
-    background: $dark-blue-krayola
-    box-shadow: 0 6px 16px rgba(26, 70, 122, 0.39)
-
-    cursor: pointer
-    & svg
-      fill:  $white
-      width: 14px
-      height: 14px
-
-    &:hover, .active
-      background: $white
-      svg
-        fill: $dark-blue-krayola
-  &__left
-    flex-wrap: wrap
-    &-item
-      &:hover,
-      &_active
-        color: var(--color-active) !important
-        & .b-slot
-          cursor: pointer
-  &__right
-    position: relative
-    min-height: $size-step*15
-
-    display: flex
-    text-align: center
-    justify-content: center
-    .is-mobile &
-      width: 100%
-      height: auto !important
-      min-height: auto !important
-    .is-tablet &
-      height: auto !important
-      min-height: auto !important
-    @media only screen and (max-width: 768px)
-      &
-        height: auto !important
-        min-height: auto !important
-    &-stage
-      height: 100%
-      display: flex
-      width: 100%
-      flex-direction: column
-      align-items: center
-      justify-content: center
-    &-item
-      position: absolute
-      top: 0
-      right: 0
-      left: 0
-
-      width: 100%
-      min-height: 100%
-      padding: 0
-
-      visibility: hidden
-
-      display: flex
-      justify-content: center
-      align-items: center
-      flex-direction: column
-
-      opacity: 0
-      &_active
-        visibility: visible
-        opacity: 1
-      .is-mobile &,
-      .is-tablet &
-        width: 100%
-        height: auto
-        position: relative
-        visibility: visible
-        margin: 1.6rem 0
-        display: flex !important
-      @media only screen and (max-width: 768px)
-        &
-          width: 100%
-          height: auto
-          position: relative
-          visibility: visible
-          margin: 1.6rem 0
-          display: flex !important
-
-.b-draggable-slot_row
-  flex-direction: row !important
-  & > div
-    margin: $size-step/8
-
-.b-slot
-  height: auto !important
 </style>

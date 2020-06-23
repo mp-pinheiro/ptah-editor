@@ -2,7 +2,7 @@
 <section
     v-styler:section="$sectionData.mainStyle"
     :class="[$sectionData.mainStyle.classes, device.type]"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     class="b-gallery-carousel">
 
   <slot name="menu"/>
@@ -13,10 +13,9 @@
     <sandbox
       container-path="$sectionData.container"
       components-path="$sectionData.components"
-      direction="column"
       class="b-sandbox">
 
-      <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @change="dragStop">
+      <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
         <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
           <component
             v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -108,6 +107,7 @@ import * as types from '@editor/types'
 import { merge } from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 import 'swiper/dist/css/swiper.min.css'
 import swiperOptions from '@editor/swiper'
@@ -123,43 +123,45 @@ const COMPONENTS = [
     element: types.Text,
     type: 'text',
     class: 'b-title',
-    label: 'title',
-    key: 0
+    label: 'title'
   }
 ]
 
 const C_CUSTOM = [
   {
     element: {
-      text: '<b>Header</b>',
+      text: '<h1>Header</h1>',
       styles: {
-        'font-family': 'Montserrat',
         'font-size': '4.2rem',
-        'line-height': '49px',
         'color': '#ffffff',
-        'padding-bottom': '48px'
+        'padding-top': '32px',
+        'padding-bottom': '16px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '3.6rem'
+        }
       }
-    },
-    key: 0
+    }
   }
 ]
 
 const C_IMAGES = [
   {
     name: '1.jpg',
-    path: 'https://gn913.cdn.stg.gamenet.ru/0/8dWmn/o_hDJWI.jpg'
+    path: 'https://s3.protocol.one/src/o_hDJWI.jpg'
   },
   {
     name: '2.jpg',
-    path: 'https://gn285.cdn.stg.gamenet.ru/0/8dWne/o_1hyDuA.jpg'
+    path: 'https://s3.protocol.one/src/o_1hyDuA.jpg'
   }
 ]
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://gn870.cdn.stg.gamenet.ru/0/8coGJ/o_u02v0.jpg)',
-      'background-position': 'center center',
+      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
+      'background-position': '50% 50%',
       'background-size': 'cover'
     },
     swiper: {
@@ -186,9 +188,9 @@ export default {
 
   description: 'Fullscreen sliding gallery',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
-  cover: 'https://gn659.cdn.stg.gamenet.ru/0/8iyZR/o_1jkJaZ.jpg',
+  cover: 'https://s3.protocol.one/src/o_1jkJaZ.jpg',
 
   $schema: {
     mainStyle: types.GallerySlider,
@@ -232,43 +234,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.swiper-slide-image
-  max-width: 100%
-.swiper-slide-item
-  width: 100%
-  height: 100%
-
-  background-size: contain
-  background-position: center
-  background-repeat: no-repeat
-
-.swiper-pagination
-  width: 100%
-  bottom: 2.5rem
-  padding-left: 2.5rem
-  &-bullet
-    margin: 0 .4rem
-
 .swiper-pagination-bullet
   opacity: 1
   &-inactive
     opacity: .35 !important
     background: black !important
-
-.swiper-button-next,
-.swiper-button-prev
-  background-image: none
-
-  svg
-    width: 100%
-    height: 100%
-
-.b-empty-carousel
-  border: 5px dashed rgba(0,0,0, .35)
-  color: rgba(0,0,0, .35)
-  font-size: 4.8rem
-  font-weight: bold
-  padding: 5rem 10rem
-  width: 60vw
-  background: rgba(255,255,255, .2)
 </style>

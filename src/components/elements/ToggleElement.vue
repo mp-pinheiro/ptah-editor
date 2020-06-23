@@ -5,13 +5,24 @@
     ref="toggleEl"
     @click.stop.stop=""
     :path="path"
+    :style="[objVarsMedia, objVarsTypo]"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
     >
 
     <div class="b-toggle-element__item"
       >
       <div class="b-toggle-element__item-col b-toggle-element__item-col-icon" v-if="el.isIconVisible"
         >
-        <span class="b-toggle-element__icon" :style="{ fill: el.color, width: el.size + 'px', 'margin-top': -el.size/6 + 'px'  }" @click="toggle">
+        <span class="b-toggle-element__icon"
+          :style="{
+            fill: el.color,
+            width: sizeIcons.width + 'px',
+            'margin-top':  sizeIcons.width/4 + 'px',
+            '--mobile-toggle-el-width': mediaStyles['is-mobile']['sizeIcons']['width'] + 'px',
+            '--mobile-toggle-el--margin-top': mediaStyles['is-mobile']['sizeIcons']['width']/4 + 'px'
+          }"
+          @click="toggle">
           <icon-base :name="el.icon.value"/>
         </span>
       </div>
@@ -19,7 +30,6 @@
         :class="{ 'b-toggle-element__item-col-content_hide-text': !el.isTextVisible }"
         :style="{
           '--text-align': styles['text-align'],
-          '--font-family': styles['font-family'],
           '--font-size': styles['font-size'],
           '--font-style': styles['font-style'],
           '--line-height': styles['line-height'],
@@ -84,7 +94,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-            @click.stop="setHeading({ level: 1 })"
+            @click.stop="$_setHeading({ level: 1 })"
           >
             H1
           </button>
@@ -92,7 +102,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-            @click.stop="setHeading({ level: 2 })"
+            @click.stop="$_setHeading({ level: 2 })"
           >
             H2
           </button>
@@ -100,7 +110,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-            @click.stop="setHeading({ level: 3 })"
+            @click.stop="$_setHeading({ level: 3 })"
           >
             H3
           </button>
@@ -108,7 +118,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.bullet_list() }"
-            @click.stop="setList('bullet', 'ordered')"
+            @click.stop="$_setList('bullet', 'ordered')"
           >
             <icon-base name="bulletList"></icon-base>
           </button>
@@ -116,7 +126,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.ordered_list() }"
-            @click.stop="setList('ordered', 'bullet')"
+            @click.stop="$_setList('ordered', 'bullet')"
           >
             <icon-base name="orderedList"></icon-base>
           </button>
@@ -133,12 +143,12 @@
         </template>
 
         <!-- Link form -->
-        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-          <button class="menubar__button" @click.stop="setLinkUrl(commands.link, null)" type="button">
+        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="$_setLinkUrl(commands.link, linkUrl)">
+          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="$_hideLinkMenu"/>
+          <button class="menubar__button" @click.stop="$_setLinkUrl(commands.link, null)" type="button">
             <icon-base name="remove"></icon-base>
           </button>
-          <base-button class="menubar__button" color="blue" size="small" @click.stop="setLinkUrl(commands.link, linkUrl)">
+          <base-button class="menubar__button" color="blue" size="small" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
             Done
           </base-button>
         </form>
@@ -150,15 +160,18 @@
 <script>
 import { merge } from 'lodash-es'
 import { EditorContent, EditorMenuBar } from 'tiptap'
-
+import elementMedia from '../mixins/elementMedia'
 import textElement from '../mixins/textElement'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'ToggleElement',
 
-  mixins: [textElement],
-
-  inject: ['$section'],
+  mixins: [
+    elementMedia,
+    textElement,
+    elementHover
+  ],
 
   components: {
     EditorContent,
@@ -200,6 +213,10 @@ export default {
       return this.$section.get(`$sectionData.${this.path}.el`)
     },
 
+    sizeIcons () {
+      return this.$section.get(`$sectionData.${this.path}.sizeIcons`)
+    },
+
     textOptions () {
       return this.$section.get(`$sectionData.${this.path}.editor`)
     },
@@ -224,60 +241,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-
-.b-toggle-element
-  width: 100%
-  position: relative
-  text-align: left
-  &::selection,
-  & ::selection
-    color: #ff0
-    background: #000
-  &__item
-    display: flex
-    align-items: flex-start
-    justify-content: inherit
-
-    padding: 0.8rem 0
-    cursor: pointer
-    &-col
-      padding: 0 0.4rem
-      &-icon
-        width: 3.2rem
-        min-width: 3.2rem
-      &-content
-        width: 100%
-        > div
-          text-align: var(--text-align) !important
-        &_hide-text
-          /deep/
-            table,
-            table th,
-            table td
-              width: 100%
-            table > tbody > tr:last-child
-              display: none
-            table > tbody > tr
-              display: flex
-              justify-content: var(--justify-content) !important
-            table > tbody > tr > th,
-            table > tbody > tr > td
-              text-align: var(--text-align) !important
-              font-size: var(--font-size) !important
-              line-height: var(--line-height) !important
-              font-style: var(--font-style) !important
-              font-family: var(--font-family) !important
-              color: var(--color) !important
-  &_hide
-    padding: 0 1.6rem
-  &__icon
-    display: flex
-    padding-top: 1rem
-    svg
-      fill: inherit
-      width: 100%
-      height: auto
-
 </style>

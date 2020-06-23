@@ -12,7 +12,7 @@
 
         <div class="b-login__github">
           <a href="https://github.com/ProtocolONE/storefront" target="_blank">
-            <img src="https://gn91.cdn.stg.gamenet.ru/0/7nKD8/o_yOEML.png" alt="Github">
+            <img src="https://s3.protocol.one/src/o_yOEML.png" alt="Github">
           </a>
         </div>
 
@@ -20,7 +20,11 @@
       </div>
 
       <div class="b-login__form">
-        <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
+        <form @submit.prevent="submit">
+          <div><input type="email" v-model="email" placeholder="email"></div>
+          <div><input type="password" v-model="password" placeholder="password" /></div>
+          <div><button type="submit">Submit</button></div>
+        </form>
       </div>
 
     </div>
@@ -33,42 +37,28 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Login',
 
-  computed: {
-    frameSrc () {
-      return `${window.location.protocol}//${window.location.hostname}/auth1/login`
+  data () {
+    return {
+      email: '',
+      password: ''
     }
   },
 
-  created () {
-    this.listenFrame()
+  beforeRouteEnter (to, from, next) {
+    if (process.env.VUE_APP_PROD === '1') {
+      window.location.href = `${process.env.VUE_APP_DOMAIN}/login`
+    }
+    next()
   },
 
   methods: {
-    ...mapActions('User', ['setToken', 'logout']),
+    ...mapActions('User', ['login']),
 
-    listenFrame () {
-      window.addEventListener('message', (e) => {
-        let data = {}
-
-        try {
-          data = JSON.parse(e.data)
-        } catch (e) { }
-
-        if (data.access_token && data.success) {
-          this.setToken(data.access_token)
-          this.$router.push({ path: `/dashboard` })
-        }
-
-        // the client has lost the token
-        // logout & reload
-        if (data.error === 'user-already-logged') {
-          this.logout()
-
-          setTimeout(() => {
-            window.location.reload()
-          }, 500)
-        }
-      })
+    submit () {
+      this.login({ email: this.email, password: this.password })
+        .then(() => {
+          this.$router.push('/dashboard')
+        })
     }
   }
 }
@@ -82,6 +72,12 @@ export default {
   display: flex
   justify-content: center
   align-items: center
+
+  &__form
+    div
+      padding: 1rem 0
+    input, button
+      padding: .5rem
 
   &__inner
     height: 50rem
@@ -112,6 +108,17 @@ export default {
 
     img
       max-width: 100%
+
+  &__already
+    color: #FFFFFF
+    font-size: 1.7rem
+    line-height: 2.6rem
+    a
+      font-size: 3rem
+      color: $emerald-green
+      text-decoration: none
+      &:hover
+        text-decoration: underline
 
 iframe
   border: none

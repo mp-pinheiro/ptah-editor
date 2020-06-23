@@ -3,6 +3,7 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const COMPONENTS = [
   {
@@ -55,7 +56,7 @@ const C_CUSTOM = [
 
 const GROUP_NAME = 'SocialNetworks'
 const NAME = 'SocialNetworks'
-const BG_SECTION = 'url(https://gn736.cdn.stg.gamenet.ru/0/8dI9p/o_cm1BL.jpg)'
+const BG_SECTION = 'url(https://s3.protocol.one/src/o_cm1BL.jpg)'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
@@ -63,15 +64,16 @@ const SCHEMA_CUSTOM = {
       'background-image': BG_SECTION,
       'background-color': '#151C44',
       'background-size': 'cover',
-      'background-position': 'top center',
+      'background-position': '50% 0%',
       'background-repeat': 'no-repeat',
-      'padding': '8px 0'
+      'padding-top': '8px',
+      'padding-bottom': '8px'
     }
   },
   container: {
     styles: {
-      margin: '0',
-      padding: '30px 0'
+      'padding-top': '30px',
+      'padding-bottom': '30px'
     },
     width: 12
   },
@@ -84,7 +86,7 @@ export default {
 
   group: GROUP_NAME,
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   cover: '/img/covers/socials-space.jpg',
 
@@ -106,7 +108,7 @@ export default {
   <section
     class="b-socials-networks-space"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -121,7 +123,7 @@ export default {
                 components-path="$sectionData.components"
                 class="b-socials__col b-socials__col_1">
 
-              <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_horizont" :style="$sectionData.container.styles" @change="dragStop">
+              <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_horizont" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
                 <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                   <component
                     v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: $sectionData.components[index].label }"
@@ -146,6 +148,8 @@ export default {
 </template>
 
 <style lang="sass" scoped>
+@import '../../../assets/sass/section-media.sass'
+
 .b-socials-networks-space
   position: relative
   width: 100%

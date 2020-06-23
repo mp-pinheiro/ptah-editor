@@ -1,9 +1,9 @@
 <template>
-<section
+<header
     v-styler:section="$sectionData.mainStyle"
-    :class="$sectionData.mainStyle.classes"
-    :style="[$sectionData.mainStyle.styles, { '--bg-color': $sectionData.mainStyle.styles['background-color'] }]"
-    class="b-section-header">
+    :class="[$sectionData.mainStyle.classes, {'_sticky' : $sectionData.mainStyle.sticky }]"
+    :style="[$sectionData.mainStyle.styles, { '--bg-color': $sectionData.mainStyle.styles['background-color'] }, $sectionData.objVarsMedia]"
+    class="b-smm-header b-header-logo b-section-header">
 
   <slot name="menu"/>
   <slot name="video"/>
@@ -12,13 +12,14 @@
   <div class="b-grid b-header">
     <div class="b-grid__row">
 
-      <div class="b-grid__col-12 b-grid__col-m-12 mobile-header">
+      <div class="b-grid__col-12 b-grid__col-m-12 mobile-header b-section-header__col">
 
         <button
             id="js-hamburger"
             class="hamburger hamburger--slider"
             type="button"
             :data-target="`#mobile-menu-${ _uid }`"
+            :style="{'top': $sectionData.mainStyle.hamPosition + 'px'}"
             @click.stop="toggle">
 
           <span class="hamburger-box">
@@ -31,22 +32,20 @@
 
       <div
           :id="`mobile-menu-${ _uid }`"
-          class="b-grid__col-12 b-grid__col-m-12 mobile-menu mobile-menu_drop"
+          class="b-grid__col-12 b-grid__col-m-12 mobile-menu mobile-menu_drop b-section-header__col"
           :class="{ 'mobile-menu_hide': !$sectionData.isToggle }"
         >
 
         <sandbox
             container-path="$sectionData.container"
             components-path="$sectionData.components"
-            direction="row"
-            align="center"
             class="b-sandbox">
 
           <draggable
-              v-model="$sectionData.components"
-              :style="$sectionData.container.styles"
-              class="b-draggable-slot b-draggable-slot_horizont"
-              @change="dragStop"
+            v-model="$sectionData.components"
+            :style="$sectionData.container.styles"
+            class="b-draggable-slot b-draggable-slot_horizont"
+            @start="$_drag('components')" @change="$_dragStop"
             >
 
             <div
@@ -87,7 +86,7 @@
     </div>
   </div>
 
-</section>
+</header>
 </template>
 
 <script>
@@ -95,6 +94,7 @@ import { StyleObject, Logo, Button } from '@editor/types'
 import { merge } from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const [name, group, cover] = ['CenteredLogoHeader', 'Header', '/img/covers/header-space-03.jpg']
 const defaultComponents = [
@@ -105,12 +105,12 @@ const defaultComponents = [
         'background-color': 'rgba(0,0,0,0)',
         'background-image': 'none',
         'color': '#F4BC64',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '80px',
         'height': '32px',
         'font-size': '1.8rem',
-        'margin': '0 16px'
+        'margin-right': '16px',
+        'margin-left': '16px'
       },
       pseudo: {
         hover: {
@@ -118,8 +118,7 @@ const defaultComponents = [
           'background-color': 'rgba(0,0,0,0)'
         }
       }
-    },
-    key: 1
+    }
   },
   {
     element: {
@@ -128,12 +127,12 @@ const defaultComponents = [
         'background-color': 'rgba(0,0,0,0)',
         'background-image': 'none',
         'color': '#F4BC64',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '80px',
         'height': '32px',
         'font-size': '1.8rem',
-        'margin': '0 16px'
+        'margin-right': '16px',
+        'margin-left': '16px'
       },
       pseudo: {
         hover: {
@@ -141,22 +140,33 @@ const defaultComponents = [
           'background-color': 'rgba(0,0,0,0)'
         }
       }
-    },
-    key: 2
+    }
   },
   {
     element: {
       styles: {
-        'background-image': 'url("https://gn623.cdn.stg.gamenet.ru/0/8cqjM/o_1Y54Cu.svg")',
+        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
         'width': '154px',
         'height': '60px',
-        'margin': '8px 16px'
+        'margin-top': '8px',
+        'margin-right': '16px',
+        'margin-bottom': '8px',
+        'margin-left': '16px'
+      },
+      media: {
+        'is-mobile': {
+          width: '100px',
+          height: '40px',
+          'margin-top': '32px',
+          'margin-right': '0',
+          'margin-bottom': '16px',
+          'margin-left': '0'
+        }
       }
-    },
-    key: 0
+    }
   },
   {
     element: {
@@ -165,12 +175,12 @@ const defaultComponents = [
         'background-color': 'rgba(0,0,0,0)',
         'background-image': 'none',
         'color': '#F4BC64',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '80px',
         'height': '32px',
         'font-size': '1.8rem',
-        'margin': '0 16px'
+        'margin-right': '16px',
+        'margin-left': '16px'
       },
       pseudo: {
         hover: {
@@ -178,8 +188,7 @@ const defaultComponents = [
           'background-color': 'rgba(0,0,0,0)'
         }
       }
-    },
-    key: 3
+    }
   },
   {
     element: {
@@ -188,12 +197,12 @@ const defaultComponents = [
         'background-color': 'rgba(0,0,0,0)',
         'background-image': 'none',
         'color': '#F4BC64',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '80px',
         'height': '32px',
         'font-size': '1.8rem',
-        'margin': '0 16px'
+        'margin-right': '16px',
+        'margin-left': '16px'
       },
       pseudo: {
         hover: {
@@ -201,17 +210,30 @@ const defaultComponents = [
           'background-color': 'rgba(0,0,0,0)'
         }
       }
-    },
-    key: 4
+    }
   }
 ]
 const defaultSchema = {
   mainStyle: {
+    hamPosition: 17,
     styles: {
-      'background-image': 'url(https://gn736.cdn.stg.gamenet.ru/0/8dI9p/o_cm1BL.jpg)',
+      'background-image': 'url(https://s3.protocol.one/src/o_cm1BL.jpg)',
       'background-color': 'rgba(51, 51, 51, 0.95)',
-      'background-position': 'center',
+      'background-position': '50% 50%',
       'background-size': 'cover'
+    }
+  },
+  container: {
+    styles: {
+      'flex-direction': 'row',
+      'justify-content': 'center',
+      'align-items': 'center'
+    },
+    media: {
+      'is-mobile': {
+        'flex-direction': 'column',
+        'justify-content': 'flex-start'
+      }
     }
   },
   components: merge({}, defaultComponents),
@@ -225,7 +247,7 @@ export default {
 
   description: 'Lined up upper block with set of elements',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   $schema: {
     isHeader: true,
@@ -273,74 +295,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.b-section-header
-  .is-tablet &,
-  .is-mobile &
-    min-height: 7rem
-    text-align: left
-
-  @media (max-width: 800px)
-    min-height: 7rem
-    text-align: left
-
-  .mobile-menu
-    transition: all 200ms
-    .is-mobile &
-      &_hide
-        display: none
-    .is-mobile &
-      &_drop
-        background-color: var(--bg-color) !important
-    @media (max-width: 800px)
-      &_drop
-        background-color: var(--bg-color) !important
-
-  .b-grid__col-3,
-  .b-grid__col-9
-    padding: .8rem 1.6rem
-  .b-grid__row
-    .is-mobile &
-      padding: 0 !important
-    @media (max-width: 800px)
-      &
-        padding: 0 !important
-
-.mobile-header
-  padding: 0
-  display: none
-  .is-mobile &
-    display: block
-  @media (max-width: 800px)
-    display: block
-
-.b-logo
-  .is-mobile &
-    display: block
-    background-position: center !important
-  @media (max-width: 800px)
-    display: block
-    background-position: center !important
-
-.b-header-link
-  .is-mobile &
-    font-size: 1.6rem
-  @media (max-width: 800px)
-    font-size: 1.6rem
-
-.b-logo-one
-  .is-mobile &
-    margin-top: auto !important
-    order: 1
-  @media (max-width: 800px)
-    margin-top: auto !important
-    margin-bottom: 8px !important
-    order: 1
-  @media (max-height: 420px)
-    width: auto !important
-    margin-top: 8px !important
-    margin-bottom: 8px !important
-
-@media (max-height: 420px) and (max-width: 800px) and (min-width: 480px)
-  .b-slot .b-draggable-slot > div
-    width: 50% !important
 </style>

@@ -64,6 +64,7 @@ export function getTypeFromSchema(target, schema) {
   if (value === types.TextInherit) return 'inline'
   if (value === types.IconWithText) return 'iconWithText'
   if (value === types.VideoElement) return 'video'
+  if (value === types.IframeElement) return 'iframe'
 
   return null
 }
@@ -133,7 +134,9 @@ export function cleanDOM(artboard) {
     .b-button__resize,
     .b-delimiter__resize,
     .b-video__resize,
-    .b-slot__settings
+    .b-iframe__resize,
+    .b-slot__settings,
+    .b-section-menu__controls
   `
 
   classes.forEach((className) => {
@@ -152,6 +155,10 @@ export function cleanDOM(artboard) {
 
 export function randomPoneId() {
   return `pone${Math.random().toString().substring(2, 7)}`
+}
+
+export function randomSectionId() {
+  return _.random(10000)
 }
 
 /**
@@ -420,55 +427,175 @@ export function elemtentList () {
       element: types.Timer,
       type: 'timer',
       label: 'timer'
+    },
+    iframe: {
+      name: 'IframeElement',
+      element: types.IframeElement,
+      type: 'iframe',
+      label: 'iframe'
     }
   }
 }
 
-export const FONT_SIZES_LIST = [
-  { name: '12px', value: '1.2rem' },
-  { name: '14px', value: '1.4rem' },
-  { name: '16px', value: '1.6rem' },
-  { name: '18px', value: '1.8rem' },
-  { name: '20px', value: '2rem' },
-  { name: '24px', value: '2.4rem' },
-  { name: '28px', value: '2.8rem' },
-  { name: '30px', value: '3rem' },
-  { name: '32px', value: '3.2rem' },
-  { name: '36px', value: '3.6rem' },
-  { name: '40px', value: '4rem' },
-  { name: '44px', value: '4.4rem' },
-  { name: '48px', value: '4.8rem' },
-  { name: '52px', value: '5.2rem' },
-  { name: '56px', value: '5.6rem' },
-  { name: '64px', value: '6.4rem' },
-  { name: '72px', value: '7.2rem' }
-]
+export function getFontsNameStr (fonts) {
+  let str = ''
 
-export const LINES_HEIGHT_LIST = [
-  { name: '1', value: '1' },
-  { name: '1.1', value: '1.1' },
-  { name: '1.2', value: '1.2' },
-  { name: '1.3', value: '1.3' },
-  { name: '1.4', value: '1.4' },
-  { name: '1.5', value: '1.5' },
-  { name: '1.6', value: '1.6' },
-  { name: '1.7', value: '1.7' },
-  { name: '1.9', value: '1.9' },
-  { name: '1.8', value: '1.8' },
-  { name: '2', value: '2' },
-  { name: '2.4', value: '2.4' },
-  { name: '2.8', value: '2.8' },
-  { name: '3', value: '3' }
-]
+  if (!fonts) {
+    return ''
+  }
 
-export const FONTS_LIST = [
-  'Lato',
-  'Montserrat',
-  'Heebo',
-  'PT Serif',
-  'Roboto',
-  'Cinzel',
-  'IBM Plex Sans',
-  'IBM Plex Mono'
+  for (let key in fonts) {
+    str += `${key}:400,600|`
+  }
+
+  return str
+}
+
+export function getFontsLanguages (fonts) {
+  let langs = []
+
+  if (!fonts) {
+    return ''
+  }
+
+  for (let key in fonts) {
+    if (fonts[key].subsets.length) {
+      fonts[key].subsets.forEach(item => {
+        langs = [
+          ...langs,
+          item
+        ]
+      })
+    }
+  }
+
+  return _.uniq(langs).join(',')
+}
+
+/**
+ * Set css global variables for default fonts
+ * @param {Object}
+ */
+export function getFontsSetup (setupFonts) {
+  let arr = []
+
+  if (!setupFonts) {
+    return ''
+  }
+
+  for (let key in setupFonts) {
+    if (setupFonts[key]) {
+      arr.push(`--global-font-${key}: ${setupFonts[key]}`)
+    }
+  }
+
+  return arr.join(';')
+}
+
+/**
+ * Set script for parallax
+ */
+export function getParallaxSetup (sections) {
+  let parallaxSetup = false
+
+  sections.forEach(section => {
+    parallaxSetup = section.data.mainStyle.parallax || parallaxSetup
+  })
+
+  if (parallaxSetup) {
+    return `
+      <script src="${window.location.origin}/js/parallax.min.js"></script>
+      <script>$('._parallax').parallax();</script>
+    `
+  }
+
+  return ''
+}
+
+export function getScrollSetup (fullPageScroll) {
+  let scroll = {
+    style: '',
+    setup: ''
+  }
+
+  if (fullPageScroll === 'yes') {
+    scroll.style = `
+        <link href="${window.location.origin + '/css/onepage-scroll.css'}" rel="stylesheet">
+      `
+    scroll.setup = `
+        <script src="${window.location.origin + '/js/onepage-scroll.min.js'}"></script>
+        <script>
+          function detectMobile () {
+            return $(window).width() < 500 ? true : false;
+          }
+
+          if (!detectMobile()) {
+            $(".main").onepage_scroll();
+          }
+
+          $(window).resize(function() {
+            let className = 'disabled-onepage-scroll';
+            let classWrapName = 'onepage-wrapper';
+
+            if (detectMobile()) {
+              if ($(".main").data("onepage_scroll")){
+                $(".main").disable();
+                $(".main").data("onepage_scroll").destroy();
+
+                if ($(".main").hasClass(classWrapName)) $(".main").removeClass(classWrapName);
+              }
+              $("body").addClass(className);
+              $("body").css('overflow', '')
+
+            } else {
+              if (!$(".main").data("onepage_scroll")){
+                $(".main").onepage_scroll();
+              }
+
+              $("body").css('overflow', 'hidden');
+
+              if ($("body").hasClass(className)) $("body").removeClass(className);
+            }
+          });
+      </script>`
+  }
+
+  return scroll
+}
+
+/**
+ * Set Jquery for page
+ */
+export function getJquerySetup (parallax = '', fullPageScroll ='') {
+  if (fullPageScroll === 'yes' || parallax !== '') {
+    return `<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>`
+  }
+
+  return ``
+}
+
+/**
+ * search and return the styles for the elements
+ */
+export function getPoneStyles (frag) {
+  let defStyles = ''
+  const stylesElements = frag.querySelectorAll('style[id^=pone]');
+
+  Array.from(stylesElements).forEach(node => {
+    defStyles += `<style>${node.innerHTML}</style>`
+  })
+
+  return defStyles
+}
+
+export const LIST_ICONS = [
+  'checkMark',
+  'close',
+  'plus',
+  'flash',
+  'start',
+  'whatshot',
+  'help',
+  'preview'
 ]
 

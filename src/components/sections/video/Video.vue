@@ -3,10 +3,11 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Video'
 const NAME = 'Video'
-const BG_SECTION = 'url(https://gn123.cdn.stg.gamenet.ru/0/7opzP/o_NvNe4.jpg)'
+const BG_SECTION = 'url(https://s3.protocol.one/src/o_NvNe4.jpg)'
 
 const COMPONENTS = [
   {
@@ -32,7 +33,6 @@ const C_CUSTOM = [
     element: {
       text: 'This is a short header',
       styles: {
-        'font-family': 'Heebo',
         'font-size': '5.6rem',
         'color': '#ffffff'
       }
@@ -41,7 +41,7 @@ const C_CUSTOM = [
   },
   {
     element: {
-      videoUrl: 'https://gn616.cdn.stg.gamenet.ru/0/7opu4/o_n0x1o.mp4',
+      videoUrl: 'https://s3.protocol.one/src/o_n0x1o.mp4',
       styles: {
         width: '640px',
         height: '400px'
@@ -73,7 +73,7 @@ export default {
 
   group: GROUP_NAME,
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   cover: '/img/covers/video-thumbnail.png',
 
@@ -95,7 +95,7 @@ export default {
   <section
     class="b-video-section"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
    >
     <slot name="menu"/>
@@ -108,10 +108,9 @@ export default {
           <sandbox
               container-path="$sectionData.container"
               components-path="$sectionData.components"
-              direction="column"
               class="b-sandbox">
 
-            <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @change="dragStop">
+            <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
               <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                 <component
                   v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -134,8 +133,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-video-section
 </style>

@@ -1,5 +1,10 @@
 <template>
-    <VuseBuilder v-bind:show-intro="showIntro" @saved="onDownload" @preview="onPreview" @save="onSave" />
+    <VuseBuilder
+      v-bind:show-intro="showIntro"
+      @saved="onDownload"
+      @preview="onPreview"
+      @save="onSave"
+    />
 </template>
 
 <script>
@@ -23,6 +28,7 @@ import AgeRestrictions from '@components/elements/AgeRestrictions'
 import SocialNetworks from '@components/elements/SocialNetworks'
 import IconWithText from '@components/elements/IconWithText'
 import VideoElement from '@components/elements/VideoElement'
+import IframeElement from '@components/elements/IframeElement'
 import Timer from '@components/elements/Timer'
 import Form from '@components/elements/Form'
 import ToggleElement from '@components/elements/ToggleElement'
@@ -30,8 +36,11 @@ import ToggleElement from '@components/elements/ToggleElement'
 // sections
 // --- header
 import ActionButtonHeader from '@components/sections/header/ActionButtonHeader'
+import ActionButtonFantasyHeader from '@components/sections/header/ActionButtonFantasyHeader'
 import SmmHeader from '@components/sections/header/SmmHeader'
+import SmmFantasyHeader from '@components/sections/header/SmmFantasyHeader'
 import CenteredLogoHeader from '@components/sections/header/CenteredLogoHeader'
+import ActionButtonWesternHeader from '@components/sections/header/ActionButtonWesternHeader'
 
 // --- hero
 import GenericMainScreen from '@components/sections/hero/HeroUnit'
@@ -55,18 +64,30 @@ import FirstScreenSpaceVideoPlayer from '@components/sections/first-screen/First
 import FirstScreenFantasy01 from '@components/sections/first-screen/FirstScreenFantasy01'
 import FirstScreenFantasy02 from '@components/sections/first-screen/FirstScreenFantasy02'
 import FirstScreenFantasyVideoBack from '@components/sections/first-screen/FirstScreenFantasyVideoBack'
+import FirstScreenWestern01 from '@components/sections/first-screen/FirstScreenWestern01'
+import FirstScreenWesternVideoPlayer01 from '@components/sections/first-screen/FirstScreenWesternVideoPlayer01'
+import FirstScreenWesternVideoPlayer02 from '@components/sections/first-screen/FirstScreenWesternVideoPlayer02'
+import FirstScreenWesternVideoBack from '@components/sections/first-screen/FirstScreenWesternVideoBack'
 // --- gallery
 import GallerySwitch from '@components/sections/galleries/GallerySwitch'
+import GallerySwitchFantasy from '@components/sections/galleries/GallerySwitchFantasy'
 import GalleryPopup from '@components/sections/galleries/GalleryPopup'
+import GalleryPopupFantasy from '@components/sections/galleries/GalleryPopupFantasy'
+import GalleryPopupWestern from '@components/sections/galleries/GalleryPopupWestern'
 // --- products
 import Products from '@components/sections/products/Products'
+import ProductsFantasy from '@components/sections/products/ProductsFantasy'
 import ProductsExtend from '@components/sections/products/ProductsExtend'
+import ProductsExtendFantasy from '@components/sections/products/ProductsExtendFantasy'
 // --- columns
 import Columns from '@components/sections/columns/Columns'
+import ColumnsFantasy from '@components/sections/columns/ColumnsFantasy'
+import ColumnsWestern from '@components/sections/columns/ColumnsWestern'
 // --- carousel
 import Carousel from '@components/sections/carousel/Carousel'
 // --- forms
 import FormCenter from '@components/sections/forms/FormCenter'
+import FormCenterFantasy from '@components/sections/forms/FormCenterFantasy'
 import FormRight from '@components/sections/forms/FormRightSide'
 import FormRight2 from '@components/sections/forms/FormRightSide2'
 import FormLeft from '@components/sections/forms/FormLeftSideVariant'
@@ -74,9 +95,16 @@ import FormLeft2 from '@components/sections/forms/FormLeftSideVariant2'
 
 // --- other
 import SystemRequirements from '@components/sections/elements/SystemRequirements'
+import SystemRequirementsFantasy from '@components/sections/elements/SystemRequirementsFantasy'
+import SystemRequirementsWestern from '@components/sections/elements/SystemRequirementsWestern'
 import FooterSpace from '@components/sections/footers/FooterSpace'
+import FooterFantasy from '@components/sections/footers/FooterFantasy'
+import FooterWestern from '@components/sections/footers/FooterWestern'
 import FrequentlyAskedQuestions from '@components/sections/elements/FrequentlyAskedQuestions'
+import FrequentlyAskedQuestionsWestern from '@components/sections/elements/FrequentlyAskedQuestionsWestern'
 import Slider from '@components/sections/slider/Slider'
+import SliderFantasy from '@components/sections/slider/SliderFantasy'
+import SliderWestern from '@components/sections/slider/SliderWestern'
 
 import store from '@store'
 
@@ -93,6 +121,7 @@ const ELEMENTS = {
   SocialNetworks,
   IconWithText,
   VideoElement,
+  IframeElement,
   Timer,
   Form,
   ToggleElement
@@ -102,6 +131,9 @@ const COMPONENTS = {
   ActionButtonHeader,
   SmmHeader,
   CenteredLogoHeader,
+  ActionButtonFantasyHeader,
+  SmmFantasyHeader,
+  ActionButtonWesternHeader,
 
   FirstScreenSpace01,
   FirstScreenSpace02,
@@ -110,6 +142,11 @@ const COMPONENTS = {
   FirstScreenFantasy01,
   FirstScreenFantasy02,
   FirstScreenFantasyVideoBack,
+  FirstScreenWestern01,
+  FirstScreenWesternVideoPlayer01,
+  FirstScreenWesternVideoPlayer02,
+  FirstScreenWesternVideoBack,
+
   TwoSegmentHeroScreen,
   ThreeSegmentHeroScreen,
   VideoHeroSplitScreen,
@@ -125,26 +162,41 @@ const COMPONENTS = {
   HeroWithTimerSlogan2,
 
   Slider,
+  SliderFantasy,
+  SliderWestern,
 
   Columns,
+  ColumnsFantasy,
+  ColumnsWestern,
 
   GallerySwitch,
   GalleryPopup,
   Carousel,
+  GalleryPopupFantasy,
+  GallerySwitchFantasy,
+  GalleryPopupWestern,
 
   Products,
   ProductsExtend,
+  ProductsFantasy,
+  ProductsExtendFantasy,
 
   FormCenter,
+  FormCenterFantasy,
   FormRight,
   FormLeft,
   FormRight2,
   FormLeft2,
 
   SystemRequirements,
+  SystemRequirementsFantasy,
+  SystemRequirementsWestern,
   FrequentlyAskedQuestions,
+  FrequentlyAskedQuestionsWestern,
 
-  FooterSpace
+  FooterSpace,
+  FooterFantasy,
+  FooterWestern
 }
 
 Vuse.mix({ components: ELEMENTS })
@@ -181,15 +233,16 @@ export default {
   },
 
   created () {
-    let themes = []
-
     Vue.use(Vuse, {
-      js: './../js/cjs.js',
-      themes: themes
+      js: '/js/cjs.js',
+      css: '/ptah_sections.css'
     })
   },
 
   mounted () {
+    const body = document.querySelector('body')
+    body.classList.add('b-body_app')
+
     this.$Progress.finish()
   },
 

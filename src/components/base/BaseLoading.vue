@@ -24,8 +24,8 @@ export default {
 
 .lds-dual-ring {
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
 }
 .lds-dual-ring:after {
   content: " ";
@@ -34,8 +34,8 @@ export default {
   height: 46px;
   margin: 1px;
   border-radius: 50%;
-  border: 5px solid #84ff89;
-  border-color: #84ff89 transparent #84ff89 transparent;
+  border: 5px solid #00ADB6;
+  border-color: #00ADB6 transparent #00ADB6 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {

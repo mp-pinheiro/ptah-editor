@@ -1,0 +1,50 @@
+\:root
+  --vh: 100vh
+  --mobile-header-height: 6rem
+
+.mobile-header
+  .is-mobile &
+    height: var(--mobile-header-height) !important
+  @media (max-width: 800px)
+    height: var(--mobile-header-height) !important
+
+.mobile-menu
+  .is-mobile &
+    .b-draggable-slot
+      height: 100%
+      flex-direction: column !important
+      justify-content: flex-start !important
+      > *
+        margin: 0 !important
+
+    .b-sandbox
+      height: 100%
+
+  @media (max-width: 800px)
+    position: fixed
+    top: 6rem
+    right: 0
+    z-index: 9999
+
+    display: none
+    width: 100vw
+    max-width: 100%
+    height: calc(var(--vh, 1vh) * 100 - var(--mobile-header-height))
+    flex-basis: 100%
+
+    border: 0
+    background-color: rgba(0, 0, 0, .9)
+
+    &.is-active
+      display: block
+
+    .b-draggable-slot
+      height: 100%
+      flex-direction: column !important
+      justify-content: flex-start !important
+      > *
+        margin: 0 !important
+
+    .b-sandbox
+      height: 100%
+

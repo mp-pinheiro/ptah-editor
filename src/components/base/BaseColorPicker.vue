@@ -1,6 +1,48 @@
+<template>
+  <div class="b-picker">
+    <div class="b-picker__row">
+      <div class="b-picker__label">
+        <base-label v-if="label !== ''">
+          {{ label }}
+        </base-label>
+      </div>
+
+      <slot />
+      <slot name="buttons" />
+
+      <BaseDropdownMenu
+        class="b-picker__palette"
+        positionDropdown="right"
+      >
+        <div class="b-picker__preview"
+          :style="{ 'background-color': pickerValue.rgba || pickerValue }"
+          :class="{ 'b-picker__preview_transparent': isTransparent }"
+          :title="pickerValue.rgba || pickerValue || 'Choose color'"
+        />
+        <div slot="list">
+          <Sketch
+            :value="pickerValue"
+            @input="changeColor"
+            :presetColors="palette"
+          />
+        </div>
+      </BaseDropdownMenu>
+    </div>
+  </div>
+</template>
+
 <script>
 import { Sketch } from 'vue-color'
+import { mapGetters } from 'vuex'
+
 const DEFAULT_COLOR = 'rgba(0,0,0,1)'
+const DEFAULT_PALETTE_COLORS = [
+  'rgba(0,0,0,1)',
+  'rgba(155,155,155,1)',
+  'rgba(255,255,255,1)',
+  'rgba(0,0,0,0)'
+]
+
 export default {
   name: 'BaseColorPicker',
   model: {
@@ -16,6 +58,31 @@ export default {
     },
     label: {
       type: String
+    }
+  },
+  computed: {
+    ...mapGetters(['colorsPalette']),
+
+    palette () {
+      return [...new Set(this.colorsPalette.concat(DEFAULT_PALETTE_COLORS))]
+    },
+
+    isTransparent () {
+      let isOpacity = false
+
+      if (this.pickerValue && this.pickerValue.indexOf('0)') !== -1) {
+        isOpacity = true
+      }
+
+      if (this.pickerValue.rgba && this.pickerValue.rgba.indexOf('0)') !== -1) {
+        isOpacity = true
+      }
+
+      if (this.pickerValue === '') {
+        isOpacity = true
+      }
+
+      return isOpacity
     }
   },
   watch: {
@@ -44,33 +111,6 @@ export default {
 }
 </script>
 
-<template>
-  <div class="b-picker">
-    <div class="b-picker__row">
-      <BaseDropdownMenu
-        class="b-picker__palette"
-        positionDropdown="left"
-        >
-        <div class="b-picker__preview"
-          :style="{ 'background-color': pickerValue.rgba || pickerValue }"
-          :class="{ 'b-picker__preview_transparent': pickerValue.rgba === 'rgba(0,0,0,0)' || pickerValue === 'rgba(0,0,0,0)' }"
-          :title="pickerValue.rgba || pickerValue || 'Choose color'"
-          >
-        </div>
-        <div slot="list">
-          <Sketch :value="pickerValue" @input="changeColor"></Sketch>
-        </div>
-      </BaseDropdownMenu>
-      <div
-        class="b-picker__label"
-        v-if="label !== ''"
-       >
-        {{ label }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <style lang="sass" scoped="">
 @import '../../assets/sass/_colors.sass'
 @import '../../assets/sass/_variables.sass'
@@ -78,29 +118,39 @@ export default {
 .b-picker
   position: relative
   width: 100%
+  // max-width: 24rem
   &__row
     display: flex
+    justify-content: space-between
     align-items: center
 
     width: 100%
   &__preview
-    width: $size-step*1.5
-    height: $size-step
+    width: 2rem
+    height: 2rem
 
-    border-radius: 0.2rem
+    border-radius: 1rem
     background-color: $white
     border: 2px solid $ligth-grey
+
+    margin: 0 0 0 1.6rem
     &_transparent
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAL0lEQVQ4T2N89uzZfwY8QFJSEp80A+OoAcMiDP4DAb6Ifv78Of50MGoAA+PQDwMAuX5VedFT3cEAAAAASUVORK5CYII=")
+      background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/9503b817-0d0d-4510-a3ae-b2c67ed8a860.png)
+      width: 2rem
+      height: 2rem
+      background-size: 100%
     &:hover
-      border-color: $dark-blue-krayola
+      border-color: $main-green
   &__label
-    color: $dark-grey
-    margin-left: $size-step/2
+    width: 100%
+    max-width: 16rem
+    margin-right: $size-step/2
+    overflow: hidden
+    text-overflow: ellipsis
     &:first-letter
       text-transform: uppercase
   &__palette
-    margin-top: .5rem
+    margin-top: 0
   &_color-hover
     /deep/
       .b-pth-base-dropdown-menu__list
@@ -117,8 +167,8 @@ export default {
     width: $size-step*7.5 !important
     max-height: none !important
     box-shadow: 0px 0 8rem rgba($black, 0.15) !important
-    &_left
-      left: -1.5rem !important
+    &_right
+      right: -2.2rem !important
       padding: 0 0 1rem 0 !important
 
   .vc-sketch

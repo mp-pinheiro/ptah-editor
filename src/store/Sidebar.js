@@ -2,14 +2,30 @@ import * as _ from 'lodash-es'
 
 export default {
   state: {
-    isExpanded: true,
-    controlPanel: { // control panels for sections & elements
-      expanded: false,
+    isExpanded: false, // show/hide sidebar
+    mainLeftMenu: { // left menu of all settings
+      list: [
+        { name: 'Sections', icon: 'hamburgerDot', panel: 'sectionsTree' },
+        { name: 'Style', icon: 'editStyle', panel: 'pageStyle' },
+        { name: 'Fonts', icon: 'fonts', panel: 'fonts' },
+        { name: 'Code', icon: 'code', panel: 'addJsScrips' },
+        { name: 'Seo', icon: 'seo', panel: 'seoSettings' },
+        { name: 'Integration', icon: 'integration', panel: 'integrations' }
+      ],
+      expanded: false, // small/middle it
       name: ''
     },
-    isAddSectionExpanded: false, // add section menu
-    isResizeStop: false,
-    isDragStop: false,
+    controlPanel: { // settings panels for sections & elements
+      expanded: false, // show/hide it
+      name: ''
+    },
+    isShowModal: false, // show/hide modal of elemets settings
+    isShowModalButton: false, // show/hide modal of button target settings
+    isAddSectionExpanded: false, // show/hide add section panel
+    isSectionsTreeExpanded: false, // show/hide panel of sections tree
+    isProgressPanelExpanded: false, // show/hide progress panel
+    isResizeStop: false, // resize elements
+    isDragStop: false, // drag elements in slots
     isGrouping: false, // section grouping interface
     settingObjectType: '', // (Styler prop) section, button, text etc.
     settingObjectLabel: '', // Styler slot label
@@ -19,37 +35,25 @@ export default {
     settingObjectSection: {},
     siteSettingsMenu: [
       {
-        id: 'visualSettings',
-        name: 'menu.visualSettings'
+        id: 'pageStyle',
+        name: 'menu.pageStyle'
+      },
+      {
+        id: 'fonts',
+        name: 'menu.fonts'
+      },
+      {
+        id: 'addJsScrips',
+        name: 'menu.code'
       },
       {
         id: 'seoSettings',
         name: 'menu.seo'
       },
       {
-        id: 'cookiesSettings',
-        name: 'menu.cookie'
-      },
-      {
-        id: 'addJsScrips',
-        name: 'menu.addJs'
-      },
-      {
-        id: 'addCss',
-        name: 'menu.addCss'
-      },
-      {
         id: 'integrations',
         name: 'menu.integrations'
-      },
-      {
-        id: 'openGraph',
-        name: 'menu.openGraph'
       }
-      // {
-      //   id: 'versionHistory',
-      //   name: 'Version history'
-      // }
     ],
     builderSections: [],
     builderGroups: [], // section layouts
@@ -58,15 +62,25 @@ export default {
       components: [], // sandbox current section's components
       styles: {} // sandbox current section's styles
     },
-    device: 'is-desktop'
+    device: 'is-desktop', // selected platform in platforms menu
+    hoverBy: '', // hovering by element in editor
+    isMobile: false, // detect mobile mode
+    mainGreenColor: '#00ADB6'
   },
 
   mutations: {
     isExpanded (state, value) {
       state.isExpanded = value
     },
+
     isAddSectionExpanded (state, value) {
       state.isAddSectionExpanded = value
+    },
+    isSectionsTreeExpanded (state, value) {
+      state.isSectionsTreeExpanded = value
+    },
+    isProgressPanelExpanded (state, value) {
+      state.isProgressPanelExpanded = value
     },
     setSettingObjectType (state, value) {
       state.settingObjectType = value
@@ -112,6 +126,18 @@ export default {
     },
     device (state, value) {
       state.device = value
+    },
+    hoverBy (state, value) {
+      state.hoverBy = value
+    },
+    isMobile (state, value) {
+      state.isMobile = value
+    },
+    isShowModal (state, value) {
+      state.isShowModal = value
+    },
+    isShowModalButton (state, value) {
+      state.isShowModalButton = value
     }
   },
 
@@ -124,15 +150,26 @@ export default {
       commit('isAddSectionExpanded', (typeof value !== 'undefined') ? value : !state.isAddSectionExpanded)
     },
 
+    toggleSectionsTreeMenu ({ state, commit }, value) {
+      commit('isSectionsTreeExpanded', (typeof value !== 'undefined') ? value : !state.isSectionsTreeExpanded)
+    },
+
+    toggleProgressPanelExpanded ({ state, commit }, value) {
+      commit('isProgressPanelExpanded', (typeof value !== 'undefined') ? value : !state.isProgressPanelExpanded)
+    },
+
     /**
      * Set current element options (from seeder)
      * @param commit
      * @param data
      */
-    setSettingObject ({ commit }, data) {
-      commit('setSettingObjectLabel', data.label)
-      commit('setSettingObjectType', data.type)
-      commit('setSettingObjectOptions', data.options)
+    setSettingObject ({ commit, state }, data) {
+      if (data.options.sectionId !== state.settingObjectOptions.sectionId ||
+          data.options.name !== state.settingObjectOptions.name) {
+        commit('setSettingObjectLabel', data.label)
+        commit('setSettingObjectType', data.type)
+        commit('setSettingObjectOptions', data.options)
+      }
     },
 
     /**
@@ -211,6 +248,8 @@ export default {
         label,
         options: elementOptions
       })
+
+      commit('isProgressPanelExpanded', false)
     },
 
     updateBuilderSections ({ commit }, sectionsArray) {
@@ -253,12 +292,15 @@ export default {
 
         // close 'add section bar'
         commit('isAddSectionExpanded', false)
+        commit('isSectionsTreeExpanded', false)
+        commit('isProgressPanelExpanded', false)
       } else {
         commit('controlPanel', {
           expanded: false,
           name: ''
         })
 
+        commit('isProgressPanelExpanded', false)
         dispatch('toggleGrouping', false)
       }
     },
@@ -283,6 +325,24 @@ export default {
 
     setDevice ({ state, commit }, value) {
       commit('device', (typeof value !== 'undefined') ? value : 'is-desktop')
+
+      if (value === 'is-mobile') {
+        commit('isMobile', true)
+      } else {
+        commit('isMobile', false)
+      }
+    },
+
+    setHoverBy: _.throttle(function ({ state, commit }, value) {
+      commit('hoverBy', (typeof value !== 'undefined') ? value : '')
+    }, 250),
+
+    toggleModal ({ state, commit }, value) {
+      commit('isShowModal', (typeof value !== 'undefined') ? value : !state.isShowModal)
+    },
+
+    toggleModalButton ({ state, commit }, value) {
+      commit('isShowModalButton', (typeof value !== 'undefined') ? value : !state.isShowModalButton)
     }
   },
 

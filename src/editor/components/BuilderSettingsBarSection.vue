@@ -142,9 +142,7 @@ export default {
       styles: [],
       products: {},
       selectProduct: {},
-      expandedProducts: true,
-
-      isComplexText: false
+      expandedProducts: true
     }
   },
 
@@ -185,7 +183,6 @@ export default {
     this.selectPlatform = this.settingObjectOptions.selectPlatform || {}
 
     /* Get font settings */
-    this.fontFamily = styles['font-family'] || ''
     this.fontSize = styles['font-size'] || 1.6
     this.fontColor = styles['color'] || '#000000'
 
@@ -196,7 +193,6 @@ export default {
     /* Products */
     this.products = this.settingObjectOptions.products || {}
     this.selectProduct = this.settingObjectOptions.selectProduct || {}
-    this.isComplexText = this.settingObjectOptions.hasProducts || false
   },
 
   beforeDestroy () {

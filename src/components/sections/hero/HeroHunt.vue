@@ -3,6 +3,7 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 /**
  * Base keys for elements in Hero sections
  * Logo - 0
@@ -20,7 +21,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://gn119.cdn.stg.gamenet.ru/0/7RbIo/o_1Ci11S.png")',
+        'background-image': 'url("https://s3.protocol.one/src/o_1Ci11S.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -34,8 +35,7 @@ const C_CUSTOM = [
     element: {
       text: 'Early Access Available Now',
       styles: {
-        'font-family': 'PT Serif',
-        'font-size': '32px',
+        'font-size': '3.2rem',
         'color': '#ffffff'
       }
     },
@@ -47,10 +47,9 @@ const C_CUSTOM = [
       video: 'Qg4n9IpjMg0',
       styles: {
         'background-color': 'transparent',
-        'background-image': 'url(https://gn267.cdn.stg.gamenet.ru/0/7RbUP/o_KcVd3.png)',
+        'background-image': 'url(https://s3.protocol.one/src/o_KcVd3.png)',
         'background-size': 'cover',
         'color': '#ffffff',
-        'font-family': 'PT Serif',
         'text-align': 'center',
         'width': '352px',
         'height': '102px'
@@ -66,10 +65,9 @@ const C_CUSTOM = [
       text: 'Play now',
       styles: {
         'background-color': 'transparent',
-        'background-image': 'url(https://gn342.cdn.stg.gamenet.ru/0/7RbXk/o_1j8P9r.png)',
+        'background-image': 'url(https://s3.protocol.one/src/o_1j8P9r.png)',
         'background-size': 'cover',
         'color': 'transparent',
-        'font-family': 'PT Serif',
         'text-align': 'center',
         'width': '352px',
         'height': '54px'
@@ -85,13 +83,11 @@ const C_CUSTOM = [
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://gn157.cdn.stg.gamenet.ru/0/7T30j/o_1zIylP.jpg)',
+      'background-image': 'url(https://s3.protocol.one/src/o_1zIylP.jpg)',
       'background-size': 'cover',
-      'background-repeat': 'no-repeat'
-    },
-    classes: [
-      'full-height'
-    ]
+      'background-repeat': 'no-repeat',
+      'height': '80vh'
+    }
   },
   container: {
     width: 6
@@ -110,9 +106,9 @@ export default {
 
   description: 'Shooter title Early Access main screen',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
-  cover: 'https://gn372.cdn.stg.gamenet.ru/0/7cELj/o_1DWDoa.png',
+  cover: 'https://s3.protocol.one/src/o_1DWDoa.png',
 
   $schema: {
     mainStyle: types.StyleObject,
@@ -165,7 +161,7 @@ export default {
   <section
     class="b-hunt"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -178,10 +174,9 @@ export default {
           <sandbox
             container-path="$sectionData.container"
             components-path="$sectionData.components"
-            direction="column"
             class="b-sandbox b-hunt-sandbox"
           >
-            <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @change="dragStop">
+            <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
               <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                 <component class="b-hero-component"
                   v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -207,13 +202,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-.b-hunt
-  .b-grid,
-  .b-grid__row
-    height: 80vh
-  .b-hunt-sandbox
-    height: 80vh
-    /deep/
-      .b-draggable-slot
-        justify-content: flex-end
 </style>

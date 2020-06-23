@@ -13,11 +13,15 @@ function installStyler ({ builder, Vue }) {
       const newNode = document.createElement('div')
       const section = vnode.context.$section
       const rootApp = vnode.context.$root.$el
+      const stylerPath = `${binding.value.path}-${section.id}`
+      const findStyler = document.querySelector(`.b-styler[path="${binding.value.path}-${section.id}"]`)
+      const styler = findStyler || newNode
       let name
       let type = false
 
       rootApp.appendChild(newNode)
       el.classList.add('is-editable')
+      el.setAttribute('section', section.id)
 
       if (binding.arg === 'for' || binding.arg === 'galleryItem' || binding.arg === 'product') {
         name = binding.value.path
@@ -27,6 +31,7 @@ function installStyler ({ builder, Vue }) {
 
       if (binding.value.type !== undefined) {
         type = binding.value.type
+        el.classList.add('b-ptah-element')
       }
 
       if (binding.value.el && binding.value.el.link && binding.value.el.link.behavior) {
@@ -36,6 +41,7 @@ function installStyler ({ builder, Vue }) {
       section.stylers.push(new StylerInstance({
         store: vnode.context.$store,
         propsData: {
+          stylerPath,
           el,
           section: section,
           type: (binding.arg !== 'index' && binding.arg !== 'for' && binding.arg) || type || getTypeFromSchema(name, section.schema) || getTypeFromTagName(el.tagName),
@@ -43,7 +49,7 @@ function installStyler ({ builder, Vue }) {
           label: binding.value.label,
           name: name
         }
-      }).$mount(newNode))
+      }).$mount(styler))
     },
 
     update (el, binding, vnode) {

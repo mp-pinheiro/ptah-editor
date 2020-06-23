@@ -1,6 +1,17 @@
 import JSZip from 'jszip'
 import saveAs from 'save-as'
-import { getImageBlob, cleanDOM, gtagSetup } from '../util'
+import {
+  getImageBlob,
+  cleanDOM,
+  gtagSetup,
+  getFontsNameStr,
+  getFontsLanguages,
+  getFontsSetup,
+  getScrollSetup,
+  getParallaxSetup,
+  getJquerySetup,
+  getPoneStyles
+} from '../util'
 
 /**
  * Adds a service worker that caches the static assets.
@@ -77,25 +88,31 @@ function createPWA (output, payload) {
   createSW(output, payload)
 }
 
+function getFile(path) {
+  return new Promise((resolve) => {
+    const assetsClient = new XMLHttpRequest()
+    assetsClient.open('GET', path)
+    assetsClient.onload = function () {
+      resolve(this.response)
+    }
+    assetsClient.send(null)
+  })
+}
+
 function download (assets) {
   const frag = this.outputFragment()
   const artboard = frag.querySelector('#artboard')
   const title = this.settings.title
   const zip = new JSZip()
   const output = zip.folder('project')
-  const jsFolder = output.folder('js/')
+  const [jsFolder, cssFolder] = [output.folder('js/'), output.folder('css/')]
   const manifest = this.getManifest()
+  const urls = [assets.css, assets.js]
 
-  var promise = new Promise((resolve, reject) => {
-    const assetsClient = new XMLHttpRequest()
-    assetsClient.open('GET', assets.js)
-    assetsClient.onload = function () {
-      resolve(this.response)
-    }
-    assetsClient.send(null)
-  })
+  Promise.all(urls.map(getFile))
     .then((content) => {
-      jsFolder.file('cjs.js', content)
+      cssFolder.file('styles.css', content[0])
+      jsFolder.file('cjs.js', content[1])
       return content
     })
     .then(() => {
@@ -103,19 +120,25 @@ function download (assets) {
     })
     .then(() => {
       cleanDOM(frag)
-      let styles = this.getCss(frag)
       let bodyStyles = this.getBodyStyles()
       let video = this.settings.video ? this.getVideoBg(this.settings.video) : ''
       let og = this.settings.ogTags ? this.getOgMetaTags(this.settings.ogTags) : ''
       let icon = this.settings.favicon
-      let scrollSetup = this.getScrollSetup()
+      let scrollSetup = getScrollSetup(this.settings.fullPageScroll)
       let customCss = this.getCustomCss()
       let gtm = this.gtmSetup(this.settings.gtmId)
       let gtag = gtagSetup(this.settings.gtag)
       let script = this.settings.script ? this.settings.script : ''
+      let fontsNameStr = getFontsNameStr(this.settings.fonts)
+      let fontsLanguages = getFontsLanguages(this.settings.fonts)
+      let fontsSetup = getFontsSetup(this.settings.setupFonts)
+      let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
+      let parallaxSetup = getParallaxSetup(this.sections)
+      let stylePoneList = getPoneStyles(frag)
 
       output.file('index.html',
-        `<html>
+        `<!DOCTYPE html>
+          <html>
           <head>
             ${gtm.head}
             ${gtag}
@@ -124,31 +147,34 @@ function download (assets) {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="shortcut icon" href="${icon}"/>
             <link rel="manifest" href="/manifest.json">
-            <link href="https://fonts.googleapis.com/css?family=Lato|Heebo|PT+Serif|Montserrat:400,500|Roboto:400,700|Cinzel:400,700|IBM+Plex+Sans:400,600|IBM+Plex+Mono:400,600&amp;subset=cyrillic" rel="stylesheet">
+            <link rel="stylesheet" href="css/styles.css">
+            <link href="https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}" rel="stylesheet">
             ${scrollSetup.style}
             ${og}
             <style>
-              ${styles}
               ${customCss}
             </style>
+            ${stylePoneList}
           </head>
           <body class="b-body_export" style="${bodyStyles}">
             ${gtm.body}
-            <div id="main" class="main">
+            <div id="main" class="main" style="${fontsSetup}">
               ${artboard.innerHTML}
             </div>
             ${video}
             ${this.getCookiesPreview()}
-          <script src="js/cjs.js"></script>
+          ${getJquery}
           ${scrollSetup.setup}
+          ${parallaxSetup}
           <script>
             ${script}
           </script>
+          <script src="js/cjs.js"></script>
           </body>
         </html>`)
 
       zip.generateAsync({ type: 'blob' }).then((blob) => {
-        saveAs(blob, 'project.zip')
+        saveAs(blob, `${this.settings.name}.zip`)
       })
     })
 }

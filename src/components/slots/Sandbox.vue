@@ -1,29 +1,49 @@
 <template>
-  <div class="b-slot">
-    <div class="b-slot__settings" :style="{
-      'margin-top': styles['margin-top'],
-      'margin-left': styles['margin-left']
-    }">
+  <div class="b-slot b-slot b-on-boarding-tips-step-4"
+    @mouseleave.self="mouseleave"
+    @mouseover="mouseover"
+    :class="[
+      { '_hover' : hoverBy === 'block' }
+    ]"
+    :style="{
+      '--mobile-slot-flex-direction': mediaStyles['is-mobile']['flex-direction'],
+      '--mobile-slot-align-items': mediaStyles['is-mobile']['align-items'],
+      '--mobile-slot-justify-content': mediaStyles['is-mobile']['justify-content'],
+      '--mobile-slot-background-color': mediaStyles['is-mobile']['background-color'],
+      '--mobile-slot-background-image': mediaStyles['is-mobile']['background-image'],
+      '--mobile-slot-background-position': mediaStyles['is-mobile']['background-position'],
+      '--mobile-slot-background-repeat': mediaStyles['is-mobile']['background-repeat'],
+      '--mobile-slot-background-size': mediaStyles['is-mobile']['background-size'],
+      '--mobile-slot-background-attachment': mediaStyles['is-mobile']['background-attachment'],
+      '--mobile-slot-margin-top': mediaStyles['is-mobile']['margin-top'],
+      '--mobile-slot-margin-right': mediaStyles['is-mobile']['margin-right'],
+      '--mobile-slot-margin-bottom': mediaStyles['is-mobile']['margin-bottom'],
+      '--mobile-slot-margin-left': mediaStyles['is-mobile']['margin-left'],
+      '--mobile-slot-padding-top': mediaStyles['is-mobile']['padding-top'],
+      '--mobile-slot-padding-right': mediaStyles['is-mobile']['padding-right'],
+      '--mobile-slot-padding-bottom': mediaStyles['is-mobile']['padding-bottom'],
+      '--mobile-slot-padding-left': mediaStyles['is-mobile']['padding-left']
+    }
+  ">
+    <div
+      @mouseover.self="mouseover"
+      @mouseleave.self="mouseleave"
+      class="b-slot__settings"
+    >
       <span
         @click.stop="showSandboxSidebar($event, 'SlotSettings')"
-        tooltip="Slot settings"
-        tooltip-position="right"
         class="b-slot__settings-item b-slot__settings-item-settings"
         >
           <icon-base name="cog" fill="white" />
       </span>
       <span
         @click.stop="showSandboxSidebar($event, 'SlotBackground')"
-        tooltip="Slot background"
-        tooltip-position="right"
         class="b-slot__settings-item b-slot__settings-item-slot-bg"
         >
           <icon-base name="background" fill="white" />
       </span>
       <span
         @click.stop="showSandboxSidebar($event, 'Slot')"
-        tooltip="Add element"
-        tooltip-position="right"
         class="b-slot__settings-item b-slot__settings-item-add-el"
         >
           <icon-base name="plus" fill="white" />
@@ -35,6 +55,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { merge } from 'lodash-es'
 
 export default {
   name: 'Sandbox',
@@ -43,30 +64,74 @@ export default {
 
   props: {
     containerPath: String,
-    componentsPath: String,
-    direction: {
-      type: String,
-      default: 'row'
-    },
-    align: {
-      type: String,
-      default: 'center'
-    }
+    componentsPath: String
   },
 
   computed: {
     ...mapState('Sidebar', [
       'sandbox',
-      'settingObjectSection'
+      'settingObjectOptions',
+      'settingObjectSection',
+      'device',
+      'hoverBy'
     ]),
+
+    ...mapState('OnBoardingTips', [
+      'isShowTips',
+      'stepTips'
+    ]),
+
+    slot () {
+      return this.settingObjectSection.get(this.sandbox.container) || {}
+    },
+
+    isMobile () {
+      return this.device === 'is-mobile'
+    },
 
     styles () {
       return this.$section.get(this.containerPath).styles
+    },
+
+    mediaStyles: {
+      get () {
+        let device = 'is-mobile'
+        let media = { 'is-mobile': {} }
+        let stylesMedia = this.$section.get(this.containerPath).media
+
+        if (stylesMedia === undefined) {
+          stylesMedia = media
+        }
+
+        if (stylesMedia[device]) {
+          for (let key in this.styles) {
+            media[device][key] = stylesMedia[device][key] !== undefined ? stylesMedia[device][key] : this.styles[key]
+          }
+        } else {
+          media[device] = this.styles
+        }
+
+        return media
+      },
+      set (value) {
+        this.settingObjectSection.set(this.sandbox.container, merge({}, this.slot, {
+          media: value
+        }))
+      }
+    },
+
+    direction () {
+      return this.getPropValue('flex-direction')
+    },
+
+    align () {
+      return this.getPropValue('align-items')
     }
   },
 
   created () {
     this.styles['flex-direction'] = this.styles['flex-direction'] || this.direction
+    this.styles['align-items'] = this.styles['align-items'] || this.align
     this.styles['align-items'] = this.styles['align-items'] || this.align
   },
 
@@ -80,7 +145,8 @@ export default {
       'toggleSidebar',
       'setControlPanel',
       'setElement',
-      'setSettingObject'
+      'setSettingObject',
+      'setHoverBy'
     ]),
 
     showSandboxSidebar (e, openElBar) {
@@ -117,107 +183,30 @@ export default {
       this.toggleSidebar(true)
 
       this.setControlPanel(openElBar)
+    },
+
+    getPropValue (prop) {
+      let s = ''
+
+      if (this.isMobile && this.mediaStyles[`${this.device}`] && this.mediaStyles[`${this.device}`][prop]) {
+        s = this.mediaStyles[`${this.device}`][prop]
+      } else {
+        s = this.styles[prop]
+      }
+
+      return s
+    },
+
+    mouseover () {
+      this.setHoverBy('block')
+    },
+
+    mouseleave () {
+      this.setHoverBy(null)
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-
-.b-slot
-  $this: &
-  display: flex
-  flex-wrap: wrap
-
-  position: relative
-  width: 100%
-  padding: 0
-  min-height: $size-step
-
-  transition: border 0.25s
-  .is-editable &
-    height: 100%
-
-  &__settings
-    position: absolute
-    top: 0
-    left: 0
-    z-index: 1000
-
-    width: $size-step/1.5
-    padding: 0
-    margin: 0
-    border: none
-    border-radius: 0
-
-    display: flex
-    align-items: center
-    justify-content: flex-start
-    flex-direction: column
-
-    opacity: 0
-    transition: opacity 0.25s
-    &-item
-      display: flex
-      align-items: center
-      justify-content: center
-
-      width: $size-step/1.5
-      height: $size-step/1.5
-
-      background: $dark-blue-krayola
-      box-shadow: 0 6px 16px rgba(26, 70, 122, 0.39)
-
-      cursor: pointer
-      transition: all .3s cubic-bezier(.2,.85,.4,1.275)
-      & svg
-        fill: $white
-        width: 14px
-        height: 14px
-
-      &:hover,
-      .active
-        background: $white
-        svg
-          fill: $dark-blue-krayola
-
-  .is-editable &:hover
-    #{$this}__settings
-      opacity: 1
-    .b-draggable-slot
-      border: 1px dashed $dark-blue-krayola
-  /deep/
-    .b-draggable-slot
-      display: flex
-      flex-wrap: wrap
-      flex-direction: column
-      justify-content: center
-      align-items: center
-      color: inherit
-
-      width: 100%
-      margin: 0 auto
-
-      border: 1px dashed transparent
-      padding: .8rem
-      &
-        > div
-          max-width: 100%
-          // padding: .8rem
-      &_horizont
-        > div
-          width: auto
-      .is-mobile &,
-      .is-tablet &
-        width: 100%
-        > div
-          width: 100%
-      @media only screen and (max-width: 576px)
-        &
-          width: 100%
-          > div
-            width: 100%
-
 </style>

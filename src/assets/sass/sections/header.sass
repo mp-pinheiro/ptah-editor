@@ -1,0 +1,97 @@
+// GENERAL STYLES
+.b-section-header
+  position: relative
+  z-index: 2
+  .is-tablet &,
+  .is-mobile &
+    text-align: left
+  @media (max-width: 800px)
+    text-align: left
+
+  .mobile-menu
+    transition: all 200ms
+    .is-mobile &
+      &_hide
+        display: none
+    .is-mobile &
+      &_drop
+        background-color: var(--bg-color) !important
+    @media (max-width: 800px)
+      &_drop
+        background-color: var(--bg-color) !important
+
+  &._sticky
+    position: sticky
+    z-index: 18
+    top: 0
+
+  ~ section[class^="b-"]
+    z-index: 1
+    .is-editable &._section-active
+      z-index: 19
+      & ~ .ptah-g-child
+        z-index: 19
+
+  .b-sandbox
+    min-height: 5rem !important
+
+  .b-draggable-slot
+    width: 100%
+
+  @media (max-height: 420px) and (max-width: 800px) and (min-width: 480px)
+    .b-slot .b-draggable-slot > div
+      width: 50% !important
+
+  &__col
+    // padding: 0 1.6rem !important // TODO:
+
+  .b-grid__row
+    .is-mobile &
+      padding: 0 !important
+    @media (max-width: 800px)
+      &
+        padding: 0 !important
+
+// SMM HEADER
+.b-smm-header
+  .b-one
+    .is-mobile &
+      margin-top: auto
+      order: 1
+    @media (max-width: 800px)
+      margin-top: auto
+      margin-bottom: 8px
+      order: 1
+    @media (max-height: 420px)
+      width: auto
+      margin-top: 8px
+      margin-bottom: 8px
+
+  .b-header-link
+    .is-mobile &
+      font-size: 1.6rem
+    @media (max-width: 800px)
+      font-size: 1.6rem
+
+// HEADER CENTRED LOGO
+.b-header-logo
+  .b-logo-one
+    .is-mobile &
+      order: 1
+    @media (max-width: 800px)
+      order: 1
+
+// BUTTON HEADER
+.b-button-header
+  .b-button-one
+    .is-mobile &
+      order: 1
+
+// FANTASY BUTTON HEADER
+.b-fantasy-header
+  .b-button-one
+    .is-mobile &
+      order: 1
+    @media (max-width: 800px)
+      order: 1
+

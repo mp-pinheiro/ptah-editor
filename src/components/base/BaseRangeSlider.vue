@@ -1,12 +1,12 @@
 <template>
   <div class="b-range-slider">
-    <base-label v-if="label != ''">
+    <base-label class="b-range-slider__label _top" v-if="label != '' && positionLabel === 'top'">
       {{ label }}
     </base-label>
     <div class="b-range-slider__row">
-      <div class="b-range-slider__text">
-        <slot></slot>
-      </div>
+      <base-label class="b-range-slider__label _left" v-if="label != '' && positionLabel !== 'top'">
+        {{ label }}
+      </base-label>
       <range-slider
         class=""
         :min="min"
@@ -14,6 +14,9 @@
         :step="step"
         v-model="sliderValue">
       </range-slider>
+      <div class="b-range-slider__text-input">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +43,10 @@ export default {
       type: String,
       default: ''
     },
+    positionLabel: {
+      type: String,
+      default: 'top'
+    },
     step: {
       type: [String, Number],
       default: undefined
@@ -61,6 +68,10 @@ export default {
   },
 
   watch: {
+    value (value) {
+      this.sliderValue = value
+    },
+
     sliderValue (value) {
       this.$emit('change', parseInt(value))
     }
@@ -72,21 +83,34 @@ export default {
 @import '../../assets/sass/_colors.sass'
 @import '../../assets/sass/_variables.sass'
 
-$rail-height: 1px
+$rail-height: 2px
 $rail-color: rgba($black, 0.15)
-$rail-fill-color: $blue
+$rail-fill-color: $main-green
 
-$knob-color: $blue
+$knob-color: $main-green
 $knob-size: 1.2rem
-$knob-shadow: 0px 2px 8px rgba($cornflower-blue, 0.2)
+$knob-shadow: 0px 2px 8px rgba($main-green, 0.2)
 
 .b-range-slider
+  // max-width: 24rem
   &__row
     display: flex
-  &__text
-    width: $size-step*2
+    justify-content: space-between
+    align-items: center
+  .b-base-label
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif
+    font-size: 1.4rem
+    font-weight: 600
+    &._top
+      padding: 0 0 .9rem
+    &._left
+      width: 6rem
+      padding: 0 .9rem 0 0
+  &__text-input
+    width: 7rem
+    padding: 0 0 0 .8rem
 
-    font-size: 1.6rem
+    font-size: 1.4rem
     line-height: $size-step
     color: $dark-grey
 
@@ -95,7 +119,7 @@ $knob-shadow: 0px 2px 8px rgba($cornflower-blue, 0.2)
     .range-slider
       box-sizing: border-box
       padding: 0 0.6rem
-      width: $size-step*5.5
+      width: 11rem
       height: $size-step
       display: block
 
@@ -132,8 +156,8 @@ $knob-shadow: 0px 2px 8px rgba($cornflower-blue, 0.2)
       top: 50%
       left: 0
       box-sizing: border-box
-      width: 2.5rem
-      height: 2.5rem
+      width: 1.2rem
+      height: 1.2rem
       transform: translate(-50%, -50%)
       cursor: pointer
 
@@ -151,18 +175,7 @@ $knob-shadow: 0px 2px 8px rgba($cornflower-blue, 0.2)
         transition: all 0.1s ease
       &:hover:before
         content: ''
-        height: $knob-size*1.4
-        width: $knob-size*1.4
-      &:after
-        content: ''
-        height: $knob-size/3
-        width: $knob-size/3
-        border-radius: 50%
-
-        background-color: $white
-
-        position: absolute
-        z-index: 0
+        background-color: $yellow
     .range-slider-hidden
       display: none
 </style>

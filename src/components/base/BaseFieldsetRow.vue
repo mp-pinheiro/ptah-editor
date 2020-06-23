@@ -1,5 +1,5 @@
 <script>
-import _ from 'lodash'
+import _ from 'lodash-es'
 
 export default {
   name: 'BaseFieldsetRow',
@@ -9,7 +9,7 @@ export default {
       type: String,
       default: 'default',
       validator (value) {
-        const allowed = ['default', 'short', 'wide']
+        const allowed = ['default', 'short', 'wide', 'auto']
         return _.includes(allowed, value)
       }
     }
@@ -39,4 +39,7 @@ export default {
 
   &_wide
     width: 54.5rem
+
+  &_auto
+    width: 100%
 </style>

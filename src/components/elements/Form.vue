@@ -1,7 +1,10 @@
 <template>
   <div class="b-form b-border" @click.stop.stop="" ref="form"
     :path="path"
-    >
+    :style="[objVarsMedia, objVarsTypo]"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+  >
 
     <slot v-if="!isActive"></slot>
 
@@ -11,7 +14,8 @@
       target="_blank"
       :style="{
         '--b-hover-color': formStyles.buttonHoverColor,
-        '--b-hover-text-color': formStyles.buttonTextHoverColor
+        '--b-hover-text-color': formStyles.buttonTextHoverColor,
+        '--mobile-form-styles-height': mediaStyles['is-mobile'].formStyles.height + 'px'
       }"
       >
       <input
@@ -20,7 +24,6 @@
         required
         :style="{
           'color' : styles['color'],
-          'font-family' : styles['font-family'],
           'font-size' : styles['font-size'],
           'font-weight' : styles['font-weight'],
           'font-style' : styles['font-style'],
@@ -40,7 +43,6 @@
         'color': `${formStyles.buttonTextColor}`,
         'background-color': formStyles['button-color'],
         'border-radius': `${formStyles['border-radius']}px`,
-        'font-family' : styles['font-family'],
         'font-size' : styles['font-size'],
         'font-weight' : styles['font-weight'],
         'font-style' : styles['font-style'],
@@ -105,7 +107,7 @@
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-              @click.stop="setHeading({ level: 1 })"
+              @click.stop="$_setHeading({ level: 1 })"
               >
               H1
             </button>
@@ -113,7 +115,7 @@
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-              @click.stop="setHeading({ level: 2 })"
+              @click.stop="$_setHeading({ level: 2 })"
               >
               H2
             </button>
@@ -121,7 +123,7 @@
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-              @click.stop="setHeading({ level: 3 })"
+              @click.stop="$_setHeading({ level: 3 })"
               >
               H3
             </button>
@@ -129,7 +131,7 @@
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.bullet_list() }"
-              @click.stop="setList('bullet', 'ordered')"
+              @click.stop="$_setList('bullet', 'ordered')"
               >
               <icon-base name="bulletList"></icon-base>
             </button>
@@ -137,7 +139,7 @@
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.ordered_list() }"
-              @click.stop="setList('ordered', 'bullet')"
+              @click.stop="$_setList('ordered', 'bullet')"
               >
               <icon-base name="orderedList"></icon-base>
             </button>
@@ -154,12 +156,12 @@
           </template>
 
           <!-- Link form -->
-          <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-            <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-            <button class="menubar__button" @click.stop="setLinkUrl(commands.link, null)" type="button">
+          <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="$_setLinkUrl(commands.link, linkUrl)">
+            <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="$_hideLinkMenu"/>
+            <button class="menubar__button" @click.stop="$_setLinkUrl(commands.link, null)" type="button">
               <icon-base name="remove"></icon-base>
             </button>
-            <base-button class="menubar__button" color="blue" size="small" @click.stop="setLinkUrl(commands.link, linkUrl)">
+            <base-button class="menubar__button" color="blue" size="small" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
               Done
             </base-button>
           </form>
@@ -173,15 +175,20 @@
 import { getParameterByName } from '@editor/util'
 import { mapState } from 'vuex'
 import { EditorContent, EditorMenuBar } from 'tiptap'
-
+import elementMedia from '../mixins/elementMedia'
 import textElement from '../mixins/textElement'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'Form',
 
-  mixins: [textElement],
+  mixins: [
+    elementMedia,
+    textElement,
+    elementHover
+  ],
 
-  inject: ['$section', '$builder'],
+  inject: ['$builder'],
 
   components: {
     EditorContent,
@@ -263,85 +270,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-
-.b-form-element
-  display: flex
-  align-items: center
-  justify-content: center
-
-  width: 100%
-  padding: 0.4rem 0.8rem
-
-  position: relative
-  .is-mobile &,
-  .is-tablet &
-    flex-direction: column
-  @media only screen and (max-width: 768px)
-    &
-      flex-direction: column
-
-  &__hidden-input
-    position: absolute
-    left: -5000px
-
-  &-button
-    max-width: 50%
-    height: 4.8rem
-    margin: 0.2rem
-
-    font-size: 1.6rem
-    word-break: keep-all
-    overflow: hidden
-
-    padding: 0 5rem
-    border-radius: 0.2rem
-    border: none
-
-    transition: all ease-out .2s
-    position: relative
-    cursor: pointer
-    &:active
-      top: 1px
-    &:hover
-      background-color: var(--b-hover-color) !important
-      color: var(--b-hover-text-color) !important
-    &.submited
-      background-color: $emerald-green !important
-    .is-mobile &,
-    .is-tablet &
-      width: 100%
-      min-width: auto
-      max-width: 100%
-      margin-left: 0
-    @media only screen and (max-width: 768px)
-      &
-        width: 100%
-        min-width: auto
-        max-width: 100%
-        margin-left: 0
-
-  &-input
-    border: none
-    background: #fff
-    color: #2a2a2a
-    border-radius: 0.2rem
-    padding: 0 2.4rem
-    flex-grow: 1
-    margin-right: 3rem
-    transition: all ease-out .2s
-    .is-mobile &,
-    .is-tablet &
-      width: 100%
-      max-width: 100%
-      margin-bottom: 1rem
-      margin-right: 0
-    @media only screen and (max-width: 768px)
-      &
-        width: 100%
-        max-width: 100%
-        margin-bottom: 1rem
-        margin-right: 0
-
 </style>

@@ -1,7 +1,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import { getPseudoTemplate, randomPoneId, FONT_SIZES_LIST, LINES_HEIGHT_LIST, FONTS_LIST } from '../../util'
-import * as _ from 'lodash-es'
+import { getPseudoTemplate, randomPoneId } from '../../util'
+import { get, merge } from 'lodash-es'
 
 export default {
   props: {
@@ -17,10 +17,6 @@ export default {
 
   data () {
     return {
-      fontName: {},
-      size: {},
-      sizes: FONT_SIZES_LIST,
-      linesHeight: LINES_HEIGHT_LIST,
       color: '',
       colorHover: '',
       td: { prop: 'text-decoration', value: 'underline', base: 'none' },
@@ -46,62 +42,98 @@ export default {
         ],
         valueMultiple: []
       },
-      temp: {}
+      temp: {},
+      sizeValue: 0,
+      lineHeightValue: 0
     }
-  },
-
-  created () {
-    this.fontName = { name: this.styles['font-family'], value: this.styles['font-family'] }
-    this.size = _.find(this.sizes, { value: this.styles['font-size'] })
-    this.color = this.styles['color']
-    if (this.colorTextHover) this.colorHover = this.pseudo['hover']['color']
   },
 
   computed: {
     ...mapState('Sidebar', [
       'settingObjectSection',
       'settingObjectElement',
-      'settingObjectOptions'
+      'settingObjectLabel',
+      'settingObjectOptions',
+      'isMobile'
     ]),
+    ...mapState(['currentLanding']),
 
     styles () {
       return this.settingObjectOptions.styles
+    },
+
+    mediaStyles () {
+      let device = 'is-mobile'
+      let stylesMedia = this.settingObjectOptions.media
+      let media = { 'is-mobile': {} }
+
+      if (stylesMedia === undefined) {
+        stylesMedia = media
+      }
+
+      if (stylesMedia[device]) {
+        for (let key in this.styles) {
+          media[device][key] = stylesMedia[device][key] !== undefined ? stylesMedia[device][key] : this.styles[key]
+        }
+      } else {
+        media[device] = this.styles
+      }
+
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, {
+        media: media
+      }))
+
+      return media
     },
 
     pseudo () {
       return this.settingObjectOptions.pseudo
     },
 
-    fonts () {
-      const options = FONTS_LIST.map((font) => {
-        return { name: font, value: font }
-      })
-      return {
-        options
+    size: {
+      get () {
+        let props = 'styles'
+        let size = ''
+        let newSize = ''
+
+        if (this.isMobile) props = `media['is-mobile']`
+
+        size = get(this.settingObjectOptions, `${props}['font-size']`)
+
+        if (size === undefined) size = get(this.settingObjectOptions, `styles['font-size']`)
+
+        newSize = size.split('rem')
+
+        return parseFloat(newSize[0]) * 10
+      },
+      set (value) {
+        this.update('font-size', `${value / 10}rem`)
       }
     },
 
     lineHeight: {
       get () {
-        let s = _.get(this.settingObjectOptions, `styles['line-height']`)
-        let gotLineHeight = s
+        let props = 'styles'
+        let s = ''
+        let gotLineHeight = ''
+
+        if (this.isMobile) props = `media['is-mobile']`
+
+        s = get(this.settingObjectOptions, `${props}['line-height']`)
+        gotLineHeight = s
 
         if (s === undefined) {
           let style = window.getComputedStyle(this.settingObjectElement)
           let lineHeight = parseFloat(style['line-height'])
           let fontSize = parseFloat(style['font-size'])
 
-          gotLineHeight = Math.round((lineHeight / fontSize) * 10) / 10
+          gotLineHeight = Math.round((lineHeight / fontSize) * 10) * 100
         }
 
-        return { name: gotLineHeight, value: gotLineHeight }
+        return gotLineHeight * 100
       },
       set (value) {
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, {
-          styles: {
-            'line-height': value.value
-          }
-        }))
+        this.update('line-height', value / 100)
       }
     }
   },
@@ -111,12 +143,34 @@ export default {
       'updateSettingOptions'
     ]),
 
-    changeFont () {
-      this.styles['font-family'] = this.fontName.value
-    },
+    updateProps () {
+      let props = this.styles
+      let color = ''
 
-    changeSize () {
-      this.styles['font-size'] = this.size.value
+      if (this.isMobile) props = this.mediaStyles
+
+      color = props['color'] !== undefined ? props['color'] : this.styles['color']
+      this.color = color
+
+      if (this.colorTextHover) this.colorHover = this.pseudo['hover']['color']
+
+      /* text styles */
+      this.style.list[0].value = this.td
+      this.style.list[1].value = this.fs
+      this.style.list[2].value = this.fw
+
+      this.temp['text-decoration'] = this.td
+      this.temp['font-style'] = this.fs
+      this.temp['font-weight'] = this.fw
+
+      for (let key in this.temp) {
+        if (props[key] !== this.temp[key].base) {
+          this.style.valueMultiple.push(this.temp[key])
+        }
+      }
+
+      this.sizeValue = this.size
+      this.lineHeightValue = this.lineHeight
     },
 
     changeColor () {
@@ -136,7 +190,7 @@ export default {
       if (style !== '') {
         pseudo[pseudoClass] = {}
         pseudo[pseudoClass][attr] = style + '!important'
-        this.updateSettingOptions(_.merge({}, this.settingObjectOptions, { pseudo }))
+        this.updateSettingOptions(merge({}, this.settingObjectOptions, { pseudo }))
 
         this.changePseudoStyle(attr, style + '!important')
       }
@@ -154,78 +208,123 @@ export default {
     changeStyle () {
       this.style.list.forEach((style) => {
         if (find(this.style.valueMultiple, style.value)) {
-          this.styles[style.value.prop] = style.value.value
+          this.update(style.value.prop, style.value.value)
         } else {
-          this.styles[style.value.prop] = style.value.base
+          this.update(style.value.prop, style.value.base)
         }
       })
+    },
+
+    update (prop, value) {
+      let props = {}
+      let styles = {}
+      let media = {}
+      let device = 'is-mobile'
+
+      styles[prop] = value
+
+      media[device] = {}
+      media[device][prop] = value
+
+      this.isMobile ? props = { 'media': media } : props = { 'styles': styles }
+
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, props))
+    },
+
+    setSize (value) {
+      this.sizeValue = value
+    },
+
+    setSizeValue (value) {
+      this.size = value
+    },
+
+    setLineHeight (value) {
+      this.lineHeightValue = value
+    },
+
+    setLineHeightValue (value) {
+      this.lineHeight = value
     }
   },
 
-  mounted () {
-    this.style.list[0].value = this.td
-    this.style.list[1].value = this.fs
-    this.style.list[2].value = this.fw
-
-    this.temp['text-decoration'] = this.td
-    this.temp['font-style'] = this.fs
-    this.temp['font-weight'] = this.fw
-
-    for (let key in this.temp) {
-      if (this.styles[key] !== this.temp[key].base) {
-        this.style.valueMultiple.push(this.temp[key])
-      }
-    }
+  created () {
+    this.updateProps()
   }
 }
 </script>
 
 <template>
-  <div class="b-typography-controls">
-    <div class="b-typography-controls__control">
-      <div class="b-typography-controls__control-col b-typography-controls__control-col-font-name">
-        <base-select :label="$t('c.font')" :options="fonts.options" v-model="fontName" @input="changeFont" height="14"></base-select>
+  <div class="b-panel__control">
+    <div class="b-panel__col" v-if="!isMobile">
+      <div class="b-panel__control">
+        <base-color-picker
+          :label="$t('c.textColor')"
+          v-model="color"
+          @change="changeColor"
+        />
       </div>
-      <div class="b-typography-controls__control-col">
-        <base-select :label="$t('c.size')" :options="sizes" v-model="size" @input="changeSize" height="23"></base-select>
-      </div>
-      <div class="b-typography-controls__control-col">
-        <base-select :label="$t('c.line')" :options="linesHeight" v-model="lineHeight" height="23"></base-select>
+      <div class="b-panel__control" v-if="colorTextHover">
+        <base-color-picker
+          class="b-picker_color-hover"
+          :label="$t('c.hoverColor')"
+          v-model="colorHover"
+          @change="changeColorHover"
+        />
       </div>
     </div>
-    <div class="b-typography-controls__control">
-      <div class="b-typography-controls__control-col">
-        <base-color-picker :label="$t('c.text')" v-model="color" @change="changeColor"></base-color-picker>
+
+    <div class="b-panel__col" v-if="!isMobile">
+      <div class="b-panel__control" v-if="showTextStyles">
+        <BaseButtonTabs
+          :list="style.list"
+          v-model="style.valueMultiple"
+          @change="changeStyle"
+        />
       </div>
-      <div class="b-typography-controls__control-col b-typography-controls__control-col" v-if="colorTextHover">
-        <base-color-picker class="b-picker_color-hover" :label="$t('c.hover')" v-model="colorHover" @change="changeColorHover"></base-color-picker>
+    </div>
+
+    <div class="b-panel__control">
+      <div class="b-panel__col">
+        <base-range-slider
+          position-label="left"
+          v-model="size"
+          :label="$t('c.size')"
+          step="1"
+          min="8"
+          max="72"
+          @change="setSize"
+        >
+          <base-number-input
+            :value="sizeValue"
+            :minimum="8"
+            :maximum="72"
+            unit="px"
+            @input="setSizeValue"
+          />
+        </base-range-slider>
       </div>
-      <div class="b-typography-controls__control-col" v-if="showTextStyles">
-        <BaseButtonTabs :list="style.list" v-model="style.valueMultiple" @change="changeStyle"/>
+    </div>
+    <div class="b-panel__control">
+      <div class="b-panel__col" >
+        <base-range-slider
+          position-label="left"
+          v-model="lineHeight"
+          :label="$t('c.line')"
+          step="1"
+          min="100"
+          max="130"
+          @change="setLineHeight"
+        >
+          <base-number-input
+            :value="lineHeightValue"
+            :minimum="100"
+            :maximum="130"
+            unit="%"
+            @input="setLineHeightValue"
+          />
+        </base-range-slider>
       </div>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-typography-controls
-  padding: 0 0 $size-step/2
-  border-bottom: 0.2rem dotted rgba($black, 0.15)
-  &__control
-    display: flex
-    justify-content: stretch
-    align-items: center
-
-    width: 100%
-    margin-top: $size-step/2
-    &-col
-      flex-basis: 50%
-      margin: 0 0 0 $size-step/2
-      &-font-name
-        flex-basis: 90%
-      &:first-child
-        margin: 0
-</style>

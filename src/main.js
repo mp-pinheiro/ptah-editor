@@ -18,11 +18,17 @@ import router from './router'
 import store from './store'
 import { sync } from 'vuex-router-sync'
 import AppView from './App.vue'
+import VueGtag from 'vue-gtag'
+import VueYandexMetrika from 'vue-yandex-metrika'
 
 import en from '@assets/lang/en.json'
 import ru from '@assets/lang/ru.json'
 
 import { truncate } from '@src/filters/truncate'
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
+
+import { getCookie } from '@editor/util'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -47,6 +53,16 @@ Vue.use(VueScrollTo, {
   y: true
 })
 
+if (process.env.NODE_ENV === 'production') {
+  Raven
+    .config(process.env.PUBLIC_HOST === 'http://ptah.super.com/' ? process.env.VUE_APP_SENTRY : process.env.VUE_APP_SENTRYTST,
+      {
+        debug: true
+      })
+    .addPlugin(RavenVue, Vue)
+    .install()
+}
+
 sync(store, router)
 
 const [messages, locale] = [
@@ -67,13 +83,13 @@ Vue.use(VueProgressBar, {
 
 // request interceptor
 const createSetAuthInterceptor = options => config => {
-  if (localStorage.getItem('token') !== null) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+  if (getCookie('token') !== null) {
+    config.headers.Authorization = `Bearer ${getCookie('token')}`
   }
   return config
 }
 
-const setAuthCb = createSetAuthInterceptor(localStorage.getItem('token'))
+const setAuthCb = createSetAuthInterceptor(getCookie('token'))
 axios.interceptors.request.use(setAuthCb)
 
 // response interceptor
@@ -82,7 +98,7 @@ let refreshTokenPromise
 const createUpdateAuthInterceptor = (store, http) => async error => {
   if (error.response.status === 500 &&
     (error.response.config.url.indexOf('refresh') > -1 || error.response.config.url.indexOf('logout'))) {
-    localStorage.removeItem('token')
+    store.dispatch('User/logout')
     window.location.href = '/login'
   }
   if (error.response.data.error.code !== 401) {
@@ -103,6 +119,29 @@ const updateAuthCb = createUpdateAuthInterceptor(store, axios)
 axios.interceptors.response.use(null, updateAuthCb)
 
 Vue.filter('truncate', truncate)
+
+if (process.env.VUE_APP_PROD === '1') {
+  Vue.use(VueGtag, {
+    config: {
+      id: process.env.VUE_APP_GTAG
+    },
+    linker: {
+      domains: ['ptah.pro', 'docs.ptah.pro']
+    }
+  })
+
+  Vue.use(VueYandexMetrika, {
+    id: process.env.VUE_APP_METRIKA,
+    router: router,
+    env: process.env.NODE_ENV,
+    options: {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true
+    }
+  })
+}
 
 new Vue(
   {

@@ -1,16 +1,28 @@
 <template>
   <div class="b-text-icon is-editable b-border"
-    :class="{ 'b-text-icon_hide': !icon.visible }"
     ref="icon"
     @click.stop.stop=""
     :path="path"
-    >
+    :style="[objVarsMedia, objVarsTypo]"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+    :class="[
+      { 'b-text-icon_hide': !icon.visible }
+    ]"
+  >
 
     <slot v-if="!isActive"></slot>
 
     <div class="b-text-icon__item">
-      <div class="b-text-icon__item-col b-text-icon__item-col-icon" v-if="icon.visible">
-        <span class="b-text-icon__icon" :style="{ fill: colorFill['color'], width: sizeIcons.width + 'px'  }">
+      <div class="b-text-icon__item-col b-text-icon__item-col-icon" v-if="icon.visible"
+        :style="{
+          '--mobile-width': mediaSizeIcons['width'] + 'px'
+        }"
+        >
+        <span class="b-text-icon__icon" :style="{
+          fill: colorFill['color'],
+          width: sizeIcons.width + 'px'
+        }">
           <icon-base :name="icon.value"></icon-base>
         </span>
       </div>
@@ -75,7 +87,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-            @click.stop="setHeading({ level: 1 })"
+            @click.stop="$_setHeading({ level: 1 })"
           >
             H1
           </button>
@@ -83,7 +95,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-            @click.stop="setHeading({ level: 2 })"
+            @click.stop="$_setHeading({ level: 2 })"
           >
             H2
           </button>
@@ -91,7 +103,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-            @click.stop="setHeading({ level: 3 })"
+            @click.stop="$_setHeading({ level: 3 })"
           >
             H3
           </button>
@@ -99,7 +111,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.bullet_list() }"
-            @click.stop="setList('bullet', 'ordered')"
+            @click.stop="$_setList('bullet', 'ordered')"
           >
             <icon-base name="bulletList"></icon-base>
           </button>
@@ -107,7 +119,7 @@
           <button
             class="menubar__button"
             :class="{ 'is-active': isActive.ordered_list() }"
-            @click.stop="setList('ordered', 'bullet')"
+            @click.stop="$_setList('ordered', 'bullet')"
           >
             <icon-base name="orderedList"></icon-base>
           </button>
@@ -124,12 +136,12 @@
         </template>
 
         <!-- Link form -->
-        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-          <button class="menubar__button" @click.stop="setLinkUrl(commands.link, null)" type="button">
+        <form class="menubar__form" v-if="linkMenuIsActive" @submit.prevent="$_setLinkUrl(commands.link, linkUrl)">
+          <input class="menubar__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="$_hideLinkMenu"/>
+          <button class="menubar__button" @click.stop="$_setLinkUrl(commands.link, null)" type="button">
             <icon-base name="remove"></icon-base>
           </button>
-          <base-button class="menubar__button" color="blue" size="small" @click.stop="setLinkUrl(commands.link, linkUrl)">
+          <base-button class="menubar__button" color="blue" size="small" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
             Done
           </base-button>
         </form>
@@ -141,15 +153,18 @@
 
 <script>
 import { EditorContent, EditorMenuBar } from 'tiptap'
-
+import elementMedia from '../mixins/elementMedia'
 import textElement from '../mixins/textElement'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'IconWithText',
 
-  mixins: [textElement],
-
-  inject: ['$section'],
+  mixins: [
+    elementMedia,
+    textElement,
+    elementHover
+  ],
 
   components: {
     EditorContent,
@@ -208,51 +223,24 @@ export default {
 
     sizeIcons () {
       return this.$section.get(`$sectionData.${this.path}.sizeIcons`)
+    },
+    mediaSizeIcons () {
+      let media = this.$section.get(`$sectionData.${this.path}.media['is-mobile']['sizeIcons']`)
+
+      if (media === undefined) {
+        media = {
+          'is-mobile': {
+            sizeIcons: this.sizeIcons
+          }
+        }
+        this.$section.set(`$sectionData.${this.path}.media`, media)
+      }
+
+      return media
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-@import '../../assets/sass/_colors.sass'
-@import '../../assets/sass/_variables.sass'
-@import '../../assets/sass/_menubar.sass'
-
-.b-text-icon
-  color: #000
-  font-family: 'Lato'
-  position: relative
-  font-size: 1.4rem
-  line-height: 1.4
-
-  display: flex
-  justify-content: flex-start
-  align-items: flex-start
-
-  color: inherit
-  font-family: inherit
-  &::selection,
-  & ::selection
-    color: #ff0
-    background: #000
-  &__item
-    display: flex
-    align-items: flex-start
-    justify-content: inherit
-
-    padding: 0.8rem 0
-    cursor: pointer
-    &-col
-      padding: 0 0.4rem
-    &-text
-      max-width: 100%
-  &_hide
-    padding: 0 1.6rem
-  &__icon
-    display: inline-block
-    svg
-      fill: inherit
-      width: 100%
-      height: auto
-
 </style>

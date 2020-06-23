@@ -77,8 +77,9 @@ export default {
 
   color: $dark-grey
   font-size: 1.6rem
+  white-space: nowrap
   &:hover:not(.b-tab-item_selected)
-    color: $dark-blue-krayola
+    color: $main-green
   &:first-child
     margin-left: 0
 
@@ -91,6 +92,6 @@ export default {
     flex-grow: 1
 
   &_selected
-    color: $dark-blue-krayola
-    border-bottom: 0.2rem solid $dark-blue-krayola
+    color: $main-green
+    border-bottom: 0.2rem solid $main-green
 </style>

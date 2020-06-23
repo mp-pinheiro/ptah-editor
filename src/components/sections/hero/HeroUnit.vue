@@ -3,64 +3,47 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'GenericMainScreen'
-const BG_SECTION = 'url(https://gn987.cdn.stg.gamenet.ru/0/7K0NZ/o_1zKuK8.png)'
+const BG_SECTION = 'url(https://s3.protocol.one/src/o_1zKuK8.png)'
 
-/**
- * Base keys for elements in Hero sections
- * Logo - 0
- * Title - 1
- * Description - 2
- * Button - 3
- * Available Platforms - 4
- * Video - 5
- * Slogan - 6
- * Link - 7
- * Delimiter- 8
- * Timer - 9
- * */
 const COMPONENTS = [
   {
     name: 'Logo',
     element: types.Logo,
     type: 'image',
     class: 'b-logo',
-    label: 'logo',
-    key: 0
+    label: 'logo'
   },
   {
     name: 'TextElement',
     element: types.Text,
     type: 'text',
     class: 'b-title',
-    label: 'text',
-    key: 1
+    label: 'text'
   },
   {
     name: 'TextElement',
     element: types.Text,
     type: 'text',
     class: ' ',
-    label: 'text',
-    key: 2
+    label: 'text'
   },
   {
     name: 'Button',
     element: types.Button,
     type: 'button',
     class: 'b-button',
-    label: 'button',
-    key: 3
+    label: 'button'
   },
   {
     name: 'AvailablePlatforms',
     element: types.AvailablePlatforms,
     type: 'available',
     class: 'b-available-platforms',
-    label: 'Available Platforms',
-    key: 4
+    label: 'Available Platforms'
   }
 ]
 
@@ -68,26 +51,30 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://gn675.cdn.stg.gamenet.ru/0/7K0Jf/o_15rRBx.svg")',
+        'background-image': 'url("https://s3.protocol.one/src/o_15rRBx.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
         'width': '110px',
         'height': '64px'
       }
-    },
-    key: 0
+    }
   },
   {
     element: {
       text: 'This is a short header',
       styles: {
-        'font-family': 'Lato',
         'font-size': '4.8rem',
-        'color': '#ffffff'
+        'color': '#ffffff',
+        'margin-bottom': '32px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '3.6rem',
+          'line-height': '1.4'
+        }
       }
-    },
-    key: 1
+    }
   },
   {
     element: {
@@ -95,12 +82,10 @@ const C_CUSTOM = [
       '<p>Mrs all projecting favourable now unpleasing. Son law garden chatty temper</p>' +
       '<p>Oh children provided to mr elegance marriage strongly.</p>',
       styles: {
-        'font-family': 'Lato',
         'font-size': '2rem',
         'color': 'rgba(255, 255, 255, 0.3)'
       }
-    },
-    key: 2
+    }
   },
   {
     element: {
@@ -108,14 +93,12 @@ const C_CUSTOM = [
       styles: {
         'background-color': '#FF6D64',
         'color': '#ffffff',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '352px',
         'height': '64px',
         'border-radius': '2px'
       }
-    },
-    key: 3
+    }
   },
   {
     element: {
@@ -147,8 +130,7 @@ const C_CUSTOM = [
       sizeIcons: {
         width: 15
       }
-    },
-    key: 4
+    }
   }
 ]
 
@@ -176,7 +158,7 @@ export default {
 
   description: 'Simplified all-purpose main screen',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   cover: '/img/covers/hero-unit.png',
 
@@ -198,7 +180,7 @@ export default {
   <section
     class="b-hero"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -210,10 +192,9 @@ export default {
           <sandbox
               container-path="$sectionData.container"
               components-path="$sectionData.components"
-              direction="column"
               class="b-sandbox">
 
-            <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @change="dragStop">
+            <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
               <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                 <component class="b-hero-component"
                   v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -236,6 +217,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-.b-hero
-
 </style>

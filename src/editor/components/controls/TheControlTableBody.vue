@@ -1,17 +1,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
-import { find, merge } from 'lodash-es'
-import { FONT_SIZES_LIST, LINES_HEIGHT_LIST, FONTS_LIST } from '../../util'
+import { merge, get, find } from 'lodash-es'
 
 export default {
 
   data () {
     return {
-      fontName: {},
-      size: {},
-      sizes: FONT_SIZES_LIST,
-      linesHeight: LINES_HEIGHT_LIST,
-      color: '',
       td: { prop: 'text-decoration', value: 'underline', base: 'none' },
       fs: { prop: 'font-style', value: 'italic', base: 'normal' },
       fw: { prop: 'font-weight', value: 'bold', base: 'normal' },
@@ -35,47 +29,115 @@ export default {
         ],
         valueMultiple: []
       },
-      temp: {},
-      bgColor: ''
+      sizeValue: 0,
+      lineHeightValue: 0,
+      temp: {}
     }
   },
 
   created () {
-    this.fontName = { name: this.table.body['font-family'], value: this.table.body['font-family'] }
-    this.size = find(this.sizes, { value: this.table.body['font-size'] })
-    this.color = this.table.body['color']
     this.bgColor = this.table.body['background-color']
   },
 
   computed: {
     ...mapState('Sidebar', [
       'settingObjectSection',
-      'settingObjectOptions'
+      'settingObjectElement',
+      'settingObjectOptions',
+      'isMobile'
     ]),
+    ...mapState(['currentLanding']),
 
     table () {
       return this.settingObjectOptions.table
     },
 
-    fonts () {
-      const options = FONTS_LIST.map((font) => {
-        return { name: font, value: font }
-      })
-      return {
-        options
+    mediaStyles () {
+      let device = 'is-mobile'
+      let stylesMedia = this.settingObjectOptions.media
+      let media = { 'is-mobile': { 'table': { 'body': {} } } }
+
+      if (stylesMedia === undefined) {
+        stylesMedia = media
+      }
+
+      if (stylesMedia[device]['table'] === undefined) {
+        stylesMedia[device]['table'] = media[device]['table']
+      }
+
+      if (stylesMedia[device]['table']['body']) {
+        for (let key in this.table) {
+          media[device]['table']['body'][key] = stylesMedia[device]['table']['body'][key] !== undefined
+            ? stylesMedia[device]['table']['body'][key]
+            : this.table[key]
+        }
+      } else {
+        media[device]['table']['body'] = this.table.body
+      }
+
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, {
+        media: media
+      }))
+
+      return this.settingObjectOptions.media
+    },
+
+    size: {
+      get () {
+        let props = `table['body']`
+        let size = ''
+        let newSize = ''
+
+        if (this.isMobile) props = `media['is-mobile']['table']['body']`
+
+        size = get(this.settingObjectOptions, `${props}['font-size']`)
+
+        if (size === undefined) size = get(this.settingObjectOptions, `table['body']['font-size']`)
+
+        newSize = size.split('rem')
+
+        return parseFloat(newSize[0]) * 10
+      },
+      set (value) {
+        this.update('font-size', `${value / 10}rem`)
+      }
+    },
+
+    color: {
+      get () {
+        let props = `table['body']`
+        let color = ''
+
+        if (this.isMobile) props = `media['is-mobile']['table']['body']`
+
+        color = get(this.settingObjectOptions, `${props}['color']`)
+
+        if (color === undefined) color = get(this.settingObjectOptions, `table['body']['color']`)
+
+        return color
+      },
+      set (value) {
+        let color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
+
+        this.update('color', color)
       }
     },
 
     lineHeight: {
       get () {
-        return { name: this.table.body['line-height'] || 1.4, value: this.table.body['line-height'] || 1.4 }
+        let props = `table['body']`
+        let s = ''
+
+        if (this.isMobile) props = `media['is-mobile']['table']['body']`
+
+        s = get(this.settingObjectOptions, `${props}['line-height']`)
+
+        if (s === undefined) s = get(this.settingObjectOptions, `table['body']['line-height']`)
+
+        return s * 100
       },
       set (value) {
-        this.updateSettingOptions(merge({}, this.settingObjectOptions, {
-          table: {
-            body: { 'line-height': value.value }
-          }
-        }))
+        this.update('line-height', value / 100)
       }
     }
   },
@@ -85,22 +147,12 @@ export default {
       'updateSettingOptions'
     ]),
 
-    changeFont () {
-      this.table.body['font-family'] = this.fontName.value
-    },
-    changeSize () {
-      this.table.body['font-size'] = this.size.value
-    },
-    changeColor () {
-      const color = this.color.rgba ? `rgba(${Object.values(this.color.rgba).toString()}` : this.color
-
-      this.table.body['color'] = color
-    },
     changeBgColor () {
       const color = this.bgColor.rgba ? `rgba(${Object.values(this.bgColor.rgba).toString()}` : this.color
 
       this.table.body['background-color'] = color
     },
+
     changeStyle () {
       this.style.list.forEach((style) => {
         if (find(this.style.valueMultiple, style.value)) {
@@ -109,6 +161,36 @@ export default {
           this.table.body[style.value.prop] = style.value.base
         }
       })
+    },
+
+    update (prop, value) {
+      let props = {}
+      let table = { 'body': {} }
+      let device = 'is-mobile'
+      let media = { 'is-mobile': { 'table': table } }
+
+      table['body'][prop] = value
+      media[device]['table']['body'][prop] = value
+
+      this.isMobile ? props = { 'media': media } : props = { 'table': table }
+
+      this.updateSettingOptions(merge({}, this.settingObjectOptions, props))
+    },
+
+    setSize (value) {
+      this.sizeValue = value
+    },
+
+    setSizeValue (value) {
+      this.size = value
+    },
+
+    setLineHeight (value) {
+      this.lineHeightValue = value
+    },
+
+    setLineHeightValue (value) {
+      this.lineHeight = value
     }
   },
 
@@ -116,71 +198,103 @@ export default {
     this.style.list[0].value = this.td
     this.style.list[1].value = this.fs
     this.style.list[2].value = this.fw
+
     this.temp['text-decoration'] = this.td
     this.temp['font-style'] = this.fs
     this.temp['font-weight'] = this.fw
+
     for (let key in this.temp) {
       if (this.table.body[key] !== this.temp[key].base) {
         this.style.valueMultiple.push(this.temp[key])
       }
     }
+
+    this.sizeValue = this.size
+    this.lineHeightValue = this.lineHeight
   }
 }
 </script>
 
 <template>
-  <div class="b-table-controls">
-    <div class="b-table-controls__chapter">
-      Table content style
-    </div>
-    <div class="b-table-controls__control">
-      <div class="b-table-controls__control-col b-table-controls__control-col-font-name">
-        <base-select label="Font" :options="fonts.options" v-model="fontName" @input="changeFont"></base-select>
-      </div>
-      <div class="b-table-controls__control-col">
-        <base-select label="Size" :options="sizes" v-model="size" @input="changeSize"></base-select>
-      </div>
-      <div class="b-table-controls__control-col">
-        <base-select label="Line" :options="linesHeight" v-model="lineHeight" height="23"></base-select>
+  <div>
+    <base-caption>
+      Content style
+    </base-caption>
+    <div class="b-panel__control">
+      <div class="b-panel__col">
+        <base-color-picker
+          label="Text color"
+          v-model="color"
+        />
       </div>
     </div>
-    <div class="b-table-controls__control">
-      <div class="b-table-controls__control-col">
-        <base-color-picker label="Text color" v-model="color" @change="changeColor"></base-color-picker>
-      </div>
-      <div class="b-table-controls__control-col">
-        <BaseButtonTabs :list="style.list" v-model="style.valueMultiple" @change="changeStyle"/>
+    <div class="b-panel__control">
+      <div class="b-panel__col">
+        <base-range-slider
+          position-label="left"
+          v-model="size"
+          :label="$t('c.size')"
+          step="1"
+          min="8"
+          max="72"
+          @change="setSize"
+        >
+          <base-number-input
+            :value="sizeValue"
+            :minimum="8"
+            :maximum="72"
+            unit="px"
+            @input="setSizeValue"
+          />
+        </base-range-slider>
       </div>
     </div>
-    <div class="b-table-controls__control">
-      <base-color-picker label="Content background color" v-model="bgColor" @change="changeBgColor"></base-color-picker>
+    <div class="b-panel__control">
+      <div class="b-panel__col" >
+        <base-range-slider
+          position-label="left"
+          v-model="lineHeight"
+          :label="$t('c.line')"
+          step="1"
+          min="100"
+          max="130"
+          @change="setLineHeight"
+        >
+          <base-number-input
+            :value="lineHeightValue"
+            :minimum="100"
+            :maximum="130"
+            unit="%"
+            @input="setLineHeightValue"
+          />
+        </base-range-slider>
+      </div>
+    </div>
+    <div class="b-panel__control">
+      <div class="b-panel__col" v-if="!isMobile">
+        <div class="b-panel__row" v-if="!isMobile">
+          <base-label>
+            Text format
+          </base-label>
+          <div class="b-panel__col _m-0">
+            <BaseButtonTabs
+              type="buttons"
+              :list="style.list"
+              v-model="style.valueMultiple"
+              @change="changeStyle"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="b-panel__control" v-if="!isMobile">
+      <div class="b-panel__col">
+        <base-color-picker
+          label="Content background color"
+          v-model="bgColor"
+          @change="changeBgColor"
+        />
+      </div>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-table-controls
-  padding: 0 0 $size-step/2
-  border-bottom: 0.2rem dotted rgba($black, 0.15)
-  &__control
-    display: flex
-    justify-content: stretch
-    align-items: center
-
-    width: 100%
-    margin-top: $size-step/2
-    &-col
-      flex-basis: 50%
-      margin: 0 0 0 $size-step/2
-      &-font-name
-        flex-basis: 90%
-      &:first-child
-        margin: 0
-  &__chapter
-    font-size: 1.4rem
-    font-weight: bold
-    margin-top: $size-step
-</style>

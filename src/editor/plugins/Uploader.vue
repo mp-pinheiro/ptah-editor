@@ -10,7 +10,7 @@
         :total-steps="totalSteps"
         :strokeWidth="3"
         :startColor="`#55D287`"
-        :stopColor="`#2275D7`"
+        :stopColor="`#00ADB6`"
         :innerStrokeColor="`#E4E4E4`"
       >
         <span class="b-uploader__progress">{{progress}}%</span>
@@ -32,13 +32,12 @@
 
 <script>
 import RadialProgressBar from 'vue-radial-progress'
+import { getCookie } from '@editor/util'
 const VALID_TYPES = ['image', 'video']
 
 function getFormData (file) {
   let formData = new FormData()
-  formData.append('file[]', file)
-  formData.append('method', 'storefront.upload')
-  formData.append('format', 'json')
+  formData.append('file', file)
   return formData
 }
 
@@ -103,16 +102,17 @@ export default {
         let xhr = new XMLHttpRequest()
 
         xhr.upload.onprogress = this.loadingProgress // --- uploading progress
-        xhr.open('POST', '//images.stg.gamenet.ru/restapi')
+        xhr.open('POST', `${process.env.VUE_APP_API}upload`)
+        xhr.setRequestHeader('Authorization', `Bearer ${getCookie('token')}`)
         xhr.send(getFormData(file))
 
         xhr.onload = xhr.onerror = () => {
           if (xhr.status === 200) {
             try {
-              let { response } = JSON.parse(xhr.response)
-              let { name, src: path } = response.data[0]
+              let response = JSON.parse(xhr.response)
+              let path = response.cdnUrl
               this.clearProgress(path)
-              resolve({ name, path })
+              resolve({ name: response.file, path })
             } catch (error) {
               reject(error)
             }

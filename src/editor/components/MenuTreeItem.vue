@@ -1,44 +1,73 @@
 <template>
   <div class="menu-tree-item" @click="$emit('click', $event)" @click.ctrl="onClickCtrl">
     <div class="menu-tree-item__header-sign">
-      #
+      <IconBase name="lock" />
     </div>
     <div class="menu-tree-item__drag">
-      <icon-base name="dragNew"></icon-base>
+      <IconBase name="dragNew"/>
     </div>
-    <div class="menu-tree-item__name">
-      {{section.name}}
+    <div
+      class="menu-tree-item__name"
+      :class="{ '_short' : areAdditionSettings }"
+    >
+      <span>
+        {{ section.name }}
+      </span>
     </div>
     <div class="menu-tree-item__controls">
       <span
+        v-if="areAdditionSettings"
         class="menu-tree-item__control"
-        tooltip="Section settings"
-        tooltip-position="bottom"
-        @click.stop="showSettingsBar(section)">
-        <icon-base name="cog"></icon-base>
+        @click="showAdditionSettings(panels[section.group], section)">
+        <IconBase
+          width="20"
+          height="20"
+          name="settingsFill"
+          color="#A2A5A5"
+        />
       </span>
       <span
         class="menu-tree-item__control"
-        tooltip="Section background"
-        tooltip-position="bottom"
-        @click.stop="showBackgroundPanel(section)">
-        <icon-base name="background"></icon-base>
+        @click="showSettingsBar(section)">
+        <IconBase
+          width="24"
+          height="18"
+          name="overscan"
+        />
       </span>
       <span
         class="menu-tree-item__control"
-        tooltip="Delete"
-        tooltip-position="bottom"
-        @click.stop="deleteSection(section)">
-        <icon-base name="remove"></icon-base>
+        @click="showBackgroundPanel(section)">
+        <IconBase
+          name="backgroundGrey"
+        />
       </span>
     </div>
   </div>
 </template>
 
 <script>
-import * as _ from 'lodash-es'
+import { find, merge } from 'lodash-es'
 import { mapActions, mapState } from 'vuex'
 import { resetIndents } from '@editor/util'
+
+const GROUPS = [
+  'Slider',
+  'Columns',
+  'Galleries',
+  'Products',
+  'Forms',
+  'Elements'
+]
+
+const PANELS = {
+  'Slider': 'SectionSliderSettings',
+  'Columns': 'SectionColumnsSettings',
+  'Galleries': 'SectionGallerySettings',
+  'Products': 'SectionProductsColumnsSettings',
+  'Forms': 'SectionFormSettings',
+  'Elements': 'SectionSystemSettings'
+}
 
 export default {
   name: 'MenuTreeItem',
@@ -54,10 +83,28 @@ export default {
     }
   },
 
+  data () {
+    return {
+      panels: PANELS
+    }
+  },
+
   computed: {
     ...mapState('Sidebar', [
       'sectionsGroups'
-    ])
+    ]),
+
+    areAdditionSettings () {
+      if (this.section.group !== 'Elements') {
+        if (GROUPS.indexOf(this.section.group) !== -1) {
+          return true
+        }
+      } else if (this.section.name.indexOf('FrequentlyAskedQuestions') === -1) {
+        if (GROUPS.indexOf(this.section.group) !== -1) {
+          return true
+        }
+      }
+    }
   },
 
   methods: {
@@ -92,9 +139,9 @@ export default {
     deleteSection (section) {
       // update group
       if (this.isSlaveSection(section.id)) {
-        let master = _.find(this.sectionsGroups, o => o.children.indexOf(section.id) > -1).main
+        let master = find(this.sectionsGroups, o => o.children.indexOf(section.id) > -1).main
         let absorb = master.data.mainStyle.absorb
-        master.set('$sectionData.mainStyle', _.merge({}, master.data.mainStyle, { absorb: absorb - 1 }))
+        master.set('$sectionData.mainStyle', merge({}, master.data.mainStyle, { absorb: absorb - 1 }))
       }
 
       this.builder.remove(section)
@@ -108,11 +155,21 @@ export default {
     },
 
     isMasterSection () {
-      return !!_.find(this.sectionsGroups, o => o.main.id === this.sectionId)
+      return !!find(this.sectionsGroups, o => o.main.id === this.sectionId)
     },
 
     isSlaveSection (sectionId) {
-      return !!_.find(this.sectionsGroups, o => o.children.indexOf(sectionId) > -1)
+      return !!find(this.sectionsGroups, o => o.children.indexOf(sectionId) > -1)
+    },
+
+    async showAdditionSettings (panel, section) {
+      console.log(section)
+
+      this.setSettingSection(section)
+
+      await this.$nextTick()
+
+      this.setControlPanel(panel)
     }
   }
 }
@@ -120,68 +177,87 @@ export default {
 
 <style lang="sass" scoped>
   .menu-tree-item
-    color: $gray300
+    color: #A2A5A5
     font-size: 1.6rem
-    line-height: 1.9rem
-    width: 100%
+    line-height: 1.6rem
+
     display: flex
     justify-content: flex-start
-    padding: 1.6rem 2.5rem 1.6rem 1.6rem
-    cursor: pointer
+    align-items: center
 
+    max-width: 28rem
+    height: 5rem
+    padding: 1.3rem 1.1rem 1.3rem 1.6rem
+    margin: 0 0 0 1.3rem
+    cursor: pointer
     &__drag
-      visibility: hidden
+      width: 3rem
       margin-right: 1.2rem
-      width: .3rem
+      text-align: center
+      cursor: move
       svg
-        width: .3rem
-        height: 1.4rem
+        fill: #A2A5A5
+        width: .4rem
+        height: 1.6rem
         margin-bottom: -1px !important
 
     &__header-sign
       display: none
-      width: 1.5rem
+      width: 3rem
+      margin-right: 1.2rem
+      text-align: center
+      svg
+        fill: #A2A5A5
+        width: 1.6rem
+        height: 2.1rem
+        margin-bottom: -1px !important
 
     &__name
-      max-width: 15rem
-      overflow: hidden
-      text-overflow: ellipsis
+      width: 14rem
+      > span
+        display: block
+        width: 14rem
+        overflow: hidden
+        text-overflow: ellipsis
+      &._short
+        width: 10rem
+        > span
+          width: 10rem
+    &.group-node &__name._short
+        width: 6rem !important
+        > span
+          width: 6rem !important
 
     &:hover
-      background: rgba(116, 169, 230, 0.25)
+      background: rgba(0, 0, 0, 0.05)
+      & svg
+        fill: #575A5F
       .menu-tree-item__name
-        color: #000
-      .menu-tree-item__drag
-        visibility: visible
-      .menu-tree-item__controls
-        visibility: visible
+        color: #575A5F
+
+    &:active
+      box-shadow: 0 4px 16px rgba($black, 0.25)
 
     &.selected
-      background: rgba(116, 169, 230, 0.25)
+      background: rgba(0, 173, 182, 0.1)
       .menu-tree-item__name
-        color: #000
-      .menu-tree-item__controls
-        visibility: visible
+        color: #575A5F
 
     &.isHeader
       .menu-tree-item__drag
         display: none
       .menu-tree-item__header-sign
-        display: inline-block
+        display: block
 
     &__controls
-      visibility: hidden
       display: flex
       justify-content: flex-end
       flex-grow: 1
       opacity: .8
 
     &__control
-      margin-left: 1rem
-      svg
-        width: 1.5rem
-        height: 1.5rem
+      margin-left: 1.6rem
 
       &:hover
-        color: $dark-blue-krayola
+        color: $main-green
 </style>

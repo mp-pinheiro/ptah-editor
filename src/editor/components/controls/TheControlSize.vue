@@ -4,11 +4,19 @@ import * as _ from 'lodash-es'
 
 export default {
 
+  data () {
+    return {
+      widthValue: 0,
+      heightValue: 0
+    }
+  },
+
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
       'settingObjectElement',
-      'device'
+      'device',
+      'isMobile'
     ]),
 
     width: {
@@ -36,7 +44,7 @@ export default {
       let max = {}
 
       parents['width'] = this.settingObjectElement.closest('.b-draggable-slot')
-      parents['height'] = this.settingObjectElement.closest('section')
+      parents['height'] = this.settingObjectElement.closest('section') || this.settingObjectElement.closest('header') || this.settingObjectElement.closest('footer')
 
       max['width'] = parents['width'].offsetWidth
       max['height'] = parseInt(parents['height'].offsetHeight)
@@ -52,7 +60,24 @@ export default {
     ]),
 
     getStyleNumberValue (prop) {
-      let s = _.get(this.settingObjectOptions, `styles[${prop}]`)
+      let props = {}
+      let s = {}
+      let styles = this.settingObjectOptions.styles
+      let stylesMedia = {}
+
+      if (this.settingObjectOptions.media && this.settingObjectOptions.media['is-mobile']) {
+        stylesMedia = this.settingObjectOptions.media['is-mobile']
+      } else {
+        stylesMedia[prop] = styles[prop]
+      }
+
+      if (this.isMobile) {
+        props = stylesMedia
+      } else {
+        props = styles
+      }
+
+      s = props[prop]
 
       if (s === undefined) {
         // get values from node
@@ -64,45 +89,89 @@ export default {
     },
 
     update (prop, value) {
+      let props = {}
       let styles = {}
+      let media = {}
 
-      if (value === '') value = 0
+      if (value === '') value = 32
 
       styles[prop] = value + 'px'
-      this.updateSettingOptions(_.merge({}, this.settingObjectOptions, { styles }))
+
+      media[`${this.device}`] = {}
+      media[`${this.device}`][prop] = value + 'px'
+
+      this.isMobile ? props = { 'media': media } : props = { 'styles': styles }
+
+      this.updateSettingOptions(_.merge({}, this.settingObjectOptions, props))
+    },
+
+    setWidth (value) {
+      this.widthValue = value
+    },
+
+    setWidthValue (value) {
+      this.width = value
+    },
+
+    setHeight (value) {
+      this.heightValue = value
+    },
+
+    setHeightValue (value) {
+      this.height = value
     }
+  },
+
+  mounted () {
+    this.widthValue = this.width
+    this.heightValue = this.height
   }
 }
 </script>
 
 <template>
-  <div class="b-size" v-if="device !== 'is-mobile'">
-    <base-label>
-      {{ $t('c.size') }}
-    </base-label>
-    <div class="b-size-controls">
-      <div class="b-size-controls__control">
-        <base-number-field :maximum="maxProps['width']" v-model="width" :label="$t('c.width')" class=""></base-number-field>
+  <div>
+    <div class="b-panel__control">
+      <div class="b-panel__col" >
+        <base-range-slider
+          position-label="left"
+          v-model="width"
+          :label="$t('c.width')"
+          step="1"
+          min="32"
+          :max="maxProps['width']"
+          @change="setWidth"
+        >
+          <base-number-input
+            :value="widthValue"
+            :minimum="32"
+            :maximum="maxProps['width']"
+            unit="px"
+            @input="setWidthValue"
+          />
+        </base-range-slider>
       </div>
-      <div class="b-size-controls__control">
-        <base-number-field :maximum="maxProps['height']" v-model="height" :label="$t('c.height')" class=""></base-number-field>
+    </div>
+    <div class="b-panel__control">
+      <div class="b-panel__col" >
+        <base-range-slider
+          position-label="left"
+          v-model="height"
+          :label="$t('c.height')"
+          step="1"
+          min="32"
+          :max="maxProps['height']"
+          @change="setHeight"
+        >
+          <base-number-input
+            :value="heightValue"
+            :minimum="32"
+            :maximum="maxProps['height']"
+            unit="px"
+            @input="setHeightValue"
+          />
+        </base-range-slider>
       </div>
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-@import '../../../assets/sass/_colors.sass'
-@import '../../../assets/sass/_variables.sass'
-
-.b-size
-  margin-top: $size-step/2
-  &-controls
-    display: flex
-    justify-content: stretch
-    align-items: flex-start
-    &__control
-      width: 50%
-      margin-right: $size-step/4
-
-</style>

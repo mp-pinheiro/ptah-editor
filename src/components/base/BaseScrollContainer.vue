@@ -10,7 +10,8 @@ export default {
       type: Object
     },
     backgroundBar: {
-      type: String
+      type: String,
+      default: '#00ADB6'
     }
   },
   computed: {
@@ -88,7 +89,10 @@ export default {
   margin: 5px 5px 5px 0
   border-radius: 20px
   height: calc(100% - 10px)
+  min-height: 2px
   display: block
+.vb-invisible > .vb-dragger > .vb-dragger-styler
+  display: none
 
 .vb.vb-scrolling-phantom > .vb-dragger > .vb-dragger-styler
   background-color: var(--bg-color)
@@ -96,13 +100,13 @@ export default {
 
 .vb > .vb-dragger:hover > .vb-dragger-styler
   background-color: var(--bg-color)
-  margin: 0px
+  margin: 0
   height: 100%
   opacity: 0.5
 
 .vb.vb-dragging > .vb-dragger > .vb-dragger-styler
   background-color: var(--bg-color)
-  margin: 0px
+  margin: 0
   height: 100%
   opacity: 0.5
 

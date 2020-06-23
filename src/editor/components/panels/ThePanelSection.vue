@@ -1,82 +1,28 @@
 <template>
   <div class="b-panel">
-    <h6 class="b-panel__title">
-      {{ settingObjectSection.name }}
+    <h6 class="b-panel__title b-panel__title_name-section">
+      <span>
+        <span>
+          {{ name }}
+        </span>
+      </span>
     </h6>
+
+    <IndicatorPlatform />
+
     <base-scroll-container backgroundBar="#999" v-if="!isGrouping">
       <div class="b-panel__inner">
-
-        <!-- Carousel Images Multiple Upload -->
-        <div class="b-panel__control" v-if="settingObjectOptions.hasMultipleImages">
-          <base-uploader
-            :value="galleryImages"
-            @change="updateGalleryImages"
-            label="Image"
-            multiple/>
+        <div class="b-panel__control" v-if="!isHeader && !isMobile">
+          <control-section-height />
         </div>
 
-        <!-- Carousel options -->
-        <div class="b-section-settings__control" v-if="settingObjectOptions.hasMultipleImages">
-          <the-control-carousel></the-control-carousel>
+        <div class="b-panel__control" v-if="isHeader">
+          <control-section-sticky />
         </div>
 
-        <!-- Banner section options -->
-        <div class="b-section-settings__control" v-if="settingObjectOptions.bannerSection">
-          <the-control-section-banner></the-control-section-banner>
+        <div class="b-panel__control">
+          <control-box />
         </div>
-
-        <!-- Form -->
-        <div class="b-panel__control mailchimp" v-if="settingObjectSection.group === 'Forms'">
-          <div v-if="user.mailchimpIntegration && currentLanding.settings.mailchimpList">
-            <div class="mailchimp_complete">
-              <img src="https://gn831.cdn.stg.gamenet.ru/0/7m0JQ/o_CaMZ6.png" alt="">
-              <icon-base name="checkMark" width="40" height="40"></icon-base>
-            </div>
-            <p>Now emails from this form will be sent to the list:
-              <b>{{currentLanding.settings.mailchimpList}}</b>
-            </p>
-            <p>Change this in <b><router-link :to="mailchimpLink">Integrations Settings</router-link></b></p>
-          </div>
-
-          <div v-if="!user.mailchimpIntegration || !currentLanding.settings.mailchimpList">
-            <div class="mailchimp_none">
-              <img src="https://gn831.cdn.stg.gamenet.ru/0/7m0JQ/o_CaMZ6.png" alt="">
-              <icon-base name="close" width="40" height="40"></icon-base>
-            </div>
-            <p>Change this in <b><router-link :to="mailchimpLink">Integrations Settings</router-link></b></p>
-          </div>
-        </div>
-
-        <div v-if="!isHeader" class="b-panel__control">
-          <control-section-height></control-section-height>
-        </div>
-
-        <div class="b-section-settings__control">
-          <control-box></control-box>
-        </div>
-
-        <!-- Group -->
-        <!--<template v-if="!isLastSection() && !isHeader">
-          <div class="b-section-settings__control" v-if="!isSlaveSection()">
-            <BaseButton
-              :color="'gray'"
-              :transparent="true"
-              @click="toggleGrouping(true)"
-            >
-              Group sections
-            </BaseButton>
-          </div>
-
-          <div class="b-panel__control" v-if="isSlaveSection()">
-            <BaseButton
-              :color="'gray'"
-              :transparent="true"
-              @click="openSlaveGrouping()"
-            >
-              Group sections
-            </BaseButton>
-          </div>
-        </template>-->
 
       </div>
     </base-scroll-container>
@@ -88,7 +34,8 @@
         :builder="builder"
         :master="isMasterSection()"
         :slave="isSlaveSection()"
-        v-if="isGrouping"></builder-settings-bar-group>
+        v-if="isGrouping"
+      />
 
       <BaseButton
         :color="'gray'"
@@ -97,10 +44,6 @@
       >
         Close
       </BaseButton>
-    </div>
-
-    <div class="b-panel__buttons">
-      <base-button :color="'gray'" :transparent="true" @click="deleteSection()">Delete</base-button>
     </div>
   </div>
 </template>
@@ -115,17 +58,19 @@ import IconBase from '../../../components/base/icons/IconBase'
 import ControlBox from './../controls/TheControlBox'
 import { resetIndents } from '@editor/util'
 import TheControlCarousel from '../controls/TheControlCarousel'
-import TheControlSectionBanner from '../controls/TheControlSectionBanner'
+import ControlSectionSticky from '../controls/TheControlSectionSticky'
+import IndicatorPlatform from '../IndicatorPlatform'
 
 export default {
   components: {
-    TheControlSectionBanner,
+    IndicatorPlatform,
     TheControlCarousel,
     IconBase,
     BuilderSettingsBarGroup,
     BaseUploader,
     ControlBox,
-    ControlSectionHeight
+    ControlSectionHeight,
+    ControlSectionSticky
   },
   name: 'BuilderSettingsBarSection',
 
@@ -136,19 +81,14 @@ export default {
     }
   },
 
-  data () {
-    return {
-      galleryImages: []
-    }
-  },
-
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
       'settingObjectSection',
       'sectionsGroups',
       'isGrouping',
-      'settingObjectElement'
+      'settingObjectElement',
+      'isMobile'
     ]),
 
     ...mapState('User', ['user']),
@@ -162,16 +102,13 @@ export default {
       return this.settingObjectSection.isHeader
     },
 
-    mailchimpLink () {
-      return `/editor/${this.$route.params.slug}/settings/integrations/mailchimp`
+    name () {
+      return _.startCase(this.settingObjectSection.name)
     }
   },
 
   created () {
     this.header = this.settingObjectOptions.header || ''
-
-    /* Gallery */
-    this.galleryImages = this.settingObjectOptions.galleryImages || []
 
     if (this.settingObjectOptions.classes !== undefined && this.settingObjectOptions.classes.indexOf('full-height') !== -1) {
       this.fullScreen = true
@@ -211,13 +148,6 @@ export default {
       )
     },
 
-    updateGalleryImages (galleryImages) {
-      this.updateSettingOptions({
-        ..._.cloneDeep(this.settingObjectOptions),
-        galleryImages
-      })
-    },
-
     isMasterSection () {
       return !!_.find(this.sectionsGroups, o => o.main.id === this.sectionId)
     },
@@ -249,7 +179,7 @@ export default {
 @import '../../../assets/sass/_colors.sass'
 @import '../../../assets/sass/_variables.sass'
 
-.b-panel
+.b-section-settings
   /deep/
     .vb.vb-visible
       padding-right: 0 !important
@@ -266,8 +196,6 @@ export default {
       margin: 0 auto
       max-width: 100%
       display: block
-  &__control
-    margin-bottom: 2rem
 
   &__description
     font-size: 1.4rem
@@ -332,21 +260,4 @@ export default {
       ~ .picker__item
         margin-top: .4rem
 
-.mailchimp
-  p
-    padding: 1rem 0
-  &_complete
-    display: flex
-    align-items: center
-    img
-      margin-right: 2rem
-    svg
-      fill: $emerald-green
-  &_none
-    display: flex
-    align-items: center
-    img
-      margin-right: 2rem
-    svg
-      fill: red
 </style>

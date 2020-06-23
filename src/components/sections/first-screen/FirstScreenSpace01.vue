@@ -3,10 +3,11 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenSpace01'
-const BG_SECTION = 'url(https://gn36.cdn.stg.gamenet.ru/0/8cqkG/o_3xWrv.jpg)'
+const BG_SECTION = 'url(https://s3.protocol.one/src/o_3xWrv.jpg)'
 const date = Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000
 
 const COMPONENTS = [
@@ -58,37 +59,39 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://gn623.cdn.stg.gamenet.ru/0/8cqjM/o_1Y54Cu.svg")',
+        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
         'width': '246px',
         'height': '96px',
-        'margin': '25px 0'
+        'margin-top': '25px',
+        'margin-bottom': '25px'
       }
     }
   },
   {
     element: {
-      text: '<p><b>Here should be a little text describing youre beautiful game</b></p>',
+      text: '<h2><b>Place for a short description of your beautiful game.</b></h2>',
       styles: {
-        'font-family': 'Montserrat',
         'font-size': '3.6rem',
         'line-height': '1.2',
         'color': '#ffffff',
-        'margin': '10px 80px'
+        'margin-top': '10px',
+        'margin-right': '80px',
+        'margin-bottom': '10px',
+        'margin-left': '80px'
       }
     }
   },
   {
     element: {
-      text: '<p><b>Time left</b></p>',
+      text: '<h3><b>Time left</b></h3>',
       styles: {
-        'font-family': 'Montserrat',
         'font-size': '3.6rem',
         'line-height': '1.2',
         'color': '#ffffff',
-        'margin': '21px 0 0 0'
+        'margin-top': '21px'
       }
     }
   },
@@ -104,13 +107,11 @@ const C_CUSTOM = [
       },
       styles: {
         'background-color': 'rgba(0,0,0,0)',
-        'font-family': 'Roboto',
         'font-size': '4rem',
         'font-weight': '800',
         'line-height': '1',
         'color': '#ffffff',
-        'padding': '0',
-        'margin': '0 0 62px 0'
+        'margin-bottom': '62px'
       }
     }
   },
@@ -120,13 +121,13 @@ const C_CUSTOM = [
       styles: {
         'background-color': '#F4BC64',
         'color': '#000000',
-        'font-family': 'Montserrat',
         'font-size': '2rem',
         'text-align': 'center',
         'width': '240px',
         'height': '64px',
         'border-radius': '100px',
-        'margin': '25px 0'
+        'margin-top': '25px',
+        'margin-bottom': '25px'
       },
       pseudo: {
         'hover': {
@@ -164,7 +165,7 @@ const C_CUSTOM = [
         }
       },
       styles: {
-        'margin': '25px 0 0'
+        'margin-top': '25px'
       },
       colorFill: {
         color: '#F4BC64'
@@ -202,7 +203,7 @@ export default {
 
   description: 'Space title Maximum main screen',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   cover: '/img/covers/first-screen-space-01.jpg',
 
@@ -224,7 +225,7 @@ export default {
   <section
     class="b-first-screen-space-01"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -236,10 +237,9 @@ export default {
           <sandbox
               container-path="$sectionData.container"
               components-path="$sectionData.components"
-              direction="column"
               class="b-sandbox">
 
-            <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @change="dragStop">
+            <draggable :list="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
               <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                 <component
                   v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -262,27 +262,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-.b-first-screen-space-01
-  .b-text-fs
-    letter-spacing: -0.02em
-    .is-mobile &,
-    .is-tablet &
-      font-size: 2.4rem !important
-      margin: 0 auto 8px !important
-    @media only screen and (max-width: 840px)
-      &
-        font-size: 2.4rem !important
-        margin: 0 auto 8px !important
-  .b-button-fs
-    box-shadow: 0px 8px 70px rgba(0, 0, 0, 0.2)
-    transition: background-color 200ms
-  .b-timer-fs
-    .is-mobile &,
-    .is-tablet &
-      margin: 0 auto 8px !important
-    @media only screen and (max-width: 840px)
-      &
-        font-size: 2.4rem !important
-        margin: 0 auto 8px !important
-
 </style>

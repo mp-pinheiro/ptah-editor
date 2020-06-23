@@ -1,104 +1,61 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build Status](https://travis-ci.org/ProtocolOne/ptah-editor.svg?branch=master)](https://travis-ci.org/ProtocolOne/ptah-editor)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/da503bb6111644f68a1266eea37309c7)](https://www.codacy.com/app/ProtocolOne/storefront)
 
-# Ptah? What is this?
+# Ptah - Vue.js-based landing page builder
+<p align="center">
+<a href="https://ptah.super.com/" target="_blank"><img align="center" width="596" height="336" src="/docs/ptah-editor.gif"></a>
+</p>
 
-Ptah is a free, powerful and open source Web Builder Framework helping you to fast create modern cross browser landing pages for the games and e-commerce. Mainly Ptah designed to be used as a separate product or like edit component inside CMS to speed up the creation of landing pages. 
+Ptah is a Vue.js-based open-source game-focused landing page builder framework that combines various ready-to-use templates. 
+It is can be used as a separate product or as an editor inside a CMS to empower less technical users to create modern and fast landing pages for games or e-commerce.
 
-Editor and components based on Vue components, created as editable sections with slot elements in it. Editor allow you both to create page prototypes and ready to use pages which are ready to export as [PWA](https://developers.google.com/web/progressive-web-apps/) projects in zip arhives ready to deploy on your server. 
+* Free and open source under [Apache-2.0 license](LICENSE)
+* Produces ready to deploy [PWA projects](https://developers.google.com/web/progressive-web-apps/)
+* Ships with 2 production quality templates
+* * All our templates feature responsive design out of the box and are mobile-friendly
+* * You can modify our templates or add your own
+* Contains multiple ready to use [building blocks](/src/components/sections) 
+* * Each building block (a 'section') can be additionally tweaked to your needs and taste
+* * Sections support drag-n-drop and live edits
 
-# Our goals
+## We built [our own landing page](https://ptah.super.com/) with Ptah
 
-Fast creation of landing pages for game developers which cover the main distribution aspects: lead generation, presale and sales. Editor contains ready to use building blocks for such pages — tunable `hero section` with variations, `galleries`, `system requirements`, `supported gaming platforms`, `social links`, `lead form`, `presale options`, `footers` and so on.  
+We created Ptah for internal use, and were able to open source it under a friendly and popular [Apache 2.0 license](LICENSE). If you're curious about the context, [here's a blog post at dev.to](https://dev.to/tooevangelist/how-to-open-source-the-company-s-internal-tech-bg0) just about what we're doing and why.
 
-Each ready to use block (we named it `section`) could be tuned with custom elements. Most of properies for each section has they own settings like fonts, background, marging, etc. In same time you don't need to work with low level settings for each element or block you need. The page could be composed in few minutes with drag and drop section you need.
+## A good demo is worth a thousand words
 
-## Dependencies: 
-* Node.js v10+
-* NPM v6+
-* Redis v5+
+We're running a demo of Ptah on Amazon Cloud. [Check it out](https://ptah.super.com) by clicking the "Try demo editor" button. 
 
-## Install and run
+If you like what you see, we do inspire you to try out Ptah and perhaps see [CONTRIBUTING.md](CONTRIBUTING.md), once you're ready to contribute.
+
+Ptah is based on Vue.js components, created as editable sections with slot elements. You can use the editor to create templates, just like in the demo above, or export ready to deploy [PWA projects](https://developers.google.com/web/progressive-web-apps/).
+
+
+# Getting Started
+We've started working on [verbose docs for Ptah](docs/_index.md), so _Watch/Star_ the repo to follow the progress. 
+
+Or _be brave, be bold_ and fork what we have today. Then fire up all [your questions as issues](/../../issues/new) so we have a motivation to finish the docs faster ;-) Obviously we'd also reply to your issues to our best ability.
+
+You can see the bigger picture [in the docs](docs/_index.md), but here's a quick start that gets you the Ptah editor running locally on your machine.
+
+#### Install and run
 * `yarn install`
 * `yarn cjs`
 * `gulp locale_sync`
 * `gulp public-image`
 * `yarn build`
-* `NODE_ENV=production AUTH1_CLIENT_ID={string} AUTH1_CLIENT_SCOPE={string="openid,offline"} 
-AUTH1_CLIENT_SECRET={string} AUTH1_ISSUER_URL={string} CORS_VALID_ORIGINS={string} POST_MESSAGE_TARGET_ORIGIN={string} 
-PTAH_API_HOST_URL={string} MAILCHIMP_CLIENT_ID={string} MAILCHIMP_CLIENT_SECRET={string} PUBLIC_HOST={string} 
-REDIS_HOST={string} REDIS_PORT={string} ROUTES_PREFIX={string} SENTRY_DSN={string} SESSION_COOKIE_NAME={string} 
-SESSION_COOKIE_SIGN_KEY={string} SESSION_MAX_AGE={string=21600} SERVER_POR={string=80} node ./index.js`
 
-Where:
+#### Feature Requests and support
 
-*Obligatory params*
+If you have an idea of how to improve Ptah or have general feedback, you're welcome to submit a [feature request](/../../issues/new?labels=type%3A+feature+request&template=2-feature_request.md).
 
-{AUTH1_CLIENT_ID} - client id for OAuth2 authentication through Auth1 service
+Chances are, you like what we have already but you may require a custom integration, a special license or something else big and specific to your needs that our community may not benefit from. We're generally open to such conversations.
 
-{AUTH1_CLIENT_SCOPE} - required client scope for OAuth2 authentication through Auth1 service
+If you have a question and can't find the answer yourself, you can [raise an issue](/../../issues/new) and describe what exactly you're trying to do. We'll do our best to reply in a meaningful time.
 
-{AUTH1_CLIENT_SECRET} - client secret for OAuth2 authentication through Auth1 service
+---
 
-{AUTH1_ISSUER_URL} - url of Auth1 host 
+Cross-browser testing provided by:
 
-{CORS_VALID_ORIGINS} - list of valid origins for CORS protection, separated by comma. Notice! Value of * uses by default (disable CORS protection)
-
-{MAILCHIMP_CLIENT_ID} - client id for OAuth2 authentication in Mailchimp service
-
-{MAILCHIMP_CLIENT_SECRET} - client secret for OAuth2 authentication in Mailchimp service
-
-{NODE_ENV} - Current environment
-
-{POST_MESSAGE_TARGET_ORIGIN} - target origin for postMessages with results of authorization
-
-{PTAH_API_HOST_URL} - host with ptah-api, for example https://ptahapi.tst.protocol.one
-
-{PUBLIC_HOST} - Public host url, for example https://landings.protocol.one
-
-{REDIS_HOST} - Redis host
-
-{REDIS_PORT} - Redis post
-
-{ROUTES_PREFIX} - Common prefix for all routes, use empty string by default
-
-{SENTRY_DSN} - public DSN for Sentry
-
-{SERVER_PORT} - Port of koa http server
-
-{SESSION_COOKIE_NAME} - Name of cookie session
-
-{SESSION_COOKIE_SIGN_KEY} - Key for signing cookie session
-
-{SESSION_MAX_AGE} - session lifetime in seconds
-
-
-
-
-
-
-## User Authentication
-
-For make a user login, you must open an `/auth1/login` url if iframe. 
-All process of authorization will go in that frame, and finally you receive a postMessage from iframe, 
-with result of authorization. 
-
-Result will be an json-serialized object with auth token, expire time and error code if it occures. 
-Actual structure of object you may see in `backend/templates/auth1.postmessage.html.template` file.
-
-Token, that you receive form postMessage, you must store in browser's local storage.
-You must pass access token as bearer authorization header to all requests to ptah api.
-
-For refresh you must send GET request to `/auth1/refresh`, and you will get json response with updated token. 
-
-For logout you must send refresh token as "refresh" header and access token as bearer authorization in GET request to 
-`/auth1/logout`
-
-## Mailchimp linking
-
-For link user accounts in mailchimp and use maillists on your landing page, you must open an `/mailchimp/login` url
-in iframe.
-All process of authorization will go in that frame, and finally you receive a postMessage from iframe, 
-with result of authorization. 
-
-Result will be an json-serialized object with success sign and error code (if it occures). 
-Actual structure of object you may see in `backend/templates/mailchimp.postmessage.html.template` file.
+<a rel="nofollow" target="_blank" href="http://browserstack.com"><img width="150" height="32" src="https://github.com/ProtocolONE/ptah-editor/blob/develop/public/img/browserstack-logo.svg" alt="BrowserStack"></a>

@@ -1,21 +1,35 @@
 <template>
-  <div class="b-base-button-tabs">
-    <div class="b-base-button-tabs__row">
-      <base-label v-if="label != ''">
+  <div class="b-base-button-tabs"
+    :class="{'_buttons' : type === 'buttons'}"
+  >
+    <div class="b-base-button-tabs__label" v-if="label != ''">
+      <base-label>
         {{ label }}
       </base-label>
     </div>
     <div class="b-base-button-tabs__row">
-      <button class="b-base-button-tabs-button"
+      <button class="b-base-button-tabs__button"
         type="button"
         v-for="(item, index) in list"
         :key="index"
-        :class="{'b-base-button-tabs-button_selected': isSelected(item.value)}"
+        :class="{'_selected': isSelected(item.value)}"
         :title="item.tooltipText"
         @click="selectItem(item.value)">
 
-        <IconBase width="12" height="12" class="b-base-button-tabs-button__icon" v-if="item.iconName" :name="item.iconName" />
-        <span class="b-base-button-tabs-button__text" v-if="item.text" v-html="item.text"></span>
+        <IconBase
+          width="12"
+          height="12"
+          class="b-base-button-tabs-button__icon"
+          v-if="item.iconName"
+          :name="item.iconName"
+          :color="color"
+          :strokeColor="strokeColor"
+        />
+        <span
+          class="b-base-button-tabs-button__text"
+          v-if="item.text"
+          v-html="item.text"
+        />
       </button>
     </div>
   </div>
@@ -55,6 +69,21 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+
+    type: {
+      type: String,
+      default: ''
+    },
+
+    color: {
+      type: String,
+      default: '#575A5F'
+    },
+
+    strokeColor: {
+      type: String,
+      default: 'transparent'
     }
   },
 
@@ -95,7 +124,7 @@ export default {
 @import '../../assets/sass/_colors.sass'
 @import '../../assets/sass/_variables.sass'
 
-$border-color: rgba(#888888, 0.25)
+$tabs-bg: #EEF9FA
 
 @mixin button-style-reset()
   border: 0
@@ -109,39 +138,99 @@ $border-color: rgba(#888888, 0.25)
 
 .b-base-button-tabs
   width: 100%
+  &__label
+    margin-bottom: 1.6rem
   &__row
     display: flex
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1)
+    background-color: $tabs-bg
+    justify-content: stretch
 
-.b-base-button-tabs-button
-  @include button-style-reset
-  cursor: pointer
-  transition: background-color 0.1s ease, color 0.1s ease
+  &__button
+    @include button-style-reset
+    cursor: pointer
+    transition: all .2s ease-out
 
-  display: flex
-  flex-basis: 0rem
-  flex-grow: 1
-  flex-shrink: 0
-  justify-content: center
-  align-items: center
+    display: flex
+    flex-basis: 0
+    flex-grow: 1
+    flex-shrink: 0
+    justify-content: center
+    align-items: center
+    position: relative
+    height: 3.7rem
 
-  background-color: $white
-  color: #888888
-  border: 1px solid $border-color
-  border-radius: 0.2rem
+    background-color: transparent
+    color: #A2A5A5
 
-  padding: $size-step/2.5
-  margin: 0.2rem
-  font-size: 1.4rem
-  white-space: nowrap
+    padding: $size-step/4 $size-step/2
+    margin: 0
+    font-size: 1.3rem
+    white-space: nowrap
+    text-transform: uppercase
 
-  outline: none
-  &:hover,
-  &_selected,
-  &_selected:hover
-    color: $dark-blue-krayola
-    fill: $dark-blue-krayola
-    border: 1px solid $dark-blue-krayola
+    outline: none
+    &:hover
+      color: $main-green
+    &._selected
+      box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.05)
+    &._selected,
+    &._selected:hover
+      color: #575A5F
+      fill: #575A5F
+      background: #FFFFFF
+    &._selected:after,
+    &._selected:before
+      content: ''
+      position: absolute
+      width: .5rem
+      height: 3.7rem
+      z-index: 1
+      top: 0
+      background-color: $tabs-bg
+      display: none
+    &._selected:not(:last-child):after
+      right: 0
+      display: block
+      border-radius: 0 0 0 5px
+      box-shadow: inset 2px 1px 2px rgba(186, 186, 186, 0.34)
+    &._selected:not(:first-child):before
+      left: 0
+      display: block
+      border-radius: 0 0 5px 0
+      box-shadow: inset -2px 1px 2px rgba(186, 186, 186, 0.34)
 
-  &__icon + &__text
-    margin-left: 0.6rem
+    &__icon + &__text
+      margin-left: 0.6rem
+
+  &._buttons
+    .b-base-button-tabs__row
+      justify-content: center
+      flex-wrap: wrap
+
+      background: transparent
+      box-shadow: none
+    .b-base-button-tabs__button
+      width: 3.4rem
+      min-width: 3.4rem
+      max-width: 3.4rem
+      height: 3.4rem
+      padding: 0
+      margin: .8rem .3rem
+      background: #F3F6F6
+      border-radius: .5rem
+      & svg
+        width: 55%
+        height: 55%
+      &:after,
+      &:before
+        display: none
+      &:hover
+        background: rgba(162, 165, 165, 0.5)
+      &._selected
+        background: #00ADB6
+        color: #575A5F
+        &:hover
+          color: #575A5F
+          background: #00ADB6
 </style>

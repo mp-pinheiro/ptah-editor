@@ -3,10 +3,11 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenFantasyVideoBack'
-const BG_SECTION = 'url(https://gn780.cdn.stg.gamenet.ru/0/8iMuX/o_JEnQO.jpg)'
+const BG_SECTION = 'url(https://s3.protocol.one/src/o_JEnQO.jpg)'
 const date = Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000
 
 const COMPONENTS = [
@@ -51,25 +52,51 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://gn543.cdn.stg.gamenet.ru/0/8iMxM/o_18R5TC.svg")',
+        'background-image': 'url("https://s3.protocol.one/src/o_18R5TC.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
         'width': '500px',
         'height': '121px',
-        'margin': '25px 0 20px'
+        'margin-top': '25px',
+        'margin-right': '0px',
+        'margin-bottom': '20px',
+        'margin-left': '0px'
+      },
+      media: {
+        'is-mobile': {
+          width: '270px',
+          height: '100px',
+          'margin-top': '25px',
+          'margin-right': '0',
+          'margin-bottom': '0',
+          'margin-left': '0'
+        }
       }
     }
   },
   {
     element: {
-      text: '<p>HERE SHOULD BE A LITTLE TEXT ABOUT YOURE GAME</b></p>',
+      text: '<h1>HERE SHOULD BE A LITTLE TEXT ABOUT YOURE GAME</h1>',
       styles: {
-        'font-family': 'Cinzel',
         'font-size': '5.6rem',
         'line-height': '1.2',
         'color': '#ffffff',
-        'margin': '25px 0 20px'
+        'margin-top': '25px',
+        'margin-right': '0px',
+        'margin-bottom': '20px',
+        'margin-left': '0px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '2rem',
+          'line-height': '1.4',
+          'text-align': 'center',
+          'margin-top': '16px',
+          'margin-bottom': '16px',
+          'margin-left': '32px',
+          'margin-right': '32px'
+        }
       }
     }
   },
@@ -77,11 +104,13 @@ const C_CUSTOM = [
     element: {
       text: '<p><b>Time left</b></p>',
       styles: {
-        'font-family': 'Cinzel',
         'font-size': '3.6rem',
         'line-height': '1.2',
         'color': '#ffffff',
-        'margin': '25px 0 12px'
+        'margin-top': '25px',
+        'margin-right': '0px',
+        'margin-bottom': '12px',
+        'margin-left': '0px'
       }
     }
   },
@@ -97,13 +126,14 @@ const C_CUSTOM = [
       },
       styles: {
         'background-color': 'rgba(0,0,0,0)',
-        'font-family': 'Cinzel',
         'font-size': '4rem',
         'font-weight': 'normal',
         'line-height': '1',
         'color': '#ffffff',
-        'padding': '0',
-        'margin': '0 0 27px 0'
+        'margin-top': '0px',
+        'margin-right': '0px',
+        'margin-bottom': '27px',
+        'margin-left': '0px'
       }
     }
   },
@@ -113,18 +143,24 @@ const C_CUSTOM = [
       styles: {
         'background-color': '#AF2E12',
         'color': '#ffffff',
-        'font-family': 'Cinzel',
         'font-size': '2rem',
         'text-align': 'center',
         'width': '240px',
         'height': '64px',
-        'border': '1px solid #000000',
-        'margin': '25px 0'
+        'border-width': '1px',
+        'border-style': 'solid',
+        'border-color': '#000000',
+        'margin-top': '25px',
+        'margin-right': '0px',
+        'margin-bottom': '25px',
+        'margin-left': '0px'
       },
       pseudo: {
         'hover': {
-          'background-color': '#000000 !important',
-          'border': '1px solid AF2E120 !important'
+          'background-color': '#333333 !important',
+          'border-width': '1px',
+          'border-style': 'solid',
+          'border-color': '#000000'
         }
       }
     }
@@ -142,7 +178,7 @@ const SCHEMA_CUSTOM = {
       'height': '100vh'
     },
     backgroundType: 'video',
-    backgroundVideo: 'https://gn357.cdn.stg.gamenet.ru/0/8iNCR/o_1vLDJn.mp4',
+    backgroundVideo: 'https://s3.protocol.one/src/o_1vLDJn.mp4',
     overlay: {
       color: '#000000',
       opacity: '0.5'
@@ -151,8 +187,10 @@ const SCHEMA_CUSTOM = {
   components: _.merge({}, C_CUSTOM),
   container: {
     width: 9,
-    styles: {
-      padding: '0 0 120px 0'
+    media: {
+      'is-mobile': {
+        'padding-bottom': '25px'
+      }
     }
   },
   edited: true
@@ -165,7 +203,7 @@ export default {
 
   description: 'Fantasy title animated background main screen',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   cover: '/img/covers/first-screen-fantasy-video-back.jpg',
 
@@ -187,7 +225,7 @@ export default {
   <section
     class="b-first-screen-space-video-back"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -199,10 +237,9 @@ export default {
           <sandbox
               container-path="$sectionData.container"
               components-path="$sectionData.components"
-              direction="column"
               class="b-sandbox">
 
-            <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @change="dragStop">
+            <draggable v-model="$sectionData.components" class="b-draggable-slot b-draggable-slot_100" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
               <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                 <component
                   v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
@@ -225,27 +262,4 @@ export default {
 </template>
 
 <style lang="sass" scoped>
-.b-first-screen-space-video-back
-  .b-text-fs
-    letter-spacing: -0.02em
-    .is-mobile &,
-    .is-tablet &
-      font-size: 2.4rem !important
-      margin: 0 auto 8px !important
-    @media only screen and (max-width: 840px)
-      &
-        font-size: 2.4rem !important
-        margin: 0 auto 8px !important
-  .b-button-fs
-    box-shadow: 0px 8px 70px rgba(0, 0, 0, 0.2)
-    transition: background-color 200ms
-  .b-timer-fs
-    .is-mobile &,
-    .is-tablet &
-      margin: 0 auto 8px !important
-    @media only screen and (max-width: 840px)
-      &
-        font-size: 2.4rem !important
-        margin: 0 auto 8px !important
-
 </style>

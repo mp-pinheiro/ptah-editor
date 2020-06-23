@@ -19,7 +19,7 @@ html
   background: $black !important
 
 body
-  font-family: Lato, Helvetica, Arial, sans-serif
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif
   font-size: 1.6rem
   line-height: 1
   font-weight: 400
@@ -35,25 +35,29 @@ body
   -moz-osx-font-smoothing: antialiased !important
   font-smooth: always
 .b-body
+  min-width: 980px
+  min-height: 600px
+  overflow: auto
+  overflow-y: hidden
   &_preview,
   &_export
     background-color: $white
     position: relative
     overflow: auto
     overflow-x: hidden
+  &_app
+    overflow: hidden
 
 .b-page
   min-height: 100vh
   position: relative
-  background-color: #5D7899
-  &__header, &__content, &__footer
+  background-color: $gray200
+  &__header, &__footer
     position: relative
-    z-index: 5
   &__header, &__footer
     height: 8rem
   &__header
-    background-color: $white
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), inset 0px -1px 0px rgba(0, 0, 0, 0.07)
+    background-color: $gray200
   &__footer
     position: absolute
     bottom: 0
@@ -62,9 +66,10 @@ body
     z-index: 0
     height: 4rem
 
-    background-color: $dark-blue
+    background-color: $gray200
   &__content
     flex-grow: 1
+    position: relative
 
 #video_bg
   position: absolute
@@ -75,6 +80,8 @@ body
   width: 120%
   margin: 0 0 0 -60%
   height: auto
+  &._hide
+    display: none
   .is-tablet &,
   .is-mobile &
     position: absolute
@@ -148,4 +155,4 @@ body
 
 .drag-start
   .b-logo, .b-image, .b-gallery-item
-    border: .2rem dotted $dark-blue-krayola !important
+    border: .2rem dotted $main-green !important

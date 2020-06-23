@@ -9,7 +9,7 @@
         :total-steps="totalSteps"
         :strokeWidth="2"
         :startColor="`#55D287`"
-        :stopColor="`#2275D7`"
+        :stopColor="`#00ADB6`"
         :innerStrokeColor="`#E4E4E4`"
       >
       </radial-progress-bar>
@@ -38,7 +38,9 @@
              @drop="onDrop"
              :style="style"
              v-else>
-          <IconBase name="plus" width="16" height="16" color="#2275D7" />
+          <IconBase name="downloadCloud" width="32" height="22" color="#00ADB6" />
+
+          <div>Upload file</div>
 
           <input
             :multiple="multiple"
@@ -62,7 +64,7 @@
           <span
             class="b-uploader-item__label-help"
             v-if="type === 'image'"
-            tooltip="Upload image or enter url"
+            :tooltip="tooltipText || 'Upload image or enter url'"
             tooltip-position="leftbottom"
             >
             <IconBase
@@ -75,7 +77,7 @@
           <span
             class="b-uploader-item__label-help"
             v-if="type === 'video'"
-            tooltip="Upload video or enter url"
+            :tooltip="tooltipText || 'Upload video or enter url'"
             tooltip-position="leftbottom"
             >
             <IconBase
@@ -90,20 +92,30 @@
           {{ label }}
         </template>
       </div>
+
       <div class="b-uploader-item__text">
-        <base-text-field
-          :value="path"
-          :hasError="error"
-          errorText="Invalid image url"
-          @input="onInput"
-        />
+        <button
+          class="b-uploader-item__button-url"
+          :class="{ 'drop' : openUrl }"
+          @click="openUrl = !openUrl">
+          URL <IconBase name="arrowDown" width="7" />
+        </button>
+
+        <div class="b-uploader-item__remove"
+             @click="$emit('remove')"
+             v-if="hasPreview">
+          {{$t('nav.delete')}}
+        </div>
       </div>
-      <div class="b-uploader-item__remove"
-           tooltip="Remove"
-           @click="$emit('remove')"
-           v-if="hasPreview">
-        <icon-base name="close" width="12" height="12"></icon-base>
-      </div>
+    </div>
+
+    <div class="b-uploader-item__url" :class="{ 'show' : openUrl }">
+      <base-text-field
+        :value="path"
+        :hasError="error"
+        errorText="Invalid image url"
+        @input="onInput"
+      />
     </div>
 
   </figure>
@@ -112,12 +124,11 @@
 <script>
 import RadialProgressBar from 'vue-radial-progress'
 import * as _ from 'lodash-es'
+import { getCookie } from '@editor/util'
 
 function getFormData (file) {
   let formData = new FormData()
-  formData.append('file[]', file)
-  formData.append('method', 'storefront.upload')
-  formData.append('format', 'json')
+  formData.append('file', file)
   return formData
 }
 
@@ -133,14 +144,16 @@ export default {
     multiple: Boolean,
     src: String,
     type: String,
-    label: String
+    label: String,
+    tooltipText: String
   },
 
   data () {
     return {
       progress: 100,
       totalSteps: 100,
-      error: false
+      error: false,
+      openUrl: false
     }
   },
 
@@ -175,16 +188,17 @@ export default {
         let xhr = new XMLHttpRequest()
 
         xhr.upload.onprogress = this.loadingProgress // --- uploading progress
-        xhr.open('POST', '//images.stg.gamenet.ru/restapi')
+        xhr.open('POST', `${process.env.VUE_APP_API}upload`)
+        xhr.setRequestHeader('Authorization', `Bearer ${getCookie('token')}`)
         xhr.send(getFormData(file))
 
         xhr.onload = xhr.onerror = () => {
           if (xhr.status === 200) {
             try {
-              let { response } = JSON.parse(xhr.response)
-              let { name, src: path } = response.data[0]
+              let response = JSON.parse(xhr.response)
+              let path = response.cdnUrl
               this.clearProgress(path)
-              resolve({ name, path })
+              resolve({ name: response.file, path })
             } catch (error) {
               reject(error)
             }
@@ -222,6 +236,7 @@ export default {
       for (let file of files) {
         this.$emit('add', await this.getFileData(file))
       }
+      this.$emit('getInputSrcFiles', files)
     },
 
     async uploadFile (file) {
@@ -229,6 +244,7 @@ export default {
         return
       }
       this.$emit('replace', await this.getFileData(file))
+      this.$emit('getInputSrcFiles', file)
     },
 
     onDrop (e) {
@@ -293,9 +309,11 @@ export default {
 @import '../../assets/sass/_variables.sass'
 
 .b-uploader-item
+  font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
   display: flex
   justify-content: space-between
   align-items: flex-start
+  flex-wrap: wrap
 
   margin: 0 0 $size-step/2
   padding: 0
@@ -304,10 +322,12 @@ export default {
     display: flex
     align-items: center
     justify-content: center
+    flex-shrink: 0
+    flex-basis: 45%
 
-    width: $size-step*1.5
-    height: $size-step
-    margin: 0 $size-step/2 0 0
+    width: $size-step*3.5
+    height: 8rem
+    margin: 0 1.1rem 0 0
 
     position: relative
 
@@ -318,7 +338,7 @@ export default {
 
       cursor: pointer
       &:hover
-        border-color: $dark-blue-krayola
+        border-color: $main-green
 
     &--img
       width: 100%
@@ -329,48 +349,90 @@ export default {
       background-size: contain !important
       background-position: center center !important
       background-repeat: no-repeat !important
+      position: relative
 
     &--plus
       display: flex
       align-items: center
       justify-content: center
-      width: 3rem
-      height: 3rem
+      flex-direction: column
+      width: 100%
+      height: 100%
 
-      border: 0.2rem solid $ligth-grey
-      border-radius: 50%
+      color: $main-green
+
+      background: rgba(88, 199, 205, 0.1)
+      border: 1px dashed $main-green
+      border-radius: 5px
+
+      &> div
+        font-size: 1rem
+        line-height: 1.4rem
+        margin-top: .5rem
 
   &__controls
     position: relative
     flex-grow: 1
-
-    margin-top: .5rem
+    flex-basis: 50%
 
     font-size: 1.4rem
     line-height: 1.7rem
     letter-spacing: -0.01em
 
   &__label
-    color: $black
-    text-transform: capitalize
+    color: $dark-grey
+    font-weight: 500
+    height: 5rem
+    &:first-letter
+      text-transform: uppercase
     &-help
       position: absolute
       right: 0rem
       text-transform: none
       cursor: pointer
+      svg
+        fill: $yellow
     &--empty
-      color: #999
+      // color: #999
 
   &__text
     margin-top: .5rem
-    /deep/
-      .b-base-text-field__input
-        font-size: 1.4rem
+    display: flex
+    align-items: center
+
+  &__url
+    flex-basis: 100%
+    margin-top: 2rem
+    overflow: hidden
+    height: 0
+    opacity: 0
+    transition: all .2s ease-out
+
+    &.show
+      height: 3.5rem
+      opacity: 1
 
   &__remove
-    position: absolute
-    top: 1px
-    right: 0
-    color: $grey-middle
+    color: #A2A5A5
     cursor: pointer
+    font-size: 1.4rem
+
+  &__button-url
+    background: transparent
+    color: $main-green
+    border: none
+    display: flex
+    align-items: center
+    font-size: 1.4rem
+    font-weight: 500
+    font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
+    margin-right: 1.5rem
+    cursor: pointer
+    outline: none
+
+    &.drop svg
+      transform: rotate(180deg)
+
+    svg
+      margin-left: .7rem
 </style>

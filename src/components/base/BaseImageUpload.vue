@@ -79,7 +79,9 @@ export default {
   methods: {
     uploadFileAndHandleData (event) {
       this.uploadFile(event)
-        .then((data) => { this.url = data.src })
+        .then((response) => {
+          this.url = response.cdnUrl
+        })
         .catch((error) => console.warn(error))
     },
 
@@ -151,10 +153,10 @@ export default {
       height: $size-step
       width: $size-step
       margin: 0 auto
-      background: $dark-blue-krayola
+      background: $main-green
       border-radius: 100%
       &:hover
-        border-color: $dark-blue-krayola
+        border-color: $main-green
 
       svg
         margin-bottom: 0.2rem

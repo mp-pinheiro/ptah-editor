@@ -9,12 +9,14 @@
       </base-label>
 
       <input class="b-base-number-field__input" type="number"
-             v-bind="$attrs"
-             v-model="innerValue"
-             :placeholder="placeholder"
-             @input="$emit('input', innerValue)"
-             @focus="$emit('focus', $event), hasFocus = true"
-             @blur="$emit('blur', $event), hasFocus = false" />
+        v-bind="$attrs"
+        v-model="innerValue"
+        :placeholder="placeholder"
+        @input="$emit('input', innerValue)"
+        @focus="$emit('focus', $event), hasFocus = true"
+        @blur="$emit('blur', $event), hasFocus = false"
+        :disabled="disabled"
+      />
 
       <base-error-text v-if="hasError">
         {{errorText}}
@@ -44,6 +46,10 @@ export default {
         return value > 0
       }
     },
+    minimum: {
+      type: [String, Number],
+      default: 0
+    },
     hasError: {
       type: Boolean,
       default: false
@@ -59,12 +65,25 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    /* is disabled */
+    disabled: {
+      default: false,
+      type: Boolean
     }
   },
 
   watch: {
+    value (value) {
+      this.innerValue = value !== ''
+        ? Math.min(Math.max(value, this.minimum), this.maximum)
+        : 0
+    },
+
     innerValue  (value) {
-      let val = value !== '' ? Math.min(value, this.maximum) : 0
+      let val = value !== ''
+        ? Math.min(Math.max(value, this.minimum), this.maximum)
+        : 0
       this.innerValue = val
 
       this.$emit('input', val)
@@ -79,7 +98,9 @@ export default {
   },
 
   mounted () {
-    this.innerValue = this.value !== '' ? Math.min(this.value, this.maximum) : 0
+    this.innerValue = this.value !== ''
+      ? Math.min(Math.max(this.value, this.minimum), this.maximum)
+      : 0
   }
 }
 </script>
@@ -128,5 +149,6 @@ export default {
     &:disabled
       border-color: transparent
       color: #888888
+      cursor: not-allowed
 
 </style>

@@ -1,10 +1,16 @@
 <template>
   <div class="b-age-restrictions b-border"
-      :path="path"
-    >
+    :path="path"
+    :style="objVarsMedia"
+    @mouseleave="mouseleave"
+    @mouseover.stop="mouseover"
+  >
     <div class="b-age-restrictions__item"
       v-for="(value, key) in restrictions" :key="key"
       v-if="restrictions[key].visible"
+      :style="{
+        '--mobile-width': mediaStyles['is-mobile']['sizeIcons']['width'] + 'px'
+      }"
       >
       <div class="b-age-restrictions__item-img"
         :style="{ width: sizeIcons.width + 'px'  }">
@@ -20,10 +26,17 @@
 
 <script>
 import VuseIcon from '@editor/components/VuseIcon'
+import elementMedia from '../mixins/elementMedia'
+import elementHover from '../mixins/elementHover'
 
 export default {
   name: 'AgeRestrictions',
-  inject: ['$section'],
+
+  mixins: [
+    elementMedia,
+    elementHover
+  ],
+
   components: {
     VuseIcon
   },
@@ -46,44 +59,4 @@ export default {
 </script>
 
 <style lang="sass" scoped="scoped">
-.b-age-restrictions
-  margin: 0 auto
-  min-height: 5rem
-  min-width: 5rem
-  display: flex
-  justify-content: center
-  align-items: center
-  .is-tablet &,
-  .is-mobile &
-    flex-wrap: wrap
-    height: auto !important
-  @media only screen and (max-width: 768px)
-    &
-      flex-wrap: wrap
-      height: auto !important
-  &__item
-    position: relative
-    margin: 1.6rem
-    text-align: center
-    &-select
-      background: #fff
-      color: #323c47
-      border: 0
-      outline: 0
-      width: auto
-      height: 3rem
-      border-radius: 3rem
-      font-size: 1.4rem
-      margin: 1rem auto
-      padding: 0.5rem
-      width: 6rem
-      display: block
-      & option:checked
-        background-color: #333
-        color: #fff
-    &-img
-      display: inline-block
-      & img
-        width: 100%
-        height: auto
 </style>

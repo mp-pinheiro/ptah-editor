@@ -16,7 +16,7 @@ import {
   TableCell,
   TableRow
 } from 'tiptap-extensions'
-import { merge, set } from 'lodash-es'
+import { merge, set, throttle } from 'lodash-es'
 
 export default {
   data () {
@@ -72,15 +72,20 @@ export default {
         this.setTextFocus('editor__content')
         // set menu position
         this.setPosition()
+
+        window.addEventListener('scroll', this.setPosition, true)
       } else {
         if (this.editor !== null) this.editor.destroy()
-        this.hideLinkMenu()
+        this.$_hideLinkMenu()
         this.isActive = false
+        window.removeEventListener('scroll', this.setPosition, true)
       }
     },
 
-    text () {
-      this.save()
+    text (value, oldValue) {
+      if (value !== oldValue) {
+        this.save()
+      }
     }
   },
 
@@ -92,7 +97,7 @@ export default {
   beforeDestroy () {
     try {
       this.editor.destroy()
-      this.hideLinkMenu()
+      this.$_hideLinkMenu()
     } catch (e) { }
   },
 
@@ -100,9 +105,13 @@ export default {
     ...mapActions('Sidebar', ['updateSettingOptions']),
     ...mapMutations('Landing', ['textEditor']),
 
-    save () {
+    save: throttle(function () {
+      if (this.settingObjectElement !== this.currentEl) {
+        return
+      }
+
       this.updateSettingOptions(merge({}, this.settingObjectOptions, set({}, this.savePath, this.text)))
-    },
+    }, 100),
 
     close () {
       this.textEditor(false)
@@ -116,18 +125,18 @@ export default {
       })
     },
 
-    hideLinkMenu () {
+    $_hideLinkMenu () {
       this.linkUrl = null
       this.linkMenuIsActive = false
     },
 
-    setLinkUrl (command, url) {
+    $_setLinkUrl (command, url) {
       command({ href: url })
-      this.hideLinkMenu()
+      this.$_hideLinkMenu()
       this.editor.focus()
     },
 
-    setList (oldList, newList) {
+    $_setList (oldList, newList) {
       if (this.editor.isActive.heading()) {
         this.editor.commands.heading()
       }
@@ -143,7 +152,7 @@ export default {
       }
     },
 
-    setHeading (obj) {
+    $_setHeading (obj) {
       this.resetList('bullet')
       this.resetList('ordered')
       this.editor.commands.heading(obj)

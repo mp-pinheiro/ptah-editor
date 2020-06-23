@@ -2,7 +2,7 @@
 <section
     v-styler:section="$sectionData.mainStyle"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     class="b-hero">
 
   <slot name="menu"/>
@@ -17,11 +17,9 @@
         <sandbox
             container-path="$sectionData.container"
             components-path="$sectionData.components"
-            direction="column"
-            align="center"
             class="b-sandbox">
 
-          <draggable v-model="$sectionData.components" :style="$sectionData.container.styles" class="b-draggable-slot" @change="dragStop">
+          <draggable v-model="$sectionData.components" :style="$sectionData.container.styles" class="b-draggable-slot" @start="$_drag('components')" @change="$_dragStop">
 
             <div
                 v-for="(component, index) in $sectionData.components"
@@ -71,6 +69,7 @@ import { StyleObject, Logo, VideoElement, Text, Button } from '@editor/types'
 import { merge } from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
+import sectionMedia from '../../mixins/sectionMedia'
 
 const [name, group, cover] = ['VideoHeroSplitScreen', 'FirstScreen', '/img/covers/hero-art-right.png']
 
@@ -91,7 +90,7 @@ const defaultColumnComponents = [
   {
     element: {
       styles: {
-        'background-image': 'url(https://gn120.cdn.stg.gamenet.ru/0/7aITH/o_1vTdxd.png)',
+        'background-image': 'url(https://s3.protocol.one/src/o_1vTdxd.png)',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -104,7 +103,7 @@ const defaultColumnComponents = [
   },
   {
     element: {
-      src: 'https://gn553.cdn.stg.gamenet.ru/0/7aJD3/o_1Od7Vf.mp4'
+      src: 'https://s3.protocol.one/src/o_1Od7Vf.mp4'
     },
     key: 5
   },
@@ -120,7 +119,6 @@ const defaultColumnComponents = [
       styles: {
         'background-color': '#FF6D64',
         'color': '#ffffff',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '30rem',
         'height': '6.4rem',
@@ -138,7 +136,6 @@ const defaultColumnComponents = [
         'align-items': 'center',
         'justify-content': 'center',
         'color': '#ffffff',
-        'font-family': 'Lato',
         'text-align': 'center',
         'width': '30rem',
         'height': '6.4rem',
@@ -154,7 +151,7 @@ const defaultColumnComponents = [
 const defaultSchema = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://gn545.cdn.stg.gamenet.ru/0/7aIQe/o_1Mpn8F.jpg)',
+      'background-image': 'url(https://s3.protocol.one/src/o_1Mpn8F.jpg)',
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'background-position': '75% 50%'
@@ -174,7 +171,7 @@ export default {
 
   description: 'Game character to rightward of video main screen',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
   $schema: {
     mainStyle: StyleObject,
@@ -197,14 +194,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.b-hero
-  position: relative
-  width: 100%
-  margin: 0
-  padding: 1rem
-  display: flex
-  text-align: center
-  justify-content: center
-  flex-direction: column
-  transition: background 200ms
 </style>

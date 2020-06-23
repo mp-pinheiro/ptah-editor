@@ -3,58 +3,85 @@ import * as types from '@editor/types'
 import * as _ from 'lodash-es'
 import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
-import { mapActions } from 'vuex'
+import sectionMedia from '../../mixins/sectionMedia'
 
-const C_CUSTOM_1 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn257.cdn.stg.gamenet.ru/0/8dAso/o_1O03Wg.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '120px',
-        'height': '143px'
+let prev = [
+  'https://s3.protocol.one/src/o_1O03Wg.png',
+  'https://s3.protocol.one/src/o_1FdGcD.png',
+  'https://s3.protocol.one/src/o_2FiQhB.png',
+  'https://s3.protocol.one/src/o_1ZxHzN.png'
+]
+
+let label = [
+  'Start', 'Full', 'Delux', 'Ultimate'
+]
+
+const [
+  C_CUSTOM_1,
+  C_CUSTOM_2,
+  C_CUSTOM_3,
+  C_CUSTOM_4
+] = Array.from(new Array(4), (x, i) => {
+  return [
+    {
+      element: {
+        styles: {
+          'background-image': `url(${prev[i]})`,
+          'background-color': 'rgba(0, 0, 0, 0)',
+          'background-repeat': 'no-repeat',
+          'background-size': 'contain',
+          'width': '160px',
+          'height': '160px'
+        },
+        media: {
+          'is-mobile': {
+            'width': '160px',
+            'height': '160px'
+          }
+        }
       }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>Start edition</strong></p>',
-      styles: {
-        'font-family': 'Montserrat',
-        'font-size': '2.8rem',
-        'color': '#ffffff'
+    },
+    {
+      element: {
+        text: `<h1><strong>${label[i]} edition</strong></h1>`,
+        styles: {
+          'font-size': '2.8rem',
+          'color': '#ffffff'
+        },
+        media: {
+          'is-mobile': {
+            'font-size': '3rem'
+          }
+        }
       }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
+    },
+    {
+      element: {
+        text: '><strong>BUY NOW</strong>',
+        styles: {
+          'background-color': 'transparent',
+          'color': '#F4BC64',
+          'font-size:': '1.6rem',
+          'text-align': 'center',
+          'width': '190px',
+          'height': '64px',
+          'border-radius': '100px',
+          'border-width': '2px',
+          'border-style': 'solid',
+          'border-color': '#F4BC64'
+        },
+        pseudo: {
+          hover: {
+            'color': '#FFFFFF !important',
+            'border-width': '2px !important',
+            'border-style': 'solid !important',
+            'border-color': '#FFFFFF !important'
+          }
         }
       }
     }
-  }
-]
+  ]
+})
 
 const C_CUSTOM_1D = [
   {
@@ -114,57 +141,6 @@ const C_CUSTOM_1D = [
       },
       styles: {
         color: '#818181'
-      }
-    }
-  }
-]
-
-const C_CUSTOM_2 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn292.cdn.stg.gamenet.ru/0/8dAtJ/o_1FdGcD.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '161px',
-        'height': '143px'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>Full edition</strong></p>',
-      styles: {
-        'font-family': 'Montserrat',
-        'font-size': '2.8rem',
-        'color': '#ffffff'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
       }
     }
   }
@@ -233,57 +209,6 @@ const C_CUSTOM_2D = [
   }
 ]
 
-const C_CUSTOM_3 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn546.cdn.stg.gamenet.ru/0/8dAtZ/o_2FiQhB.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '157px',
-        'height': '143px'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>Delux edition</strong></p>',
-      styles: {
-        'font-family': 'Montserrat',
-        'font-size': '2.8rem',
-        'color': '#ffffff'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
-      }
-    }
-  }
-]
-
 const C_CUSTOM_3D = [
   {
     element: {
@@ -342,57 +267,6 @@ const C_CUSTOM_3D = [
       },
       styles: {
         color: '#818181'
-      }
-    }
-  }
-]
-
-const C_CUSTOM_4 = [
-  {
-    element: {
-      styles: {
-        'background-image': 'url("https://gn452.cdn.stg.gamenet.ru/0/8dAtj/o_1ZxHzN.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '157px',
-        'height': '143px'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>Ultimate edition</strong></p>',
-      styles: {
-        'font-family': 'Montserrat',
-        'font-size': '2.8rem',
-        'color': '#ffffff'
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p><strong>BUY NOW</strong></p>',
-      styles: {
-        'background-color': 'transparent',
-        'color': '#F4BC64',
-        'font-family': 'Montserrat',
-        'font-size:': '1.6rem',
-        'text-align': 'center',
-        'width': '190px',
-        'height': '64px',
-        'border-radius': '100px',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#F4BC64'
-      },
-      pseudo: {
-        hover: {
-          'color': '#FFFFFF !important',
-          'border-width': '2px !important',
-          'border-style': 'solid !important',
-          'border-color': '#FFFFFF !important'
-        }
       }
     }
   }
@@ -464,8 +338,7 @@ const C_CUSTOM_4D = [
 const C_CUSTOM_CONTAINER = {
   styles: {
     'flex-direction': 'column',
-    'align-items': 'center',
-    'padding': '0px'
+    'align-items': 'center'
   }
 }
 
@@ -473,7 +346,12 @@ const C_CUSTOM_CONTAINER_D = {
   styles: {
     'flex-direction': 'column',
     'align-items': 'flex-start',
-    'padding': '0 0 0 35px'
+    'padding-left': '35px'
+  },
+  media: {
+    'is-mobile': {
+      'padding-left': '70px'
+    }
   }
 }
 
@@ -490,10 +368,11 @@ const C_CUSTOM = [
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://gn870.cdn.stg.gamenet.ru/0/8coGJ/o_u02v0.jpg)',
+      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
       'background-color': 'rgba(21,28,68,1)',
       'background-size': 'cover',
-      'padding': '50px 0 190px 0'
+      'padding-top': '50px',
+      'padding-bottom': '190px'
     }
   },
   components: _.merge({}, C_CUSTOM),
@@ -591,9 +470,9 @@ export default {
 
   description: 'Product list horizontal view',
 
-  mixins: [defaults],
+  mixins: [defaults, sectionMedia],
 
-  cover: 'https://gn709.cdn.stg.gamenet.ru/0/8iEAD/o_1uYktu.jpg',
+  cover: 'https://s3.protocol.one/src/o_1uYktu.jpg',
 
   $schema: {
     mainStyle: types.ProductSection,
@@ -617,20 +496,6 @@ export default {
     componentsUltimateD: _.merge([], COMPONENTS_D)
   },
 
-  methods: {
-    ...mapActions('Sidebar', ['setControlPanel', 'setSettingSection']),
-
-    async showSettings (panel) {
-      let index = _.findIndex(this.$builder.sections, ['group', GROUP_NAME])
-
-      this.setSettingSection(this.$builder.sections[index])
-
-      await this.$nextTick()
-
-      this.setControlPanel(panel)
-    }
-  },
-
   created () {
     if (this.$sectionData.edited === undefined) {
       Seeder.seed(_.merge(this.$sectionData, SCHEMA_CUSTOM))
@@ -641,9 +506,9 @@ export default {
 
 <template>
   <section
-    class="b-products-colums"
+    class="b-products-columns"
     :class="$sectionData.mainStyle.classes"
-    :style="$sectionData.mainStyle.styles"
+    :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
   >
     <slot name="menu"/>
@@ -657,10 +522,8 @@ export default {
                 class="b-sandbox"
                 container-path="$sectionData.container"
                 components-path="$sectionData.components"
-                direction="column"
-                :style="$sectionData.container.styles"
               >
-                <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @change="dragStop">
+                <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
                   <div :class="`b-draggable-slot__${component.type}`" v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
                     <component
                        v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: $sectionData.components[index].label }"
@@ -678,21 +541,9 @@ export default {
               </sandbox>
             </div>
           </div>
-          <div class="b-products-colums__padd">
-            <div class="b-products-colums__padd-border">
-              <!-- Setting controls -->
-                <div class="b-products-colums__controls">
-                  <div>
-                    <a href="#" class="b-products-colums__control"
-                       tooltip="Products"
-                       tooltip-position="bottom"
-                       @click.stop="showSettings('SectionProductsColumnsSettings')">
-                      <icon-base name="cog" width="12" height="15" />
-                    </a>
-                  </div>
-                </div>
-
-              <div class="b-grid__row b-products-colums__row"
+          <div class="b-section-padd">
+            <div class="b-section-padd-border">
+              <div class="b-grid__row b-products-columns__row"
                    :style="{ 'align-items' : $sectionData.mainStyle.styles['align-items']}">
                 <div class="b-grid__col-3 b-grid__col-m-12 "
                   v-for="(product, key) in $sectionData.mainStyle.products"
@@ -703,16 +554,14 @@ export default {
                     class="b-sandbox"
                     :container-path="`$sectionData.container${key}`"
                     :components-path="`$sectionData.components${key}`"
-                    direction="column"
-                    :style="`$sectionData.container${key}.styles`"
                     >
-                    <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}`].styles" @change="dragStop">
+                    <draggable v-model="$sectionData['components' + key]" class="b-draggable-slot" :style="$sectionData[`container${key}`].styles" @start="$_drag(`components${key}`)" @change="$_dragStop">
                       <div
                         v-for="(component, index) in $sectionData[`components${key}`]"
                         v-if="$sectionData[`components${key}`].length !== 0"
                         :key="index"
                         >
-                        <component class="b-products-colums-component"
+                        <component class="b-products-columns-component"
                           v-styler:for="{ el: $sectionData[`components${key}`][index].element, path: `$sectionData.components${key}[${index}].element`, type: $sectionData[`components${key}`][index].type, label: $sectionData[`components${key}`][index].label }"
                           :is="$sectionData[`components${key}`][index].name"
                           :href="$sectionData[`components${key}`][index].element.link.href"
@@ -730,16 +579,14 @@ export default {
                     class="b-sandbox"
                     :container-path="`$sectionData.container${key}D`"
                     :components-path="`$sectionData.components${key}D`"
-                    direction="column"
-                    :style="`$sectionData.container${key}D.styles`"
                     >
-                    <draggable v-model="$sectionData['components' + key + 'D']" class="b-draggable-slot" :style="$sectionData[`container${key}D`].styles" @change="dragStop">
+                    <draggable v-model="$sectionData['components' + key + 'D']" class="b-draggable-slot" :style="$sectionData[`container${key}D`].styles" @start="$_drag(`components${key}D`)" @change="$_dragStop">
                       <div
                         v-for="(component, index) in $sectionData[`components${key}D`]"
                         v-if="$sectionData[`components${key}D`].length !== 0"
                         :key="index"
                         >
-                        <component class="b-products-colums-component"
+                        <component class="b-products-columns-component"
                           v-styler:for="{ el: $sectionData[`components${key}D`][index].element, path: `$sectionData.components${key}D[${index}].element`, type: $sectionData[`components${key}D`][index].type, label: $sectionData[`components${key}D`][index].label }"
                           :is="$sectionData[`components${key}D`][index].name"
                           :href="$sectionData[`components${key}D`][index].element.link.href"
@@ -755,80 +602,11 @@ export default {
                   </sandbox>
                 </div>
               </div>
-            </div><!--/.b-products-colums__padd-border-->
-          </div><!--/.b-products-colums__padd-->
+            </div><!--/.b-products-columns__padd-border-->
+          </div><!--/.b-products-columns__padd-->
         </div>
   </section>
 </template>
 
 <style lang="sass" scoped>
-@import '../../../assets/sass/_variables.sass'
-@import '../../../assets/sass/_flex.sass'
-
-.b-products-colums
-  $this: &
-  &__row
-    justify-content: center
-    align-items: flex-start
-
-  &__icon-with-text
-    color: inherit
-    font-family: inherit
-
-  &__padd
-    padding: 0
-
-    transition: border 0.25s
-    border: 0.2rem dotted transparent
-
-    position: relative
-    .is-mobile &
-      padding: 0
-    @media only screen and (max-width: 540px)
-      &
-        padding: 0
-    &-border
-      padding: 0
-      transition: border 0.25s
-      border: 1px dotted transparent
-      .is-editable #{$this}__padd:hover &
-        border: 1px dashed $dark-blue-krayola
-
-  &__controls
-    position: absolute
-    top: -14px
-    left: $size-step/3.4
-
-    display: flex
-    align-items: flex-end
-    justify-content: flex-start
-
-    display: none
-    .is-editable #{$this}__padd:hover &
-      display: flex !important
-  &__control
-    display: flex
-    align-items: center
-    justify-content: center
-
-    width: $size-step/1.5
-    height: $size-step/1.5
-
-    background: $dark-blue-krayola
-    box-shadow: 0 6px 16px rgba(26, 70, 122, 0.39)
-
-    cursor: pointer
-    & svg
-      fill:  $white
-      width: 14px
-      height: 14px
-
-    &:hover, .active
-      background: $white
-      svg
-        fill: $dark-blue-krayola
-
-  .b-grid__col-3
-    padding: .8rem
-
 </style>

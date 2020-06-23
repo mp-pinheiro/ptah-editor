@@ -4,50 +4,56 @@
       {{ settingObjectLabel }}
     </h6>
 
+    <IndicatorPlatform />
+
     <base-scroll-container backgroundBar="#999">
       <div class="b-panel__inner">
 
         <!-- Typography -->
         <div class="b-panel__control">
+          <base-caption>
+            Text {{ settingObjectLabel }}
+          </base-caption>
           <control-typography :colorTextHover="true" />
         </div>
 
-        <!-- Align -->
-        <div class="b-panel__control" v-if="settingObjectOptions.aligned">
-          <control-align/>
-        </div>
-
-        <!-- background -->
+        <!-- Typography -->
         <div class="b-panel__control">
-          <control-background-color/>
-        </div>
-        <div class="b-panel__control">
-          <control-background-image/>
+          <base-caption>
+            {{ settingObjectLabel }} style
+          </base-caption>
+          <!-- background color -->
+          <div class="b-panel__control" v-if="!isMobile">
+            <control-background-color/>
+          </div>
+          <!-- width/height -->
+          <div class="b-panel__control" v-if="settingObjectOptions.resizable">
+            <control-size />
+          </div>
+          <!-- background image-->
+          <div class="b-panel__control" v-if="!isMobile">
+            <control-background-image/>
+          </div>
         </div>
 
         <!-- Border style -->
-        <div class="b-panel__control">
+        <div class="b-panel__control" v-if="!isMobile">
           <control-border-style/>
         </div>
 
         <!-- Border radius -->
-        <div class="b-panel__control">
+        <div class="b-panel__control" v-if="!isMobile">
           <control-border-radius/>
         </div>
 
         <!-- Hover animation -->
-        <div class="b-panel__control">
+        <div class="b-panel__control" v-if="!isMobile">
           <control-hover-animation/>
         </div>
 
         <!-- Padding/Margin -->
         <div class="b-panel__control">
           <control-box></control-box>
-        </div>
-
-        <!-- Width / Height -->
-        <div class="b-panel__control" v-if="settingObjectOptions.resizable">
-          <control-size></control-size>
         </div>
 
       </div><!--/.b-panel__inner-->
@@ -66,6 +72,7 @@ import ControlAlign from './../controls/TheControlAlign'
 import ControlHoverAnimation from './../controls/TheControlHoverAnimation'
 import ControlBox from '../controls/TheControlBox'
 import ControlSize from '../controls/TheControlSize'
+import IndicatorPlatform from '../IndicatorPlatform'
 
 export default {
   name: 'ThePanelButton',
@@ -78,6 +85,7 @@ export default {
   },
 
   components: {
+    IndicatorPlatform,
     ControlTypography,
     ControlAlign,
     ControlBackgroundColor,
@@ -92,7 +100,8 @@ export default {
   computed: {
     ...mapState('Sidebar', [
       'settingObjectOptions',
-      'settingObjectLabel'
+      'settingObjectLabel',
+      'isMobile'
     ])
   }
 }

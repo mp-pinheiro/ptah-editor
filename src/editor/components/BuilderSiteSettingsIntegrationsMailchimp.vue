@@ -2,22 +2,33 @@
   <div
     class="b-integrations-mailchimp"
     >
-    <div>
-      <base-heading level="2">Mailchimp</base-heading>
-      <template v-if="integrationComplete">
-        <base-select
-          :options="lists"
-          :value="selectedList"
-          @input="setList($event)"
-          label="Select a list to collect leads"/>
+    <div class="b-integrations-mailchimp__inner">
+      <div class="b-integrations-mailchimp__layout-padding">
+        <template v-if="integrationComplete">
+          <img
+            class="b-integrations-mailchimp__logo"
+            src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/64004e89-19d2-4ce4-84d6-6d0df226d8af.png"
+          >
+          <div class="b-panel__control">
+            <base-caption>
+              Select a list to collect leads
+            </base-caption>
+            <base-select
+              :options="lists"
+              :value="selectedList"
+              @input="setList($event)"
+            />
+          </div>
 
-        <br>
-        <p>E-mail addresses from the "Form" section will now be sent to this list</p>
-      </template>
+          <p class="b-integrations-mailchimp__descr">
+            E-mail addresses from the "Form" section will now be sent to this list
+          </p>
+        </template>
 
-      <template v-if="!integrationComplete">
-        <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
-      </template>
+        <template v-if="!integrationComplete">
+          <iframe :src="frameSrc" frameborder="none" width="100%" height="100%"></iframe>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -73,7 +84,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['storeSettings']),
+    ...mapActions(['storeSettings', 'activateCheckListItem']),
     ...mapActions('User', ['mailchimpLists', 'getUser']),
 
     listenFrame () {
@@ -87,6 +98,7 @@ export default {
         if (data.success) {
           this.getLists()
             .then(() => {
+              this.activateCheckListItem('integrations')
               return this.getUser()
             })
         }
@@ -105,7 +117,9 @@ export default {
             list = this.lists[0]
           }
 
-          this.setList(list)
+          if (list !== undefined) {
+            this.setList(list)
+          }
         })
     },
 
@@ -126,13 +140,41 @@ export default {
 
 <style lang="sass" scoped>
 .b-integrations-mailchimp
-  height: 100%
-  min-height: 60rem
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 0
+
+  &__inner
+    position: absolute
+    top: 0
+    right: 1rem
+    bottom: 0
+    left: 0
+    z-index: 0
+
+    padding: 0 2.5rem
+  &__logo
+    max-width: 100%
+    margin: 2rem 0 4rem
+
+  &__descr
+    font-size: 1.6rem
+    line-height: 2rem
+
   &__controls
     justify-content: flex-start !important
     border-top: none !important
 
 iframe
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 0
+
   border: none
-  height: 52rem
 </style>
