@@ -11,7 +11,7 @@ COPY .eslintrc.js aliases.config.js gulpfile.js package.json vue.config.js yarn.
 # RUN npm install && npm prune --production
 RUN yarn install
 COPY . /app/
-RUN yarn cjs && gulp locale_sync && gulp public-image && yarn build
+RUN yarn cjs && gulp locale_sync && gulp public-image && yarn build-tst
 
 FROM nginx:stable
 

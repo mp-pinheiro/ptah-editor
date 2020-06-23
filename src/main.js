@@ -19,6 +19,7 @@ import store from './store'
 import { sync } from 'vuex-router-sync'
 import AppView from './App.vue'
 import VueGtag from 'vue-gtag'
+import VueYandexMetrika from 'vue-yandex-metrika'
 
 import en from '@assets/lang/en.json'
 import ru from '@assets/lang/ru.json'
@@ -126,6 +127,18 @@ if (process.env.VUE_APP_PROD === '1') {
     },
     linker: {
       domains: ['ptah.pro', 'docs.ptah.pro']
+    }
+  })
+
+  Vue.use(VueYandexMetrika, {
+    id: process.env.VUE_APP_METRIKA,
+    router: router,
+    env: process.env.NODE_ENV,
+    options: {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true
     }
   })
 }
