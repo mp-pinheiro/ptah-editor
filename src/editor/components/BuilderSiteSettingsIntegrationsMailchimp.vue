@@ -49,7 +49,8 @@ export default {
   data () {
     return {
       lists: [],
-      selectedList: {}
+      selectedList: {},
+      frameSrc: ''
     }
   },
 
@@ -59,10 +60,6 @@ export default {
 
     integrationComplete () {
       return this.user.mailchimpIntegration
-    },
-
-    frameSrc () {
-      return `${window.location.protocol}//${window.location.hostname}/mailchimp/login`
     },
 
     savedList () {
@@ -79,13 +76,22 @@ export default {
     if (this.integrationComplete) {
       this.getLists()
     } else {
+      this.mailchimpLogin()
+        .then((response) => {
+          this.frameSrc = response.redirect
+        })
       this.listenFrame()
     }
   },
 
   methods: {
     ...mapActions(['storeSettings', 'activateCheckListItem']),
-    ...mapActions('User', ['mailchimpLists', 'getUser']),
+    ...mapActions('User', [
+      'mailchimpLists',
+      'getUser',
+      'mailchimpLogin',
+      'mailchimpCallback'
+    ]),
 
     listenFrame () {
       window.addEventListener('message', (e) => {
@@ -95,8 +101,9 @@ export default {
           data = JSON.parse(e.data)
         } catch (e) { }
 
-        if (data.success) {
-          this.getLists()
+        if (data.code) {
+          this.mailchimpCallback()
+            .then(() => this.getLists())
             .then(() => {
               this.activateCheckListItem('integrations')
               return this.getUser()

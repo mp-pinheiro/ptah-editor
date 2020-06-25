@@ -139,6 +139,25 @@ export default {
           commit('setLists', lists)
           return lists
         })
+    },
+
+    mailchimpLogin ({ commit }) {
+      return api.request({
+        url: 'auth/mailchimp',
+        method: 'get'
+      })
+    },
+
+    mailchimpCallback ({ commit }, params) {
+      return api.request({
+        url: 'auth/mailchimp',
+        method: 'get',
+        params
+      }).then((response) => {
+        this.user = response
+
+        return response
+      })
     }
   },
 
