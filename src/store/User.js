@@ -143,14 +143,14 @@ export default {
 
     mailchimpLogin ({ commit }) {
       return api.request({
-        url: 'auth/mailchimp',
+        url: 'mailchimp/login',
         method: 'get'
       })
     },
 
     mailchimpCallback ({ commit }, params) {
       return api.request({
-        url: 'auth/mailchimp',
+        url: 'mailchimp/login/callback',
         method: 'get',
         params
       }).then((response) => {

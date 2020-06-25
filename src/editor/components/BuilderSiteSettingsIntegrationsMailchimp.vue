@@ -95,6 +95,7 @@ export default {
 
     listenFrame () {
       window.addEventListener('message', (e) => {
+        console.log(e)
         let data = {}
 
         try {
@@ -102,7 +103,7 @@ export default {
         } catch (e) { }
 
         if (data.code) {
-          this.mailchimpCallback()
+          this.mailchimpCallback(data)
             .then(() => this.getLists())
             .then(() => {
               this.activateCheckListItem('integrations')

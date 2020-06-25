@@ -7,6 +7,7 @@ const allowedPaths = [
   '/',
   '/login',
   '/404',
+  '/oauth2',
   '/editor/demo',
   '/editor/demo/settings',
   '/editor/demo/settings/visualSettings',

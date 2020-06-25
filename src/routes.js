@@ -159,8 +159,8 @@ const routes = [
     alias: ''
   },
   {
-    path: '/oauth_complete/',
-    component: () => import('@components/pages/OauthComplete'),
+    path: '/oauth2/',
+    component: () => import('@components/pages/MailchimpOauthComplete'),
     name: 'OauthComplete',
     alias: ''
   },
