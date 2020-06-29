@@ -26,6 +26,7 @@ export default {
     display: flex
     justify-content: center
     align-items: center
-    height: 100vh
+    width: 100%
+    height: 100%
     background: #fff
 </style>

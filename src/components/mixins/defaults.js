@@ -115,6 +115,7 @@ export default {
       // Buttons color
       let buttonColor = this.$store.state.currentLanding.settings.colors.button
       let buttonTextColor = this.$store.state.currentLanding.settings.colors.buttonText
+      let buttonHoverColor = this.$store.state.currentLanding.settings.colors.add1
 
       if (buttonColor !== '') {
         let buttonBgPaths = this.getElementPropertyPath('Button', 'background-color')
@@ -125,17 +126,23 @@ export default {
         let buttonColorPaths = this.getElementPropertyPath('Button', 'color')
         buttonColorPaths.forEach(path => this.$section.set(path, buttonTextColor))
       }
+
+      if (buttonHoverColor !== '') {
+        let buttonColorPaths = this.getElementPropertyPath('Button', 'pseudo.hover.background-color', true)
+        buttonColorPaths.forEach(path => this.$section.set(path, `${buttonHoverColor} !important`))
+      }
     },
 
-    getElementPropertyPath (el, prop) {
+    getElementPropertyPath (el, prop, root = false) {
       let paths = []
 
       // find all logos in section
       forEach(this.$sectionData, (value, key) => {
+        let paramPath = root ? '.element' : '.element.styles'
         if (key.indexOf('components') > -1) {
           value.forEach((element, index) => {
-            if (element.name === el) {
-              paths.push(`$sectionData.${key}[${index}].element.styles[${prop}]`)
+            if (element.name === el && !element.element.customColor) {
+              paths.push(`$sectionData.${key}[${index}]${paramPath}[${prop}]`)
             }
           })
         }
