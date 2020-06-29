@@ -50,6 +50,7 @@ export default {
       const color = this.bgColor.rgba ? `rgba(${Object.values(this.bgColor.rgba).toString()})` : this.bgColor
 
       this.styles['background-color'] = color
+      this.settingObjectOptions.customColor = true
     },
 
     changeHoverBgColor () {
