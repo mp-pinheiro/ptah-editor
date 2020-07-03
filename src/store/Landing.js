@@ -1,4 +1,5 @@
 import { throttle, last } from 'lodash-es'
+import html2canvas from 'html2canvas'
 
 const STACK_SIZE = 7
 
@@ -10,7 +11,8 @@ export default {
     savedStates: [], // stack of saved states,
     textEditorActive: false,
     currentStateNumber: [],
-    undoFlag: false
+    undoFlag: false,
+    process: false
   },
 
   mutations: {
@@ -52,6 +54,10 @@ export default {
 
     clearStateStack (state) {
       state.savedStates = []
+    },
+
+    process (state, value) {
+      state.process = value
     }
   },
 
@@ -80,9 +86,32 @@ export default {
     }, 3000),
 
     saveStateHandler ({ commit, dispatch, state }, landing) {
+      if (state.process) {
+        return false
+      }
+
+      commit('process', true)
+
       commit('saveState', landing)
       commit('currentStateNumber', state.savedStates.length)
-      dispatch('saveLanding', landing, { root: true })
+
+      dispatch('getPreview')
+        .then((dataImg) => {
+          let landObj = JSON.parse(landing)
+          landObj.previewUrl = dataImg
+
+          return dispatch('saveLanding', JSON.stringify(landObj), { root: true })
+        })
+        .then(() => {
+          return commit('process', false)
+        })
+    },
+
+    getPreview () {
+      return html2canvas(document.querySelector('#ptah-board'), { scale: 0.3, useCORS: true })
+        .then(canvas => {
+          return canvas.toDataURL('image/png')
+        })
     },
 
     setState ({ state, commit }, number) {
