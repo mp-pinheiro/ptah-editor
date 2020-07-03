@@ -548,7 +548,6 @@ export default {
     },
 
     showStyler (event) {
-      console.log(event)
       if (event.target.classList.contains('b-upload--alternative')) {
         return
       }
