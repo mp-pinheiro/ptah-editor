@@ -115,9 +115,9 @@
           <button class="menubar__button" @click.stop="$_setLinkUrl(commands.link, null)" type="button">
             <icon-base name="remove"></icon-base>
           </button>
-          <base-button class="menubar__button" color="blue" size="small" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
+          <button class="menubar__button link-button" @click.stop="$_setLinkUrl(commands.link, linkUrl)">
             Done
-          </base-button>
+          </button>
         </form>
       </div>
     </editor-menu-bar>
@@ -196,4 +196,13 @@ export default {
 </script>
 
 <style lang="sass">
+.link-button
+  font-size: 1.2rem
+  font-weight: 800
+  letter-spacing: .1rem
+  text-transform: uppercase
+  padding: 1.2rem
+  margin: .5rem
+  min-width: 8.8rem
+  height: auto
 </style>

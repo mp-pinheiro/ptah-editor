@@ -350,7 +350,7 @@ const actions = {
    * @param commit
    * @param data - JSON representation of the builder
    */
-  saveLanding: _.throttle(({ state, commit }, data) => {
+  saveLanding ({ state, commit }, data) {
     // @todo save all data in the store properyly
     const parsedData = JSON.parse(data)
     const mergedData = {
@@ -366,7 +366,8 @@ const actions = {
       params: {
         name: state.name,
         baseVersion: state.version,
-        landing: resultDataString
+        landing: resultDataString,
+        previewUrl: parsedData.previewUrl
       }
     })
       .then((data) => {
@@ -374,9 +375,9 @@ const actions = {
         return commit('isSaved', data.currentVersion)
       })
       .catch(() => {
-        commit('isSaved', 'error')
+        return commit('isSaved', 'error')
       })
-  }, 2800),
+  },
 
   /**
    * Copy

@@ -242,7 +242,8 @@ export default {
       { name: 'bounce', className: 'ptah-a-bounce' }
     ],
     timer: 0,
-    prevent: false
+    prevent: false,
+    eventTimestamp: null
   }),
   computed: {
     ...mapState('Sidebar', [
@@ -547,6 +548,7 @@ export default {
     },
 
     showStyler (event) {
+      console.log(event)
       if (event.target.classList.contains('b-upload--alternative')) {
         return
       }
@@ -567,8 +569,11 @@ export default {
       const stopNames = [
         'b-styler__control_text',
         'b-control-panel',
+        'menubar__form',
         'menubar__button',
+        'menubar__input',
         'menubar__button is-active',
+        'menubar__button link-button',
         'editor__content',
         'menubar is-hidden',
         'b-handle',
@@ -738,6 +743,14 @@ export default {
 
     async dblclick (event) {
       let name = _.upperFirst(_.camelCase(this.type))
+      let textElements = [
+        'text',
+        'inline',
+        'button',
+        'iconWithText',
+        'form',
+        'toggleElement'
+      ]
 
       // clear timer after dbl click
       clearTimeout(this.timer)
@@ -757,7 +770,7 @@ export default {
         this.setControlPanel(name)
       }
 
-      if (this.type === 'text' || this.type === 'inline' || this.type === 'button' || this.type === 'iconWithText' || this.type === 'form' || this.type === 'toggleElement') {
+      if (textElements.includes(this.type)) {
         this.editText = true
       } else {
         this.initPopper()
