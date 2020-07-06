@@ -209,6 +209,7 @@ const data = new Map([
       background: true,
       shape: true,
       resizable: true,
+      customColor: false,
       pseudo: {
         hover: {
           'background-color': '',

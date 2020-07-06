@@ -4,20 +4,26 @@
       <IconBase name="lock" />
     </div>
     <div class="menu-tree-item__drag">
-      <IconBase name="dragNew"/>
+      <IconBase name="dragNew" class="drag-ico" />
+      <IconBase
+        class="section-ico"
+        :name="groupSrc[section.group].ico"
+        :width="groupSrc[section.group].width"
+      />
     </div>
     <div
       class="menu-tree-item__name"
       :class="{ '_short' : areAdditionSettings }"
     >
       <span>
-        {{ section.name }}
+        {{ section.group }}
       </span>
     </div>
     <div class="menu-tree-item__controls">
       <span
         v-if="areAdditionSettings"
         class="menu-tree-item__control"
+        title="Settings"
         @click="showAdditionSettings(panels[section.group], section)">
         <IconBase
           width="20"
@@ -28,6 +34,7 @@
       </span>
       <span
         class="menu-tree-item__control"
+        title="Size and margins"
         @click="showSettingsBar(section)">
         <IconBase
           width="24"
@@ -37,6 +44,7 @@
       </span>
       <span
         class="menu-tree-item__control"
+        title="Background image and video"
         @click="showBackgroundPanel(section)">
         <IconBase
           name="backgroundGrey"
@@ -85,7 +93,45 @@ export default {
 
   data () {
     return {
-      panels: PANELS
+      panels: PANELS,
+      groupSrc: {
+        Header: {
+          ico: 'sectionHeader',
+          width: 25
+        },
+        FirstScreen: {
+          ico: 'sectionFirstScreen',
+          width: 18
+        },
+        Columns: {
+          ico: 'sectionColumns',
+          width: 26
+        },
+        Elements: {
+          ico: 'sectionElements',
+          width: 20
+        },
+        Footer: {
+          ico: 'sectionFooter',
+          width: 23
+        },
+        Forms: {
+          ico: 'sectionForms',
+          width: 21
+        },
+        Galleries: {
+          ico: 'sectionGallery',
+          width: 26
+        },
+        Products: {
+          ico: 'sectionProducts',
+          width: 26
+        },
+        Slider: {
+          ico: 'sectionSlider',
+          width: 32
+        }
+      }
     }
   },
 
@@ -190,16 +236,21 @@ export default {
     padding: 1.3rem 1.1rem 1.3rem 1.6rem
     margin: 0 0 0 1.3rem
     cursor: pointer
+    $this: &
+
     &__drag
       width: 3rem
       margin-right: 1.2rem
       text-align: center
       cursor: move
-      svg
-        fill: #A2A5A5
-        width: .4rem
-        height: 1.6rem
-        margin-bottom: -1px !important
+
+      .drag-ico
+        display: none
+        svg
+          fill: #A2A5A5
+          width: .4rem
+          height: 1.6rem
+          margin-bottom: -1px !important
 
     &__header-sign
       display: none
@@ -234,6 +285,11 @@ export default {
         fill: #575A5F
       .menu-tree-item__name
         color: #575A5F
+      #{$this}__drag
+        .drag-ico
+          display: block
+        .section-ico
+          display: none
 
     &:active
       box-shadow: 0 4px 16px rgba($black, 0.25)

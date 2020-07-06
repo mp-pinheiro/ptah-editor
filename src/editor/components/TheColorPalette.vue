@@ -76,7 +76,7 @@ export default {
         text: 'Plain text',
         button: 'Button background',
         buttonText: 'Button text',
-        add1: 'Additional color',
+        add1: 'Button hover color',
         add2: 'Additional color'
       }
     }
