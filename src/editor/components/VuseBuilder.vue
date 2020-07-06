@@ -684,7 +684,7 @@ export default {
       }
 
       if (event.code === 'KeyZ' && event.ctrlKey) {
-        this.undoFlag(false)
+        /* this.undoFlag(false)
         this.loading = true
         let frame = document.getElementById('artboard')
         let stateNumber = this.currentStateNumber > 0 ? this.currentStateNumber - 1 : 0
@@ -700,7 +700,7 @@ export default {
           })
         }, 0)
 
-        frame.normalize()
+        frame.normalize() */
       }
     },
 
