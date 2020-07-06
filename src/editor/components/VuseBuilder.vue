@@ -8,6 +8,7 @@
 
   <div
     class="b-layout"
+    id="ptah-board"
     :style="`${fontsSetup}`"
   >
     <base-loading

@@ -121,7 +121,7 @@ export default {
     },
 
     getItemCover (item) {
-      return item.cover || 'https://s3.protocol.one/images/placeholder.png'
+      return item.previewUrl.length ? item.previewUrl : 'https://s3.protocol.one/images/placeholder.png'
     },
 
     skipSteps () {
