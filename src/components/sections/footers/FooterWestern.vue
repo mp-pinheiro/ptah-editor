@@ -178,7 +178,6 @@ const NAME = 'FooterWestern'
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-color': '#000000',
       'padding-top': '8px',
       'padding-bottom': '8px'
     }

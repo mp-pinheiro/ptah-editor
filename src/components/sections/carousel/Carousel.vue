@@ -8,31 +8,6 @@
   <slot name="menu"/>
   <slot name="video"/>
   <slot name="overlay"/>
-
-  <div class="">
-    <sandbox
-      container-path="$sectionData.container"
-      components-path="$sectionData.components"
-      class="b-sandbox">
-
-      <draggable v-model="$sectionData.components" class="b-draggable-slot" :style="$sectionData.container.styles" @start="$_drag('components')" @change="$_dragStop">
-        <div v-for="(component, index) in $sectionData.components" v-if="$sectionData.components.length !== 0" :key="index">
-          <component
-            v-styler:for="{ el: $sectionData.components[index].element, path: `$sectionData.components[${index}].element`, type: $sectionData.components[index].type, label: component.label }"
-            :is="component.name"
-            :href="$sectionData.components[index].element.link.href"
-            :target="$sectionData.components[index].element.link.target"
-            :style="$sectionData.components[index].element.styles"
-            :class="[$sectionData.components[index].element.classes, $sectionData.components[index].class]"
-            :path="`components[${index}].element`"
-          >
-            <div v-html="$sectionData.components[index].element.text"></div>
-          </component>
-        </div>
-      </draggable>
-    </sandbox>
-  </div>
-
   <div class="b-grid">
     <!-- TODO: need drag&drop here -->
     <div class="b-grid__row" v-if="$sectionData.mainStyle.galleryImages.length < 1">
@@ -117,35 +92,6 @@ import { randomPoneId } from '../../../editor/util'
 const GROUP_NAME = 'Galleries'
 const NAME = 'Carousel'
 
-const COMPONENTS = [
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-title',
-    label: 'title'
-  }
-]
-
-const C_CUSTOM = [
-  {
-    element: {
-      text: '<h1>Header</h1>',
-      styles: {
-        'font-size': '4.2rem',
-        'color': '#ffffff',
-        'padding-top': '32px',
-        'padding-bottom': '16px'
-      },
-      media: {
-        'is-mobile': {
-          'font-size': '3.6rem'
-        }
-      }
-    }
-  }
-]
-
 const C_IMAGES = [
   {
     name: '1.jpg',
@@ -159,11 +105,6 @@ const C_IMAGES = [
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
-      'background-position': '50% 50%',
-      'background-size': 'cover'
-    },
     swiper: {
       autoHeight: true,
       pagination: { el: swiperOptions.pagination },
@@ -177,7 +118,6 @@ const SCHEMA_CUSTOM = {
     },
     galleryImages: C_IMAGES
   },
-  components: merge([], C_CUSTOM),
   container: {},
   edited: true
 }
@@ -193,9 +133,7 @@ export default {
   cover: 'https://s3.protocol.one/src/o_1jkJaZ.jpg',
 
   $schema: {
-    mainStyle: types.GallerySlider,
-    container: types.StyleObject,
-    components: COMPONENTS
+    mainStyle: types.GallerySlider
   },
 
   inject: ['device'],

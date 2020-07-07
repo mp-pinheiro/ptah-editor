@@ -308,9 +308,6 @@ const NAME = 'GallerySwitch'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)'
-    },
     isChapter: true,
     isChapterStyle: true,
     isTextStyle: true,

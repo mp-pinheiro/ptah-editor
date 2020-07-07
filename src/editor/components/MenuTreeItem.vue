@@ -145,7 +145,7 @@ export default {
         if (GROUPS.indexOf(this.section.group) !== -1) {
           return true
         }
-      } else if (this.section.name.indexOf('FrequentlyAskedQuestions') === -1) {
+      } else if (this.section.name.indexOf('SystemRequirements') !== -1) {
         if (GROUPS.indexOf(this.section.group) !== -1) {
           return true
         }

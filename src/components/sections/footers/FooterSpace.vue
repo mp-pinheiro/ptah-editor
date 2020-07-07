@@ -174,16 +174,10 @@ const C_CUSTOM = [
 
 const GROUP_NAME = 'Footer'
 const NAME = 'FooterSpace'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_cm1BL.jpg)'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': BG_SECTION,
-      'background-color': '#151C44',
-      'background-size': 'cover',
-      'background-position': '50% 0%',
-      'background-repeat': 'no-repeat',
       'padding-top': '8px',
       'padding-bottom': '8px'
     }

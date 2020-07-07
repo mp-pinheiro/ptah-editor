@@ -7,6 +7,10 @@ export function initMobileMenu () {
     return
   }
 
+  if (habmurger.classList.contains('is-active')) {
+    habmurger.classList.remove('is-active')
+  }
+
   habmurger.addEventListener('click', toggleMobileMenu, false)
   document.body.addEventListener('click', closeMobileMenu, false)
   window.addEventListener('resize', calculateViewportHeight, false)

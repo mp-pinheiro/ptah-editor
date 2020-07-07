@@ -141,7 +141,8 @@ export default {
         let paramPath = root ? '.element' : '.element.styles'
         if (key.indexOf('components') > -1) {
           value.forEach((element, index) => {
-            if (element.name === el && !element.element.customColor) {
+            // TODO: element.label !== 'link' ---> fix coloring link in header
+            if (element.name === el && !element.element.customColor && element.label !== 'link') {
               paths.push(`$sectionData.${key}[${index}]${paramPath}[${prop}]`)
             }
           })

@@ -65,9 +65,6 @@ const C_CUSTOM = [
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-color': '#000000',
-      'background-position': '50% 50%',
-      'background-size': 'cover',
       'padding-top': '62px',
       'padding-bottom': '236px'
     },

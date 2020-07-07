@@ -190,10 +190,6 @@ const NAME = 'FooterFantasy'
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-color': '#000',
-      'background-size': 'cover',
-      'background-position': '50% 0%',
-      'background-repeat': 'no-repeat',
       'padding-top': '8px',
       'padding-bottom': '8px'
     }

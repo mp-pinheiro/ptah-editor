@@ -16,21 +16,6 @@ Vue.use(vOutsideEvents)
 Vue.use(Vuebar)
 
 const demoLanding = 'https://s3.protocol.one/files/demoLanding080520_v1.json'
-const FONTS = {
-  'Lato': {
-    variants: ['regular'],
-    subsets: ['latin', 'cyrillic']
-  },
-  'Montserrat': {
-    variants: ['regular'],
-    subsets: ['latin', 'cyrillic']
-  }
-}
-const SETUP_FONTS = {
-  'h1': 'Montserrat',
-  'p': 'Lato',
-  'btn': 'Montserrat'
-}
 
 const DEFAULT_CHECK_LIST = {
   logo: {
@@ -114,8 +99,8 @@ const state = {
   landings: [],
   currentLanding: {
     settings: {
-      fonts: FONTS,
-      setupFonts: SETUP_FONTS,
+      fonts: {},
+      setupFonts: {},
       colors: COLORS,
       imageForPalette: null,
       palette: [],
@@ -199,7 +184,7 @@ const actions = {
           favicon: state.defaultFavicon,
           styles: {
             backgroundImage: state.Onboarding.background,
-            backgroundColor: '',
+            backgroundColor: state.Onboarding.backgroundColor,
             backgroundPositionX: 0,
             backgroundPositionY: 0,
             backgroundAttachment: 'fixed',
@@ -215,8 +200,8 @@ const actions = {
           mailchimpUrl: false,
           mailchimpList: false,
           name: data.name,
-          fonts: FONTS,
-          setupFonts: SETUP_FONTS,
+          fonts: state.Onboarding.fonts,
+          setupFonts: state.Onboarding.setupFonts,
           colors: state.Onboarding.colors,
           logo: state.Onboarding.logo
         })
@@ -242,8 +227,9 @@ const actions = {
    * @returns {Promise}
    */
   getLandingForUser ({ dispatch }, slug) {
-    return localStorage.getItem('guest') !== null ?
-      dispatch('fetchLandingFromFile', { slug, url: demoLanding }) : dispatch('getLandingData', slug)
+    return localStorage.getItem('guest') !== null
+      ? dispatch('fetchLandingFromFile', { slug, url: demoLanding })
+      : dispatch('getLandingData', slug)
   },
 
   /**
@@ -270,7 +256,7 @@ const actions = {
         data.settings['name'] = nameLanding
 
         if (!data.settings.fonts) {
-          data.settings['fonts'] = FONTS
+          data.settings['fonts'] = state.Onboarding.fonts
         }
 
         if (!data.settings.logo) {
@@ -282,7 +268,7 @@ const actions = {
         }
 
         if (!data.settings.setupFonts) {
-          data.settings['setupFonts'] = SETUP_FONTS
+          data.settings['setupFonts'] = state.Onboarding.setupFonts
         }
 
         if (!data.settings.checkList) {
@@ -457,6 +443,7 @@ const actions = {
 
   storeColorSettings ({ state, commit }, colors) {
     const settings = _.merge({}, state.currentLanding.settings)
+
     Object.keys(settings.colors).forEach((key, index) => {
       settings.colors[key] = colors[index]
     })

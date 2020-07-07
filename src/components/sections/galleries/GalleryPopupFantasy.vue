@@ -110,7 +110,6 @@ const NAME = 'GalleryPopupFantasy'
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/travel_map.jpg)',
       'padding-top': '100px',
       'padding-bottom': '190px'
     },

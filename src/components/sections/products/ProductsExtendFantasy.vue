@@ -407,11 +407,8 @@ const C_CUSTOM_CONTAINER_D = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/travel_map.jpg)',
       'padding-top': '80px',
-      'padding-bottom': '125px',
-      'background-position': '50% 50%',
-      'background-size': 'cover'
+      'padding-bottom': '125px'
     },
     overlay: {
       color: 'rgba(0,0,0,1)',

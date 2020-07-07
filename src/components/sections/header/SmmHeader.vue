@@ -274,13 +274,7 @@ const defaultComponents2 = [
 ]
 const defaultSchema = {
   mainStyle: {
-    hamPosition: 17,
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_cm1BL.jpg)',
-      'background-color': 'rgba(51, 51, 51, 0.95)',
-      'background-position': '50% 50%',
-      'background-size': 'cover'
-    }
+    hamPosition: 17
   },
   container: {
     styles: {

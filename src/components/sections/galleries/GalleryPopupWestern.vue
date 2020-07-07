@@ -109,12 +109,6 @@ const NAME = 'GalleryPopupWestern'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/ae9c2a18-b036-45fe-a85c-2fad087d8fa7.jpg)',
-      'background-color': '#000000',
-      'padding-top': '100px',
-      'padding-bottom': '190px'
-    },
     isTextStyle: true,
     isLabel: true,
     isLabelPreview: true,

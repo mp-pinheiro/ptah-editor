@@ -101,10 +101,6 @@ const C_CUSTOM_CONTAINER = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
-      'background-color': '#151C44',
-      'background-position': '50% 50%',
-      'background-size': 'cover',
       'padding-bottom': '122px'
     },
     count: 3

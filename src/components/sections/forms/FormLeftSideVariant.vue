@@ -106,14 +106,6 @@ const C_CUSTOM_2 = [
 ]
 
 const SCHEMA_CUSTOM = {
-  mainStyle: {
-    styles: {
-      'background-size': 'cover',
-      'background-color': 'rgba(21, 28, 68, 1)',
-      'background-repeat': 'no-repeat',
-      'background-attachment': 'scroll'
-    }
-  },
   components: _.merge({}, C_CUSTOM_1),
   components2: _.merge({}, C_CUSTOM_2),
   container: {
