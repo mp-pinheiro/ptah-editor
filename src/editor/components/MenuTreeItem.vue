@@ -209,8 +209,6 @@ export default {
     },
 
     async showAdditionSettings (panel, section) {
-      console.log(section)
-
       this.setSettingSection(section)
 
       await this.$nextTick()

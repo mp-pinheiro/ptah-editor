@@ -95,7 +95,6 @@ export default {
 
     listenFrame () {
       window.addEventListener('message', (e) => {
-        console.log(e)
         let data = {}
 
         try {

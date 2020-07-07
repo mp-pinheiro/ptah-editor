@@ -176,6 +176,7 @@ export default {
     changeColor () {
       const color = this.color.rgba ? `rgba(${Object.values(this.color.rgba).toString()})` : this.color
       this.styles['color'] = color
+      this.settingObjectOptions.customColor = true
     },
 
     changeColorHover () {

@@ -61,6 +61,7 @@ const DEFAULT_OPTIONS = {
 const data = new Map([
   [types.Text, () => (_.merge({}, DEFAULT_OPTIONS, {
     text: 'Enter your text',
+    customColor: false,
     removable: true,
     aligned: true,
     typography: true,
