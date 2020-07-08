@@ -15,7 +15,6 @@ Vue.use(Vuex)
 Vue.use(vOutsideEvents)
 Vue.use(Vuebar)
 
-const demoLanding = 'https://s3.protocol.one/files/demoLanding080520_v1.json'
 const FONTS = {
   'Lato': {
     variants: ['regular'],
@@ -233,17 +232,6 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
-  },
-
-  /**
-   * Returns the demo landing page for the guest user
-   * @param dispatch
-   * @param slug
-   * @returns {Promise}
-   */
-  getLandingForUser ({ dispatch }, slug) {
-    return localStorage.getItem('guest') !== null ?
-      dispatch('fetchLandingFromFile', { slug, url: demoLanding }) : dispatch('getLandingData', slug)
   },
 
   /**
