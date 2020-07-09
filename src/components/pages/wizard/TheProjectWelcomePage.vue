@@ -24,6 +24,7 @@
           color="transparent"
           size="small"
           @click="skipSteps"
+          :disabled="skip"
         >
           Skip tour
         </base-button>
@@ -36,12 +37,19 @@
 export default {
   name: 'TheProjectWelcomePage',
 
+  data () {
+    return {
+      skip: false
+    }
+  },
+
   methods: {
     start () {
       this.$router.push({ path: `/dashboard/wizard/logo` })
     },
 
     skipSteps () {
+      this.skip = true
       this.$emit('skipSteps')
     }
   }

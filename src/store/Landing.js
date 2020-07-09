@@ -80,8 +80,8 @@ export default {
         return
       }
 
-      if (last(state.savedStates) !== landing && localStorage.getItem('guest') === null) {
-        dispatch('saveStateHandler', landing)
+      if (last(state.savedStates) !== landing) {
+        return dispatch('saveStateHandler', landing)
       }
     }, 3000),
 
@@ -95,7 +95,7 @@ export default {
       commit('saveState', landing)
       commit('currentStateNumber', state.savedStates.length)
 
-      dispatch('getPreview')
+      return dispatch('getPreview')
         .then((dataImg) => {
           let landObj = JSON.parse(landing)
           landObj.previewUrl = dataImg

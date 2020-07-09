@@ -7,8 +7,7 @@ export default {
     access_token: '',
     isAuth: false,
     mcLists: [], // user mailchimp lists,
-    user: {},
-    guest: false
+    user: {}
   },
 
   mutations: {
@@ -26,15 +25,6 @@ export default {
 
     setUser (state, value) {
       state.user = value
-    },
-
-    setGuestUser (state, value) {
-      state.guest = value
-      if (value) {
-        localStorage.setItem('guest', value)
-      } else {
-        localStorage.removeItem('guest')
-      }
     }
   },
 
@@ -77,7 +67,6 @@ export default {
       setCookie('token', token.accessToken, options)
       setCookie('refreshToken', token.refreshToken, options)
       commit('setAuth', true)
-      commit('setGuestUser', false)
     },
 
     /**

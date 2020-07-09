@@ -1,10 +1,10 @@
 <template>
   <div class="b-wizard-modal__overlay">
-    <transition name="slide-fade">
-      <div class="b-wizard-modal__content" :style="customSize">
+    <div class="b-wizard-modal__content" :style="customSize">
+      <transition name="fade" mode="out-in">
         <router-view @skipSteps="skipSteps" />
-      </div>
-    </transition>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -57,15 +57,9 @@ export default {
     min-height: 47rem
 
 // Animations
-.slide-fade
-  &-enter-active
-    transition: all .2s ease
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
 
-  &-leave-active
-    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
-
-  &-enter,
-  &-leave-to
-    opacity: 0
-    transform: translateX(-0.8rem)
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>

@@ -66,6 +66,7 @@ export default {
   },
 
   mounted () {
+    this.projectName = ''
     this.$refs.name.$refs.inputText.focus()
   },
 

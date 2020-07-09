@@ -112,12 +112,8 @@ export default {
       return this.$route.path.split('/')[4] || ''
     },
 
-    isGuest () {
-      return localStorage.getItem('guest') !== null
-    },
-
     homeTooltipText () {
-      return this.isGuest ? 'Back to main' : this.$t('nav.backToDashbord')
+      return this.$t('nav.backToDashbord')
     },
 
     emptySections () {
