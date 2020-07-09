@@ -243,7 +243,6 @@ const C_CUSTOM_CONTAINER3 = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-color': 'transparent',
       'height': '80vh'
     },
     swiper: {

@@ -109,9 +109,6 @@ const NAME = 'GalleryPopup'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)'
-    },
     isTextStyle: true,
     isLabel: true,
     isLabelPreview: true,

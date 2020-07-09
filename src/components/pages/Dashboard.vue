@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import BaseScrollContainer from '../base/BaseScrollContainer'
 
 export default {
@@ -40,10 +40,6 @@ export default {
       'copyLanding'
     ]),
 
-    ...mapMutations('Onboarding', [
-      'resetState'
-    ]),
-
     openLanding (item) {
       // add log
       this.$Progress.start()
@@ -76,7 +72,10 @@ export default {
         this.createProgress = true
         this.$Progress.start()
         this.invalid = false
-        this.createLanding({ name: this.name, sections: this.preset.sections })
+        this.createLanding({
+          name: this.name,
+          sections: this.preset.sections
+        })
           .then((response) => {
             let url = this.preset.url
 
@@ -89,7 +88,6 @@ export default {
             }
           })
           .then((data) => {
-            this.resetState()
             this.$nextTick(() => {
               this.$router.push({ path: `/editor/${data.slug}` })
             })

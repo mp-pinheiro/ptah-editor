@@ -78,7 +78,15 @@ export default {
   },
 
   methods: {
-    ...mapMutations('Onboarding', ['setGoal', 'setPreset']),
+    ...mapMutations('Onboarding', [
+      'setGoal',
+      'setPreset',
+      'setColors',
+      'setFonts',
+      'setSetupFonts',
+      'setBackground',
+      'setBackgroundColor'
+    ]),
 
     selectGoal (goal) {
       this.selectedPreset = null
@@ -88,6 +96,13 @@ export default {
     selectPreset (preset) {
       this.selectedPreset = preset.id
       this.setPreset(preset)
+      this.setColors(preset.colors)
+      this.setFonts(preset.fonts)
+      this.setSetupFonts(preset.setupFonts)
+      this.setBackground(preset.backgroundImage)
+      this.setBackgroundColor(preset.backgroundColor)
+
+      this.$router.push({ path: `/dashboard/wizard/welcome` })
     },
 
     preview (preset) {

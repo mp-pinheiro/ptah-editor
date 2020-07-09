@@ -126,6 +126,10 @@
           h1, h2, h3 {
             color: {{currentLanding.settings.colors.headers}} !important;
           }
+
+          strong {
+            color: {{currentLanding.settings.colors.add2}} !important;
+          }
         </template>
       </v-style>
 

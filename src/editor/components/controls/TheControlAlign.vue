@@ -207,8 +207,8 @@ export default {
 
 <template>
   <div class="b-panel__control">
-    <div class="b-panel__col" v-if="!isMobile">
-      <div class="b-panel__row" v-if="!isMobile">
+    <div class="b-panel__col">
+      <div class="b-panel__row">
         <base-label>
           Text align
         </base-label>

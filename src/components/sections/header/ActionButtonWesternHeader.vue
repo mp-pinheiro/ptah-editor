@@ -259,10 +259,7 @@ const defaultComponents2 = [
 ]
 const defaultSchema = {
   mainStyle: {
-    hamPosition: 17,
-    styles: {
-      'background-color': 'rgba(0, 0, 0, 1)'
-    }
+    hamPosition: 17
   },
   container: {
     styles: {

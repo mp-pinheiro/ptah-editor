@@ -226,10 +226,6 @@ const C_CUSTOM_CONTAINER_1 = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_O5UBP.jpg)',
-      'background-color': '#151C44',
-      'background-position': '50% 50%',
-      'background-size': 'cover',
       'padding-top': '24px',
       'padding-bottom': '24px',
       'height': 'auto'

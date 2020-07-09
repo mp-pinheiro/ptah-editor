@@ -7,6 +7,7 @@
 
     <div class="b-project-name__form">
       <base-text-field
+        ref="name"
         class="b-project-name__input"
         v-model="projectName"
         label="Project name"
@@ -62,6 +63,10 @@ export default {
 
   created () {
     this.getUser()
+  },
+
+  mounted () {
+    this.$refs.name.$refs.inputText.focus()
   },
 
   methods: {
