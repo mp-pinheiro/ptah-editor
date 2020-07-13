@@ -27,8 +27,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6b0b3b65-e3bf-49ef-8c8c-579fc7581181.jpg',
     backgroundColor: '#0F1617',
@@ -44,7 +44,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 1,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/d749e8e6-6feb-4f10-992b-5b2241640d65.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/d749e8e6-6feb-4f10-992b-5b2241640d65.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   /*
   {
@@ -160,8 +161,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -177,7 +178,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 8,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ffb398c0-5a76-4bf2-9085-d4f4e1657619.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ffb398c0-5a76-4bf2-9085-d4f4e1657619.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 09',
@@ -200,8 +202,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#fffffff'
+      buttonHover: '#71675B',
+      add1: '#fffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -217,7 +219,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 9,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/711c6813-736e-413c-8ed0-ec8625c0919c.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/711c6813-736e-413c-8ed0-ec8625c0919c.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 10',
@@ -239,8 +242,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -256,7 +259,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 10,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/fb6b1a47-0f54-4cc3-9195-b5b9c2181db2.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/fb6b1a47-0f54-4cc3-9195-b5b9c2181db2.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 11',
@@ -277,8 +281,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -294,7 +298,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 11,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/77c1a5c9-b1ce-4033-9739-0d55930b7566.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/77c1a5c9-b1ce-4033-9739-0d55930b7566.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 12',
@@ -316,8 +321,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -333,7 +338,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 12,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/33226527-ffd9-452b-b139-4fe76b445c21.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/33226527-ffd9-452b-b139-4fe76b445c21.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 13',
@@ -355,8 +361,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -372,7 +378,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 13,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a60429ec-677d-4dde-b554-6352f338de98.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a60429ec-677d-4dde-b554-6352f338de98.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 14',
@@ -393,8 +400,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -410,7 +417,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 14,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/42a11beb-4934-4c13-9a58-e9d83935c61b.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/42a11beb-4934-4c13-9a58-e9d83935c61b.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 15',
@@ -431,8 +439,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -448,7 +456,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 15,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/1c905dd6-9f4a-43ae-928f-ed8059da3dd2.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/1c905dd6-9f4a-43ae-928f-ed8059da3dd2.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 16',
@@ -469,8 +478,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#000000'
+      buttonHover: '#71675B',
+      add1: '#000000'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -486,7 +495,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 16,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/38dd9a66-b3d9-4898-80ea-4051955363b0.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/38dd9a66-b3d9-4898-80ea-4051955363b0.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 17',
@@ -508,8 +518,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ECD19A'
+      buttonHover: '#71675B',
+      add1: '#ECD19A'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -525,7 +535,8 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 17,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/58a67bfc-23e5-43aa-ad57-f8fb80283aff.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/58a67bfc-23e5-43aa-ad57-f8fb80283aff.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
   },
   {
     type: 'Ash of Gods 18',
@@ -546,8 +557,8 @@ export default [
       text: '#71675B',
       button: '#B93A27',
       buttonText: '#ECD19A',
-      add1: '#71675B',
-      add2: '#ffffff'
+      buttonHover: '#71675B',
+      add1: '#ffffff'
     },
     backgroundImage: '',
     backgroundColor: '#0F1617',
@@ -563,6 +574,247 @@ export default [
       'btn': 'Playfair Display'
     },
     id: 18,
-    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ba93af99-a79a-4301-8ba0-c5405a57a2c3.jpg'
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ba93af99-a79a-4301-8ba0-c5405a57a2c3.jpg',
+    logo: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a8db1a89-4030-4557-99ec-850ef578d367.png'
+  },
+  {
+    type: 'Sky 01',
+    sections: [
+      'FirstScreenSky01',
+      'ColumnsSky01',
+      'BlockWithImage01',
+      'TextWithButtonTwoColumns02',
+      'FooterSky01'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0a015e13-19c0-469a-ac76-9e36a51b0f9e.jpg',
+    description: 'Sell game keys',
+    categories: [1],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 20,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0a015e13-19c0-469a-ac76-9e36a51b0f9e.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
+  },
+  {
+    type: 'Sky 02',
+    sections: [
+      'FirstScreenSky02',
+      'ColumnsSky02',
+      'BlockWithVideo02',
+      'CallToActionSky01',
+      'FooterSky01'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/705d77df-9689-4f24-8df3-ea250a625768.jpg',
+    description: 'Sell game keys',
+    categories: [1],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 21,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/705d77df-9689-4f24-8df3-ea250a625768.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
+  },
+  {
+    type: 'Sky 03',
+    sections: [
+      'FirstScreenSky02',
+      'BlockText01',
+      'SliderSky02',
+      'ProductsSky02',
+      'BlockWithVideo03',
+      'TextWithButtonTwoColumns02',
+      'FooterSky01'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/3f79152e-3969-4c8b-a390-398cc83b3a38.jpg',
+    description: 'Sell game keys',
+    categories: [2],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 22,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/3f79152e-3969-4c8b-a390-398cc83b3a38.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
+  },
+  {
+    type: 'Sky 04',
+    sections: [
+      'FirstScreenSky02',
+      'BlockTextsWithVideo02',
+      'BlockText01',
+      'ProductsSky01',
+      'FeaturesSky01',
+      'CallToActionSky01',
+      'FooterSky01'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/07dd9ab8-b80f-458d-9a8e-b532f55e2c45.jpg',
+    description: 'Sell game keys',
+    categories: [2],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 23,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/07dd9ab8-b80f-458d-9a8e-b532f55e2c45.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
+  },
+  {
+    type: 'Sky 05',
+    sections: [
+      'FirstScreenSky01',
+      'FeaturesSky01',
+      'BlockTextsWithVideo03',
+      'FeaturesSky02',
+      'CallToActionSky01',
+      'FooterSky01'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7840969c-752e-49a4-be9d-4e8f341e7544.jpg',
+    description: 'Setup pre-order',
+    categories: [4],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 24,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7840969c-752e-49a4-be9d-4e8f341e7544.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
+  },
+  {
+    type: 'Sky 06',
+    sections: [
+      'SliderSky01',
+      'FeaturesSky01',
+      'BlockWithVideo04',
+      'ColumnsSky03',
+      'CallToActionSky02',
+      'FooterSky02'
+    ],
+    image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/deaeb762-6deb-4475-a49c-fd6f238a9964.jpg',
+    description: 'Setup pre-order',
+    categories: [4],
+    palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
+    colors: {
+      headers: '#5E42AE',
+      text: '#5E42AE',
+      button: '#F04B4C',
+      buttonText: '#ffffff',
+      buttonHover: '#5E42AE',
+      add1: '#ffffff'
+    },
+    backgroundImage: '',
+    backgroundColor: '#ffffff',
+    fonts: {
+      'Roboto': {
+        variants: ['regular'],
+        subsets: ['latin']
+      }
+    },
+    setupFonts: {
+      'h1': 'Roboto',
+      'p': 'Roboto',
+      'btn': 'Roboto'
+    },
+    id: 25,
+    preview: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/deaeb762-6deb-4475-a49c-fd6f238a9964.jpg',
+    video: 'https://youtu.be/Nq9RNp-Mt0o',
+    logo: '"https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png"'
   }
 ]

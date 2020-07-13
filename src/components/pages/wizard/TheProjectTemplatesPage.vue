@@ -82,10 +82,12 @@ export default {
       'setGoal',
       'setPreset',
       'setColors',
+      'setLogo',
       'setFonts',
       'setSetupFonts',
       'setBackground',
-      'setBackgroundColor'
+      'setBackgroundColor',
+      'setVideo'
     ]),
 
     selectGoal (goal) {
@@ -97,10 +99,12 @@ export default {
       this.selectedPreset = preset.id
       this.setPreset(preset)
       this.setColors(preset.colors)
+      this.setLogo(preset.logo || '')
       this.setFonts(preset.fonts)
       this.setSetupFonts(preset.setupFonts)
       this.setBackground(preset.backgroundImage)
       this.setBackgroundColor(preset.backgroundColor)
+      this.setVideo(preset.video)
 
       this.$router.push({ path: `/dashboard/wizard/welcome` })
     },

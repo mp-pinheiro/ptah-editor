@@ -5,93 +5,111 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const GROUP_NAME = 'Forms'
-const NAME = 'CallToActionAndTextAshOfGods01'
+const GROUP_NAME = 'Footer'
+const NAME = 'FooterSky02'
 const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/36ad916a-122d-4e9a-87ca-e9d63f6e9271.jpg'
-const DESCRIPTION = 'Block with two text'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/1317919e-5be0-4a9d-ac76-48bbcf0af152.jpg'
+const DESCRIPTION = 'Lined up lower block with set of elements'
 
 const COMPONENTS = [
   {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
+    name: 'Logo',
+    element: types.Logo,
+    type: 'image',
+    class: 'b-footer-game-logo',
+    label: 'logo'
   },
   {
     name: 'TextElement',
     element: types.Text,
     type: 'text',
-    class: 'b-text',
-    label: 'text'
+    class: 'b-footer-copyright',
+    label: 'description'
   },
   {
-    name: 'Form',
-    element: types.Form,
-    type: 'form',
-    class: 'b-form',
-    label: 'form'
+    name: 'SocialNetworks',
+    element: types.SocialNetworks,
+    type: 'networks',
+    class: 'b-social-networks-fs',
+    label: 'Social Networks'
   }
 ]
 
 const C_CUSTOM = [
   {
     element: {
-      text: '<h3>Get started with us</h3>',
       styles: {
-        'font-size': '3.6rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '50px'
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png")',
+        'background-color': 'rgba(0, 0, 0, 0)',
+        'background-repeat': 'no-repeat',
+        'background-size': 'contain',
+        'width': '152px',
+        'height': '108px'
       },
       media: {
         'is-mobile': {
-          'font-size': '3.2rem',
-          'padding-top': '0',
-          'padding-bottom': '50px'
+          'width': '152px',
+          'height': '108px'
         }
       }
     }
   },
   {
     element: {
-      text: '<p>“The dialogue choices you make, journey paths you take and battles you fight truly affect the story and the world around you.”</p>',
+      text: `<span>Term & policy, Copyright © ${new Date().getFullYear()}</span>`,
       styles: {
-        'font-size': '1.8rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '50px'
+        'font-size': '1.4rem',
+        'color': '#575A5F',
+        'padding-top': '13px',
+        'padding-right': '32px',
+        'padding-left': '32px'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.6rem',
-          'padding-top': '0',
-          'padding-bottom': '50px'
+          'font-size': '1.2rem',
+          'text-align': 'center'
         }
       }
     }
   },
   {
     element: {
-      placeholder: 'Paste your email',
-      buttonText: 'Remind me!',
-      styles: {
-        'color': '#ECD19A',
-        'border-radius': '0',
-        'font-weight': 'normal',
-        'font-style': 'normal',
-        'font-size': '2rem',
-        'text-decoration': 'none'
+      socialNetworks: {
+        'facebook': {
+          name: 'Facebook',
+          expand: false,
+          visible: true,
+          url: ''
+        },
+        'instagram': {
+          name: 'Instagram',
+          expand: false,
+          visible: true,
+          url: ''
+        },
+        'twitter': {
+          name: 'Twitter',
+          expand: false,
+          visible: true,
+          url: ''
+        },
+        'youtube': {
+          name: 'Youtube',
+          expand: false,
+          visible: true,
+          url: ''
+        }
       },
-      formStyles: {
-        'button-color': '#B93A27',
-        'buttonHoverColor': '#9E1E0B',
-        'buttonTextColor': '#ECD19A',
-        'buttonHoverTextColor': '#ffffff',
-        'inputBgColor': '#29221C',
-        'border-radius': '0',
-        'height': 55
+      media: {
+        'is-mobile': {
+          'margin-top': '70px'
+        }
+      },
+      colorFill: {
+        color: '#56319F'
+      },
+      sizeIcons: {
+        width: 30
       }
     }
   }
@@ -101,26 +119,25 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'background-color': '#000000',
-      'background-size': 'cover',
-      'background-position': '100% 50%',
-      'height': 'auto'
-    },
-    overlay: {
-      color: '#000000',
-      opacity: '0'
+      'padding-top': '8px',
+      'padding-bottom': '8px',
+      'height': '170px'
     }
   },
   container: {
-    width: 8,
+    width: 10,
     styles: {
-      'padding-top': '80px',
-      'padding-bottom': '150px'
+      'padding-top': '8px',
+      'padding-bottom': '8px',
+      'flex-direction': 'row',
+      'justify-content': 'space-between'
     },
     media: {
       'is-mobile': {
-        'padding-top': '80px',
-        'padding-bottom': '150px'
+        'flex-direction': 'column',
+        'align-items': 'center',
+        'padding-top': '50px',
+        'padding-bottom': '50px'
       }
     }
   },
@@ -154,8 +171,8 @@ export default {
 </script>
 
 <template>
-  <section
-    class="b-call-to-action"
+  <footer
+    class="b-section-footer"
     :class="$sectionData.mainStyle.classes"
     :style="[$sectionData.mainStyle.styles, $sectionData.objVarsMedia]"
     v-styler:section="$sectionData.mainStyle"
@@ -163,7 +180,7 @@ export default {
     <slot name="menu"/>
     <slot name="video"/>
     <slot name="overlay"/>
-    <div>
+    <div class="b-footer">
       <div class="b-grid">
         <div class="b-grid__row b-footer__row">
           <div class="b-grid__col-m-12" :class="`b-grid__col-${$sectionData.container.width}`">
@@ -193,7 +210,7 @@ export default {
         </div><!--/.b-grid__row.b-footer__row-->
       </div><!--/.b-grid-->
     </div><!--/.b-footer-->
-  </section>
+  </footer>
 </template>
 
 <style lang="sass" scoped>

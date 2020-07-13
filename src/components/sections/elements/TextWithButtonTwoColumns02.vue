@@ -6,54 +6,70 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Elements'
-const NAME = 'VideoAndCallToAction01'
-const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/5c3e12ad-0b72-45bc-a9be-85b5621d3701.jpg'
-const DESCRIPTION = 'Block with video and a button'
+const NAME = 'TextWithButtonTwoColumns02'
+const BG_SECTION = 'url(https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0a959767-8c8b-45e0-828f-acf64720b4b1.jpg)'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/e0d0d0f7-6ff2-4797-bb7c-684bf2375d30.jpg'
+const DESCRIPTION = 'Two columns with texts and button'
 
 const COMPONENTS_2 = [
   {
-    name: 'VideoElement',
-    element: types.VideoElement,
-    type: 'video',
-    class: 'b-video',
-    label: 'video'
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text',
+    label: 'text'
+  },
+  {
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text',
+    label: 'text'
   }
 ]
 
 const C_CUSTOM_2 = [
   {
     element: {
-      settings: {
-        loop: false,
-        autoplay: false,
-        rel: false,
-        controls: false,
-        url: 'https://www.youtube.com/watch?v=1CAx8oB7RJ4&feature=youtu.be'
-      },
+      text: '<h2>Become legendary</h2>',
       styles: {
-        width: '780px',
-        height: '442px'
+        'font-size': '3.6rem',
+        'color': '#5E42AE',
+        'padding-top': '0',
+        'padding-bottom': '0'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '3.2rem',
+          'padding-top': '0',
+          'padding-bottom': '0'
+        }
+      }
+    }
+  },
+  {
+    element: {
+      text: '<p>“The dialogue choices you make, journey paths you take ' +
+        'and battles you fight truly affect the story and the world around you.”</p>',
+      styles: {
+        'font-size': '1.8rem',
+        'line-height': '1.3',
+        'color': '#5E42AE',
+        'text-align': 'left',
+        'margin-top': '20px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '1.4rem',
+          'margin-top': '20px',
+          'margin-bottom': '25px'
+        }
       }
     }
   }
 ]
 
 const COMPONENTS_3 = [
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
-  },
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
-  },
   {
     name: 'Button',
     element: types.Button,
@@ -66,65 +82,23 @@ const COMPONENTS_3 = [
 const C_CUSTOM_3 = [
   {
     element: {
-      text: '<h2>STORYTELLING</h2>',
+      text: 'BUY NOW',
       styles: {
-        'font-size': '3.6rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '0',
-        'text-align': 'left'
-      },
-      media: {
-        'is-mobile': {
-          'font-size': '3.2rem',
-          'padding-top': '0',
-          'padding-bottom': '0',
-          'text-align': 'center'
-        }
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p>The dialogue choices you make, journey paths you take and battles you fight truly affect the story and the world around you. The team’s resources and time are limited.</p>',
-      styles: {
-        'font-size': '1.7rem',
-        'line-height': '1.45',
-        'color': '#ECD19A',
-        'text-align': 'left',
-        'margin-top': '20px'
-      },
-      media: {
-        'is-mobile': {
-          'font-size': '1.4rem',
-          'margin-top': '20px',
-          'margin-bottom': '25px',
-          'text-align': 'center'
-        }
-      }
-    }
-  },
-  {
-    element: {
-      text: 'Become a baker',
-      styles: {
-        'background-color': '#B93A27',
-        'color': '#ECD19A',
+        'background-color': '#F04B4C',
+        'color': '#ffffff',
         'font-size': '2.4rem',
         'text-align': 'center',
-        'width': '270px',
-        'height': '62px',
-        'border-width': '1px',
-        'border-style': 'solid',
-        'border-color': '#ECD19A',
-        'margin-top': '40px'
+        'width': '226px',
+        'height': '66px',
+        'border-radius': '50px',
+        'border-width': '0',
+        'margin-top': '50px'
       },
       media: {
         'is-mobile': {
           'font-size': '1.8rem',
           'width': '191px',
-          'height': '46px',
-          'margin-top': '20px'
+          'height': '46px'
         }
       },
       pseudo: {
@@ -141,16 +115,19 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'height': 'auto',
-      'padding-top': '80px',
-      'padding-bottom': '80px',
+      'height': '80vh',
+      'padding-top': '20px',
+      'padding-bottom': '20px',
       'padding-left': '32px',
-      'padding-right': '32px'
+      'padding-right': '32px',
+      'background-position': '50% 100%',
+      'background-repeat': 'repeat-x',
+      'background-size': 'auto'
     },
     media: {
       'is-mobile': {
-        'padding-top': '20px',
-        'padding-bottom': '60px'
+        'padding-bottom': '60px',
+        'background-size': 'cover'
       }
     }
   },
@@ -163,10 +140,10 @@ const SCHEMA_CUSTOM = {
     selfName: '$sectionData.container2',
     styles: {
       'padding-top': '0',
-      'padding-left': '0',
-      'padding-right': '0',
-      'justify-content': 'flex-start',
-      'align-items': 'center'
+      'padding-left': '32px',
+      'padding-right': '32px',
+      'justify-content': 'center',
+      'align-items': 'flex-start'
     },
     media: {
       'is-mobile': {
@@ -181,20 +158,7 @@ const SCHEMA_CUSTOM = {
     minWidth: 2,
     maxWidth: 10,
     grow: ['$sectionData.container2'],
-    selfName: '$sectionData.container3',
-    styles: {
-      'padding-top': '0',
-      'padding-left': '60px',
-      'padding-right': '0',
-      'justify-content': 'center',
-      'align-items': 'flex-start'
-    },
-    media: {
-      'is-mobile': {
-        'padding-top': '30px',
-        'align-items': 'center'
-      }
-    }
+    selfName: '$sectionData.container3'
   },
   edited: true
 }

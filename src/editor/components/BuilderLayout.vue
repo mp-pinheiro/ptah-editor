@@ -251,8 +251,6 @@ $topBarHeight: 6rem
       left: 39.5rem
     &_expanded-setting
       left: 39.5rem
-      &:after
-        display: none
     &_show-modal
       z-index: 12
       &:after

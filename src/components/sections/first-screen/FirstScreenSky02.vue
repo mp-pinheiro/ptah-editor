@@ -5,11 +5,11 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const GROUP_NAME = 'Forms'
-const NAME = 'FirstScreenAshOfGods06'
-const BG_SECTION = 'url(https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/b4655052-98ba-4313-be80-ea4d43bab7eb.jpg)'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/58665352-4d5f-4512-bf4d-c1319b4d281b.jpg'
-const DESCRIPTION = 'Main screen with subscribe form'
+const GROUP_NAME = 'FirstScreen'
+const NAME = 'FirstScreenSky02'
+const BG_SECTION = 'url(https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/8f281505-6207-4460-84ef-0c88dd86167e.jpg)'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/adb9a6eb-edae-4b04-9ec3-2e8faa3e4562.jpg'
+const DESCRIPTION = 'Main screen with timer'
 
 const COMPONENTS_1 = [
   {
@@ -27,11 +27,18 @@ const COMPONENTS_1 = [
     label: 'text'
   },
   {
-    name: 'Form',
-    element: types.Form,
-    type: 'form',
-    class: 'b-form',
-    label: 'form'
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text-fs',
+    label: 'text'
+  },
+  {
+    name: 'Button',
+    element: types.Button,
+    type: 'button',
+    class: 'b-button-fs',
+    label: 'button'
   }
 ]
 
@@ -39,39 +46,38 @@ const C_CUSTOM_1 = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/bd3d2e7d-783a-45c1-ab4c-ebe2149a25f4.png")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
-        'width': '450px',
-        'height': '135px'
+        'width': '230px',
+        'height': '164px'
       },
       media: {
         'is-mobile': {
-          'width': '212px',
-          'height': '74px'
+          'width': '230px',
+          'height': '164px'
         }
       }
     }
   },
   {
     element: {
-      text: '<h1>TURN-BASED RPG FEATURING</h1>' +
-        ' <h1>ROGUE-LIKE STORYTELLING</h1>',
+      text: '<h3><strong>Something amazing is coming soon</strong></h3>',
       styles: {
-        'font-size': '4.2rem',
+        'font-size': '1.8rem',
         'line-height': '1.3',
-        'color': '#ECD19A',
+        'color': '#56319F',
         'text-align': 'center',
-        'margin-top': '70px',
-        'margin-bottom': '70px'
+        'margin-top': '40px',
+        'margin-bottom': '10px'
       },
       media: {
         'is-mobile': {
-          'font-size': '2.2rem',
-          'line-height': '1.4',
-          'margin-top': '50px',
-          'margin-bottom': '50px',
+          'font-size': '1.4rem',
+          'line-height': '1.3',
+          'margin-top': '25px',
+          'margin-bottom': '0',
           'padding-right': '0'
         }
       }
@@ -79,24 +85,52 @@ const C_CUSTOM_1 = [
   },
   {
     element: {
-      placeholder: 'Paste your email',
-      buttonText: 'Remind me!',
+      text: '<p><strong>It’s time to take new gaming experience</h1>',
       styles: {
-        'color': '#ECD19A',
-        'border-radius': '0',
-        'font-weight': 'normal',
-        'font-style': 'normal',
-        'font-size': '2rem',
-        'text-decoration': 'none'
+        'font-size': '4.6rem',
+        'line-height': '1.3',
+        'color': '#ffffff',
+        'text-align': 'center',
+        'margin-top': '0',
+        'margin-bottom': '40px'
       },
-      formStyles: {
-        'button-color': '#B93A27',
-        'buttonHoverColor': '#9E1E0B',
-        'buttonTextColor': '#ECD19A',
-        'buttonHoverTextColor': '#ffffff',
-        'inputBgColor': '#29221C',
-        'border-radius': '0',
-        'height': 55
+      media: {
+        'is-mobile': {
+          'font-size': '2.2rem',
+          'line-height': '1.4',
+          'margin-top': '0',
+          'margin-bottom': '25px',
+          'padding-right': '0'
+        }
+      }
+    }
+  },
+  {
+    element: {
+      text: 'BUY NOW',
+      styles: {
+        'background-color': '#F04B4C',
+        'color': '#ffffff',
+        'font-size': '2.4rem',
+        'text-align': 'center',
+        'width': '214px',
+        'height': '54px',
+        'border-radius': '50px',
+        'border-width': '0',
+        'margin-top': '50px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '1.8rem',
+          'width': '191px',
+          'height': '46px'
+        }
+      },
+      pseudo: {
+        hover: {
+          'color': '#fff !important',
+          'background-color': 'rgba(0,0,0,0)'
+        }
       }
     }
   }
@@ -106,11 +140,11 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'background-size': 'cover',
-      'background-color': '#4A4A4A',
+      'background-color': '#ffffff',
       'background-repeat': 'no-repeat',
       'background-attachment': 'scroll',
-      'background-position': '50% 0%',
+      'background-position': '50% 0',
+      'background-size': 'cover',
       'height': '100vh',
       'padding-top': '20px',
       'padding-bottom': '150px',
@@ -119,18 +153,18 @@ const SCHEMA_CUSTOM = {
     },
     media: {
       'is-mobile': {
-        'background-position': '100% 50%',
-        'padding-bottom': '60px'
+        'background-position': '50% 0',
+        'padding-bottom': '150px'
       }
     },
     overlay: {
       color: '#000000',
-      opacity: '0.45'
+      opacity: '0'
     }
   },
   components1: merge({}, C_CUSTOM_1),
   container1: {
-    width: 10,
+    width: 6,
     styles: {
       'flex-direction': 'column',
       'justify-content': 'center',

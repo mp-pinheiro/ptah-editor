@@ -5,11 +5,11 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const GROUP_NAME = 'Forms'
-const NAME = 'CallToActionAndTextAshOfGods01'
-const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/36ad916a-122d-4e9a-87ca-e9d63f6e9271.jpg'
-const DESCRIPTION = 'Block with two text'
+const GROUP_NAME = 'Elements'
+const NAME = 'CallToActionSky02'
+const BG_SECTION = 'url(https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0a959767-8c8b-45e0-828f-acf64720b4b1.jpg)'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/419261e7-0a98-45b1-bd0b-9fbf70a00534.jpg'
+const DESCRIPTION = 'Block with timer & call to action a button'
 
 const COMPONENTS = [
   {
@@ -20,78 +20,91 @@ const COMPONENTS = [
     label: 'text'
   },
   {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
+    name: 'Timer',
+    element: types.Timer,
+    type: 'timer',
+    class: 'b-timer-fs',
+    label: 'timer'
   },
   {
-    name: 'Form',
-    element: types.Form,
-    type: 'form',
-    class: 'b-form',
-    label: 'form'
+    name: 'Button',
+    element: types.Button,
+    type: 'button',
+    class: 'b-button',
+    label: 'button'
   }
 ]
 
 const C_CUSTOM = [
   {
     element: {
-      text: '<h3>Get started with us</h3>',
-      styles: {
-        'font-size': '3.6rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '50px'
-      },
-      media: {
-        'is-mobile': {
-          'font-size': '3.2rem',
-          'padding-top': '0',
-          'padding-bottom': '50px'
-        }
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p>“The dialogue choices you make, journey paths you take and battles you fight truly affect the story and the world around you.”</p>',
+      text: '<h3><strong>Something amazing is coming soon</strong></h3>',
       styles: {
         'font-size': '1.8rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '50px'
+        'line-height': '1.3',
+        'color': '#5E42AE',
+        'text-align': 'center',
+        'margin-top': '40px',
+        'margin-bottom': '10px'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.6rem',
-          'padding-top': '0',
-          'padding-bottom': '50px'
+          'font-size': '1.4rem',
+          'line-height': '1.3',
+          'margin-top': '25px',
+          'margin-bottom': '0',
+          'padding-right': '0'
         }
       }
     }
   },
   {
     element: {
-      placeholder: 'Paste your email',
-      buttonText: 'Remind me!',
-      styles: {
-        'color': '#ECD19A',
-        'border-radius': '0',
-        'font-weight': 'normal',
-        'font-style': 'normal',
-        'font-size': '2rem',
-        'text-decoration': 'none'
+      timer: {
+        timestamp: Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000,
+        UTC: new Date().getTimezoneOffset() / 60 * (-1),
+        labels: {
+          show: true
+        },
+        colorTile: 'rgba(0,0,0,0)'
       },
-      formStyles: {
-        'button-color': '#B93A27',
-        'buttonHoverColor': '#9E1E0B',
-        'buttonTextColor': '#ECD19A',
-        'buttonHoverTextColor': '#ffffff',
-        'inputBgColor': '#29221C',
-        'border-radius': '0',
-        'height': 55
+      styles: {
+        'background-color': 'rgba(0,0,0,0)',
+        'font-size': '3.2rem',
+        'font-weight': '800',
+        'line-height': '1.3',
+        'color': '#A7B4FD',
+        'margin-top': '0',
+        'margin-bottom': '0'
+      }
+    }
+  },
+  {
+    element: {
+      text: 'PRE - ORDER',
+      styles: {
+        'background-color': '#F04B4C',
+        'color': '#ffffff',
+        'font-size': '2.4rem',
+        'text-align': 'center',
+        'width': '226px',
+        'height': '66px',
+        'border-radius': '50px',
+        'border-width': '0',
+        'margin-top': '50px'
+      },
+      media: {
+        'is-mobile': {
+          'font-size': '1.8rem',
+          'width': '191px',
+          'height': '46px'
+        }
+      },
+      pseudo: {
+        hover: {
+          'color': '#fff !important',
+          'background-color': 'rgba(0,0,0,0)'
+        }
       }
     }
   }
@@ -101,26 +114,32 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'background-color': '#000000',
-      'background-size': 'cover',
-      'background-position': '100% 50%',
-      'height': 'auto'
+      'height': '80vh',
+      'padding-top': '20px',
+      'padding-bottom': '20px',
+      'padding-left': '32px',
+      'padding-right': '32px',
+      'background-position': '50% 100%',
+      'background-repeat': 'repeat-x',
+      'background-size': 'auto'
     },
-    overlay: {
-      color: '#000000',
-      opacity: '0'
+    media: {
+      'is-mobile': {
+        'padding-bottom': '60px',
+        'background-size': 'cover'
+      }
     }
   },
   container: {
     width: 8,
     styles: {
-      'padding-top': '80px',
-      'padding-bottom': '150px'
+      'padding-top': '8px',
+      'padding-bottom': '8px'
     },
     media: {
       'is-mobile': {
-        'padding-top': '80px',
-        'padding-bottom': '150px'
+        'padding-top': '40px',
+        'padding-bottom': '50px'
       }
     }
   },
@@ -163,8 +182,7 @@ export default {
     <slot name="menu"/>
     <slot name="video"/>
     <slot name="overlay"/>
-    <div>
-      <div class="b-grid">
+    <div class="b-grid">
         <div class="b-grid__row b-footer__row">
           <div class="b-grid__col-m-12" :class="`b-grid__col-${$sectionData.container.width}`">
             <sandbox
@@ -192,7 +210,6 @@ export default {
           </div>
         </div><!--/.b-grid__row.b-footer__row-->
       </div><!--/.b-grid-->
-    </div><!--/.b-footer-->
   </section>
 </template>
 

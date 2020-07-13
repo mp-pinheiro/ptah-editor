@@ -9,8 +9,8 @@ const COLORS = {
   text: '',
   button: '',
   buttonText: '',
-  add1: '',
-  add2: ''
+  buttonHover: '',
+  add1: ''
 }
 
 const FONTS = {
@@ -32,6 +32,7 @@ const SETUP_FONTS = {
 const defaultState = {
   name: '', // new project name
   logo: '',
+  video: '',
   background: '',
   backgroundColor: '#fafafa',
   colors: COLORS,
@@ -57,6 +58,10 @@ export default {
 
     setLogo (state, value) {
       state.logo = value
+    },
+
+    setVideo (state, value) {
+      state.video = value
     },
 
     setBackground (state, value) {

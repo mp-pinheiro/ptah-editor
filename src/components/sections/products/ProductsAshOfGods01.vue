@@ -165,7 +165,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -180,7 +180,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -195,7 +195,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   }
@@ -213,7 +213,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -228,7 +228,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -243,7 +243,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -258,7 +258,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   }
@@ -276,7 +276,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -291,7 +291,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -306,7 +306,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -321,7 +321,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   }
@@ -339,7 +339,7 @@ const C_CUSTOM_4D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -354,7 +354,7 @@ const C_CUSTOM_4D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -369,7 +369,7 @@ const C_CUSTOM_4D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   },
@@ -384,7 +384,7 @@ const C_CUSTOM_4D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#fffffff'
+        color: '#ffffff'
       }
     }
   }
@@ -423,6 +423,7 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
+      'background-color': '#000000',
       'padding-top': '80px',
       'padding-bottom': '80px'
     },

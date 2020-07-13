@@ -38,19 +38,23 @@ export default {
     ...mapMutations('Onboarding', [
       'setPreset',
       'setColors',
+      'setLogo',
       'setFonts',
       'setSetupFonts',
       'setBackground',
-      'setBackgroundColor'
+      'setBackgroundColor',
+      'setVideo'
     ]),
 
     selectPreset () {
       this.setPreset(this.preset)
       this.setColors(this.preset.colors)
+      this.setLogo(this.preset.logo || '')
       this.setFonts(this.preset.fonts)
       this.setSetupFonts(this.preset.setupFonts)
       this.setBackground(this.preset.backgroundImage)
       this.setBackgroundColor(this.preset.backgroundColor)
+      this.setVideo(this.preset.video)
 
       this.$router.push({ path: `/dashboard/wizard/welcome` })
     },

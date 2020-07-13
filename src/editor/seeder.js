@@ -197,7 +197,8 @@ const data = new Map([
           'flex-direction': 'column'
         }
       },
-      parallax: false
+      parallax: false,
+      applyPageStyle: true
     })
   )],
   [types.Button, () => (_.merge({}, DEFAULT_OPTIONS,

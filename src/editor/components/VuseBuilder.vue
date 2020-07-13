@@ -71,7 +71,10 @@
               'background-color' : headerSection.data.mainStyle.overlay.color,
               'opacity' : headerSection.data.mainStyle.overlay.opacity
           }"
-          :class="[ isActiveSection(headerSection.id) ? '_section-active' : '' ]"
+          :class="[
+            isActiveSection(headerSection.id) ? '_section-active' : '',
+            headerSection.data.mainStyle.applyPageStyle ? '_applyPageStyle' : '_not-applyPageStyle'
+          ]"
         >
         </div>
 
@@ -86,8 +89,10 @@
           { 'video-background': section.data.mainStyle.backgroundVideo },
           $builder.isEditing ? device: '',
           isActiveSection(section.id) ? '_section-active' : '',
-          section.data.mainStyle.parallax ? '_parallax' : ''
+          section.data.mainStyle.parallax ? '_parallax' : '',
+          section.data.mainStyle.applyPageStyle ? '_applyPageStyle' : '_not-applyPageStyle'
         ]"
+        :data-apply="section.data.mainStyle.applyPageStyle"
         :data-parallax="section.data.mainStyle.parallax ? 'scroll' : ''"
         :data-image-src="getImageFromBgStyles(section.data.mainStyle.styles['background-image'])"
         @click.native="selectSidebarSection(section)">
@@ -123,12 +128,10 @@
 
         <!-- apply headers color -->
         <template v-if="currentLanding.settings.colors && currentLanding.settings.colors.headers !== ''">
-          h1, h2, h3 {
+          h1,
+          h2,
+          h3 {
             color: {{currentLanding.settings.colors.headers}} !important;
-          }
-
-          strong {
-            color: {{currentLanding.settings.colors.add2}} !important;
           }
         </template>
       </v-style>

@@ -19,6 +19,7 @@ export default class Section {
     this.data = options.data || Seeder.seed(options.schema)
     this.stylers = []
     this.isMain = false // flag for group
+    this.applyPageStyle = options.applyPageStyle || false // flag if section added from list
     this.isHeader = this.schema.isHeader || false // --- flag for header element
   }
 

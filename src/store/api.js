@@ -27,7 +27,7 @@ export default {
    * @returns {Promise.<TResult>|Promise<any>}
    */
   uploadFile (request) {
-    return axios.post(`${process.env.VUE_APP_API}/upload`, request)
+    return axios.post(`${process.env.VUE_APP_API}upload`, request)
   },
 
   /**

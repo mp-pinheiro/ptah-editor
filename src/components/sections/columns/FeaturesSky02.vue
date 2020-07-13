@@ -6,64 +6,66 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Columns'
-const NAME = 'FeaturesAshOfGods02'
+const NAME = 'FeaturesSky02'
 const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/e2012514-28f3-4cd2-96d6-475117736c7d.jpg'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/31c88895-2d04-499f-8cfd-8e3ab7637d31.jpg'
 const DESCRIPTION = 'Three columns additional features presentation'
 
 const C_CUSTOM_COLUMN = [
   {
     element: {
-      styles: {
-        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/65919aed-107f-4e23-ba7d-a5150dd84724.png")',
-        'background-color': 'rgba(0, 0, 0, 0)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'contain',
-        'width': '207px',
-        'height': '207px'
-      },
-      media: {
-        'is-mobile': {
-          'width': '207px',
-          'height': '207px'
-        }
-      }
-    }
-  },
-  {
-    element: {
       text: '<h2>Rogue like storytelling</h2>',
       styles: {
         'font-size': '2.8rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'margin-top': '0',
-        'padding-bottom': '16px'
+        'color': '#5E42AE',
+        'padding-top': '40px',
+        'padding-bottom': '40px',
+        'text-align': 'left'
       },
       media: {
         'is-mobile': {
-          'font-size': '2.5rem'
+          'font-size': '3.2rem',
+          'padding-top': '20px',
+          'padding-bottom': '30px'
         }
       }
     }
   },
   {
     element: {
-      text: '<p>The dialogue choices you make, journey paths ' +
-        'you take and battles you fight truly affect the story ' +
-        'and the world around you. The team’s resources ' +
-        'and time are limited.</p>',
+      text: '<p>The dialogue choices you make, journey paths you take and battles ' +
+        'you fight truly affect the story and the world around you. ' +
+        'The team’s resources and time are limited.</p>',
       styles: {
-        'font-size': '1.7rem',
-        'color': '#71675B',
-        'padding-bottom': '40px'
+        'font-size': '1.8rem',
+        'color': '#5E42AE',
+        'padding-top': '0',
+        'padding-bottom': '50px',
+        'text-align': 'left'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.5rem',
-          'padding-bottom': '40px',
-          'padding-left': '20px',
-          'padding-right': '20px'
+          'font-size': '1.6rem',
+          'padding-top': '0',
+          'padding-bottom': '50px'
+        }
+      }
+    }
+  },
+  {
+    element: {
+      styles: {
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ff2a51e9-163f-4ec1-a993-df96bbcc1211.png")',
+        'background-color': 'rgba(0, 0, 0, 0)',
+        'background-repeat': 'no-repeat',
+        'background-size': 'contain',
+        'width': '224px',
+        'height': '190px'
+      },
+      media: {
+        'is-mobile': {
+          'width': '122px',
+          'height': '122px'
         }
       }
     }
@@ -74,122 +76,78 @@ const C_CUSTOM_COLUMN1 = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0ab27174-1fee-43fc-8cd7-4ef19a3861e5.png")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7484fb62-96cb-4507-b8d9-36494f0dc79e.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
-        'width': '168px',
-        'height': '51px'
+        'width': '224px',
+        'height': '190px'
       },
       media: {
         'is-mobile': {
-          'width': '168px',
-          'height': '51px'
+          'width': '122px',
+          'height': '122px'
         }
       }
     }
   },
   {
     element: {
-      text: '<h2>STORYTELLING</h2>',
+      text: '<h2>Rogue like storytelling</h2>',
       styles: {
         'font-size': '2.8rem',
-        'color': '#ECD19A',
-        'padding-top': '22px',
-        'padding-bottom': '16px'
-      },
-      media: {
-        'is-mobile': {
-          'font-size': '2.5rem',
-          'text-align': 'center'
-        }
-      }
-    }
-  },
-  {
-    element: {
-      text: '<p>The dialogue choices you make, journey paths you take ' +
-        'and battles you fight truly affect the story and the world ' +
-        'around you. The team’s resources and time are limited.</p>',
-      styles: {
-        'font-size': '1.7rem',
-        'color': '#71675B',
+        'color': '#5E42AE',
+        'padding-top': '40px',
         'padding-bottom': '40px',
         'text-align': 'left'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.5rem',
-          'padding-bottom': '40px',
-          'padding-left': '20px',
-          'padding-right': '20px'
+          'font-size': '3.2rem',
+          'padding-top': '20px',
+          'padding-bottom': '30px'
         }
       }
     }
   },
   {
     element: {
-      text: 'BUY NOW',
+      text: '<p>The dialogue choices you make, journey paths you take and battles ' +
+        'you fight truly affect the story and the world around you. ' +
+        'The team’s resources and time are limited.</p>',
       styles: {
-        'background-color': '#B93A27',
-        'color': '#ECD19A',
-        'font-size': '2.4rem',
-        'text-align': 'center',
-        'width': '270px',
-        'height': '62px',
-        'border-width': '1px',
-        'border-style': 'solid',
-        'border-color': '#ECD19A'
+        'font-size': '1.8rem',
+        'color': '#5E42AE',
+        'padding-top': '0',
+        'padding-bottom': '50px',
+        'text-align': 'left'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.8rem',
-          'width': '191px',
-          'height': '46px'
-        }
-      },
-      pseudo: {
-        hover: {
-          'color': '#fff !important',
-          'background-color': 'rgba(0,0,0,0)'
+          'font-size': '1.6rem',
+          'padding-top': '0',
+          'padding-bottom': '50px'
         }
       }
     }
   }
 ]
 
-const C_CUSTOM_COLUMN2 = cloneDeep(C_CUSTOM_COLUMN)
-C_CUSTOM_COLUMN2[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/65919aed-107f-4e23-ba7d-a5150dd84724.png")'
+const C_CUSTOM_COLUMN2 = cloneDeep(C_CUSTOM_COLUMN1)
+C_CUSTOM_COLUMN2[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6693bc33-4f7b-4055-9240-f1b4036275b1.png")'
 C_CUSTOM_COLUMN2[1].element.text = '<h2>PVE multiplayer modes</h2>'
-C_CUSTOM_COLUMN2[2].element.text = '<p>Live through the story and top the global ratings with your ' +
-  'characters in the multiplayer mode. Unlock new characters and cards, ' +
-  'upgrade them to build your own unique strategy and tactics.</p>'
+C_CUSTOM_COLUMN2[2].element.text = '<p>Live through the story and top the global ' +
+  'ratings with your characters in the multiplayer mode. Unlock new characters ' +
+  'and cards, upgrade them to build your own unique strategy and tactics.</p>'
 
-const C_CUSTOM_COLUMN3 = cloneDeep(C_CUSTOM_COLUMN)
-C_CUSTOM_COLUMN3[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/c4c06d7a-1dc1-4264-bc79-ab45a567d3b8.png")'
+const C_CUSTOM_COLUMN3 = cloneDeep(C_CUSTOM_COLUMN1)
+C_CUSTOM_COLUMN3[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ff2a51e9-163f-4ec1-a993-df96bbcc1211.png")'
 C_CUSTOM_COLUMN3[1].element.text = '<h2>Hand-drawn graphics</h2>'
-C_CUSTOM_COLUMN3[2].element.text = '<p>The visual style of Ash of Gods has been inspired ' +
-  'by the work of Ralph Bakshi, old-school Disney cartoons and ' +
-  'the Soviet animation studio “Soyuzmultfilm” of the 60s. </p>'
+C_CUSTOM_COLUMN3[2].element.text = '<p>The visual style of Ash of Gods has been ' +
+  'inspired by the work of Ralph Bakshi, old-school Disney cartoons and the Soviet ' +
+  'animation studio “Soyuzmultfilm” of the 60s.</p>'
 
-const C_CUSTOM = [{
-  element: {
-    text: '<h2>Features<h2>',
-    styles: {
-      'font-size': '3.6rem',
-      'color': '#ECD19A',
-      'padding-top': '80px',
-      'padding-bottom': '60px'
-    },
-    media: {
-      'is-mobile': {
-        'font-size': '3.2rem',
-        'padding-top': '50px',
-        'padding-bottom': '50px'
-      }
-    }
-  }
-}]
+const C_CUSTOM = []
 
 const C_CUSTOM_CONTAINER = {
   styles: {
@@ -202,9 +160,10 @@ const C_CUSTOM_CONTAINER = {
 
 const C_CUSTOM_CONTAINER_C = {
   styles: {
-    'background-color': 'rgba(158, 30, 11, 0.26)',
+    'background-color': '#E2F6FE',
     'flex-direction': 'column',
-    'align-items': 'center',
+    'justify-content': 'flex-start',
+    'align-items': 'flex-start',
     'padding-top': '27px',
     'padding-bottom': '27px',
     'padding-left': '27px',
@@ -214,6 +173,8 @@ const C_CUSTOM_CONTAINER_C = {
   },
   media: {
     'is-mobile': {
+      'justify-content': 'center',
+      'align-items': 'center',
       'margin-top': '10px',
       'margin-bottom': '10px',
       'margin-left': '10px',
@@ -227,7 +188,7 @@ const C_CUSTOM_CONTAINER1 = {
     'flex-direction': 'column',
     'justify-content': 'flex-start',
     'align-items': 'flex-start',
-    'padding-top': '85px',
+    'padding-top': '0',
     'padding-left': '20px',
     'padding-right': '60px'
   },
@@ -247,7 +208,9 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'padding-bottom': '122px'
+      'padding-top': '61px',
+      'padding-bottom': '122px',
+      'align-items': 'stretch'
     },
     media: {
       'is-mobile': {
@@ -262,31 +225,16 @@ const SCHEMA_CUSTOM = {
   container3: merge({}, C_CUSTOM_CONTAINER_C),
   container4: merge({}, C_CUSTOM_CONTAINER_C),
   components: merge({}, C_CUSTOM),
-  components1: merge({}, C_CUSTOM_COLUMN1),
-  components2: merge({}, C_CUSTOM_COLUMN2),
-  components3: merge({}, C_CUSTOM_COLUMN3),
-  components4: merge({}, C_CUSTOM_COLUMN),
+  components1: merge({}, C_CUSTOM_COLUMN),
+  components2: merge({}, C_CUSTOM_COLUMN1),
+  components3: merge({}, C_CUSTOM_COLUMN2),
+  components4: merge({}, C_CUSTOM_COLUMN3),
   edited: true
 }
 
-const HEADER = [
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-title',
-    label: 'title'
-  }
-]
+const HEADER = []
 
 const COMPONENTS1 = [
-  {
-    name: 'Logo',
-    element: types.Logo,
-    type: 'image',
-    class: 'b-logo',
-    label: 'logo'
-  },
   {
     name: 'TextElement',
     element: types.Text,
@@ -302,11 +250,11 @@ const COMPONENTS1 = [
     label: 'description'
   },
   {
-    name: 'Button',
-    element: types.Button,
-    type: 'button',
-    class: 'b-button-fs',
-    label: 'button'
+    name: 'Pic',
+    element: types.Image,
+    type: 'image',
+    class: 'b-image',
+    label: 'pic'
   }
 ]
 

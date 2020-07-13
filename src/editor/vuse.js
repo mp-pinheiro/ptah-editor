@@ -60,12 +60,16 @@ class Vuse {
      * @param {*} options
      */
   add (options, position) {
+    const ops = {
+      ...options,
+      applyPageStyle: true
+    }
     if (position !== undefined) {
-      this.sections.splice(position, 0, new Section(options))
+      this.sections.splice(position, 0, new Section(ops))
       return
     }
 
-    this.sections.push(new Section(options))
+    this.sections.push(new Section(ops))
   }
 
   /**

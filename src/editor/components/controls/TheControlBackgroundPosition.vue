@@ -118,6 +118,14 @@ export default {
         {
           text: 'Stretch',
           value: 'stretch'
+        },
+        {
+          text: 'Stretch vertically',
+          value: 'vertical'
+        },
+        {
+          text: 'Stretch horizontally',
+          value: 'horizontal'
         }
       ],
       backgroundFill: '',
@@ -264,6 +272,14 @@ export default {
       if (this.bgSize === 'contain') {
         this.backgroundFill = 'stretch'
       }
+
+      if (this.bgSize === '100% auto') {
+        this.backgroundFill = 'horizontal'
+      }
+
+      if (this.bgSize === 'auto 100%') {
+        this.backgroundFill = 'vertical'
+      }
     },
 
     changeSize () {
@@ -293,6 +309,14 @@ export default {
       }
       if (this.backgroundFill === 'set') {
         this.update('background-size', `${this.left}% ${this.top}%`)
+        this.updat('background-repeat', 'no-repeat')
+      }
+      if (this.backgroundFill === 'horizontal') {
+        this.update('background-size', `100% auto`)
+        this.update('background-repeat', 'no-repeat')
+      }
+      if (this.backgroundFill === 'vertical') {
+        this.update('background-size', `auto 100%`)
         this.update('background-repeat', 'no-repeat')
       }
     },

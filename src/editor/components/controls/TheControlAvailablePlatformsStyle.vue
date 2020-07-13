@@ -113,14 +113,14 @@ export default {
         position-label="left"
         v-model="elWidth"
         :label="$t('c.width')"
-        step="8"
-        min="16"
+        step="1"
+        min="1"
         max="128"
         @change="setWidth"
       >
         <base-number-input
           :value="elWidthValue"
-          :minimum="32"
+          :minimum="1"
           :maximum="128"
           unit="px"
           @input="setWidthValue"

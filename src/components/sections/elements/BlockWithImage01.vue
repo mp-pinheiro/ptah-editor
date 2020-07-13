@@ -6,77 +6,67 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Elements'
-const NAME = 'VideoAndCallToAction01'
+const NAME = 'BlockWithImage01'
 const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/5c3e12ad-0b72-45bc-a9be-85b5621d3701.jpg'
-const DESCRIPTION = 'Block with video and a button'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/8156b0a4-41eb-4568-abe1-68ed94e78335.jpg'
+const DESCRIPTION = 'Block with image'
 
 const COMPONENTS_2 = [
   {
-    name: 'VideoElement',
-    element: types.VideoElement,
-    type: 'video',
-    class: 'b-video',
-    label: 'video'
+    name: 'Logo',
+    element: types.Logo,
+    type: 'image',
+    class: 'b-logo-fs',
+    label: 'logo'
+  },
+  {
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text',
+    label: 'text'
+  },
+  {
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text',
+    label: 'text'
   }
 ]
 
 const C_CUSTOM_2 = [
   {
     element: {
-      settings: {
-        loop: false,
-        autoplay: false,
-        rel: false,
-        controls: false,
-        url: 'https://www.youtube.com/watch?v=1CAx8oB7RJ4&feature=youtu.be'
-      },
       styles: {
-        width: '780px',
-        height: '442px'
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6276c239-7f3b-404d-b630-a14db18d91c9.png")',
+        'background-color': 'rgba(0, 0, 0, 0)',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        'width': '116px',
+        'height': '164px'
+      },
+      media: {
+        'is-mobile': {
+          'width': '116px',
+          'height': '164px'
+        }
       }
     }
-  }
-]
-
-const COMPONENTS_3 = [
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
   },
-  {
-    name: 'TextElement',
-    element: types.Text,
-    type: 'text',
-    class: 'b-text',
-    label: 'text'
-  },
-  {
-    name: 'Button',
-    element: types.Button,
-    type: 'button',
-    class: 'b-button',
-    label: 'button'
-  }
-]
-
-const C_CUSTOM_3 = [
   {
     element: {
       text: '<h2>STORYTELLING</h2>',
       styles: {
-        'font-size': '3.6rem',
-        'color': '#ECD19A',
+        'font-size': '2.8rem',
+        'color': '#56319F',
         'padding-top': '0',
         'padding-bottom': '0',
         'text-align': 'left'
       },
       media: {
         'is-mobile': {
-          'font-size': '3.2rem',
+          'font-size': '1.8rem',
           'padding-top': '0',
           'padding-bottom': '0',
           'text-align': 'center'
@@ -90,7 +80,7 @@ const C_CUSTOM_3 = [
       styles: {
         'font-size': '1.7rem',
         'line-height': '1.45',
-        'color': '#ECD19A',
+        'color': '#56319F',
         'text-align': 'left',
         'margin-top': '20px'
       },
@@ -103,34 +93,34 @@ const C_CUSTOM_3 = [
         }
       }
     }
-  },
+  }
+]
+
+const COMPONENTS_3 = [
+  {
+    name: 'Pic',
+    element: types.Image,
+    type: 'image',
+    class: 'b-image',
+    label: 'pic'
+  }
+]
+
+const C_CUSTOM_3 = [
   {
     element: {
-      text: 'Become a baker',
       styles: {
-        'background-color': '#B93A27',
-        'color': '#ECD19A',
-        'font-size': '2.4rem',
-        'text-align': 'center',
-        'width': '270px',
-        'height': '62px',
-        'border-width': '1px',
-        'border-style': 'solid',
-        'border-color': '#ECD19A',
-        'margin-top': '40px'
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/37ba65c2-61b0-4b0a-879c-8d8a0b9e0ae8.jpg")',
+        'background-color': 'rgba(0, 0, 0, 0)',
+        'background-repeat': 'no-repeat',
+        'background-size': 'contain',
+        'width': '640px',
+        'height': '640px'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.8rem',
-          'width': '191px',
-          'height': '46px',
-          'margin-top': '20px'
-        }
-      },
-      pseudo: {
-        hover: {
-          'color': '#fff !important',
-          'background-color': 'rgba(0,0,0,0)'
+          'width': '280px',
+          'height': '280px'
         }
       }
     }
@@ -141,6 +131,7 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
+      'background-color': '#ffffff',
       'height': 'auto',
       'padding-top': '80px',
       'padding-bottom': '80px',
@@ -156,7 +147,7 @@ const SCHEMA_CUSTOM = {
   },
   components2: merge({}, C_CUSTOM_2),
   container2: {
-    width: 8,
+    width: 5,
     minWidth: 2,
     maxWidth: 10,
     grow: ['$sectionData.container3'],
@@ -165,8 +156,8 @@ const SCHEMA_CUSTOM = {
       'padding-top': '0',
       'padding-left': '0',
       'padding-right': '0',
-      'justify-content': 'flex-start',
-      'align-items': 'center'
+      'justify-content': 'center',
+      'align-items': 'flex-start'
     },
     media: {
       'is-mobile': {
@@ -177,7 +168,7 @@ const SCHEMA_CUSTOM = {
   },
   components3: merge({}, C_CUSTOM_3),
   container3: {
-    width: 4,
+    width: 7,
     minWidth: 2,
     maxWidth: 10,
     grow: ['$sectionData.container2'],
@@ -186,7 +177,7 @@ const SCHEMA_CUSTOM = {
       'padding-top': '0',
       'padding-left': '60px',
       'padding-right': '0',
-      'justify-content': 'center',
+      'justify-content': 'flex-start',
       'align-items': 'flex-start'
     },
     media: {

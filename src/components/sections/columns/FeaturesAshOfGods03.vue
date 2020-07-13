@@ -225,6 +225,30 @@ const HEADER = [
 
 const COMPONENTS = [
   {
+    name: 'Logo',
+    element: types.Logo,
+    type: 'image',
+    class: 'b-logo',
+    label: 'logo'
+  },
+  {
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-title',
+    label: 'title'
+  },
+  {
+    name: 'TextElement',
+    element: types.Text,
+    type: 'text',
+    class: 'b-text',
+    label: 'description'
+  }
+]
+
+const COMPONENTS1 = [
+  {
     name: 'Pic',
     element: types.Image,
     type: 'image',
@@ -267,9 +291,9 @@ export default {
     container4: types.StyleObject,
     components: merge([], HEADER),
     components1: merge([], COMPONENTS),
-    components2: merge([], COMPONENTS),
-    components3: merge([], COMPONENTS),
-    components4: merge([], COMPONENTS)
+    components2: merge([], COMPONENTS1),
+    components3: merge([], COMPONENTS1),
+    components4: merge([], COMPONENTS1)
   },
 
   created () {

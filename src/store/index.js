@@ -88,8 +88,8 @@ const COLORS = {
   text: '',
   button: '',
   buttonText: '',
-  add1: '',
-  add2: ''
+  buttonHover: '',
+  add1: ''
 }
 
 const state = {
@@ -201,7 +201,8 @@ const actions = {
           fonts: state.Onboarding.fonts,
           setupFonts: state.Onboarding.setupFonts,
           colors: state.Onboarding.colors,
-          logo: state.Onboarding.logo
+          logo: state.Onboarding.logo,
+          videoElUrl: state.Onboarding.video
         })
 
         landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)
@@ -215,62 +216,6 @@ const actions = {
       })
       .catch((error) => {
         return Promise.reject(error)
-      })
-  },
-
-  /**
-   * Get landing from url
-   * @param commit
-   * @param slug
-   * @returns {Promise<Response>}
-   */
-  fetchLandingFromFile ({ state, commit }, { slug, url, name }) {
-    let nameLanding = name || state.name
-
-    return fetch(url)
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        data['slug'] = slug
-
-        if (nameLanding === '') {
-          nameLanding = data.name
-        }
-
-        commit('name', nameLanding)
-        data.settings['name'] = nameLanding
-
-        if (!data.settings.fonts) {
-          data.settings['fonts'] = state.Onboarding.fonts
-        }
-
-        if (!data.settings.logo) {
-          data.settings['logo'] = state.Onboarding.logo
-        }
-
-        if (!data.settings.colors) {
-          data.settings['colors'] = _.merge(state.currentLanding.settings.colors, state.Onboarding.colors)
-        }
-
-        if (!data.settings.setupFonts) {
-          data.settings['setupFonts'] = state.Onboarding.setupFonts
-        }
-
-        if (!data.settings.checkList) {
-          data['checkList'] = DEFAULT_CHECK_LIST
-        }
-
-        if (!data.settings.styles.backgroundImage) {
-          data.settings['styles']['backgroundImage'] = state.Onboarding.background
-        }
-
-        commit('slug', slug)
-        commit('isSaved', false)
-        commit('version', 1)
-        commit('updateCurrentLanding', data)
-
-        return data
       })
   },
 

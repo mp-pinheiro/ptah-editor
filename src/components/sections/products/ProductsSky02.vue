@@ -6,24 +6,20 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Products'
-const NAME = 'ProductsAshOfGods02'
+const NAME = 'ProductsSky02'
 const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/4c54cb2e-e52f-49ea-afc0-61115a120704.jpg'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/77b2722d-ffdb-423a-be01-6a307874ac2b.jpg'
 const DESCRIPTION = 'Product list side expanded view'
 
 let prev = [
-  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/17be8b91-bd31-4e34-b750-5805c1aa31a7.png',
-  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/14ba8d42-d901-44c5-99cd-7b39f0e1ba29.png',
-  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/4f82d5c0-e7a3-46f4-81ac-e1469b4792fb.png',
-  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/2478c9a1-eb5e-40bd-8558-c2d5bbfca033.png'
+  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7484fb62-96cb-4507-b8d9-36494f0dc79e.png',
+  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/6693bc33-4f7b-4055-9240-f1b4036275b1.png',
+  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ff2a51e9-163f-4ec1-a993-df96bbcc1211.png',
+  'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7484fb62-96cb-4507-b8d9-36494f0dc79e.png'
 ]
 
 let label = [
   'Start', 'Full', 'Delux', 'Ultimate'
-]
-
-let price = [
-  '9.99', '19.99', '29.99', '39.99'
 ]
 
 const [
@@ -56,13 +52,13 @@ const [
         text: `<h3>${label[i]} edition</h3>`,
         styles: {
           'font-size': '2.4rem',
-          'color': '#ECD19A',
+          'color': '#472B68',
           'padding-bottom': '30px'
         },
         media: {
           'is-mobile': {
             'font-size': '2.4rem',
-            'color': '#ECD19A',
+            'color': '#472B68',
             'padding-bottom': '30px'
           }
         }
@@ -70,31 +66,29 @@ const [
     },
     {
       element: {
-        text: `$${price[i]}`,
+        text: 'BUY NOW',
         styles: {
-          'background-color': '#A1210E',
-          'color': '#ECD19A',
-          'font-size': '2.4rem',
+          'background-color': '#F04B4C',
+          'color': '#ffffff',
+          'font-size': '1.8rem',
           'text-align': 'center',
-          'width': '214px',
+          'width': '202px',
           'height': '54px',
-          'border-width': '1px',
-          'border-style': 'solid',
-          'border-color': '#ECD19A',
-          'margin-bottom': '20px'
-        },
-        pseudo: {
-          hover: {
-            'color': '#fff',
-            'background-color': '#A1210E !important'
-          }
+          'border-radius': '50px',
+          'border-width': '0',
+          'margin-top': '0'
         },
         media: {
           'is-mobile': {
-            'font-size': '2rem',
+            'font-size': '1.8rem',
             'width': '191px',
-            'height': '46px',
-            'margin-bottom': '20px'
+            'height': '46px'
+          }
+        },
+        pseudo: {
+          hover: {
+            'color': '#fff !important',
+            'background-color': 'rgba(0,0,0,0)'
           }
         }
       }
@@ -126,7 +120,7 @@ const [
         text: `<h3>${label[i]} Edition</h3>`,
         styles: {
           'font-size': '2.4rem',
-          'color': '#ECD19A'
+          'color': '#472B68'
         },
         media: {
           'is-mobile': {
@@ -142,7 +136,7 @@ const C_CUSTOM_1D = [
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -150,7 +144,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#ECD19A'
+        color: '#472B68'
       }
     }
   },
@@ -165,7 +159,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
@@ -180,7 +174,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
@@ -195,7 +189,7 @@ const C_CUSTOM_1D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   }
@@ -205,7 +199,7 @@ const C_CUSTOM_2D = [
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -213,14 +207,14 @@ const C_CUSTOM_2D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -228,7 +222,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
@@ -243,7 +237,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
@@ -258,7 +252,7 @@ const C_CUSTOM_2D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   }
@@ -268,7 +262,7 @@ const C_CUSTOM_3D = [
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -276,14 +270,14 @@ const C_CUSTOM_3D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -291,14 +285,14 @@ const C_CUSTOM_3D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -306,7 +300,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
@@ -321,7 +315,7 @@ const C_CUSTOM_3D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   }
@@ -331,7 +325,7 @@ const C_CUSTOM_4D = [
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -339,14 +333,14 @@ const C_CUSTOM_4D = [
         text: '<strong>Digital game copy</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -354,14 +348,14 @@ const C_CUSTOM_4D = [
         text: '<strong>Horse</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -369,14 +363,14 @@ const C_CUSTOM_4D = [
         text: '<strong>Great sword</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   },
   {
     element: {
       colorFill: {
-        color: '#ECD19A'
+        color: '#A1210E'
       },
       icon: {
         value: 'checkMark',
@@ -384,7 +378,7 @@ const C_CUSTOM_4D = [
         text: '<strong>Digital soundtrack</strong>'
       },
       styles: {
-        color: '#ffffff'
+        color: '#472B68'
       }
     }
   }
@@ -409,7 +403,7 @@ const C_CUSTOM_CONTAINER_D = {
     'flex-direction': 'column',
     'align-items': 'flex-start',
     'padding-top': '10px',
-    'padding-left': '60px'
+    'padding-left': '85px'
   },
   media: {
     'is-mobile': {
@@ -423,9 +417,11 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'background-color': '#000000',
+      'background-size': 'cover',
+      'background-color': '#ffffff',
       'padding-top': '80px',
-      'padding-bottom': '80px'
+      'padding-bottom': '80px',
+      'align-items': 'center'
     },
     media: {
       'is-mobile': {
@@ -436,6 +432,12 @@ const SCHEMA_CUSTOM = {
     overlay: {
       color: 'rgba(0,0,0,1)',
       opacity: '0'
+    },
+    products: {
+      'Standart': { visible: true },
+      'Full': { visible: true },
+      'Deluxe': { visible: true },
+      'Ultimate': { visible: false }
     }
   },
   containerStandart: _.merge({}, C_CUSTOM_CONTAINER),

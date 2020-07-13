@@ -5,11 +5,11 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const GROUP_NAME = 'Forms'
-const NAME = 'CallToActionAndTextAshOfGods01'
+const GROUP_NAME = 'Elements'
+const NAME = 'BlockText01'
 const BG_SECTION = 'none'
-const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/36ad916a-122d-4e9a-87ca-e9d63f6e9271.jpg'
-const DESCRIPTION = 'Block with two text'
+const COVER = 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/283f5e21-9e10-4547-a9bd-5b9ba94c321b.jpg'
+const DESCRIPTION = 'Block with texts'
 
 const COMPONENTS = [
   {
@@ -25,73 +25,48 @@ const COMPONENTS = [
     type: 'text',
     class: 'b-text',
     label: 'text'
-  },
-  {
-    name: 'Form',
-    element: types.Form,
-    type: 'form',
-    class: 'b-form',
-    label: 'form'
   }
 ]
 
 const C_CUSTOM = [
   {
     element: {
-      text: '<h3>Get started with us</h3>',
+      text: '<h2>GAME DESCRIPTION</h2>',
       styles: {
-        'font-size': '3.6rem',
-        'color': '#ECD19A',
+        'font-size': '2.8rem',
+        'color': '#5E42AE',
         'padding-top': '0',
-        'padding-bottom': '50px'
+        'padding-bottom': '0'
       },
       media: {
         'is-mobile': {
-          'font-size': '3.2rem',
+          'font-size': '2rem',
           'padding-top': '0',
-          'padding-bottom': '50px'
+          'padding-bottom': '0'
         }
       }
     }
   },
   {
     element: {
-      text: '<p>“The dialogue choices you make, journey paths you take and battles you fight truly affect the story and the world around you.”</p>',
+      text: '<p>The dialogue choices you make, journey paths you take and battles ' +
+        'you fight truly affect the story and the world around you. ' +
+        'The team’s resources and time are limited. The dialogue choices you make, ' +
+        'journey paths you take and battles you fight truly affect the story ' +
+        'and the world around you. The team’s resources and time are limited.</p>',
       styles: {
         'font-size': '1.8rem',
-        'color': '#ECD19A',
-        'padding-top': '0',
-        'padding-bottom': '50px'
+        'line-height': '1.3',
+        'color': '#5E42AE',
+        'text-align': 'center',
+        'margin-top': '20px'
       },
       media: {
         'is-mobile': {
-          'font-size': '1.6rem',
-          'padding-top': '0',
-          'padding-bottom': '50px'
+          'font-size': '1.4rem',
+          'margin-top': '20px',
+          'margin-bottom': '25px'
         }
-      }
-    }
-  },
-  {
-    element: {
-      placeholder: 'Paste your email',
-      buttonText: 'Remind me!',
-      styles: {
-        'color': '#ECD19A',
-        'border-radius': '0',
-        'font-weight': 'normal',
-        'font-style': 'normal',
-        'font-size': '2rem',
-        'text-decoration': 'none'
-      },
-      formStyles: {
-        'button-color': '#B93A27',
-        'buttonHoverColor': '#9E1E0B',
-        'buttonTextColor': '#ECD19A',
-        'buttonHoverTextColor': '#ffffff',
-        'inputBgColor': '#29221C',
-        'border-radius': '0',
-        'height': 55
       }
     }
   }
@@ -101,26 +76,32 @@ const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
       'background-image': BG_SECTION,
-      'background-color': '#000000',
-      'background-size': 'cover',
-      'background-position': '100% 50%',
-      'height': 'auto'
+      'height': '300px',
+      'padding-top': '20px',
+      'padding-bottom': '20px',
+      'padding-left': '32px',
+      'padding-right': '32px',
+      'background-position': '50% 100%',
+      'background-repeat': 'repeat-x',
+      'background-size': 'auto'
     },
-    overlay: {
-      color: '#000000',
-      opacity: '0'
+    media: {
+      'is-mobile': {
+        'padding-bottom': '60px',
+        'background-size': 'cover'
+      }
     }
   },
   container: {
     width: 8,
     styles: {
-      'padding-top': '80px',
-      'padding-bottom': '150px'
+      'padding-top': '8px',
+      'padding-bottom': '8px'
     },
     media: {
       'is-mobile': {
-        'padding-top': '80px',
-        'padding-bottom': '150px'
+        'padding-top': '40px',
+        'padding-bottom': '50px'
       }
     }
   },
