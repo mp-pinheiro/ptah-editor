@@ -9,7 +9,10 @@ export function initElementToggle() {
   [].forEach.call(elementsToggle, function (el, i) {
     let text = el.querySelectorAll('[data-toggle-element-text]')[0]
     let tr = text.getElementsByTagName('tr')[1]
-    tr.style.display = 'none'
+
+    if (el.dataset.visible && el.dataset.visible !== 'true') {
+      tr.style.display = 'none'
+    }
   });
 
   document.body.addEventListener('click', function(e) {

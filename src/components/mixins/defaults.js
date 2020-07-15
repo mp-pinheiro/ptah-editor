@@ -177,7 +177,13 @@ export default {
     },
 
     cleanSectionBgColor () {
-      this.$sectionData.mainStyle.styles['background-color'] = 'rgba(0,0,0,0)'
+      if (this.$sectionData &&
+        this.$sectionData.mainStyle &&
+        this.$sectionData.mainStyle.styles &&
+        this.$vnode.tag.indexOf('FirstScreen') === -1 &&
+        this.$vnode.tag.indexOf('Header') === -1) {
+        this.$sectionData.mainStyle.styles['background-color'] = 'rgba(0,0,0,0)'
+      }
     }
   }
 }

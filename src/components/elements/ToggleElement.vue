@@ -6,6 +6,7 @@
     @click.stop.stop=""
     :path="path"
     :style="[objVarsMedia, objVarsTypo]"
+    :data-visible="el.isTextVisible"
     @mouseleave="mouseleave"
     @mouseover.stop="mouseover"
     >

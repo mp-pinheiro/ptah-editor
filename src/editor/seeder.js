@@ -519,6 +519,7 @@ const data = new Map([
         'buttonTextColor': '#000',
         'buttonHoverTextColor': '#000',
         'height': 48,
+        'width': '400px',
         'border-radius': '3'
       },
       editor: {

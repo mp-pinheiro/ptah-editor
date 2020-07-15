@@ -17,12 +17,12 @@ export default [
     icon: 'https://s3.protocol.one/files/Multiply_edition.png',
     id: 2
   },
-  {
-    name: 'Sell subscriptions',
-    description: '',
-    icon: 'https://s3.protocol.one/files/Game_subscription.png',
-    id: 3
-  },
+  // {
+  //   name: 'Sell subscriptions',
+  //   description: '',
+  //   icon: 'https://s3.protocol.one/files/Game_subscription.png',
+  //   id: 3
+  // },
   {
     name: 'Setup pre-order',
     description: '',

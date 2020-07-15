@@ -46,6 +46,9 @@ import HeaderAshOfGods03 from '@components/sections/header/HeaderAshOfGods03'
 // import ActionButtonWesternHeader from '@components/sections/header/ActionButtonWesternHeader'
 
 // --- First screen
+import FirstScreenPrimitive01 from '@components/sections/first-screen/FirstScreenPrimitive01'
+import FirstScreenPrimitive02 from '@components/sections/first-screen/FirstScreenPrimitive02'
+import FirstScreenPrimitive03 from '@components/sections/first-screen/FirstScreenPrimitive03'
 import FirstScreenAshOfGods01 from '@components/sections/first-screen/FirstScreenAshOfGods01'
 import FirstScreenAshOfGods02 from '@components/sections/first-screen/FirstScreenAshOfGods02'
 import FirstScreenAshOfGods03 from '@components/sections/first-screen/FirstScreenAshOfGods03'
@@ -78,6 +81,7 @@ import FirstScreenSky02 from '@components/sections/first-screen/FirstScreenSky02
 // import GalleryPopupWestern from '@components/sections/galleries/GalleryPopupWestern'
 
 // --- products
+import PricesPrimitive01 from '@components/sections/products/PricesPrimitive01'
 import ProductsSky01 from '@components/sections/products/ProductsSky01'
 import ProductsSky02 from '@components/sections/products/ProductsSky02'
 import ProductsAshOfGods01 from '@components/sections/products/ProductsAshOfGods01'
@@ -88,6 +92,8 @@ import ProductsAshOfGods02 from '@components/sections/products/ProductsAshOfGods
 // import ProductsExtendFantasy from '@components/sections/products/ProductsExtendFantasy'
 
 // --- columns
+import DetailsPrimitive01 from '@components/sections/columns/DetailsPrimitive01'
+import DetailsPrimitive02 from '@components/sections/columns/DetailsPrimitive02'
 import ColumnsSky01 from '@components/sections/columns/ColumnsSky01'
 import ColumnsSky02 from '@components/sections/columns/ColumnsSky02'
 import ColumnsSky03 from '@components/sections/columns/ColumnsSky03'
@@ -113,6 +119,7 @@ import CarouselAshOfGods01 from '@components/sections/carousel/CarouselAshOfGods
 // import Carousel from '@components/sections/carousel/Carousel'
 
 // --- forms
+import FormPrimitive01 from '@components/sections/forms/FormPrimitive01'
 import CallToActionAndTextAshOfGods01 from '@components/sections/forms/CallToActionAndTextAshOfGods01'
 import FirstScreenAshOfGods06 from '@components/sections/first-screen/FirstScreenAshOfGods06'
 // import FormCenter from '@components/sections/forms/FormCenter'
@@ -123,6 +130,8 @@ import FirstScreenAshOfGods06 from '@components/sections/first-screen/FirstScree
 // import FormLeft2 from '@components/sections/forms/FormLeftSideVariant2'
 
 // --- footers
+import FooterPrimitive01 from '@components/sections/footers/FooterPrimitive01'
+import FooterPrimitive02 from '@components/sections/footers/FooterPrimitive02'
 import FooterSky01 from '@components/sections/footers/FooterSky01'
 import FooterSky02 from '@components/sections/footers/FooterSky02'
 import FooterAshOfGods01 from '@components/sections/footers/FooterAshOfGods01'
@@ -131,6 +140,13 @@ import FooterAshOfGods03 from '@components/sections/footers/FooterAshOfGods03'
 import FooterAshOfGods04 from '@components/sections/footers/FooterAshOfGods04'
 
 // --- elements
+import BlockWithImagePrimitive01 from '@components/sections/elements/BlockWithImagePrimitive01'
+import BlockWithImagePrimitive02 from '@components/sections/elements/BlockWithImagePrimitive02'
+import CallToActionPrimitive01 from '@components/sections/elements/CallToActionPrimitive01'
+import VideoAndCallToAction02 from '@components/sections/elements/VideoAndCallToAction02'
+import FrequentlyAskedQuestionsPrimitive01 from '@components/sections/elements/FrequentlyAskedQuestionsPrimitive01'
+import PrimitiveVideo01 from '@components/sections/elements/PrimitiveVideo01'
+
 import CallToActionAshOfGods01 from '@components/sections/elements/CallToActionAshOfGods01'
 import CallToActionAshOfGods02 from '@components/sections/elements/CallToActionAshOfGods02'
 import CallToActionSky01 from '@components/sections/elements/CallToActionSky01'
@@ -163,6 +179,8 @@ import VideoAndCallToAction01 from '@components/sections/elements/VideoAndCallTo
 // import Slider from '@components/sections/slider/Slider'
 // import SliderFantasy from '@components/sections/slider/SliderFantasy'
 // import SliderWestern from '@components/sections/slider/SliderWestern'
+import SliderPrimitive01 from '@components/sections/slider/SliderPrimitive01'
+import SliderPrimitive02 from '@components/sections/slider/SliderPrimitive02'
 import SliderSky01 from '@components/sections/slider/SliderSky01'
 import SliderSky02 from '@components/sections/slider/SliderSky02'
 import SliderAshOfGods01 from '@components/sections/slider/SliderAshOfGods01'
@@ -201,6 +219,9 @@ const COMPONENTS = {
   // SmmFantasyHeader,
   // ActionButtonWesternHeader,
 
+  FirstScreenPrimitive01,
+  FirstScreenPrimitive02,
+  FirstScreenPrimitive03,
   FirstScreenSky01,
   FirstScreenSky02,
   FirstScreenAshOfGods01,
@@ -208,7 +229,6 @@ const COMPONENTS = {
   FirstScreenAshOfGods03,
   FirstScreenAshOfGods04,
   FirstScreenAshOfGods05,
-  FirstScreenAshOfGods06,
   FirstScreenAshOfGods07,
   FirstScreenAshOfGods08,
   FirstScreenAshOfGods09,
@@ -228,12 +248,16 @@ const COMPONENTS = {
   // Slider,
   // SliderFantasy,
   // SliderWestern,
+  SliderPrimitive01,
+  SliderPrimitive02,
   SliderSky01,
   SliderSky02,
   SliderAshOfGods01,
   SliderAshOfGods02,
   SliderAshOfGods03,
 
+  DetailsPrimitive01,
+  DetailsPrimitive02,
   ColumnsSky01,
   ColumnsSky02,
   ColumnsSky03,
@@ -261,6 +285,7 @@ const COMPONENTS = {
   // GallerySwitchFantasy,
   // GalleryPopupWestern,
 
+  PricesPrimitive01,
   ProductsSky01,
   ProductsSky02,
   ProductsAshOfGods01,
@@ -270,7 +295,15 @@ const COMPONENTS = {
   // ProductsFantasy,
   // ProductsExtendFantasy,
 
+  FormPrimitive01,
+  BlockWithImagePrimitive01,
+  BlockWithImagePrimitive02,
+  CallToActionPrimitive01,
+  FirstScreenAshOfGods06,
+  VideoAndCallToAction02,
   CallToActionAndTextAshOfGods01,
+  FrequentlyAskedQuestionsPrimitive01,
+  PrimitiveVideo01,
   // FormCenter,
   // FormCenterFantasy,
   // FormRight,
@@ -302,6 +335,8 @@ const COMPONENTS = {
   // FrequentlyAskedQuestions,
   // FrequentlyAskedQuestionsWestern,
 
+  FooterPrimitive01,
+  FooterPrimitive02,
   FooterSky01,
   FooterSky02,
   FooterAshOfGods01,
