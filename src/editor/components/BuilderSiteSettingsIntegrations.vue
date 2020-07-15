@@ -7,7 +7,6 @@
             v-for="integration in integrations"
             :key="integration.name"
             @click="selectIntegration(integration.name)"
-            v-if="integration.name !== 'mailchimp'"
           >
             <div class="b-integrations__item-icon"
               :style="{'background-image': 'url(' + integration.icon + ')'}"
