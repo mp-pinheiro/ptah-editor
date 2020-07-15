@@ -18,7 +18,7 @@ export default [
       'FooterPrimitive01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/58a3353b-29b7-4af1-a73c-0973aed9ade0.jpg',
-    description: 'Sell game keys',
+    description: 'A basic template with the best structure to announce that your game is available for pre-order.',
     categories: [1],
     palette: ['#848484', '#848484', '#A2A5A5', '#FFFFFF', '#575A5F', '#ffffff'],
     colors: {
@@ -56,7 +56,7 @@ export default [
       'FooterPrimitive01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/bd0dc562-a527-4426-9dc4-4f8daf19bcc6.jpg',
-    description: 'Sell multiple editions',
+    description: 'A basic template with a full-screen cover video and photo gallery.',
     categories: [2],
     palette: ['#848484', '#848484', '#A2A5A5', '#FFFFFF', '#575A5F', '#ffffff'],
     colors: {
@@ -94,7 +94,7 @@ export default [
       'FooterPrimitive02'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/b3e52349-a929-4359-acb0-981b34eabd05.jpg',
-    description: 'Setup pre-order',
+    description: 'A basic template to present your game with a description, photo slider and pricing.',
     categories: [4],
     palette: ['#848484', '#848484', '#A2A5A5', '#FFFFFF', '#575A5F', '#ffffff'],
     colors: {
@@ -170,7 +170,7 @@ export default [
       'FooterAshOfGods01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/9b902ac9-6f65-4199-ba4f-d08856890577.jpg',
-    description: 'Sell game keys',
+    description: 'A well-structured landing page in an ancient style that demonstrates all game features.',
     categories: [1],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -304,7 +304,7 @@ export default [
       'FooterAshOfGods02'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/ffb398c0-5a76-4bf2-9085-d4f4e1657619.jpg',
-    description: 'Sell game keys',
+    description: 'A well-structured landing page in an ancient style that demonstrates all game features.',
     categories: [1],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -345,7 +345,7 @@ export default [
       'FooterAshOfGods03'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/711c6813-736e-413c-8ed0-ec8625c0919c.jpg',
-    description: 'Sell multiple edition',
+    description: 'An ancient styled template that includes a description and video about your game, editions and awards.',
     categories: [2],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -385,7 +385,7 @@ export default [
       'FooterAshOfGods03'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/fb6b1a47-0f54-4cc3-9195-b5b9c2181db2.jpg',
-    description: 'Sell multiple edition',
+    description: 'An ancient styled template that shows video about your game and pricing table.',
     categories: [2],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -424,7 +424,7 @@ export default [
       'FooterAshOfGods02'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/77c1a5c9-b1ce-4033-9739-0d55930b7566.jpg',
-    description: 'Setup pre-order',
+    description: 'A template to promote your game and announce that your game is available for pre-order.',
     categories: [4],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -464,7 +464,7 @@ export default [
       'FooterAshOfGods03'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/33226527-ffd9-452b-b139-4fe76b445c21.jpg',
-    description: 'Setup pre-order',
+    description: 'A template to announce that your game is available for pre-order and show awards.',
     categories: [4],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -504,7 +504,7 @@ export default [
       'FooterAshOfGods03'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/a60429ec-677d-4dde-b554-6352f338de98.jpg',
-    description: 'Sell multiple editions',
+    description: 'A template designed for game subscriptions.',
     categories: [2],
     palette: ['#ECD19A', '#71675B', '#B93A27', '#ECD19A', '#71675B', '#000000'],
     colors: {
@@ -738,7 +738,7 @@ export default [
       'FooterSky01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/0a015e13-19c0-469a-ac76-9e36a51b0f9e.jpg',
-    description: 'Sell game keys',
+    description: 'A template to share key information about your game that is available for pre-order.',
     categories: [1],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
@@ -777,7 +777,7 @@ export default [
       'FooterSky01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/705d77df-9689-4f24-8df3-ea250a625768.jpg',
-    description: 'Sell game keys',
+    description: 'A template to show your game details and video trailer.',
     categories: [1],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
@@ -818,7 +818,7 @@ export default [
       'FooterSky01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/3f79152e-3969-4c8b-a390-398cc83b3a38.jpg',
-    description: 'Sell game keys',
+    description: 'A space styled template that shows your game details, video trailer, photo slider and pricing.',
     categories: [2],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
@@ -859,7 +859,7 @@ export default [
       'FooterSky01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/07dd9ab8-b80f-458d-9a8e-b532f55e2c45.jpg',
-    description: 'Sell game keys',
+    description: 'A space styled template with a video trailer, all game features.',
     categories: [2],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
@@ -899,7 +899,7 @@ export default [
       'FooterSky01'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/7840969c-752e-49a4-be9d-4e8f341e7544.jpg',
-    description: 'Setup pre-order',
+    description: 'A coming soon cover page with a full-screen image and all game details including videos.',
     categories: [4],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
@@ -939,7 +939,7 @@ export default [
       'FooterSky02'
     ],
     image: 'https://cdn.ptah.pro/tst/5ef9a42509b4c100015ca9d4/deaeb762-6deb-4475-a49c-fd6f238a9964.jpg',
-    description: 'Setup pre-order',
+    description: 'A coming soon cover page with a full-screen photo slider and all game details including videos.',
     categories: [4],
     palette: ['#5E42AE', '#5E42AE', '#F04B4C', '#ffffff', '#5E42AE', '#ffffff'],
     colors: {
