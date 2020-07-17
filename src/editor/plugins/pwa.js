@@ -99,7 +99,7 @@ function getFile(path) {
   })
 }
 
-function download (assets) {
+function download (assets, getBlob) {
   const frag = this.outputFragment()
   const artboard = frag.querySelector('#artboard')
   const title = this.settings.title
@@ -109,7 +109,7 @@ function download (assets) {
   const manifest = this.getManifest()
   const urls = [assets.css, assets.js]
 
-  Promise.all(urls.map(getFile))
+  return Promise.all(urls.map(getFile))
     .then((content) => {
       cssFolder.file('styles.css', content[0])
       jsFolder.file('cjs.js', content[1])
@@ -173,9 +173,14 @@ function download (assets) {
           </body>
         </html>`)
 
-      zip.generateAsync({ type: 'blob' }).then((blob) => {
-        saveAs(blob, `${this.settings.name}.zip`)
-      })
+      return zip.generateAsync({ type: 'blob' })
+    })
+    .then((blob) => {
+      if (getBlob) {
+        return blob
+      } else {
+        return saveAs(blob, `${this.settings.name}.zip`)
+      }
     })
 }
 

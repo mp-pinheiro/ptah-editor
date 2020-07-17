@@ -51,13 +51,11 @@ export default {
   },
   methods: {
     nextStep () {
-      let next = 'background'
+      let steps = Object.keys(this.checkList)
+      let activeStepIndex = steps.indexOf(this.activeStep)
+      let next = steps[activeStepIndex + 1]
 
-      if (this.activeStep === 'background') {
-        next = 'colors'
-      }
-
-      if (this.activeStep === 'colors') {
+      if (next === undefined) {
         this.skipSteps()
       } else {
         this.$router.push({ path: `/dashboard/wizard/${next}` })

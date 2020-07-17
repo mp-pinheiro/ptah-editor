@@ -13,6 +13,7 @@ import TheProjectWelcomePage from '@src/components/pages/wizard/TheProjectWelcom
 import TheOnboardingLogoPage from '@src/components/pages/wizard/TheOnboardingLogoPage'
 import TheOnboardingBackgroundPage from '@src/components/pages/wizard/TheOnboardingBackgroundPage'
 import TheOnboardingColorsPage from '@src/components/pages/wizard/TheOnboardingColorsPage'
+import TheOnboardingFirstScreenPage from '@src/components/pages/wizard/TheOnboardingFirstScreenPage'
 import TheProjectGoals from '@src/components/pages/wizard/TheProjectGoals'
 import TheProjectTemplatesPage from '@src/components/pages/wizard/TheProjectTemplatesPage'
 import TheProjectPreviewPage from '@src/components/pages/wizard/TheProjectPreviewPage'
@@ -74,6 +75,10 @@ const routes = [
               {
                 path: 'background',
                 component: TheOnboardingBackgroundPage
+              },
+              {
+                path: 'firstScreen',
+                component: TheOnboardingFirstScreenPage
               },
               {
                 path: 'colors',

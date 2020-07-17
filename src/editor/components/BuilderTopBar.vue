@@ -60,9 +60,10 @@
           >
             {{ $t('nav.preview') }}
           </BaseButton>
+          <!-- @click="$emit('export', $event)" -->
           <BaseButton
             class="b-on-boarding-tips-step-9"
-             @click="$emit('export', $event)"
+             @click="showPublish = true"
              color="main-green"
              size="small"
              :disabled="builder.sections.length === 0"
@@ -72,15 +73,23 @@
         </div>
       </div>
     </div>
+
+    <the-publication
+      v-if="showPublish"
+      :landingName="landingName"
+      :builder="builder"
+      @close="showPublish = false"></the-publication>
   </div>
 </template>
 
 <script>
 import MenuPlatforms from './menu/MenuPlatforms.vue'
 import { mapState, mapActions } from 'vuex'
+import ThePublication from './ThePublication'
 
 export default {
   components: {
+    ThePublication,
     MenuPlatforms
   },
 
@@ -95,7 +104,8 @@ export default {
   },
 
   data: () => ({
-    device: null
+    device: null,
+    showPublish: false
   }),
 
   computed: {

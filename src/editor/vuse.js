@@ -470,6 +470,11 @@ class Vuse {
 
     return this.toJSON()
   }
+
+  getZip () {
+    console.log('getZip', this.download)
+    return this.download(this.assets, true)
+  }
 };
 
 // use the plugin API to add the styler and mixin functionalities.

@@ -61,6 +61,7 @@ export default {
       let logo = this.$store.state.currentLanding.settings.logo
       let video = this.$store.state.currentLanding.settings.videoElUrl
       let bgColor = this.$store.state.currentLanding.settings.styles.backgroundColor
+      let bg = this.$store.state.currentLanding.settings.firstScreen
 
       if (logo && logo.length) {
         this.changeLogos(logo)
@@ -68,6 +69,10 @@ export default {
 
       if (bgColor && bgColor !== '') {
         this.cleanSectionBgColor()
+      }
+
+      if (this.$section.group === 'FirstScreen' && bg) {
+        this.changeSectionBackground(bg)
       }
 
       this.changeColors()
@@ -110,6 +115,11 @@ export default {
     changeLogos (url) {
       let paths = this.getElementPropertyPath('Logo', 'background-image')
       paths.forEach(path => this.$section.set(path, `url(${url})`))
+    },
+
+    changeSectionBackground (url) {
+      let path = '$sectionData.mainStyle.styles.background-image'
+      this.$section.set(path, `url(${url})`)
     },
 
     changeVideo (url) {

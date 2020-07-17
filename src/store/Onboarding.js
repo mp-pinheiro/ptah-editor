@@ -35,6 +35,7 @@ const defaultState = {
   video: '',
   background: '',
   backgroundColor: '#fafafa',
+  firstScreen: '',
   colors: COLORS,
   fonts: FONTS,
   setupFonts: SETUP_FONTS,
@@ -45,7 +46,8 @@ const defaultState = {
   goal: '', // selected goal id
   goals: Goals,
   presets: Presets,
-  preset: null // selected preset object
+  preset: null, // selected preset object,
+  loading: false
 }
 
 export default {
@@ -66,6 +68,10 @@ export default {
 
     setBackground (state, value) {
       state.background = value
+    },
+
+    setFirstScreen (state, value) {
+      state.firstScreen = value
     },
 
     setBackgroundColor (state, value) {
@@ -116,6 +122,10 @@ export default {
       for (let prop in state) {
         state[prop] = defaultState[prop]
       }
+    },
+
+    setLoading (state, value) {
+      state.loading = value
     }
   },
 

@@ -20,7 +20,8 @@ export default {
           'main-green-transparent',
           'main-red',
           'yellow-transparent',
-          'main-red-transparent'
+          'main-red-transparent',
+          'gradient'
         ]
         return values.indexOf(value) !== -1
       }
@@ -255,6 +256,20 @@ export default {
       color: $yellow
     & svg
       fill: $yellow
+  &_gradient
+    color: $white
+    background: linear-gradient(270deg, #9E00FB 0%, #F9005B 100%)
+    text-transform: uppercase
+    font-weight: 800
+    &:hover
+      background: linear-gradient(270deg, #F9005B 0%, #9E00FB 100%)
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12)
+    &:active
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14)
+    &[disabled]
+      cursor: not-allowed
+      background-color: rgba($black, 0.12)
+      color: $white
   @media only screen and (max-width: 1100px)
     width: auto
     padding: 1rem 1.4rem

@@ -104,7 +104,8 @@ const state = {
       palette: [],
       logo: ''
     },
-    checkList: DEFAULT_CHECK_LIST // landing check-list in navigation menu
+    checkList: DEFAULT_CHECK_LIST, // landing check-list in navigation menu
+    domain: null
   },
   isSaved: false,
   slug: '', // landing ID
@@ -202,10 +203,12 @@ const actions = {
           setupFonts: state.Onboarding.setupFonts,
           colors: state.Onboarding.colors,
           logo: state.Onboarding.logo,
-          videoElUrl: state.Onboarding.video
+          videoElUrl: state.Onboarding.video,
+          firstScreen: state.Onboarding.firstScreen
         })
 
         landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)
+        landing.domain = data.domain
 
         commit('isSaved', false)
         commit('updateCurrentLanding', landing)
