@@ -7,7 +7,7 @@ import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenSpace01'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_3xWrv.jpg)'
+const BG_SECTION = 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ebcb2bbe-8e39-4167-ba9a-d0c30ad9a099.jpg)'
 
 const COMPONENTS = [
   {

@@ -1,7 +1,7 @@
 <template>
   <div class="b-project-welcome">
     <img
-      src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/2a0b5386-028b-425f-a1f4-bb3ccd5088bb.png"
+      src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/a0a569c1-d89a-4bf8-bfda-28483f4b264f.png"
       class="b-project-welcome__pic"
       alt="">
 

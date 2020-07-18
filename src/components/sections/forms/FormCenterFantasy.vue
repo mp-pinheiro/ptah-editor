@@ -91,7 +91,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/form_cover.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6901c4b7-03ce-4a38-b5d7-68424be1bca3.jpg',
 
   group: GROUP_NAME,
 

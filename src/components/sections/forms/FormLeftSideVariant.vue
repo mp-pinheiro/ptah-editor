@@ -155,7 +155,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_1Nioez.png',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/671ec67e-b2ab-4d7e-8e2d-efea2df2bc24.png',
 
   group: GROUP_NAME,
 

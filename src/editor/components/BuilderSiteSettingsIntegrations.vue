@@ -47,17 +47,17 @@ export default {
         {
           name: 'googleTag',
           label: 'Google Tag',
-          icon: 'https://s3.protocol.one/src/o_kfsYQ.png'
+          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ba32489f-7cd3-4013-b91c-e74f217b5c1e.png'
         },
         {
           name: 'googleAnalitycs',
           label: 'Google Analitycs',
-          icon: 'https://s3.protocol.one/src/o_2Gb9Ul.png'
+          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/9266fae1-9e4b-45b4-9ed4-a7a9f20c62b2.png'
         },
         {
           name: 'mailchimp',
           label: 'Mailchimp',
-          icon: 'https://s3.protocol.one/src/o_CaMZ6.png'
+          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/bc902030-09c2-45c6-8303-a3e28d12ba0e.png'
         }
       ],
       gtmId: '',

@@ -138,13 +138,13 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const [name, group, cover] = ['ActionButtonFantasyHeader', 'Header', 'https://s3.protocol.one/images/cover_header.jpg']
+const [name, group, cover] = ['ActionButtonFantasyHeader', 'Header', 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/e7b2cefc-6427-441b-8aad-8408a38b10a4.jpg']
 
 const defaultComponents = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/images/gamelogo.png")',
+        'background-image': 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/7f6eb97c-e996-4ef5-a463-6c89a25367b2.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

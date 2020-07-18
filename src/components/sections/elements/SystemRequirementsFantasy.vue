@@ -514,7 +514,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/CQbIwraB_cover_sr.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/86107fb7-78c8-4617-8b5d-55461c832adf.jpg',
 
   components: {
     VuseIcon

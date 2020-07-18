@@ -7,7 +7,7 @@ import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenFantasyVideoBack'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_JEnQO.jpg)'
+const BG_SECTION = 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/aea924a0-3af7-4b00-a300-944c0e8aa6f4.jpg)'
 const date = Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000
 
 const COMPONENTS = [

@@ -95,11 +95,11 @@ const NAME = 'Carousel'
 const C_IMAGES = [
   {
     name: '1.jpg',
-    path: 'https://s3.protocol.one/src/o_hDJWI.jpg'
+    path: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/92ffca95-fb34-4e53-acf7-17bc0b58dda8.jpg'
   },
   {
     name: '2.jpg',
-    path: 'https://s3.protocol.one/src/o_1hyDuA.jpg'
+    path: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/9851f16e-02d7-418b-8af2-5497e153f536.jpg'
   }
 ]
 
@@ -130,7 +130,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_1jkJaZ.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/7bec5bb3-e4e8-41d6-af24-04de9ccccada.jpg',
 
   $schema: {
     mainStyle: types.GallerySlider

@@ -181,7 +181,7 @@ let [
 const C_CUSTOM_CONTAINER = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/src/o_os2RO.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b1b35d03-4958-4c37-9831-52fdaa1632fa.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -197,7 +197,7 @@ const C_CUSTOM_CONTAINER = {
 const C_CUSTOM_CONTAINER2 = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/src/o_hDJWI.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0f28266f-bec7-4b5b-9c40-82a46b19af31.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -213,7 +213,7 @@ const C_CUSTOM_CONTAINER2 = {
 const C_CUSTOM_CONTAINER3 = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/src/o_1hyDuA.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/09c70cc0-8cbf-4b79-97bf-eb4a3c500ea5.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -304,7 +304,7 @@ export default {
 
   inject: ['device'],
 
-  cover: 'https://s3.protocol.one/src/o_1bOZmd.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f03297d4-d6ee-461a-a8a0-c25085686b9f.jpg',
 
   data () {
     return {

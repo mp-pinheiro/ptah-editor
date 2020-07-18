@@ -1,7 +1,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-const defaultBg = 'https://s3.protocol.one/src/o_OIgnu.png'
+const defaultBg = 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f7d2c158-ffaf-4dc3-9345-9b86fd478a39.png'
 
 export default {
 

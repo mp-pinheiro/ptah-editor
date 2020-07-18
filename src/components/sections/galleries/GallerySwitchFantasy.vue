@@ -189,15 +189,15 @@ const GALLERY_ITEM = [
 ]
 
 let thumbs = [
-  'https://s3.protocol.one/images/Blance_350.png',
-  'https://s3.protocol.one/images/Bret_350.png',
-  'https://s3.protocol.one/images/Mat_350.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/8ef5e9e3-fe0a-44a5-adc4-8f435a5cdb57.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/bab4c9a1-fdd8-4734-b252-c25f0e9e40d9.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/734bbee0-eed1-49fa-8610-b79c27368da2.png'
 ]
 
 let prev = [
-  'https://s3.protocol.one/images/Blance_550.png',
-  'https://s3.protocol.one/images/Bret_550.png',
-  'https://s3.protocol.one/images/Mat_550.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/c43ca7e3-3d7d-4bed-ba8a-5dea397e6fc8.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/2c3befb7-9380-4817-84a3-508cb424ff72.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6bc99ff4-7165-4a71-a322-913ab7f6521d.png'
 ]
 
 const [
@@ -376,7 +376,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/gswitch_f_cover.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/2d7960f5-8a29-4983-b5c4-c3e274627bb9.jpg',
 
   $schema: {
     mainStyle: types.Gallery,

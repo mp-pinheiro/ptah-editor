@@ -118,7 +118,7 @@ const data = new Map([
     },
     background: true,
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_OIgnu.png)',
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f59faed2-f199-4fec-bc09-2ad48c7a0875.png)',
       'background-position': '50% 50%',
       'background-repeat': 'no-repeat',
       'background-size': 'contain',
@@ -148,7 +148,7 @@ const data = new Map([
     },
     background: true,
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_OIgnu.png)',
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f59faed2-f199-4fec-bc09-2ad48c7a0875.png)',
       'background-position': '50% 50%',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
@@ -853,7 +853,7 @@ const data = new Map([
         'text-decoration': 'none',
         'text-align': 'center',
         'color': '#fff',
-        'background-image': 'url(https://s3.protocol.one/src/o_1PRuEc.png)',
+        'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/22591d47-1875-47f5-a118-c4548f1a74fe.png)',
         'background-position': '50% 50%',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

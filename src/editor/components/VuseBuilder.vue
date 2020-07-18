@@ -925,7 +925,7 @@ export default {
     width: 30rem
     height: 27rem
 
-    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/07ac25c3-94ba-4eaf-9829-70c827395747.png)
+    background-image: url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/747986bb-59e9-49be-97fe-05beb5aa0765.png)
     background-size: cover
   &__chapter
     font-size: 1.8rem

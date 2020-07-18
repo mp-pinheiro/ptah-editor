@@ -530,7 +530,7 @@ export default {
     /deep/
       & input
         padding-left: 3.6rem
-        background: url("https://s3.protocol.one/src/o_ItVIs.png") no-repeat 1rem center
+        background: url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b01c391b-3cd1-4e5f-995c-0ee270376479.png") no-repeat 1rem center
   &__sw
     width: $size-step * 5.5
     margin-left: $size-step
