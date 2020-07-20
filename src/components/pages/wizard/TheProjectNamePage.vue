@@ -14,6 +14,7 @@
         placeholder="Enter a project name"
         :hasError="invalid"
         :errorText="$t('d.cmodalErrorText')"
+        :maxLength="120"
       />
       <base-button
         color="transparent"

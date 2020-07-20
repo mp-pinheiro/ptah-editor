@@ -118,6 +118,7 @@ export default {
     margin-bottom: 3.3rem
 
   &__content
+    word-break: break-word
     font-size: 1.2rem
     line-height: 2rem
     color: #A2A5A5
