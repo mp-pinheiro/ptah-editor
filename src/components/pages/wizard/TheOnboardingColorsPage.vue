@@ -210,5 +210,5 @@ export default {
 
 <style lang="sass" scoped>
   .b-instruction
-    background-image: url(https://s3.protocol.one/images/instruction-colors.gif)
+    background-image: url(https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/3ee39b42-fda8-40ec-8ba6-d1f82e6059c6.gif)
 </style>

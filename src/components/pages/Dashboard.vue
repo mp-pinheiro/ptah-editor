@@ -119,7 +119,7 @@ export default {
     },
 
     getItemCover (item) {
-      return item.previewUrl.length ? item.previewUrl : 'https://s3.protocol.one/images/placeholder.png'
+      return item.previewUrl.length ? item.previewUrl : 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/a432b2e6-b48c-4d89-8071-b33c8b63bcf4.png'
     },
 
     skipSteps () {
@@ -379,7 +379,7 @@ export default {
         left: 10px
         width: 2.4rem
         height: 2.4rem
-        background: url('https://s3.protocol.one/images/checked.png') no-repeat
+        background: url('https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/9dd29359-eeeb-4393-a96a-ae84621cb823.png') no-repeat
         background-size: contain
 
     &.first

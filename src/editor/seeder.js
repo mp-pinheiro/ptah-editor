@@ -118,7 +118,7 @@ const data = new Map([
     },
     background: true,
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_OIgnu.png)',
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f59faed2-f199-4fec-bc09-2ad48c7a0875.png)',
       'background-position': '50% 50%',
       'background-repeat': 'no-repeat',
       'background-size': 'contain',
@@ -148,7 +148,7 @@ const data = new Map([
     },
     background: true,
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_OIgnu.png)',
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f59faed2-f199-4fec-bc09-2ad48c7a0875.png)',
       'background-position': '50% 50%',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
@@ -689,51 +689,51 @@ const data = new Map([
         'age': {
           name: 'Age',
           visible: true,
-          selected: { name: '0+', img: 'https://s3.protocol.one/src/o_20S5qo.svg' },
+          selected: { name: '0+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/6f97a3b4-1bd5-4ae4-8e96-e9eefec475c8.svg' },
           options: [
-            { name: '0+', img: 'https://s3.protocol.one/src/o_20S5qo.svg' },
-            { name: '6+', img: 'https://s3.protocol.one/src/o_1KX2IR.svg' },
-            { name: '12+', img: 'https://s3.protocol.one/src/o_DNNg8.svg' },
-            { name: '18+', img: 'https://s3.protocol.one/src/o_1AgXj1.svg' },
-            { name: '21+', img: 'https://s3.protocol.one/src/o_299afp.svg' }
+            { name: '0+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/6f97a3b4-1bd5-4ae4-8e96-e9eefec475c8.svg' },
+            { name: '6+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/04cdd869-06db-4f69-9e79-aa38b558b390.svg' },
+            { name: '12+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/40127e24-4e95-42a1-b8d6-acc0a558c3f1.svg' },
+            { name: '18+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/3e317795-fca4-446c-bcf9-208c75d95d28.svg' },
+            { name: '21+', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/5ee96a1d-e832-4ac8-9230-4add5b63ca54.svg' }
           ]
         },
         'pegi': {
           name: 'Pegi',
           visible: false,
-          selected: { name: '3', img: 'https://s3.protocol.one/src/o_13iwpA.svg' },
+          selected: { name: '3', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/217ca1ac-89cc-4d43-ad46-d46691b3b434.svg' },
           options: [
-            { name: '3', img: 'https://s3.protocol.one/src/o_13iwpA.svg' },
-            { name: '7', img: 'https://s3.protocol.one/src/o_vuop.svg' },
-            { name: '12', img: 'https://s3.protocol.one/src/o_1S1h6M.svg' },
-            { name: '16', img: 'https://s3.protocol.one/src/o_ANYUX.svg' },
-            { name: '18', img: 'https://s3.protocol.one/src/o_Xqb9n.svg' }
+            { name: '3', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/217ca1ac-89cc-4d43-ad46-d46691b3b434.svg' },
+            { name: '7', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/20c75267-6882-4148-a682-4f9f7d373a0d.svg' },
+            { name: '12', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/c137ec5a-f4e5-414f-ab2d-0d21c7d51470.svg' },
+            { name: '16', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/b7c89bfe-de03-4031-8675-9685c36e9754.svg' },
+            { name: '18', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/5ec6735b-40a3-43f8-a967-8d82f7fc5b5a.svg' }
           ]
         },
         'usk': {
           name: 'USK',
           visible: false,
-          selected: { name: '0', img: 'https://s3.protocol.one/src/o_1g38pS.svg' },
+          selected: { name: '0', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/8516d6b4-2408-44ec-9448-638ef142dd0b.svg' },
           options: [
-            { name: '0', img: 'https://s3.protocol.one/src/o_1g38pS.svg' },
-            { name: '6', img: 'https://s3.protocol.one/src/o_25hRrV.svg' },
-            { name: '12', img: 'https://s3.protocol.one/src/o_amDyU.svg' },
-            { name: '16', img: 'https://s3.protocol.one/src/o_amDyU.svg' },
-            { name: '18', img: 'https://s3.protocol.one/src/o_x4V42.svg' }
+            { name: '0', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/8516d6b4-2408-44ec-9448-638ef142dd0b.svg' },
+            { name: '6', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/de077b04-0e81-41d4-ab3b-47f5e800616c.svg' },
+            { name: '12', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/b9e0e448-fbfc-431e-b576-77469b4d1aab.svg' },
+            { name: '16', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/71d80373-e8b4-4b1d-bd88-09566ec003b2.svg' },
+            { name: '18', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/52e7f413-2a3c-43dd-919d-bf4a1831128f.svg' }
           ]
         },
         'cero': {
           name: 'CERO',
           visible: false,
-          selected: { name: 'All ages', img: 'https://s3.protocol.one/src/o_sazoN.svg' },
+          selected: { name: 'All ages', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/7e615478-a2cc-4824-b747-243da595d9e4.svg' },
           options: [
-            { name: 'All ages', img: 'https://s3.protocol.one/src/o_sazoN.svg' },
-            { name: 'Ages 12 and up only', img: 'https://s3.protocol.one/src/o_zwWo0.svg' },
-            { name: 'Ages 15 and up only', img: 'https://s3.protocol.one/src/o_qfcL4.svg' },
-            { name: 'Ages 17 and up only', img: 'https://s3.protocol.one/src/o_FHJmm.svg' },
-            { name: 'Ages 18 and up only', img: 'https://s3.protocol.one/src/o_4FtnT.svg' },
-            { name: 'Education/Database', img: 'https://s3.protocol.one/src/o_18ADS5.svg' },
-            { name: 'Rating pending', img: 'https://s3.protocol.one/src/o_1b7UOI.svg' }
+            { name: 'All ages', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/7e615478-a2cc-4824-b747-243da595d9e4.svg' },
+            { name: 'Ages 12 and up only', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/10a81661-b937-4167-8278-fae084b27ce0.svg' },
+            { name: 'Ages 15 and up only', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/75bcd369-30ec-4207-a159-cb896b9f31f0.svg' },
+            { name: 'Ages 17 and up only', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/01aefcd8-aea0-4ff0-ad56-5b4e936a2996.svg' },
+            { name: 'Ages 18 and up only', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/12cd709e-7c54-4373-9892-a642d17829d5.svg' },
+            { name: 'Education/Database', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/ad734cd7-0dac-42a1-aba1-a01bef5c24f8.svg' },
+            { name: 'Rating pending', img: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/1156dd23-dd39-4d73-a493-fea453a58d95.svg' }
           ]
         }
       },
@@ -853,7 +853,7 @@ const data = new Map([
         'text-decoration': 'none',
         'text-align': 'center',
         'color': '#fff',
-        'background-image': 'url(https://s3.protocol.one/src/o_1PRuEc.png)',
+        'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/22591d47-1875-47f5-a118-c4548f1a74fe.png)',
         'background-position': '50% 50%',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

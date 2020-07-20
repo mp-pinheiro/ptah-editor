@@ -6,10 +6,10 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 let prev = [
-  'https://s3.protocol.one/images/ash_p_1.png',
-  'https://s3.protocol.one/images/ash_p_2.png',
-  'https://s3.protocol.one/images/ash_p_3.png',
-  'https://s3.protocol.one/images/ash_p_4.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/37c6c8c9-d70c-43ad-a700-e72d41cc6e7f.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b034e2e9-047c-454c-8275-51b3da96576b.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/44d903d7-03d7-4af3-90f9-f5c38e132141.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/8c2f9ad5-55bd-4d6b-a482-e9c10ef7bc7e.png'
 ]
 
 let label = [
@@ -459,7 +459,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/ash_p_cover.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/105543b6-a09a-4568-a655-bc380bc8a289.jpg',
 
   $schema: {
     mainStyle: types.ProductSection,

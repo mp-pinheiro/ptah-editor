@@ -144,7 +144,7 @@ const defaultComponents = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/66007d63-75e1-42cb-8f52-4f0eb71fcaad.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

@@ -24,15 +24,15 @@ const GALLERY_ITEM = [
 ]
 
 let thumbs = [
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/b5ca75d4-db8f-4804-ba3f-3b8560f0964c.jpg',
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/d0ce7a93-a2a9-49ea-83c1-7062928b2bf1.jpg',
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/5a746619-af94-443f-809d-3a726f8db1dd.jpg'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/3450fee0-026c-48cc-879a-2988f1dedc8c.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/2fa10f4e-5ae8-416b-ab09-5c012cccfc56.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/d4bf2826-e4c0-4b62-830f-ec3f54a7dcb5.jpg'
 ]
 
 let prev = [
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/709ba068-5d79-4f48-ab37-c70c2e4bdde9.jpg',
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/d847d1de-d4f8-4acb-b1af-9461a80100a7.jpg',
-  'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/72c431a9-a0ab-47b5-b888-d14ce6d67630.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/00715303-781d-4b2e-8b81-369ce0ea4c73.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/bbf6d74d-8d3e-4794-8d2f-3d8cf735d0ca.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/3e2db5f4-c427-4feb-8fb4-7f398a990907.png'
 ]
 
 const [
@@ -156,7 +156,7 @@ export default {
     index: 0,
     isShowPopup: false,
     popupStyles: { width: 'auto', margin: '0' },
-    url: 'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/a07b04e0-45c6-437c-b005-ea9fc9c5b019.png',
+    url: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/c07b180d-a97c-47f5-b94c-ec335925230c.png',
     content: '',
     typeContent: 'default'
   },

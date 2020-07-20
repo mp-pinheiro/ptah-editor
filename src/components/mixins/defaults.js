@@ -54,6 +54,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(['storeSettings']),
     ...mapActions('Landing', ['saveState']),
     ...mapActions('Sidebar', ['toggleDragStop']),
 
@@ -73,6 +74,10 @@ export default {
 
       if (this.$section.group === 'FirstScreen' && bg) {
         this.changeSectionBackground(bg)
+        // rm first screen bg after first use
+        this.storeSettings({
+          firstScreen: false
+        })
       }
 
       this.changeColors()

@@ -248,9 +248,12 @@ export function correctArray (_arr, _param) {
  * Example: https://www.youtube.com/watch?v=Xv1JzYDKoc8 -> Xv1JzYDKoc8
  *
  * @param {String} url
- * @return {String}
+ * @return {String, Boolean}
  */
 export function getYoutubeVideoIdFromUrl (url) {
+  if (url === undefined) {
+    return false
+  }
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
   const match = url.match(regExp)
   return (match && match[7].length === 11) ? match[7] : false

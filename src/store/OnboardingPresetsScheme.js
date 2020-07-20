@@ -2,7 +2,7 @@ export default [
   {
     type: 'Blank page',
     sections: [],
-    image: 'https://s3.protocol.one/files/Blank_page.png',
+    image: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/12cdeb21-a202-457f-ab08-426f38086d48.png',
     description: '',
     categories: [0],
     palette: [],

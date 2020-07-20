@@ -549,7 +549,7 @@ export default {
     &:after
       left: 80%
 .b-tips-controls
-  background: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/ebcb76d9-6717-4460-9ebd-49e6b44c5558.png)
+  background: url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/46f0d1f5-c0c2-4287-9836-1dc5a1fa5619.png)
   background-size: cover
   width: 16rem
   height: 3.6rem

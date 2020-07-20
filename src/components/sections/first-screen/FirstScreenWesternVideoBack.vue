@@ -7,7 +7,7 @@ import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenWesternVideoBack'
-const BG_SECTION = 'url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/5fd9c812-bd2a-48f4-a55b-795e7fa8fd6e.jpg)'
+const BG_SECTION = 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b60a3198-6d5e-4cdd-baa7-cedc7bd3fa50.jpg)'
 const date = Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000
 
 const COMPONENTS = [
@@ -59,7 +59,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/61f6eb8d-9424-4803-8937-bf0f8f972863.png)',
+        'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/02eb3d8d-fefe-4b31-9d19-40a403c8c32a.png)',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -196,7 +196,7 @@ const SCHEMA_CUSTOM = {
     },
     media: {
       'is-mobile': {
-        'background-image': 'url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/aa96a7d3-1a1f-4208-8281-a39c22639a68.jpg)',
+        'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/58090ad9-01f3-4105-848b-dad73cb7733d.jpg)',
         'background-position': '46% 0%',
         'background-size': 'auto'
       }

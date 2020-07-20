@@ -54,7 +54,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/60830e1a-779e-4674-83dc-f550bdea0ace.png)',
+        'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/af64824d-073e-4f23-b367-88f8d84861b1.png)',
         'background-color': 'rgba(0, 0, 0, 1)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

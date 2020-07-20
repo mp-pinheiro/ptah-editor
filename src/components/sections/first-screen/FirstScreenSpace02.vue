@@ -7,7 +7,7 @@ import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'FirstScreen'
 const NAME = 'FirstScreenSpace02'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_ogapi.jpg)'
+const BG_SECTION = 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/73c70605-029b-4c61-b3ad-30e9fd0779ba.jpg)'
 const date = Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000
 
 const COMPONENTS = [
@@ -59,7 +59,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/66007d63-75e1-42cb-8f52-4f0eb71fcaad.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

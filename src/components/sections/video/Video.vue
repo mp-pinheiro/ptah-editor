@@ -40,7 +40,7 @@ const C_CUSTOM = [
   },
   {
     element: {
-      videoUrl: 'https://s3.protocol.one/src/o_n0x1o.mp4',
+      videoUrl: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/c491c6f4-ffe5-42de-a14a-3329647007c5.mp4',
       styles: {
         width: '640px',
         height: '400px'

@@ -54,7 +54,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/images/gamelogo.png")',
+        'background-image': 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6a4dc637-9f3c-4050-9b8d-516e0de13992.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -221,7 +221,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/FootFantCover3.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/50dbddfd-a9d9-44b3-a72f-52573edd496b.jpg',
 
   $schema: {
     mainStyle: types.StyleObject,
