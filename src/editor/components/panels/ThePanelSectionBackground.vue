@@ -127,6 +127,10 @@
                     />
                   </div>
                 </div>
+                <HintBlock
+                  v-if="isParallax"
+                  text="To see the applied parallax effect click the Preview mode button."
+                />
               </div>
             </template>
           </div>
@@ -191,6 +195,7 @@ import * as _ from 'lodash-es'
 import BaseUploader from '../../../components/base/BaseUploader'
 import ControlBackgroundPosition from './../controls/TheControlBackgroundPosition'
 import IndicatorPlatform from '../IndicatorPlatform'
+import HintBlock from '../HintBlock'
 
 const DEFAULT_COLOR = 'rgba(255,255,255,1)'
 
@@ -207,7 +212,8 @@ export default {
   components: {
     BaseUploader,
     ControlBackgroundPosition,
-    IndicatorPlatform
+    IndicatorPlatform,
+    HintBlock
   },
 
   props: {

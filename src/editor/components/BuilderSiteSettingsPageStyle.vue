@@ -118,6 +118,12 @@
                 <BaseSwitcher v-model="fullPageScrollCheckbox" :label="$t('s.fpScroll')" />
               </div>
             </div>
+            <div class="b-panel__control">
+              <HintBlock
+                v-if="fullPageScrollCheckbox"
+                text="To see the applied full page scroll click the Preview mode button."
+              />
+            </div>
           </div>
         </base-scroll-container>
       </div>
@@ -153,6 +159,7 @@ import { mapState, mapActions } from 'vuex'
 import BuilderModalContentLayout from './BuilderModalContentLayout'
 import BaseUploadButton from '../../components/base/BaseUploadButton'
 import TheColorPalette from './TheColorPalette'
+import HintBlock from './HintBlock'
 
 export default {
   name: 'BuilderSiteSettingsPageStyle',
@@ -160,7 +167,8 @@ export default {
   components: {
     TheColorPalette,
     BaseUploadButton,
-    BuilderModalContentLayout
+    BuilderModalContentLayout,
+    HintBlock
   },
 
   data () {
