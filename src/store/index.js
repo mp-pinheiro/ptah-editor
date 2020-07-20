@@ -194,7 +194,7 @@ const actions = {
           css: '',
           cookiesPolicy: {
             enabled: false,
-            pdf: 'https://s3.protocol.one/src/o_1ohKcv.pdf'
+            pdf: 'https://cdn.ptah.pro/o_1ohKcv.pdf'
           },
           mailchimpUrl: false,
           mailchimpList: false,
