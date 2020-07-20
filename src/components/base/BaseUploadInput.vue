@@ -1,5 +1,6 @@
 <template>
   <div class="b-base-upload">
+    <base-loading v-if="loading" class="b-base-upload__loading"></base-loading>
     <base-label class="b-base-upload__label" v-if="label">
       {{label}}
     </base-label>
@@ -60,17 +61,20 @@ export default {
   data () {
     return {
       url: this.value,
-      focus: false
+      focus: false,
+      loading: false
     }
   },
 
   methods: {
     onUploadClick (event) {
+      this.loading = true
       this.uploadFile(event)
         .then((response) => {
-          this.url = response.cdnUrl
+          this.url = response.data.cdnUrl
         })
         .catch((error) => console.warn(error))
+        .finally(() => { this.loading = false })
     },
 
     upload () {
@@ -89,6 +93,14 @@ export default {
 @import '../../assets/sass/_variables.sass'
 .b-base-upload
   width: 100%
+  position: relative
+  &__loading
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background: rgba(255,255,255, .5)
   &__label
     margin-bottom: 0.4rem
   &__inner

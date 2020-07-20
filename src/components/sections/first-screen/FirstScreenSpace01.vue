@@ -59,7 +59,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/f256c7f6-cde5-4a88-871d-a718243dc77f.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',

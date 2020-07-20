@@ -44,7 +44,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/66007d63-75e1-42cb-8f52-4f0eb71fcaad.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -62,7 +62,7 @@ const C_CUSTOM = [
         autoplay: true,
         rel: false,
         controls: false,
-        url: 'https://s3.protocol.one/src/o_1n2u0d.mp4'
+        url: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/82c5d1fb-ec25-430f-a9b6-d2577441123f.mp4'
       },
       styles: {
         width: '570px',
