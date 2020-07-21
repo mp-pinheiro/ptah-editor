@@ -78,6 +78,7 @@
       v-if="showPublish"
       :landingName="landingName"
       :builder="builder"
+      @zip="$emit('export', $event)"
       @close="showPublish = false"></the-publication>
   </div>
 </template>

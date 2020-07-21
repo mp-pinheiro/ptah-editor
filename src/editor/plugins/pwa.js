@@ -155,11 +155,31 @@ function download (assets, getBlob) {
               ${customCss}
             </style>
             ${stylePoneList}
+            <style>
+              .ptah-logo {
+                padding: 3rem;
+                margin: 2rem;
+                text-align: center;
+              }
+              
+              .ptah-logo a {
+                opacity: .5;
+              }
+              
+              .ptah-logo a:hover {
+                opacity: 1
+              }
+            </style>
           </head>
           <body class="b-body_export" style="${bodyStyles}">
             ${gtm.body}
             <div id="main" class="main" style="${fontsSetup}">
               ${artboard.innerHTML}
+            </div>
+            <div class="ptah-logo">
+              <a href="https://ptah.pro" target="_blank" title="Made with Ptah">
+                <img src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/7c0d6f3b-2f6c-437c-9f12-5b5ed960c4d4.png" alt="Ptah logo">
+              </a>
             </div>
             ${video}
             ${this.getCookiesPreview()}

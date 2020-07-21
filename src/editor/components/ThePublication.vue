@@ -37,7 +37,7 @@
               <IconBase name="globus" width="18" height="18" />
 
               <template v-if="isDomainProvided">
-                <a :href="`https://${domainLocalName}.ptah.me`" target="_blank">https://{{domainLocalName}}.ptah.me</a>
+                <a :href="`https://${domainLocalName}`" target="_blank">https://{{domainLocalName}}</a>
               </template>
               <template v-else>
                 https://
@@ -76,7 +76,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
+
 export default {
   name: 'ThePublication',
   props: {
@@ -99,7 +100,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentLanding', 'name']),
+    ...mapState(['currentLanding', 'name', 'slug']),
 
     isDomainProvided () {
       return this.currentLanding.domain.length > 0
@@ -112,18 +113,18 @@ export default {
 
   methods: {
     ...mapActions('Landing', ['publish', 'setDomain']),
+    ...mapMutations(['updateCurrentLanding']),
 
     /**
      * Publish landing on ptah.me
      */
     publishLanding () {
-      let id = this.currentLanding.slug
+      let id = this.slug
 
       this.loading = true
 
       this.domain(id)
-        .then((response) => {
-          console.log(response)
+        .then(() => {
           return this.builder.getZip()
         })
         .then((file) => {
@@ -131,10 +132,13 @@ export default {
         })
         .then((data) => {
           console.log(data)
+          this.updateCurrentLanding(Object.assign(this.currentLanding, {
+            domain: data.domain
+          }))
         })
         .catch((error) => {
           console.warn(error)
-          this.domainLocalErrorText = error
+          this.domainLocalErrorText = 'This name already exists'
           this.$message.error('Publication failed', {
             duration: 2500,
             dismissible: false
