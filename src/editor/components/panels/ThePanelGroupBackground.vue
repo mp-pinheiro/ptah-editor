@@ -18,11 +18,15 @@
         <base-scroll-container>
           <div class="layout-padding">
             <div class="b-panel__control">
-              <base-caption help="Section's background image">
+              <base-caption help="Section's background image" v-if="!isMobile">
                 Background image
+              </base-caption>
+              <base-caption help="Section's background position" v-if="sectionBgUrl !== '' && sectionBgUrl !== null && isMobile">
+                Background position
               </base-caption>
               <div class="b-panel__col">
                 <base-uploader
+                  v-if="!isMobile"
                   v-model="sectionBgUrl"
                   @change="updateBgUrl"
                   label="Image"
@@ -33,8 +37,9 @@
                 </template>
 
                 <div class="b-panel__picker"
-                     v-for="(picker, index) in backgroundPickers"
-                     :key="`picker-item-${ _uid }-${ index }`"
+                  v-if="!isMobile"
+                  v-for="(picker, index) in backgroundPickers"
+                  :key="`picker-item-${ _uid }-${ index }`"
                 >
                   <base-color-picker
                     v-model="backgroundPickers[index]"
@@ -71,7 +76,7 @@
                 </div>
               </div>
             </div>
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__row">
                 <base-caption help="Layer overlaps background ">
                   Overlay layer
@@ -102,7 +107,7 @@
               </div>
             </div>
 
-            <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null">
+            <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null && !isMobile">
               <div class="b-panel__control" v-if="!isHeader">
                 <div class="b-panel__row">
                   <base-caption help="Parallax on background">
@@ -121,6 +126,10 @@
                 />
               </div>
             </template>
+
+            <disabled-mobile-mode
+              v-if="(sectionBgUrl === '' || sectionBgUrl === null) && isMobile"
+            />
           </div>
         </base-scroll-container>
       </div>
@@ -138,7 +147,7 @@
                 type="video"
               />
             </div>
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__row">
                 <base-caption help="Layer overlaps background ">
                   Overlay layer
@@ -168,6 +177,9 @@
                 </base-range-slider>
               </div>
             </div>
+            <disabled-mobile-mode
+              v-if="isMobile"
+            />
           </div>
         </base-scroll-container>
       </div>
@@ -182,6 +194,7 @@ import BaseUploader from '../../../components/base/BaseUploader'
 import ControlBackgroundPosition from './../controls/TheControlBackgroundPosition'
 import IndicatorPlatform from '../IndicatorPlatform'
 import HintBlock from '../HintBlock'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 const DEFAULT_COLOR = 'rgba(255,255,255,1)'
 
@@ -199,7 +212,8 @@ export default {
     IndicatorPlatform,
     BaseUploader,
     ControlBackgroundPosition,
-    HintBlock
+    HintBlock,
+    DisabledMobileMode
   },
 
   props: {
@@ -328,8 +342,8 @@ export default {
       let image = ''
       let bgimage = ''
 
-      image = (!!styles['background-image'] && typeof styles['background-image'] === 'string') ?
-        styles['background-image'] : ''
+      image = (!!this.styles['background-image'] && typeof this.styles['background-image'] === 'string') ?
+        this.styles['background-image'] : ''
 
       bgimage = image.match(/url\((.*?)\)/)
 
