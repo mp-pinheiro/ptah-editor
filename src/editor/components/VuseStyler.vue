@@ -612,6 +612,7 @@ export default {
       this.setControlPanel(false)
       this.toggleSidebar(true)
       this.toggleSectionsTreeMenu(true)
+      this.toggleDragStop(false)
 
       this.el.contentEditable = 'false'
       this.el.classList.remove('styler-active')
