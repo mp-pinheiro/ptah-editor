@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import BaseScrollContainer from '../base/BaseScrollContainer'
 
 export default {
@@ -40,6 +40,14 @@ export default {
       'copyLanding'
     ]),
 
+    ...mapMutations('Onboarding', [
+      'resetState'
+    ]),
+
+    ...mapActions('Onboarding', [
+      'deactivateCheckList'
+    ]),
+
     openLanding (item) {
       // add log
       this.$Progress.start()
@@ -57,7 +65,10 @@ export default {
       } catch (e) {
         console.log(e)
       }
+
       this.$nextTick(() => {
+        this.deactivateCheckList()
+        this.resetState()
         this.$router.push({ path: `/dashboard/wizard/name` })
       })
     },

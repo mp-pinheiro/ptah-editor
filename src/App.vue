@@ -4,7 +4,7 @@
       <router-view v-if="!loading"></router-view>
     </transition>
     <vue-progress-bar></vue-progress-bar>
-    <v-style>
+    <v-style v-if="fontsNameStr !== ''">
       <template>
         {{ `@import url("https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}")` }}
       </template>

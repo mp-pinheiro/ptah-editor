@@ -1,6 +1,6 @@
 <template>
   <div class="b-project-preview">
-    <div class="b-project-preview__content">
+    <div class="b-project-preview__content" v-if="preset">
       <div class="b-project-preview__template">
         <base-scroll-container>
           <img :src="preset.preview" style="width: 100%" />
@@ -38,6 +38,7 @@ export default {
     ...mapMutations('Onboarding', [
       'setPreset',
       'setColors',
+      'setPalette',
       'setLogo',
       'setFonts',
       'setSetupFonts',
@@ -49,6 +50,7 @@ export default {
     selectPreset () {
       this.setPreset(this.preset)
       this.setColors(this.preset.colors)
+      this.setPalette(this.preset.palette)
       this.setLogo(this.preset.logo || '')
       this.setFonts(this.preset.fonts)
       this.setSetupFonts(this.preset.setupFonts)

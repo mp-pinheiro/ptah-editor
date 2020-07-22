@@ -36,7 +36,13 @@ export default {
     ])
   },
 
+  created () {
+    this.setActiveStep('logo')
+  },
+
   mounted () {
+    this.uploadLogo(this.logo)
+
     try {
       this.$gtag.event('Wizard_logo', { 'event_category': 'LANDING' })
     } catch (e) {
@@ -66,10 +72,6 @@ export default {
     skipSteps () {
       this.$emit('skipSteps')
     }
-  },
-
-  created () {
-    this.setActiveStep('logo')
   }
 }
 </script>

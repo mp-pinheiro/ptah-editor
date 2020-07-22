@@ -90,6 +90,7 @@ export default {
       'setGoal',
       'setPreset',
       'setColors',
+      'setPalette',
       'setLogo',
       'setFonts',
       'setSetupFonts',
@@ -107,6 +108,7 @@ export default {
       this.selectedPreset = preset.id
       this.setPreset(preset)
       this.setColors(preset.colors)
+      this.setPalette(preset.palette)
       this.setLogo(preset.logo || '')
       this.setFonts(preset.fonts)
       this.setSetupFonts(preset.setupFonts)

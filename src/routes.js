@@ -38,7 +38,7 @@ const routes = [
           {
             path: 'wizard',
             component: TheWizardModal,
-            redirect: { name: TheProjectNamePage },
+            redirect: '/dashboard/',
             children: [
               {
                 path: 'name',

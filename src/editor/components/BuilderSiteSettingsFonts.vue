@@ -1,6 +1,6 @@
 <template>
   <div id="settings-fonts">
-    <v-style>
+    <v-style v-if="visibleFonts.length > 0">
       <template v-for="font in visibleFonts">
         {{ `@import url("https://fonts.googleapis.com/css?family=${font.family}:${font.variant}");` }}
       </template>

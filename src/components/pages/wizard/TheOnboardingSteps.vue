@@ -22,7 +22,9 @@
       :key="index"
       :active="item.status"
     >
-      {{ item.text }}
+      <span :class="{ '_active' : activeStep === index }">
+        {{ item.text }}
+      </span>
       <div
         class="b-checklist-item__description"
         slot="description"
@@ -78,4 +80,11 @@ export default {
 
     background-image: url('/img/ptah_logo.svg')
     background-size: cover
+  & span._active
+    display: inline-block
+    width: 100%
+    border: 2px dotted #00ADB6
+    border-left: none
+    border-radius: 0 2rem 2rem 0
+    padding: .6rem .6rem .6rem 0
 </style>

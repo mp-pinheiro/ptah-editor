@@ -65,6 +65,7 @@ export default {
   },
 
   mounted () {
+    this.uploadBackground(this.firstScreen)
     try {
       this.$gtag.event('Wizard_firstScreen', { 'event_category': 'LANDING' })
     } catch (e) {

@@ -119,9 +119,14 @@ export default {
     },
 
     resetState (state) {
-      for (let prop in state) {
-        state[prop] = defaultState[prop]
-      }
+      state.logo = ''
+      state.background = ''
+      state.backgroundColor = '#fafafa'
+      state.firstScreen = ''
+      state.colors = COLORS
+      state.palette = null
+      state.fonts = FONTS
+      state.setupFonts = SETUP_FONTS
     },
 
     setLoading (state, value) {
@@ -136,6 +141,12 @@ export default {
 
     deactivateCheckListItem ({ state, commit }, item) {
       commit('deactivateCheckListItem', item)
+    },
+
+    deactivateCheckList ({ state, commit }) {
+      Object.keys(state.checkList).forEach((key, index) => {
+        commit('deactivateCheckListItem', key)
+      })
     },
 
     updateColors ({ state, commit }, palette) {
