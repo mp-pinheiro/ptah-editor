@@ -19,7 +19,7 @@
       <div class="layout layout__bg" v-if="activeTab === 'image'">
         <base-scroll-container>
           <div class="layout-padding">
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <base-caption>
                 Section color
               </base-caption>
@@ -66,22 +66,26 @@
 
             </div>
             <div class="b-panel__control">
-              <base-caption help="Section's background image">
-                  Background image
+              <base-caption help="Section's background image" v-if="!isMobile">
+                Background image
               </base-caption>
-              <div class="b-panel__col">
+              <base-caption help="Section's background position" v-if="sectionBgUrl !== '' && sectionBgUrl !== null && isMobile">
+                Background position
+              </base-caption>
+              <div class="b-panel__col" v-if="!isMobile">
                 <base-uploader
                   v-model="sectionBgUrl"
                   @change="updateBgUrl"
                   label="Image"
                   type="image"
                 />
-                <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null">
-                  <control-background-position/>
-                </template>
               </div>
+              <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null">
+                <control-background-position/>
+              </template>
             </div>
-            <div class="b-panel__control">
+
+            <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__control">
                 <div class="b-panel__row">
                   <base-caption help="Layer overlaps background ">
@@ -114,7 +118,7 @@
               </div>
             </div>
 
-            <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null">
+            <template v-if="sectionBgUrl !== '' && sectionBgUrl !== null && !isMobile">
               <div class="b-panel__control" v-if="!isHeader">
                 <div class="b-panel__row">
                   <base-caption help="Parallax on background">
@@ -127,8 +131,16 @@
                     />
                   </div>
                 </div>
+                <HintBlock
+                  v-if="isParallax"
+                  text="To see the applied parallax effect click the Preview mode button."
+                />
               </div>
             </template>
+
+            <disabled-mobile-mode
+              v-if="(sectionBgUrl === '' || sectionBgUrl === null) && isMobile"
+            />
           </div>
         </base-scroll-container>
       </div>
@@ -146,7 +158,7 @@
                 type="video"
               />
             </div>
-            <div class="b-panel__control">
+            <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__control">
                 <div class="b-panel__row">
                   <base-caption help="Layer overlaps background ">
@@ -178,6 +190,9 @@
                 </base-range-slider>
               </div>
             </div>
+            <disabled-mobile-mode
+              v-if="isMobile"
+            />
           </div>
         </base-scroll-container>
       </div>
@@ -191,6 +206,8 @@ import * as _ from 'lodash-es'
 import BaseUploader from '../../../components/base/BaseUploader'
 import ControlBackgroundPosition from './../controls/TheControlBackgroundPosition'
 import IndicatorPlatform from '../IndicatorPlatform'
+import HintBlock from '../HintBlock'
+import DisabledMobileMode from '../DisabledMobileMode'
 
 const DEFAULT_COLOR = 'rgba(255,255,255,1)'
 
@@ -205,9 +222,11 @@ export default {
   name: 'ThePanelSectionBackground',
 
   components: {
+    DisabledMobileMode,
     BaseUploader,
     ControlBackgroundPosition,
-    IndicatorPlatform
+    IndicatorPlatform,
+    HintBlock
   },
 
   props: {
@@ -340,8 +359,8 @@ export default {
       let image = ''
       let bgimage = ''
 
-      image = (!!styles['background-image'] && typeof styles['background-image'] === 'string') ?
-        styles['background-image'] : ''
+      image = (!!this.styles['background-image'] && typeof this.styles['background-image'] === 'string') ?
+        this.styles['background-image'] : ''
 
       bgimage = image.match(/url\((.*?)\)/)
 
@@ -371,7 +390,7 @@ export default {
       this.isParallax = this.parallax
     },
 
-    updateBgColor (value) {
+    updateBgColor () {
       let pickers = this.backgroundPickers
       let bgimage = this.sectionBgUrl
       let styles = { 'background-color': '' }

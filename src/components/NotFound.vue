@@ -30,18 +30,15 @@ export default {
   },
 
   computed: {
-    isGuest () {
-      return localStorage.getItem('guest') !== null
-    },
 
     buttonText () {
-      return this.isGuest ? this.$t('notFoundReturn1') : this.$t('notFoundReturn1')
+      return this.$t('notFoundReturn1')
     }
   },
 
   methods: {
     returnToBoard () {
-      this.$router.push(this.isGuest ? '/' : '/dashboard/')
+      this.$router.push('/dashboard/')
     }
   }
 }

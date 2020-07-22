@@ -77,8 +77,27 @@ export default {
     }
   },
 
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_templates', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
-    ...mapMutations('Onboarding', ['setGoal', 'setPreset']),
+    ...mapMutations('Onboarding', [
+      'setGoal',
+      'setPreset',
+      'setColors',
+      'setPalette',
+      'setLogo',
+      'setFonts',
+      'setSetupFonts',
+      'setBackground',
+      'setBackgroundColor',
+      'setVideo'
+    ]),
 
     selectGoal (goal) {
       this.selectedPreset = null
@@ -88,6 +107,16 @@ export default {
     selectPreset (preset) {
       this.selectedPreset = preset.id
       this.setPreset(preset)
+      this.setColors(preset.colors)
+      this.setPalette(preset.palette)
+      this.setLogo(preset.logo || '')
+      this.setFonts(preset.fonts)
+      this.setSetupFonts(preset.setupFonts)
+      this.setBackground(preset.backgroundImage)
+      this.setBackgroundColor(preset.backgroundColor)
+      this.setVideo(preset.video)
+
+      this.$router.push({ path: `/dashboard/wizard/welcome` })
     },
 
     preview (preset) {

@@ -7,7 +7,6 @@ import sectionMedia from '../../mixins/sectionMedia'
 
 const GROUP_NAME = 'Video'
 const NAME = 'Video'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_NvNe4.jpg)'
 
 const COMPONENTS = [
   {
@@ -41,7 +40,7 @@ const C_CUSTOM = [
   },
   {
     element: {
-      videoUrl: 'https://s3.protocol.one/src/o_n0x1o.mp4',
+      videoUrl: 'https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/c491c6f4-ffe5-42de-a14a-3329647007c5.mp4',
       styles: {
         width: '640px',
         height: '400px'
@@ -52,15 +51,6 @@ const C_CUSTOM = [
 ]
 
 const SCHEMA_CUSTOM = {
-  mainStyle: {
-    styles: {
-      'background-image': BG_SECTION,
-      'background-color': '#151C44',
-      'background-size': 'cover',
-      'background-repeat': 'no-repeat',
-      'background-attachment': 'scroll'
-    }
-  },
   components: _.merge([], C_CUSTOM),
   container: {
     width: 12

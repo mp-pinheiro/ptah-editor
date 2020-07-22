@@ -15,7 +15,8 @@
       :style="{
         '--b-hover-color': formStyles.buttonHoverColor,
         '--b-hover-text-color': formStyles.buttonTextHoverColor,
-        '--mobile-form-styles-height': mediaStyles['is-mobile'].formStyles.height + 'px'
+        '--mobile-form-styles-height': mediaStyles['is-mobile'].formStyles.height + 'px',
+        'width': `${formStyles.width}px`,
       }"
       >
       <input

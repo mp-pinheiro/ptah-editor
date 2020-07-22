@@ -98,8 +98,8 @@ export default {
         text: 'Plain text',
         button: 'Button background',
         buttonText: 'Button text',
-        add1: 'Button hover color',
-        add2: 'Additional color'
+        buttonHover: 'Button hover color',
+        add1: 'Additional color'
       }
     }
   },
@@ -155,6 +155,24 @@ export default {
     }
   },
 
+  created () {
+    this.setActiveStep('colors')
+  },
+
+  mounted () {
+    if (this.palette !== null) {
+      this.applyPalette()
+    } else {
+      this.deactivateCheckListItem('colors')
+    }
+
+    try {
+      this.$gtag.event('Wizard_colors', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapActions('Onboarding', [
       'activateCheckListItem',
@@ -200,15 +218,11 @@ export default {
     skipSteps () {
       this.$emit('skipSteps')
     }
-  },
-
-  created () {
-    this.setActiveStep('colors')
   }
 }
 </script>
 
 <style lang="sass" scoped>
   .b-instruction
-    background-image: url(https://s3.protocol.one/images/instruction-colors.gif)
+    background-image: url(https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/3ee39b42-fda8-40ec-8ba6-d1f82e6059c6.gif)
 </style>

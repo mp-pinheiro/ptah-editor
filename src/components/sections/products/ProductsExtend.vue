@@ -6,10 +6,10 @@ import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
 let prev = [
-  'https://s3.protocol.one/src/o_1O03Wg.png',
-  'https://s3.protocol.one/src/o_1FdGcD.png',
-  'https://s3.protocol.one/src/o_2FiQhB.png',
-  'https://s3.protocol.one/src/o_1ZxHzN.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/12cef120-2f30-45fc-ab21-e1a5cdc971db.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/e2b847b0-5a70-47f0-bfc9-fa9a0e345767.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/7878d224-0cce-4d09-a59c-4e5aefd5c3eb.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/e4fb83d2-4f90-4cf7-ac96-edd803e460f4.png'
 ]
 
 let label = [
@@ -416,8 +416,6 @@ const C_CUSTOM_CONTAINER_D = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
-      'background-color': 'rgba(21,28,68,1)',
       'padding-top': '30px',
       'padding-bottom': '30px'
     }
@@ -539,7 +537,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_2BSWcG.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/1fb2e58b-6879-451b-ba46-e1d07171af84.jpg',
 
   $schema: {
     mainStyle: types.ProductSection,

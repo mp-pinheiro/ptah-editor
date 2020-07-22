@@ -1,5 +1,7 @@
 import { throttle, last } from 'lodash-es'
 import html2canvas from 'html2canvas'
+import { getCookie } from '@editor/util'
+import axios from 'axios'
 
 const STACK_SIZE = 7
 
@@ -80,8 +82,8 @@ export default {
         return
       }
 
-      if (last(state.savedStates) !== landing && localStorage.getItem('guest') === null) {
-        dispatch('saveStateHandler', landing)
+      if (last(state.savedStates) !== landing) {
+        return dispatch('saveStateHandler', landing)
       }
     }, 3000),
 
@@ -95,7 +97,7 @@ export default {
       commit('saveState', landing)
       commit('currentStateNumber', state.savedStates.length)
 
-      dispatch('getPreview')
+      return dispatch('getPreview')
         .then((dataImg) => {
           let landObj = JSON.parse(landing)
           landObj.previewUrl = dataImg
@@ -121,6 +123,53 @@ export default {
       } else {
         console.warn('Cannot load the specified state.', ` -- state: ${number}`)
       }
+    },
+
+    /**
+     * Upload landing zip file by id
+     * @param dispatch
+     * @param id {String} Landing id
+     * @param file
+     * @return {Promise<AxiosResponse<T>>}
+     */
+    publish ({ dispatch }, { id, file }) {
+      let getFormData = (blob) => {
+        let formData = new FormData()
+        formData.append('file', blob, 'project.zip')
+        return formData
+      }
+
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest()
+        xhr.open('POST', `${process.env.VUE_APP_API}landings/${id}/publishing`)
+        xhr.setRequestHeader('Authorization', `Bearer ${getCookie('token')}`)
+        xhr.send(getFormData(file))
+
+        xhr.onload = xhr.onerror = () => {
+          if (xhr.status === 200) {
+            try {
+              let response = JSON.parse(xhr.response)
+              resolve(response)
+            } catch (error) {
+              reject(error)
+            }
+          } else {
+            let error = { status: xhr.status, statusText: xhr.statusText }
+            reject(error)
+          }
+        }
+      })
+    },
+
+    /**
+     * Set domain to landing
+     * @param data {Object} example: { "domain": "mylanding.com", "personal": true, "id": 13132 }
+     * @return {Promise<AxiosResponse<T>>}
+     */
+    // eslint-disable-next-line
+    setDomain ({}, data) {
+      let { domain, personal, id } = data
+      return axios.post(`${process.env.VUE_APP_API}landings/${id}/domain`, { domain, personal })
     }
   },
 

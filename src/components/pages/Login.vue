@@ -12,7 +12,7 @@
 
         <div class="b-login__github">
           <a href="https://github.com/ProtocolONE/storefront" target="_blank">
-            <img src="https://s3.protocol.one/src/o_yOEML.png" alt="Github">
+            <img src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/1cc7241c-3722-4112-8ffc-cb7b296caba2.png" alt="Github">
           </a>
         </div>
 

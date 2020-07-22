@@ -2,7 +2,7 @@
   <header class="b-page__header b-header" v-if="this.isStorefrontPreview == false">
 
     <div class="b-header__logo">
-      <img src="https://s3.protocol.one/images/ptah_logo_dashboard.png" alt="Ptah logo">
+      <img src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/88a20e2f-9d25-4a37-9b2e-e7f68727837a.png" alt="Ptah logo">
     </div>
 
     <!-- TODO: need translations -->

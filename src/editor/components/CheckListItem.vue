@@ -31,6 +31,7 @@ export default {
 
   &__row
     display: flex
+    justify-content: stretch
     align-items: center
 
   &.active
@@ -41,6 +42,7 @@ export default {
 
   &__mark
     width: 2.6rem
+    min-width: 2.6rem
     height: 2.6rem
     display: flex
     justify-content: center
@@ -53,6 +55,7 @@ export default {
       fill: #fff
 
   &__text
+    width: 100%
     font-size: 1.2rem
     font-weight: bold
     letter-spacing: 0.065em
@@ -67,6 +70,7 @@ export default {
     letter-spacing: 0.065em
     line-height: 1.5rem
     margin-left: 4.2rem
+    padding-top: 0.6rem
 
     color: #575A5F
 </style>

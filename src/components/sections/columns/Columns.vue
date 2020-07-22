@@ -9,7 +9,7 @@ const C_CUSTOM_COLUMN = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_GfDXg.png")',
+        'background-image': 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0588ef72-80a3-416d-b3ab-8b1e53c95992.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -78,10 +78,10 @@ const C_CUSTOM_COLUMN = [
 ]
 
 const C_CUSTOM_COLUMN2 = _.cloneDeep(C_CUSTOM_COLUMN)
-C_CUSTOM_COLUMN2[0].element.styles['background-image'] = 'url("https://s3.protocol.one/src/o_1qkwy5.png")'
+C_CUSTOM_COLUMN2[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6c0a8c99-5650-475f-a74f-868405823093.png")'
 
 const C_CUSTOM_COLUMN3 = _.cloneDeep(C_CUSTOM_COLUMN)
-C_CUSTOM_COLUMN3[0].element.styles['background-image'] = 'url("https://s3.protocol.one/src/o_1AhevN.png")'
+C_CUSTOM_COLUMN3[0].element.styles['background-image'] = 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ec4f4532-c567-4853-a183-8ac63ae7c802.png")'
 
 const C_CUSTOM = [{
   element: {
@@ -101,10 +101,6 @@ const C_CUSTOM_CONTAINER = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
-      'background-color': '#151C44',
-      'background-position': '50% 50%',
-      'background-size': 'cover',
       'padding-bottom': '122px'
     },
     count: 3

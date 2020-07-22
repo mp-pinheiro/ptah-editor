@@ -7,7 +7,7 @@
         <template v-if="integrationComplete">
           <img
             class="b-integrations-mailchimp__logo"
-            src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/64004e89-19d2-4ce4-84d6-6d0df226d8af.png"
+            src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/475f16d3-5641-486a-978c-8d94cdabe398.png"
           >
           <div class="b-panel__control">
             <base-caption>
@@ -95,7 +95,6 @@ export default {
 
     listenFrame () {
       window.addEventListener('message', (e) => {
-        console.log(e)
         let data = {}
 
         try {

@@ -76,9 +76,9 @@ const i18n = new VueI18n({
 })
 
 Vue.use(VueProgressBar, {
-  color: 'rgb(34, 117, 215, .86)',
+  color: '#F9005B',
   failedColor: 'red',
-  height: '8px'
+  thickness: '8px'
 })
 
 // request interceptor

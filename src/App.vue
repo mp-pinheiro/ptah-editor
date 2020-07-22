@@ -1,12 +1,14 @@
 <template>
   <div id="app">
+    <transition name="fade" mode="out-in">
       <router-view v-if="!loading"></router-view>
-      <vue-progress-bar></vue-progress-bar>
-      <v-style>
-        <template>
-          {{ `@import url("https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}")` }}
-        </template>
-      </v-style>
+    </transition>
+    <vue-progress-bar></vue-progress-bar>
+    <v-style v-if="fontsNameStr !== ''">
+      <template>
+        {{ `@import url("https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}")` }}
+      </template>
+    </v-style>
   </div>
 </template>
 
@@ -92,5 +94,12 @@ export default {
 </script>
 
 <style lang="sass">
-  @import 'assets/sass/app'
+@import 'assets/sass/app'
+
+// Animations
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>

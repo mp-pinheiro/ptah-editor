@@ -22,7 +22,9 @@
        :placeholder="placeholder"
        @input="$emit('input', innerValue)"
        @focus="$emit('focus', $event), hasFocus = true"
-       @blur="$emit('blur', $event), hasFocus = false" />
+       @blur="$emit('blur', $event), hasFocus = false"
+       :maxlength="maxLength"
+    />
 
     <base-error-text v-if="hasError">
       {{errorText}}
@@ -58,6 +60,10 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    maxLength: {
+      type: Number,
+      default: 255
     }
   },
 

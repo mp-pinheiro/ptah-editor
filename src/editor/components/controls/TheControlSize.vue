@@ -93,7 +93,7 @@ export default {
       let styles = {}
       let media = {}
 
-      if (value === '') value = 32
+      if (value === '') value = 1
 
       styles[prop] = value + 'px'
 
@@ -144,7 +144,7 @@ export default {
         >
           <base-number-input
             :value="widthValue"
-            :minimum="32"
+            :minimum="1"
             :maximum="maxProps['width']"
             unit="px"
             @input="setWidthValue"
@@ -165,7 +165,7 @@ export default {
         >
           <base-number-input
             :value="heightValue"
-            :minimum="32"
+            :minimum="1"
             :maximum="maxProps['height']"
             unit="px"
             @input="setHeightValue"

@@ -81,22 +81,22 @@ const C_CUSTOM_CONTAINER = {
 const [C_CUSTOM_CONTAINER_1, C_CUSTOM_CONTAINER_2, C_CUSTOM_CONTAINER_3, C_CUSTOM_CONTAINER_4] = [
   _.merge({}, C_CUSTOM_CONTAINER, {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/Vred.png)'
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/1baae3ee-1ae7-41e4-a831-0ae031a4ca05.png)'
     }
   }),
   _.merge({}, C_CUSTOM_CONTAINER, {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/Druket.png)'
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/7ca9c6d0-5517-446f-b65f-3181f87daadb.png)'
     }
   }),
   _.merge({}, C_CUSTOM_CONTAINER, {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/Bolla.png)'
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/d416bed9-d9af-4471-b123-a8fb7741ec7b.png)'
     }
   }),
   _.merge({}, C_CUSTOM_CONTAINER, {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/Mabok_s.png)'
+      'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/48a93947-26bc-4213-ba5f-3c9cd78ada38.png)'
     }
   })
 ]
@@ -112,10 +112,6 @@ const C_CUSTOM = [{
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/c_bg.jpg)',
-      'background-color': '#151C44',
-      'background-position': '50% 50%',
-      'background-size': 'cover',
       'padding-top': '30px',
       'padding-bottom': '0px'
     },
@@ -187,7 +183,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/ash_cover_col.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6aa77aa3-43d2-4abf-b982-5510a80b13be.jpg',
 
   $schema: {
     mainStyle: types.Columns,

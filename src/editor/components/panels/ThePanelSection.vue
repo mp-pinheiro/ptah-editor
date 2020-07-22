@@ -20,6 +20,10 @@
           <control-section-sticky />
         </div>
 
+        <!--div class="b-panel__control">
+          <control-section-apple-styles />
+        </div-->
+
         <div class="b-panel__control">
           <control-box />
         </div>
@@ -59,6 +63,7 @@ import ControlBox from './../controls/TheControlBox'
 import { resetIndents } from '@editor/util'
 import TheControlCarousel from '../controls/TheControlCarousel'
 import ControlSectionSticky from '../controls/TheControlSectionSticky'
+// import ControlSectionAppleStyles from '../controls/TheControlSectionAppleStyles'
 import IndicatorPlatform from '../IndicatorPlatform'
 
 export default {
@@ -71,6 +76,7 @@ export default {
     ControlBox,
     ControlSectionHeight,
     ControlSectionSticky
+    // ControlSectionAppleStyles
   },
   name: 'BuilderSettingsBarSection',
 

@@ -144,7 +144,7 @@ const defaultComponents = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/66007d63-75e1-42cb-8f52-4f0eb71fcaad.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -258,13 +258,7 @@ const defaultComponents2 = [
 ]
 const defaultSchema = {
   mainStyle: {
-    hamPosition: 17,
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_cm1BL.jpg)',
-      'background-color': 'rgba(51, 51, 51, 0.95)',
-      'background-position': '50% 50%',
-      'background-size': 'cover'
-    }
+    hamPosition: 17
   },
   container: {
     styles: {

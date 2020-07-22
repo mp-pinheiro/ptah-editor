@@ -176,6 +176,7 @@ export default {
     changeColor () {
       const color = this.color.rgba ? `rgba(${Object.values(this.color.rgba).toString()})` : this.color
       this.styles['color'] = color
+      this.settingObjectOptions.customColor = true
     },
 
     changeColorHover () {
@@ -313,13 +314,13 @@ export default {
           :label="$t('c.line')"
           step="1"
           min="100"
-          max="130"
+          max="300"
           @change="setLineHeight"
         >
           <base-number-input
             :value="lineHeightValue"
             :minimum="100"
-            :maximum="130"
+            :maximum="300"
             unit="%"
             @input="setLineHeightValue"
           />

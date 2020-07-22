@@ -24,15 +24,15 @@ const GALLERY_ITEM = [
 ]
 
 let thumbs = [
-  'https://s3.protocol.one/images/slider1_thumb.jpg',
-  'https://s3.protocol.one/images/slider2_thumb.jpg',
-  'https://s3.protocol.one/images/slider3_thumb.jpg'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/61d09b10-cc1d-4563-a658-9beeb6371bb1.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ef4ed405-214e-4ff1-8fba-372389d46185.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6b5e040f-8335-4dbb-8c9e-f530844ae624.jpg'
 ]
 
 let prev = [
-  'https://s3.protocol.one/images/slider_ash_1.jpg',
-  'https://s3.protocol.one/images/slider_ash_2.jpg',
-  'https://s3.protocol.one/images/slider_ash_3.jpg'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/1ddcd4af-ddfd-469c-86d5-0dd1aeeffa71.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/a9a045a7-ac12-49b8-b7c8-fea477d96551.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/31124369-6335-4090-bc6d-c2402158b55e.jpg'
 ]
 
 const [
@@ -110,7 +110,6 @@ const NAME = 'GalleryPopupFantasy'
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/images/travel_map.jpg)',
       'padding-top': '100px',
       'padding-bottom': '190px'
     },
@@ -143,7 +142,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/images/gpopup_cover.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/e9780a07-3b52-4a79-890e-58ce33e63885.jpg',
 
   $schema: {
     mainStyle: types.Gallery,
@@ -161,7 +160,7 @@ export default {
     index: 0,
     isShowPopup: false,
     popupStyles: { width: 'auto', margin: '0' },
-    url: 'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/a07b04e0-45c6-437c-b005-ea9fc9c5b019.png',
+    url: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/4b5a304c-6c10-4bd5-94e6-fa5d78c4a585.png',
     content: '',
     typeContent: 'default'
   },

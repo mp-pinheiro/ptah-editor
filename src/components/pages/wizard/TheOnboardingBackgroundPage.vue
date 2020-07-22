@@ -36,6 +36,20 @@ export default {
     ])
   },
 
+  created () {
+    this.setActiveStep('background')
+  },
+
+  mounted () {
+    this.uploadBackground(this.background)
+
+    try {
+      this.$gtag.event('Wizard_background', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapActions('Onboarding', [
       'activateCheckListItem',
@@ -58,15 +72,11 @@ export default {
     skipSteps () {
       this.$emit('skipSteps')
     }
-  },
-
-  created () {
-    this.setActiveStep('background')
   }
 }
 </script>
 
 <style lang="sass" scoped>
   .b-instruction
-    background-image: url(https://s3.protocol.one/images/instruction-background.gif)
+    background-image: url(https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/741209ef-e283-4fa4-a4d7-55d7b3f07353.gif)
 </style>

@@ -24,15 +24,15 @@ const GALLERY_ITEM = [
 ]
 
 let thumbs = [
-  'https://s3.protocol.one/src/o_YYKWx.jpg',
-  'https://s3.protocol.one/src/o_hJ0YE.jpg',
-  'https://s3.protocol.one/src/o_7IKPH.jpg'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6c764e91-de6a-4689-b5ca-7ac3cec309a3.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/245ae6d6-d217-43f5-a793-3f56a7050851.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/fda2cf3f-291d-4193-8c15-ce5bebca4ebf.jpg'
 ]
 
 let prev = [
-  'https://s3.protocol.one/src/o_1guior.jpg',
-  'https://s3.protocol.one/src/o_UJvfQ.jpg',
-  'https://s3.protocol.one/src/o_1LsLbz.jpg'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/2ee6317a-7dbc-4c11-abcf-32b9911c8e2b.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/070cb3e3-80ca-4fc2-b921-e17ad9ea3c72.jpg',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/6c1ca0ec-3d25-44e1-97ab-6d3004be8af1.jpg'
 ]
 
 const [
@@ -109,9 +109,6 @@ const NAME = 'GalleryPopup'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)'
-    },
     isTextStyle: true,
     isLabel: true,
     isLabelPreview: true,
@@ -151,7 +148,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_1SRy55.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/4ce4c2bc-608f-4617-8d92-0eaa1bb8286d.jpg',
 
   $schema: {
     mainStyle: types.Gallery,

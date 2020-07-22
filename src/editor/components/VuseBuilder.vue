@@ -71,7 +71,10 @@
               'background-color' : headerSection.data.mainStyle.overlay.color,
               'opacity' : headerSection.data.mainStyle.overlay.opacity
           }"
-          :class="[ isActiveSection(headerSection.id) ? '_section-active' : '' ]"
+          :class="[
+            isActiveSection(headerSection.id) ? '_section-active' : '',
+            headerSection.data.mainStyle.applyPageStyle ? '_applyPageStyle' : '_not-applyPageStyle'
+          ]"
         >
         </div>
 
@@ -86,8 +89,10 @@
           { 'video-background': section.data.mainStyle.backgroundVideo },
           $builder.isEditing ? device: '',
           isActiveSection(section.id) ? '_section-active' : '',
-          section.data.mainStyle.parallax ? '_parallax' : ''
+          section.data.mainStyle.parallax ? '_parallax' : '',
+          section.data.mainStyle.applyPageStyle ? '_applyPageStyle' : '_not-applyPageStyle'
         ]"
+        :data-apply="section.data.mainStyle.applyPageStyle"
         :data-parallax="section.data.mainStyle.parallax ? 'scroll' : ''"
         :data-image-src="getImageFromBgStyles(section.data.mainStyle.styles['background-image'])"
         @click.native="selectSidebarSection(section)">
@@ -123,7 +128,9 @@
 
         <!-- apply headers color -->
         <template v-if="currentLanding.settings.colors && currentLanding.settings.colors.headers !== ''">
-          h1, h2, h3 {
+          h1,
+          h2,
+          h3 {
             color: {{currentLanding.settings.colors.headers}} !important;
           }
         </template>
@@ -322,9 +329,7 @@ export default {
     this.updateBuilderSections(this.sections)
     this.updateBuilderGroups(this.groups)
 
-    if (localStorage.getItem('guest') === null) {
-      this.getUser()
-    }
+    this.getUser()
   },
 
   mounted () {
@@ -514,11 +519,7 @@ export default {
     },
     backToLandings () {
       this.save()
-      if (localStorage.getItem('guest') === null) {
-        this.$router.push({ path: `/dashboard` })
-      } else {
-        this.$router.push({ path: `/` })
-      }
+      this.$router.push({ path: `/dashboard` })
     },
     styleArtboard (styles) {
       Object.keys(styles).forEach((styleName) => {
@@ -924,7 +925,7 @@ export default {
     width: 30rem
     height: 27rem
 
-    background-image: url(https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/07ac25c3-94ba-4eaf-9829-70c827395747.png)
+    background-image: url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/747986bb-59e9-49be-97fe-05beb5aa0765.png)
     background-size: cover
   &__chapter
     font-size: 1.8rem

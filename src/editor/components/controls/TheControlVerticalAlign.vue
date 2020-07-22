@@ -21,6 +21,11 @@ export default {
           iconName: 'groupBottom',
           tooltipText: 'Bottom',
           value: 'flex-end'
+        },
+        {
+          iconName: 'menu',
+          tooltipText: 'Stretch',
+          value: 'stretch'
         }
       ],
       value: ''

@@ -44,6 +44,10 @@ export default {
       'resetState'
     ]),
 
+    ...mapActions('Onboarding', [
+      'deactivateCheckList'
+    ]),
+
     openLanding (item) {
       // add log
       this.$Progress.start()
@@ -56,7 +60,15 @@ export default {
     },
 
     openWindow () {
+      try {
+        this.$gtag.event('Click_create', { 'event_category': 'LANDING' })
+      } catch (e) {
+        console.log(e)
+      }
+
       this.$nextTick(() => {
+        this.deactivateCheckList()
+        this.resetState()
         this.$router.push({ path: `/dashboard/wizard/name` })
       })
     },
@@ -76,20 +88,21 @@ export default {
         this.createProgress = true
         this.$Progress.start()
         this.invalid = false
-        this.createLanding({ name: this.name, sections: this.preset.sections })
+        this.createLanding({
+          name: this.name,
+          sections: this.preset.sections
+        })
           .then((response) => {
-            let url = this.preset.url
-
-            if (url === undefined || url === '') {
-              response['slug'] = response._id
-
-              return Promise.resolve(response)
-            } else {
-              return this.fetchLandingFromFile({ slug: response._id, url: url, name: this.name })
+            try {
+              this.$gtag.event('Create_complete', { 'event_category': 'LANDING' })
+            } catch (e) {
+              console.log(e)
             }
+
+            response['slug'] = response._id
+            return Promise.resolve(response)
           })
           .then((data) => {
-            this.resetState()
             this.$nextTick(() => {
               this.$router.push({ path: `/editor/${data.slug}` })
             })
@@ -121,7 +134,7 @@ export default {
     },
 
     getItemCover (item) {
-      return item.previewUrl.length ? item.previewUrl : 'https://s3.protocol.one/images/placeholder.png'
+      return item.previewUrl.length ? item.previewUrl : 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/a432b2e6-b48c-4d89-8071-b33c8b63bcf4.png'
     },
 
     skipSteps () {
@@ -381,7 +394,7 @@ export default {
         left: 10px
         width: 2.4rem
         height: 2.4rem
-        background: url('https://s3.protocol.one/images/checked.png') no-repeat
+        background: url('https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/9dd29359-eeeb-4393-a96a-ae84621cb823.png') no-repeat
         background-size: contain
 
     &.first

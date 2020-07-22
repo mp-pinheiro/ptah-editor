@@ -13,8 +13,19 @@
             color="transparent"
             size="small"
             @click="skipSteps"
+            v-if="activeStep !== 'colors'"
           >
             Skip tour
+          </base-button>
+        </div>
+        <div>
+          <base-button
+            color="main-green-transparent"
+            size="middle"
+            @click="back"
+            v-if="activeStep !== 'logo'"
+          >
+            Back
           </base-button>
         </div>
         <div>
@@ -22,7 +33,6 @@
             color="main-green"
             size="middle"
             @click="nextStep"
-            :disabled="!checkList[activeStep].status"
           >
             {{ activeStep === 'colors' ? 'Done' : 'Next step' }}
           </base-button>
@@ -47,20 +57,46 @@ export default {
     ...mapState('Onboarding', [
       'checkList',
       'activeStep'
-    ])
-  },
-  methods: {
-    nextStep () {
-      let next = 'background'
+    ]),
 
-      if (this.activeStep === 'background') {
-        next = 'colors'
+    steps () {
+      return Object.keys(this.checkList)
+    },
+
+    activeStepIndex () {
+      return this.steps.indexOf(this.activeStep)
+    },
+
+    next () {
+      if (this.activeStepIndex === this.steps.length - 1) {
+        return ''
       }
 
-      if (this.activeStep === 'colors') {
+      return this.steps[this.activeStepIndex + 1]
+    },
+
+    prev () {
+      if (this.activeStepIndex === 0) {
+        return ''
+      }
+
+      return this.steps[this.activeStepIndex - 1]
+    }
+  },
+  methods: {
+    back () {
+      if (this.prev === '') {
         this.skipSteps()
       } else {
-        this.$router.push({ path: `/dashboard/wizard/${next}` })
+        this.$router.push({ path: `/dashboard/wizard/${this.prev}` })
+      }
+    },
+
+    nextStep () {
+      if (this.next === '') {
+        this.skipSteps()
+      } else {
+        this.$router.push({ path: `/dashboard/wizard/${this.next}` })
       }
     },
 

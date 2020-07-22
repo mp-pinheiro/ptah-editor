@@ -1,14 +1,19 @@
 <template>
   <div class="b-wizard-modal__overlay">
-    <transition name="slide-fade">
-      <div class="b-wizard-modal__content" :style="customSize">
-        <router-view @skipSteps="skipSteps" />
+    <div class="b-wizard-modal__content" :style="customSize">
+      <div class="b-wizard-modal__loading" v-if="loading">
+        <base-loading></base-loading>
       </div>
-    </transition>
+      <transition name="fade" mode="out-in">
+        <router-view @skipSteps="skipSteps" />
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'TheWizardModal',
 
@@ -23,11 +28,20 @@ export default {
         styles.height = this.$route.meta.height
       }
       return styles
-    }
+    },
+
+    ...mapState('Onboarding', ['loading'])
+  },
+
+  created () {
+    this.setLoading(false)
   },
 
   methods: {
+    ...mapMutations('Onboarding', ['setLoading']),
+
     skipSteps () {
+      this.setLoading(true)
       this.$emit('skipSteps')
     }
   }
@@ -55,17 +69,24 @@ export default {
     border-radius: 10px
     min-width: 66rem
     min-height: 47rem
+    position: relative
+
+  &__loading
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    bottom: 0
+    background: rgba(255, 255, 255, .8)
+    z-index: 1001
 
 // Animations
-.slide-fade
-  &-enter-active
-    transition: all .2s ease
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
 
-  &-leave-active
-    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
-
-  &-enter,
-  &-leave-to
-    opacity: 0
-    transform: translateX(-0.8rem)
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>

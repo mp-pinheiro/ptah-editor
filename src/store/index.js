@@ -15,23 +15,6 @@ Vue.use(Vuex)
 Vue.use(vOutsideEvents)
 Vue.use(Vuebar)
 
-const demoLanding = 'https://s3.protocol.one/files/demoLanding080520_v1.json'
-const FONTS = {
-  'Lato': {
-    variants: ['regular'],
-    subsets: ['latin', 'cyrillic']
-  },
-  'Montserrat': {
-    variants: ['regular'],
-    subsets: ['latin', 'cyrillic']
-  }
-}
-const SETUP_FONTS = {
-  'h1': 'Montserrat',
-  'p': 'Lato',
-  'btn': 'Montserrat'
-}
-
 const DEFAULT_CHECK_LIST = {
   logo: {
     status: false,
@@ -105,8 +88,8 @@ const COLORS = {
   text: '',
   button: '',
   buttonText: '',
-  add1: '',
-  add2: ''
+  buttonHover: '',
+  add1: ''
 }
 
 const state = {
@@ -114,20 +97,21 @@ const state = {
   landings: [],
   currentLanding: {
     settings: {
-      fonts: FONTS,
-      setupFonts: SETUP_FONTS,
+      fonts: {},
+      setupFonts: {},
       colors: COLORS,
       imageForPalette: null,
       palette: [],
       logo: ''
     },
-    checkList: DEFAULT_CHECK_LIST // landing check-list in navigation menu
+    checkList: DEFAULT_CHECK_LIST, // landing check-list in navigation menu
+    domain: null
   },
   isSaved: false,
   slug: '', // landing ID
   name: '',
   version: null, // landing version
-  defaultFavicon: 'https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/7b750777-57ba-4757-b864-140ac77e3395.png'
+  defaultFavicon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0bfcc243-e6a0-4a1c-b15d-495083344004.png'
 }
 
 const getters = {
@@ -199,7 +183,7 @@ const actions = {
           favicon: state.defaultFavicon,
           styles: {
             backgroundImage: state.Onboarding.background,
-            backgroundColor: '',
+            backgroundColor: state.Onboarding.backgroundColor,
             backgroundPositionX: 0,
             backgroundPositionY: 0,
             backgroundAttachment: 'fixed',
@@ -210,18 +194,21 @@ const actions = {
           css: '',
           cookiesPolicy: {
             enabled: false,
-            pdf: 'https://s3.protocol.one/src/o_1ohKcv.pdf'
+            pdf: 'https://cdn.ptah.pro/o_1ohKcv.pdf'
           },
           mailchimpUrl: false,
           mailchimpList: false,
           name: data.name,
-          fonts: FONTS,
-          setupFonts: SETUP_FONTS,
+          fonts: state.Onboarding.fonts,
+          setupFonts: state.Onboarding.setupFonts,
           colors: state.Onboarding.colors,
-          logo: state.Onboarding.logo
+          logo: state.Onboarding.logo,
+          videoElUrl: state.Onboarding.video,
+          firstScreen: state.Onboarding.firstScreen
         })
 
         landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)
+        landing.domain = data.domain
 
         commit('isSaved', false)
         commit('updateCurrentLanding', landing)
@@ -232,73 +219,6 @@ const actions = {
       })
       .catch((error) => {
         return Promise.reject(error)
-      })
-  },
-
-  /**
-   * Returns the demo landing page for the guest user
-   * @param dispatch
-   * @param slug
-   * @returns {Promise}
-   */
-  getLandingForUser ({ dispatch }, slug) {
-    return localStorage.getItem('guest') !== null ?
-      dispatch('fetchLandingFromFile', { slug, url: demoLanding }) : dispatch('getLandingData', slug)
-  },
-
-  /**
-   * Get landing from url
-   * @param commit
-   * @param slug
-   * @returns {Promise<Response>}
-   */
-  fetchLandingFromFile ({ state, commit }, { slug, url, name }) {
-    let nameLanding = name || state.name
-
-    return fetch(url)
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        data['slug'] = slug
-
-        if (nameLanding === '') {
-          nameLanding = data.name
-        }
-
-        commit('name', nameLanding)
-        data.settings['name'] = nameLanding
-
-        if (!data.settings.fonts) {
-          data.settings['fonts'] = FONTS
-        }
-
-        if (!data.settings.logo) {
-          data.settings['logo'] = state.Onboarding.logo
-        }
-
-        if (!data.settings.colors) {
-          data.settings['colors'] = _.merge(state.currentLanding.settings.colors, state.Onboarding.colors)
-        }
-
-        if (!data.settings.setupFonts) {
-          data.settings['setupFonts'] = SETUP_FONTS
-        }
-
-        if (!data.settings.checkList) {
-          data['checkList'] = DEFAULT_CHECK_LIST
-        }
-
-        if (!data.settings.styles.backgroundImage) {
-          data.settings['styles']['backgroundImage'] = state.Onboarding.background
-        }
-
-        commit('slug', slug)
-        commit('isSaved', false)
-        commit('version', 1)
-        commit('updateCurrentLanding', data)
-
-        return data
       })
   },
 
@@ -457,6 +377,7 @@ const actions = {
 
   storeColorSettings ({ state, commit }, colors) {
     const settings = _.merge({}, state.currentLanding.settings)
+
     Object.keys(settings.colors).forEach((key, index) => {
       settings.colors[key] = colors[index]
     })

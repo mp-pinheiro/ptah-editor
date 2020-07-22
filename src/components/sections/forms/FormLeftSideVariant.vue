@@ -51,7 +51,7 @@ const C_CUSTOM_1 = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_15rRBx.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/62fae3e9-cedc-49c1-be3e-d1b57b267040.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -106,14 +106,6 @@ const C_CUSTOM_2 = [
 ]
 
 const SCHEMA_CUSTOM = {
-  mainStyle: {
-    styles: {
-      'background-size': 'cover',
-      'background-color': 'rgba(21, 28, 68, 1)',
-      'background-repeat': 'no-repeat',
-      'background-attachment': 'scroll'
-    }
-  },
   components: _.merge({}, C_CUSTOM_1),
   components2: _.merge({}, C_CUSTOM_2),
   container: {
@@ -163,7 +155,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_1Nioez.png',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/671ec67e-b2ab-4d7e-8e2d-efea2df2bc24.png',
 
   group: GROUP_NAME,
 

@@ -1,7 +1,7 @@
 <template>
   <div class="b-disabled-mobile-mode">
     <img
-      src="https://s3-eu-west-1.amazonaws.com/dev.s3.ptah.super.com/image/61e45e4c-ebf7-485d-bd7b-d30bd0640493.png"
+      src="https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/280afe9a-21e5-4ea4-83aa-397a2b497242.png"
       class="b-disabled-mobile-mode__pic"
       alt="">
     <div class="b-disabled-mobile-mode__text">

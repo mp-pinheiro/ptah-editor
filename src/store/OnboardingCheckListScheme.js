@@ -7,7 +7,13 @@ export default {
   background: {
     status: false,
     text: 'Background image',
-    description: 'Click on URL to upload image. Paste URL in the field. Replace it if needed.'
+    description: 'Background is simply the background behind all landing elements. You can style it with a solid color, a gradient, or a pattern.'
+  },
+  firstScreen: {
+    status: false,
+    text: 'First Screen',
+    description: `First Screen is responsible for a site overall layout. You can use a game image. Click the URL to 
+    upload an image. Paste the resource link in the image field.`
   },
   colors: {
     status: false,

@@ -39,6 +39,8 @@ export default {
     left: 0
     height: 9rem
 
+    background-color: #fff
+
     & > div
       border-top: 1px solid $ligth-grey
       height: 100%

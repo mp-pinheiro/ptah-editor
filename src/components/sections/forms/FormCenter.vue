@@ -64,10 +64,6 @@ const C_CUSTOM = [
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)',
-      'background-position': '50% 50%',
-      'background-color': '#000',
-      'background-size': 'cover',
       'padding-top': '62px',
       'padding-bottom': '236px'
     },
@@ -94,7 +90,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_1LlVoh.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0f8e7cf3-44ab-42df-9792-ab8fa3bae8c8.jpg',
 
   group: GROUP_NAME,
 

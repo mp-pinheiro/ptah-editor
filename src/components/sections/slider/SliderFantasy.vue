@@ -181,7 +181,7 @@ let [
 const C_CUSTOM_CONTAINER = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/images/slider_ash_1.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/da4f29d0-038d-454d-9326-7ca8afe8c912.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -197,7 +197,7 @@ const C_CUSTOM_CONTAINER = {
 const C_CUSTOM_CONTAINER2 = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/images/slider_ash_2.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b1cb5cfd-274d-459e-a524-b69be9f42cfc.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -213,7 +213,7 @@ const C_CUSTOM_CONTAINER2 = {
 const C_CUSTOM_CONTAINER3 = {
   styles: {
     'background-color': '#000000',
-    'background-image': 'url(https://s3.protocol.one/images/slider_ash_3.jpg)',
+    'background-image': 'url(https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/b469a8ba-1aba-4027-9279-383d3e4668f7.jpg)',
     'background-size': 'cover',
     'padding-top': '32px',
     'padding-bottom': '64px'
@@ -229,7 +229,6 @@ const C_CUSTOM_CONTAINER3 = {
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-color': 'transparent',
       'height': '80vh'
     },
     swiper: {
@@ -305,7 +304,7 @@ export default {
 
   inject: ['device', 'isExpanded'],
 
-  cover: 'https://s3.protocol.one/images/ZCAexs7b_cover_s.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0a37f52b-ab54-4457-a3a0-fc55ea1b6dfe.jpg',
 
   data () {
     return {

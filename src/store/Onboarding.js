@@ -9,15 +9,36 @@ const COLORS = {
   text: '',
   button: '',
   buttonText: '',
-  add1: '',
-  add2: ''
+  buttonHover: '',
+  add1: ''
+}
+
+const FONTS = {
+  'Lato': {
+    variants: ['regular'],
+    subsets: ['latin', 'cyrillic']
+  },
+  'Montserrat': {
+    variants: ['regular'],
+    subsets: ['latin', 'cyrillic']
+  }
+}
+const SETUP_FONTS = {
+  'h1': 'Montserrat',
+  'p': 'Lato',
+  'btn': 'Montserrat'
 }
 
 const defaultState = {
   name: '', // new project name
   logo: '',
+  video: '',
   background: '',
+  backgroundColor: '#fafafa',
+  firstScreen: '',
   colors: COLORS,
+  fonts: FONTS,
+  setupFonts: SETUP_FONTS,
   imageForPalette: null,
   palette: null,
   checkList: CheckList, // onboarding check-list
@@ -25,7 +46,8 @@ const defaultState = {
   goal: '', // selected goal id
   goals: Goals,
   presets: Presets,
-  preset: null // selected preset object
+  preset: null, // selected preset object,
+  loading: false
 }
 
 export default {
@@ -40,8 +62,20 @@ export default {
       state.logo = value
     },
 
+    setVideo (state, value) {
+      state.video = value
+    },
+
     setBackground (state, value) {
       state.background = value
+    },
+
+    setFirstScreen (state, value) {
+      state.firstScreen = value
+    },
+
+    setBackgroundColor (state, value) {
+      state.backgroundColor = value
     },
 
     setActiveStep (state, value) {
@@ -68,6 +102,14 @@ export default {
       state.colors = value
     },
 
+    setFonts (state, value) {
+      state.fonts = value
+    },
+
+    setSetupFonts (state, value) {
+      state.setupFonts = value
+    },
+
     setGoal (state, value) {
       state.goal = value
     },
@@ -77,9 +119,18 @@ export default {
     },
 
     resetState (state) {
-      for (let prop in state) {
-        state[prop] = defaultState[prop]
-      }
+      state.logo = ''
+      state.background = ''
+      state.backgroundColor = '#fafafa'
+      state.firstScreen = ''
+      state.colors = COLORS
+      state.palette = null
+      state.fonts = FONTS
+      state.setupFonts = SETUP_FONTS
+    },
+
+    setLoading (state, value) {
+      state.loading = value
     }
   },
 
@@ -90,6 +141,12 @@ export default {
 
     deactivateCheckListItem ({ state, commit }, item) {
       commit('deactivateCheckListItem', item)
+    },
+
+    deactivateCheckList ({ state, commit }) {
+      Object.keys(state.checkList).forEach((key, index) => {
+        commit('deactivateCheckListItem', key)
+      })
     },
 
     updateColors ({ state, commit }, palette) {

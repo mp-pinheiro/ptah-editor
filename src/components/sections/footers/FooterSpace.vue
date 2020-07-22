@@ -54,7 +54,7 @@ const C_CUSTOM = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/src/o_1Y54Cu.svg")',
+        'background-image': 'url("https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/569e943b-c06c-4a35-8e4b-a63ded1af580.svg")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -174,16 +174,10 @@ const C_CUSTOM = [
 
 const GROUP_NAME = 'Footer'
 const NAME = 'FooterSpace'
-const BG_SECTION = 'url(https://s3.protocol.one/src/o_cm1BL.jpg)'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
     styles: {
-      'background-image': BG_SECTION,
-      'background-color': '#151C44',
-      'background-size': 'cover',
-      'background-position': '50% 0%',
-      'background-repeat': 'no-repeat',
       'padding-top': '8px',
       'padding-bottom': '8px'
     }

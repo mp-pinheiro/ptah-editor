@@ -194,15 +194,15 @@ const GALLERY_ITEM = [
 ]
 
 let thumbs = [
-  'https://s3.protocol.one/src/o_110MxE.png',
-  'https://s3.protocol.one/src/o_2CscoP.png',
-  'https://s3.protocol.one/src/o_193U4o.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/84ac3381-1dd4-4651-87f4-f20864bfc99c.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0477fca1-efeb-44b9-a9ce-95da2f8daf8d.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/857c62b3-dbf5-4db0-8053-6dd7259209a3.png'
 ]
 
 let prev = [
-  'https://s3.protocol.one/src/o_OqWNO.png',
-  'https://s3.protocol.one/src/o_1TgrhD.png',
-  'https://s3.protocol.one/src/o_1puIZ.png'
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/2a0bee55-a452-4b13-a494-2ce1100ab667.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/f3967d52-630e-4e5d-b22e-ca332ef359ef.png',
+  'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/01a7a3e6-9953-4c24-a36d-58565e368023.png'
 ]
 
 const [
@@ -308,9 +308,6 @@ const NAME = 'GallerySwitch'
 
 const SCHEMA_CUSTOM = {
   mainStyle: {
-    styles: {
-      'background-image': 'url(https://s3.protocol.one/src/o_u02v0.jpg)'
-    },
     isChapter: true,
     isChapterStyle: true,
     isTextStyle: true,
@@ -363,7 +360,7 @@ export default {
 
   mixins: [defaults, sectionMedia],
 
-  cover: 'https://s3.protocol.one/src/o_Rg7b5.jpg',
+  cover: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/5a0f385a-4551-4870-9f7c-08338926d678.jpg',
 
   $schema: {
     mainStyle: types.Gallery,

@@ -2,17 +2,21 @@
   <div class="b-project-name">
     <h1>Welcome, {{user.name}}</h1>
 
-    <p class="b-project-name__intro">You’re just one step away from starting your landing! <br>
-    Create a new project.</p>
+    <p class="b-project-name__intro">
+      You’re just one step away from starting your landing! <br>
+      Create a new project.
+    </p>
 
     <div class="b-project-name__form">
       <base-text-field
+        ref="name"
         class="b-project-name__input"
         v-model="projectName"
         label="Project name"
         placeholder="Enter a project name"
         :hasError="invalid"
         :errorText="$t('d.cmodalErrorText')"
+        :maxLength="120"
       />
       <base-button
         color="transparent"
@@ -62,6 +66,17 @@ export default {
 
   created () {
     this.getUser()
+
+    try {
+      this.$gtag.event('Wizard_name', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
+  mounted () {
+    this.projectName = ''
+    this.$refs.name.$refs.inputText.focus()
   },
 
   methods: {
@@ -88,8 +103,10 @@ export default {
   h1
     font-weight: bold
     font-size: 2.6rem
-    line-height: 6.6rem
+    line-height: 1.6
     color: $dark-grey
+    max-width: 32rem
+    word-break: break-word
 
   &__intro
     font-weight: 600

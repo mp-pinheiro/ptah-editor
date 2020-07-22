@@ -25,6 +25,14 @@ export default {
     ...mapState('Onboarding', ['goals', 'presets'])
   },
 
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_goals', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapMutations('Onboarding', ['setGoal', 'setPreset']),
 
@@ -59,7 +67,7 @@ export default {
 
   &__list
     display: flex
-    justify-content: space-between
+    justify-content: flex-start
     flex-wrap: wrap
     width: 77.5rem
 

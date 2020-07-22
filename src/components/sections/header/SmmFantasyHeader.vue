@@ -138,12 +138,12 @@ import Seeder from '@editor/seeder'
 import defaults from '../../mixins/defaults'
 import sectionMedia from '../../mixins/sectionMedia'
 
-const [name, group, cover] = ['SmmFantasyHeader', 'Header', 'https://s3.protocol.one/images/cover2.jpg']
+const [name, group, cover] = ['SmmFantasyHeader', 'Header', 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/a35daa33-c78d-4061-87d0-ca3ab46619f1.jpg']
 const defaultComponents = [
   {
     element: {
       styles: {
-        'background-image': 'url("https://s3.protocol.one/images/gamelogo.png")',
+        'background-image': 'url("https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/c5b2389d-b319-45c9-9968-4abdf1513a8b.png")',
         'background-color': 'rgba(0, 0, 0, 0)',
         'background-repeat': 'no-repeat',
         'background-size': 'contain',
@@ -263,13 +263,7 @@ const defaultComponents2 = [
 ]
 const defaultSchema = {
   mainStyle: {
-    hamPosition: 21,
-    styles: {
-      'background-image': 'none',
-      'background-color': '#000',
-      'background-position': '50% 50%',
-      'background-size': 'cover'
-    }
+    hamPosition: 21
   },
   container: {
     styles: {
