@@ -35,6 +35,15 @@ export default {
       'logo'
     ])
   },
+
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_logo', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapActions('Onboarding', [
       'activateCheckListItem',

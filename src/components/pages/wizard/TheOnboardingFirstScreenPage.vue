@@ -62,6 +62,14 @@ export default {
 
   created () {
     this.setActiveStep('firstScreen')
+  },
+
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_firstScreen', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 </script>

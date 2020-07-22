@@ -43,6 +43,14 @@ export default {
     }
   },
 
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_welcome', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     start () {
       this.$router.push({ path: `/dashboard/wizard/logo` })

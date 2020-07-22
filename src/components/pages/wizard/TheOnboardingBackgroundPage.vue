@@ -36,6 +36,14 @@ export default {
     ])
   },
 
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_background', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapActions('Onboarding', [
       'activateCheckListItem',

@@ -52,6 +52,11 @@ export default {
     },
 
     openWindow () {
+      try {
+        this.$gtag.event('Click_create', { 'event_category': 'LANDING' })
+      } catch (e) {
+        console.log(e)
+      }
       this.$nextTick(() => {
         this.$router.push({ path: `/dashboard/wizard/name` })
       })
@@ -77,15 +82,14 @@ export default {
           sections: this.preset.sections
         })
           .then((response) => {
-            let url = this.preset.url
-
-            if (url === undefined || url === '') {
-              response['slug'] = response._id
-
-              return Promise.resolve(response)
-            } else {
-              return this.fetchLandingFromFile({ slug: response._id, url: url, name: this.name })
+            try {
+              this.$gtag.event('Create_complete', { 'event_category': 'LANDING' })
+            } catch (e) {
+              console.log(e)
             }
+
+            response['slug'] = response._id
+            return Promise.resolve(response)
           })
           .then((data) => {
             this.$nextTick(() => {

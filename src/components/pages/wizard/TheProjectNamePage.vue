@@ -64,6 +64,12 @@ export default {
 
   created () {
     this.getUser()
+
+    try {
+      this.$gtag.event('Wizard_name', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   mounted () {

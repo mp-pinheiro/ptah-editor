@@ -77,6 +77,14 @@ export default {
     }
   },
 
+  mounted () {
+    try {
+      this.$gtag.event('Wizard_templates', { 'event_category': 'LANDING' })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   methods: {
     ...mapMutations('Onboarding', [
       'setGoal',
