@@ -362,9 +362,13 @@ export default {
   },
 
   beforeDestroy () {
-    this.$builder.clear()
-    this.clearStateStack()
-    document.removeEventListener('keyup', this.keyUp)
+    this.$Progress.start()
+    this.saveStateHandler(this.builder.export('JSON')).finally(() => {
+      this.$builder.clear()
+      this.clearStateStack()
+      document.removeEventListener('keyup', this.keyUp)
+      this.$Progress.finish()
+    })
   },
 
   methods: {
@@ -390,7 +394,8 @@ export default {
     ]),
     ...mapActions('Landing', [
       'saveState',
-      'setState'
+      'setState',
+      'saveStateHandler'
     ]),
     ...mapActions('User', [
       'getUser'

@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import BuilderMainLeftMenu from './BuilderMainLeftMenu'
 import BuilderSidebar from './BuilderSidebar.vue'
 import BuilderTopBar from './BuilderTopBar.vue'
@@ -122,16 +122,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('Landing', [
-      'saveStateHandler'
-    ]),
-
     backToLandings () {
-      this.$Progress.start()
-      this.saveStateHandler(this.builder.export('JSON')).finally(() => {
-        this.$Progress.finish()
-        this.$router.push({ path: `/dashboard` })
-      })
+      this.$router.push({ path: `/dashboard` })
     }
   }
 }

@@ -100,6 +100,11 @@ export default {
       return dispatch('getPreview')
         .then((dataImg) => {
           let landObj = JSON.parse(landing)
+
+          // don't save a landing without sections
+          if (landObj.sections.length === 0) {
+            return false
+          }
           landObj.previewUrl = dataImg
 
           return dispatch('saveLanding', JSON.stringify(landObj), { root: true })
