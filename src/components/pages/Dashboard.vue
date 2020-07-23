@@ -153,6 +153,11 @@ export default {
   },
 
   mounted () {
+    const body = document.querySelector('body')
+    if (body.classList.contains('b-body_app')) {
+      body.classList.remove('b-body_app')
+    }
+
     this.clearSlug()
   }
 }
