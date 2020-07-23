@@ -346,7 +346,7 @@ export default {
 
       this.isMobile ? props = { 'media': media } : props = { 'styles': styles }
 
-      this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, props))
+      this.settingObjectSection.set(this.sandbox.container, _.merge(this.slot, props))
     },
 
     getPropValue (prop) {

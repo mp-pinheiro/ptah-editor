@@ -348,7 +348,7 @@ export default {
       if (this.container === VALID_TYPES[0]) {
         this.updateSettingOptions(_.merge({}, this.settingObjectOptions, props))
       } else {
-        this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.options, { styles: this.styles }, props))
+        this.settingObjectSection.set(this.sandbox.container, _.merge({ styles: this.styles }, props))
       }
     }
   },
