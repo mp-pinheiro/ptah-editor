@@ -5,7 +5,7 @@
     </base-caption>
     <div class="b-instruction" />
     <div class="b-panel__control">
-      <BaseCaption help="https://docs.stg.ptah.super.com/docs/customization/">
+      <BaseCaption>
         First screen Background image
       </BaseCaption>
       <div class="b-panel__col">

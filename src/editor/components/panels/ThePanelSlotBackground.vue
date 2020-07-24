@@ -220,7 +220,7 @@ export default {
       this.bgAttachment = styles['background-attachment'] === 'fixed'
     },
 
-    updateBgColor (value) {
+    updateBgColor () {
       let pickers = this.backgroundPickers
       let bgimage = this.sectionBgUrl
       let styles = { 'background-color': '' }
@@ -243,7 +243,7 @@ export default {
 
       this.isMobile ? props = { 'media': { 'is-mobile': styles } } : props = { 'styles': styles }
 
-      this.settingObjectSection.set(this.sandbox.container, _.merge({}, this.slot, props))
+      this.settingObjectSection.set(this.sandbox.container, _.merge(this.slot, props))
     },
 
     updateBgUrl () {

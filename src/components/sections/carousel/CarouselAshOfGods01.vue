@@ -1,4 +1,6 @@
 <script>
+import Swiper from 'swiper'
+import { mapActions } from 'vuex'
 import * as types from '@editor/types'
 import { merge } from 'lodash-es'
 import Seeder from '@editor/seeder'
@@ -88,10 +90,29 @@ export default {
         this.options = JSON.stringify(this.$sectionData.mainStyle.swiper)
       },
       deep: true
+    },
+
+    'device.type': {
+      handler (value) {
+        setTimeout(() => {
+          this.swiper.update()
+        }, 250)
+      }
+    },
+
+    'isExpanded.status': {
+      handler (value) {
+        setTimeout(() => {
+          this.swiper.update()
+        }, 250)
+      }
     }
   },
 
   methods: {
+    ...mapActions('Sidebar', [
+      'setControlPanel'
+    ])
   },
 
   created () {
@@ -101,6 +122,29 @@ export default {
 
     this.paginationClass = `custom-bullets-${randomPoneId()}`
     this.options = JSON.stringify(this.$sectionData.mainStyle.swiper)
+  },
+
+  mounted () {
+    this.$nextTick(function () {
+      let self = this
+      this.swiper = new Swiper(this.$refs.swiper, {
+        loop: false,
+        touchStartPreventDefault: false,
+        navigation: {
+          nextEl: this.$refs.next,
+          prevEl: this.$refs.prev
+        },
+        pagination: {
+          el: this.$refs.pagination,
+          clickable: true
+        },
+        on: {
+          slideChange: function () {
+            self.setControlPanel(false)
+          }
+        }
+      })
+    })
   }
 }
 </script>
@@ -125,6 +169,7 @@ export default {
       <div class="b-grid__row">
         <div :class="`b-grid__col-${$sectionData.mainStyle.swiper.frameWidth}`">
           <div
+            ref="swiper"
             :data-options="options"
             class="swiper-container b-gallery-carousel-body">
 
@@ -141,12 +186,14 @@ export default {
 
             <!-- Navigation -->
             <div
+              ref="next"
               :style="{'color': $sectionData.mainStyle.swiper.navColor }"
               v-show="$sectionData.mainStyle.galleryImages.length > 1 && $sectionData.mainStyle.swiper.showNavigation"
               class="swiper-button-next">
               <icon-base name="galleryArrowRight" height="50"></icon-base>
             </div>
             <div
+              ref="prev"
               :style="{'color': $sectionData.mainStyle.swiper.navColor }"
               v-show="$sectionData.mainStyle.galleryImages.length > 1 && $sectionData.mainStyle.swiper.showNavigation"
               class="swiper-button-prev">
@@ -162,6 +209,7 @@ export default {
               }
             </v-style>
             <div
+              ref="pagination"
               :class="paginationClass"
               v-show="$sectionData.mainStyle.galleryImages.length > 1 && $sectionData.mainStyle.swiper.showPagination"
               class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
