@@ -131,10 +131,10 @@ export default {
           return this.publish({ id, file })
         })
         .then((data) => {
-          console.log(data)
           this.updateCurrentLanding(Object.assign(this.currentLanding, {
             domain: data.domain
           }))
+          this.domainLocalName = data.domain
         })
         .catch((error) => {
           console.warn(error)
