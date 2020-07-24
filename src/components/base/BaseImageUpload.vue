@@ -80,7 +80,7 @@ export default {
     uploadFileAndHandleData (event) {
       this.uploadFile(event)
         .then((response) => {
-          this.url = response.cdnUrl
+          this.url = response.data.cdnUrl
         })
         .catch((error) => console.warn(error))
     },
