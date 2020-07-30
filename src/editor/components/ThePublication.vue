@@ -43,6 +43,7 @@
                 https://
                 <input
                   type="text"
+                  @keypress="clearErrors"
                   v-model="domainLocalName">
                 .ptah.me
               </template>
@@ -135,10 +136,19 @@ export default {
             domain: data.domain
           }))
           this.domainLocalName = data.domain
+
+          try {
+            this.$gtag.pageview({
+              page_path: '/publication'
+            })
+            window.fbq('track', 'publication')
+          } catch (e) {
+            // dev mode
+          }
         })
         .catch((error) => {
-          console.warn(error)
-          this.domainLocalErrorText = 'This name already exists'
+          this.domainLocalError = true
+          this.domainLocalErrorText = error.response.status === 409 ? 'This name already exists' : 'Something went wrong'
           this.$message.error('Publication failed', {
             duration: 2500,
             dismissible: false
@@ -157,8 +167,12 @@ export default {
           id
         })
       }
-    }
+    },
 
+    clearErrors () {
+      this.domainLocalError = false
+      this.domainLocalErrorText = ''
+    }
   }
 }
 </script>
@@ -293,7 +307,10 @@ export default {
 
     &--error
       position: absolute
-      bottom: .5rem
+      bottom: -1.5rem
+      left: 0
+      right: 0
+      text-align: center
       color: $orange
 
   &__loading
