@@ -60,7 +60,6 @@
           >
             {{ $t('nav.preview') }}
           </BaseButton>
-          <!-- @click="$emit('export', $event)" -->
           <BaseButton
             class="b-on-boarding-tips-step-9"
              @click="showPublish = true"
@@ -70,6 +69,10 @@
           >
             {{ $t('nav.publish') }}
           </BaseButton>
+
+          <div class="b-top-bar-menu__user" @click="redirectToAccount">
+            {{shortName}}
+          </div>
         </div>
       </div>
     </div>
@@ -119,6 +122,10 @@ export default {
       'onBoarding'
     ]),
 
+    ...mapState('User', [
+      'user'
+    ]),
+
     modalContentID () {
       return this.$route.path.split('/')[4] || ''
     },
@@ -129,6 +136,14 @@ export default {
 
     emptySections () {
       return !this.builder.sections.length
+    },
+
+    name () {
+      return this.user ? this.user.name : ''
+    },
+
+    shortName () {
+      return this.getShortName(this.name)
     }
   },
 
@@ -137,6 +152,10 @@ export default {
       'clearSettingObject',
       'setControlPanel'
     ]),
+
+    redirectToAccount () {
+      window.location.href = `${process.env.VUE_APP_DOMAIN}/account`
+    },
 
     setDevice (type) {
       this.$emit('setDevice', type)
@@ -160,6 +179,16 @@ export default {
 
     openHelpPage () {
       window.open(process.env.VUE_APP_HELP)
+    },
+
+    getShortName (name) {
+      if (!name || name === '') {
+        return
+      }
+
+      const matches = name.match(/[^aeiouy]/gi)
+
+      return matches.slice(0, 2).join('')
     }
   }
 }
@@ -185,6 +214,22 @@ export default {
     display: flex
     align-items: center
     justify-content: space-between
+    &__user
+      width: 3.6rem
+      height: 3.6rem
+      border-radius: 50%
+      background: $grey-middle
+      color: $white
+      display: flex
+      justify-content: center
+      align-items: center
+      cursor: pointer
+      margin-left: 1rem
+      transition: all .2s ease-out
+      font-weight: 300
+      &:hover
+        background: $dark-grey
+
     &__left
       order: 1
       width: 45%
@@ -204,6 +249,7 @@ export default {
 
       display: flex
       justify-content: flex-end
+      align-items: center
       button
         margin: 0 1rem
         @media only screen and (max-width: 1100px)
