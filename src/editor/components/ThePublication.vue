@@ -141,7 +141,7 @@ export default {
             this.$gtag.pageview({
               page_path: '/publication'
             })
-            window.fbq('track', 'publication')
+            window.fbq('trackCustom', 'publication')
           } catch (e) {
             // dev mode
           }

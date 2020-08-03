@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
+import { reverse } from 'lodash-es'
 import BaseScrollContainer from '../base/BaseScrollContainer'
 
 export default {
@@ -26,7 +27,11 @@ export default {
       'name',
       'goal',
       'preset'
-    ])
+    ]),
+
+    landingsReverse () {
+      return reverse(this.landings)
+    }
   },
 
   methods: {
@@ -175,7 +180,7 @@ export default {
       </figure>
 
       <!-- cards -->
-      <figure v-for="(item, index) in landings" :key="index" class="b-dashboard__item" @click="openLanding(item)">
+      <figure v-for="(item, index) in landingsReverse" :key="index" class="b-dashboard__item" @click="openLanding(item)">
         <div class="b-dashboard__item-cell">
           <div class="b-dashboard__item-icons">
             <a @click.stop="openSettigs(item)" class="b-dashboard__icon" tooltip="Settings">
