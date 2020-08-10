@@ -62,7 +62,7 @@
           </BaseButton>
           <BaseButton
             class="b-on-boarding-tips-step-9"
-             @click="showPublish = true"
+             @click="publish"
              color="main-green"
              size="small"
              :disabled="builder.sections.length === 0"
@@ -189,6 +189,18 @@ export default {
       const matches = name.match(/[^aeiouy]/gi)
 
       return matches.slice(0, 2).join('')
+    },
+
+    publish () {
+      this.showPublish = true
+
+      try {
+        window.carrotquest.track('Publish_button_click', {
+          page: 'editor/publish'
+        })
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
