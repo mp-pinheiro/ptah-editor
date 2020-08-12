@@ -49,6 +49,7 @@
                 <div class="b-panel__col">
                   <base-upload-input
                     v-model="pdfFile"
+                    :accept="'pdf/*'"
                     :label="$t('s.policyFile')"
                     placeholder="Paste URL or upload pdf file"
                   />
