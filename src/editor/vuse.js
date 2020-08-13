@@ -12,7 +12,8 @@ import {
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
-  getPoneStyles
+  getPoneStyles,
+  getLibs
 } from './util'
 import * as _ from 'lodash-es'
 
@@ -304,6 +305,7 @@ class Vuse {
     let fontsSetup = getFontsSetup(this.settings.setupFonts)
     let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
     let parallaxSetup = getParallaxSetup(this.sections)
+    let libs = getLibs(this.settings.libs)
 
     printDocument.open()
     printDocument.write(
@@ -326,11 +328,11 @@ class Vuse {
                 margin: 2rem;
                 text-align: center;
               }
-              
+
               .ptah-logo a {
                 opacity: .5;
               }
-              
+
               .ptah-logo a:hover {
                 opacity: 1
               }
@@ -352,6 +354,7 @@ class Vuse {
             ${parallaxSetup}
             <script src="${window.location.origin + '/js/cjs.js'}"></script>
             <script>${customJS}</script>
+            ${libs}
           </body>
         </html>`
     )

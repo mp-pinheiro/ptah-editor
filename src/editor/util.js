@@ -591,6 +591,19 @@ export function getPoneStyles (frag) {
   return defStyles
 }
 
+/**
+ * return tags the scripts for the libs
+ */
+export function getLibs (libs) {
+  let def = ''
+
+  libs.forEach(l => {
+    def += `<script src="${l}"></script>`
+  })
+
+  return def
+}
+
 export const LIST_ICONS = [
   'checkMark',
   'close',

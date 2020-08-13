@@ -10,7 +10,8 @@ import {
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
-  getPoneStyles
+  getPoneStyles,
+  getLibs
 } from '../util'
 
 /**
@@ -135,6 +136,7 @@ function download (assets, getBlob) {
       let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
       let parallaxSetup = getParallaxSetup(this.sections)
       let stylePoneList = getPoneStyles(frag)
+      let libs = getLibs(this.settings.libs)
 
       output.file('index.html',
         `<!DOCTYPE html>
@@ -161,11 +163,11 @@ function download (assets, getBlob) {
                 margin: 2rem;
                 text-align: center;
               }
-              
+
               .ptah-logo a {
                 opacity: .5;
               }
-              
+
               .ptah-logo a:hover {
                 opacity: 1
               }
@@ -190,6 +192,7 @@ function download (assets, getBlob) {
             ${script}
           </script>
           <script src="js/cjs.js"></script>
+          ${libs}
           </body>
         </html>`)
 
