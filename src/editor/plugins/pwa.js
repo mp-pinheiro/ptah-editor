@@ -188,11 +188,11 @@ function download (assets, getBlob) {
           ${getJquery}
           ${scrollSetup.setup}
           ${parallaxSetup}
+          <script src="js/cjs.js"></script>
+          ${libs}
           <script>
             ${script}
           </script>
-          <script src="js/cjs.js"></script>
-          ${libs}
           </body>
         </html>`)
 

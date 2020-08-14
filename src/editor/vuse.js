@@ -353,8 +353,8 @@ class Vuse {
             ${scrollSetup.setup}
             ${parallaxSetup}
             <script src="${window.location.origin + '/js/cjs.js'}"></script>
-            <script>${customJS}</script>
             ${libs}
+            <script>${customJS}</script>
           </body>
         </html>`
     )
