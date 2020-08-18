@@ -1,11 +1,11 @@
 <template>
-  <div class="b-publication-overlay">
-    <div class="b-publication">
-      <div class="b-publication__loading" v-if="loading">
+  <div class="b-connect-domain-overlay">
+    <div class="b-connect-domain">
+      <div class="b-connect-domain__loading" v-if="loading">
         <base-loading></base-loading>
       </div>
-      <div class="b-publication__close b-panel__close"
-        @click.prevent="$emit('close')"
+      <div class="b-connect-domain__close b-panel__close"
+        @click.prevent="$emit('toggleShowConnectDomain', false)"
       >
         <IconBase
           name="close"
@@ -15,27 +15,15 @@
         />
       </div>
       <header>
-        <h1>Publishing</h1>
+        <h1>Custom domain</h1>
       </header>
 
-      <div class="b-publication__container">
-        <div class="b-publication__save b-publication__container--side">
-          <IconBase name="landingColor" width="45" height="44" />
+      <div class="b-connect-domain__container">
+        <div class="b-connect-domain__options b-connect-domain__container--side">
+          <div class="b-connect-domain__option">
+            <p>Connect your custom domain</p>
 
-          <h2>Export your project!</h2>
-
-          <p>You can download your project as a zip file</p>
-
-          <base-button size="small" color="yellow-transparent" @click.prevent="$emit('zip')">Download ZIP</base-button>
-        </div>
-
-        <div class="b-publication__divider"></div>
-
-        <div class="b-publication__options b-publication__container--side">
-          <div class="b-publication__option">
-            <p>Use this address to access your page</p>
-
-            <div class="b-publication__domain" :class="{'error': domainLocalError}">
+            <div class="b-connect-domain__domain" :class="{'error': domainLocalError}">
               <IconBase name="globus" width="18" height="18" />
 
               <template v-if="isDomainProvided">
@@ -46,37 +34,44 @@
                 <input
                   type="text"
                   @keypress="clearErrors"
-                  v-model="domainLocalName">
-                .ptah.me
+                  v-model="domainLocalName"
+                  placeholder="ptah.pro"
+                />
               </template>
-
-              <div class="b-publication__domain--error" v-if="domainLocalError">
-                {{domainLocalErrorText}}
-              </div>
             </div>
 
-            <base-button
-              :disabled="isDomainProvided"
-              @click="publishLanding"
-              class="b-publication__button"
-              size="small"
-              color="gradient"
-            >
-              Publish
-            </base-button>
-          </div>
+            <div class="b-connect-domain__domain--error" v-if="domainLocalError">
+              {{domainLocalErrorText}}
+            </div>
 
-          <div class="b-publication__option disabled">
-            <p>Connect your custom domain</p>
+            <div class="b-connect-domain__hint-block">
+                <div>Please update the DNS records of your domain. </div>
+                Add the DNS record (e.g., A, CNAME, or TXT records)
+                pointing to 2 IP addresses 75.2.110.42, 99.83.211.206.
+                <div>Domain activation will take place no later than
+                24 hours.</div>
+            </div>
 
-            <base-button
-              class="b-publication__button"
-              size="small"
-              color="gradient"
-              @click.prevent="$emit('toggleShowConnectDomain', true)"
-            >
-              Connect
-            </base-button>
+            <div class="b-connect-domain__buttons">
+              <base-button
+                :disabled="isDomainProvided"
+                @click.prevent="$emit('toggleShowConnectDomain', false)"
+                class="b-connect-domain__button"
+                size="small"
+                color="transparent"
+              >
+                Back
+              </base-button>
+              <base-button
+                :disabled="isDomainProvided"
+                @click="publishLanding"
+                class="b-connect-domain__button"
+                size="small"
+                color="gradient"
+              >
+                Connect
+              </base-button>
+            </div>
           </div>
         </div>
       </div>
@@ -87,9 +82,13 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { merge } from 'lodash-es'
+import HintBlock from './HintBlock'
 
 export default {
-  name: 'ThePublication',
+  name: 'TheConnectDomain',
+  components: {
+    HintBlock
+  },
   props: {
     landingName: {
       required: true
@@ -113,12 +112,12 @@ export default {
     ...mapState(['currentLanding', 'name', 'slug']),
 
     isDomainProvided () {
-      return this.currentLanding.settings.domain.length > 0
+      return this.currentLanding.settings.personalDomain.length > 0
     }
   },
 
   mounted () {
-    this.domainLocalName = this.isDomainProvided ? this.currentLanding.settings.domain : this.name
+    this.domainLocalName = this.isDomainProvided ? this.currentLanding.settings.personalDomain : ''
   },
 
   methods: {
@@ -142,7 +141,7 @@ export default {
         })
         .then((data) => {
           this.updateCurrentLanding(merge(this.currentLanding, {
-            settings: { domain: data.domain }
+            settings: { personalDomain: data.domain }
           }))
           this.domainLocalName = data.domain
 
@@ -172,7 +171,7 @@ export default {
       } else {
         return this.setDomain({
           domain: this.domainLocalName,
-          personal: false,
+          personal: true,
           id
         })
       }
@@ -187,7 +186,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.b-publication-overlay
+.b-connect-domain-overlay
   position: fixed
   top: 0
   right: 0
@@ -201,7 +200,7 @@ export default {
 
   z-index: 1001
 
-.b-publication
+.b-connect-domain
   width: 77vw
   height: 50rem
   padding: 5.8rem 3rem 5.8rem
@@ -220,11 +219,33 @@ export default {
     padding: 0
 
   h1
-    font-weight: 600
-    font-size: 2.2rem
-    line-height: 3rem
+    font-weight: 500
+    font-size: 1.6rem
+    line-height: 2.2rem
     letter-spacing: 0.065em
-    color: $dark-grey !important
+    background: linear-gradient(270deg, #9E00FB 0%, #F9005B 100%)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+
+    position: relative
+
+    &:after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 5%
+      width: 35%
+      height: 1px
+      background: linear-gradient(270deg, #9E00FB 0%, #F9005B 100%)
+
+    &:before
+      content: ''
+      position: absolute
+      top: 50%
+      right: 5%
+      width: 35%
+      height: 1px
+      background: linear-gradient(90deg, #9E00FB 0%, #F9005B 108.11%)
 
   &__close
     position: absolute
@@ -263,61 +284,59 @@ export default {
       margin: 0 0 3.5rem
 
   &__option
-    font-size: 1.4rem
-    line-height: 1.9rem
+    font-size: 1.8rem
+    line-height: 2.5rem
+    font-weight: 600
     letter-spacing: 0.065em
     color: $dark-grey !important
     margin: 0 0 3rem
 
     p
-      text-align: left
+      text-align: center
 
   &__button
     margin-top: 2rem
 
   &__domain
+    max-width: 36rem
     background: #FBFBFB
     border-radius: 25px
-    padding: .9rem 2.5rem
+    padding: .9rem 1.6rem
+    height: 3.4rem
     text-align: left
     display: flex
     justify-content: flex-start
     align-items: center
-    margin-top: 2rem
     position: relative
+    margin: 2rem auto
+    font-size: 1.4rem
+    border: 1px solid transparent
 
+    &.error
+      border: 1px solid #F50064
     input
-      width: 25rem
-      border: 1px solid $ligth-grey
+      width: 100%
       padding: .5rem
       margin: 0 .5rem
       box-sizing: border-box
-      font-size: 1.6rem
-      font-weight: 600
-      background: linear-gradient(270deg,#9e00fb,#f9005b)
-      -webkit-background-clip: text
-      -webkit-text-fill-color: transparent
+      font-size: 1.4rem
+      background: none transparent
+      border: none
+
+      &::placeholder
+        color: #CDCDCD
 
     svg
       margin-right: 1.6rem
 
-    a
-      background: linear-gradient(270deg,#9e00fb,#f9005b)
-      -webkit-background-clip: text
-      -webkit-text-fill-color: transparent
-
-      &:hover
-        background: linear-gradient(270deg,#f9005b,#9e00fb)
-        -webkit-background-clip: text
-        -webkit-text-fill-color: transparent
-
     &--error
-      position: absolute
-      bottom: -1.5rem
-      left: 0
-      right: 0
-      text-align: center
-      color: $orange
+      color: #F60061
+      font-size: 1rem
+      line-height: 1.2rem
+      margin: -1rem auto 2rem
+      text-align: left
+      max-width: 36rem
+      padding-left: 1.2rem
 
   &__loading
     display: flex
@@ -329,4 +348,14 @@ export default {
     left: 0
     bottom: 0
     background: rgba(255, 255, 255, .8)
+
+  &__hint-block
+    font-size: 1.2rem
+    line-height: 1.4
+    font-weight: 500
+    width: 70%
+    text-align: left
+    margin: 0 auto
+    & > div
+      margin: .5rem 0
 </style>

@@ -271,7 +271,7 @@ export default {
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14)
     &[disabled]
       cursor: not-allowed
-      background-color: rgba($black, 0.12)
+      background: none rgba($black, 0.12)
       color: $white
   @media only screen and (max-width: 1100px)
     width: auto

@@ -102,7 +102,9 @@ const state = {
       colors: COLORS,
       imageForPalette: null,
       palette: [],
-      logo: ''
+      logo: '',
+      domain: null,
+      personalDomain: null
     },
     checkList: DEFAULT_CHECK_LIST, // landing check-list in navigation menu
     domain: null
@@ -205,7 +207,9 @@ const actions = {
           colors: state.Onboarding.colors,
           logo: state.Onboarding.logo,
           videoElUrl: state.Onboarding.video,
-          firstScreen: state.Onboarding.firstScreen
+          firstScreen: state.Onboarding.firstScreen,
+          domain: data.domain || '',
+          personalDomain: data.personalDomain || ''
         })
 
         landing.checkList = _.defaultsDeep(landing.checkList, DEFAULT_CHECK_LIST)

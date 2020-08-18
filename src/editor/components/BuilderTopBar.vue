@@ -77,23 +77,36 @@
       </div>
     </div>
 
-    <the-publication
+    <Publication
       v-if="showPublish"
       :landingName="landingName"
       :builder="builder"
       @zip="$emit('export', $event)"
-      @close="showPublish = false"></the-publication>
+      @close="showPublish = false"
+      @toggleShowConnectDomain="toggleShowConnectDomain"
+    />
+
+    <ConnectDomain
+      v-if="showConnectDomain"
+      :landingName="landingName"
+      :builder="builder"
+      @zip="$emit('export', $event)"
+      @toggleShowConnectDomain="toggleShowConnectDomain"
+      @close="closeConnectDomain"
+    />
   </div>
 </template>
 
 <script>
 import MenuPlatforms from './menu/MenuPlatforms.vue'
 import { mapState, mapActions } from 'vuex'
-import ThePublication from './ThePublication'
+import Publication from './ThePublication'
+import ConnectDomain from './TheConnectDomain'
 
 export default {
   components: {
-    ThePublication,
+    Publication,
+    ConnectDomain,
     MenuPlatforms
   },
 
@@ -109,7 +122,8 @@ export default {
 
   data: () => ({
     device: null,
-    showPublish: false
+    showPublish: false,
+    showConnectDomain: false
   }),
 
   computed: {
@@ -200,6 +214,19 @@ export default {
         })
       } catch (e) {
         console.log(e)
+      }
+    },
+
+    closeConnectDomain () {
+      this.showPublish = false
+      this.showConnectDomain = true
+    },
+
+    toggleShowConnectDomain (value) {
+      this.showConnectDomain = value
+
+      if (!value) {
+        this.showPublish = true
       }
     }
   }
