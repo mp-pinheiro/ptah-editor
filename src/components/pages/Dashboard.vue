@@ -34,6 +34,27 @@ export default {
     }
   },
 
+  created () {
+    this.$Progress.start()
+    this.fetchLandings().then(() => {
+      this.$Progress.finish()
+
+      if (!this.landings.length) {
+        this.openWindow()
+      }
+    })
+  },
+
+  mounted () {
+    const body = document.querySelector('body')
+    if (body.classList.contains('b-body_app')) {
+      body.classList.remove('b-body_app')
+    }
+
+    this.clearSlug()
+    this.clearPoneStyles()
+  },
+
   methods: {
     ...mapActions([
       'fetchLandings',
@@ -144,26 +165,15 @@ export default {
 
     skipSteps () {
       this.newLanding()
+    },
+
+    clearPoneStyles () {
+      let stylesElements = document.querySelectorAll('style[id^=pone]')
+
+      Array.from(stylesElements).forEach(node => {
+        node.remove()
+      })
     }
-  },
-  created () {
-    this.$Progress.start()
-    this.fetchLandings().then(() => {
-      this.$Progress.finish()
-
-      if (!this.landings.length) {
-        this.openWindow()
-      }
-    })
-  },
-
-  mounted () {
-    const body = document.querySelector('body')
-    if (body.classList.contains('b-body_app')) {
-      body.classList.remove('b-body_app')
-    }
-
-    this.clearSlug()
   }
 }
 </script>

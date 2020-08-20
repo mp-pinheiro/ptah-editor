@@ -185,7 +185,7 @@ export function getPseudoTemplate (poneId, data) {
     }`
   })
 
-  return `<style type="text/css" id="${poneId}">${content}</style>`
+  return `<style type="text/css" id="${poneId}-style">${content}</style>`
 }
 
 /**
