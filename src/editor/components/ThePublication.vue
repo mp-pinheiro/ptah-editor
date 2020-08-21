@@ -39,7 +39,9 @@
               <IconBase name="globus" width="18" height="18" />
 
               <template v-if="isDomainProvided">
-                <a :href="`https://${domainLocalName}`" target="_blank">https://{{domainLocalName}}</a>
+                <a :href="`https://${domainLocalName}`" target="_blank">
+                  https://{{domainLocalName}}
+                </a>
               </template>
               <template v-else>
                 https://
@@ -49,10 +51,10 @@
                   v-model="domainLocalName">
                 .ptah.me
               </template>
+            </div>
 
-              <div class="b-publication__domain--error" v-if="domainLocalError">
-                {{domainLocalErrorText}}
-              </div>
+            <div class="b-publication__domain--error" v-if="domainLocalError">
+              {{domainLocalErrorText}}
             </div>
 
             <base-button
@@ -168,6 +170,7 @@ export default {
 
     domain (id) {
       if (this.isDomainProvided) {
+        this.clearErrors()
         return Promise.resolve(true)
       } else {
         return this.setDomain({
@@ -312,12 +315,12 @@ export default {
         -webkit-text-fill-color: transparent
 
     &--error
-      position: absolute
-      bottom: -1.5rem
-      left: 0
-      right: 0
-      text-align: center
-      color: $orange
+      color: #F60061
+      font-size: 1rem
+      line-height: 1.2rem
+      margin: 0.5rem auto 0
+      text-align: left
+      max-width: 36rem
 
   &__loading
     display: flex

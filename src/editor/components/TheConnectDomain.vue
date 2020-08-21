@@ -27,13 +27,15 @@
               <IconBase name="globus" width="18" height="18" />
 
               <template v-if="isDomainProvided">
-                <a :href="`https://${domainLocalName}`" target="_blank">https://{{domainLocalName}}</a>
+                <a :href="`${prot}${domainLocalName}`" target="_blank">
+                  {{ prot }}{{domainLocalName}}
+                </a>
               </template>
               <template v-else>
-                https://
+                {{ prot }}
                 <input
                   type="text"
-                  @keypress="clearErrors"
+                  @keyup="clearErrors"
                   v-model="domainLocalName"
                   placeholder="ptah.pro"
                 />
@@ -54,7 +56,6 @@
 
             <div class="b-connect-domain__buttons">
               <base-button
-                :disabled="isDomainProvided"
                 @click.prevent="$emit('toggleShowConnectDomain', false)"
                 class="b-connect-domain__button"
                 size="small"
@@ -82,6 +83,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { merge } from 'lodash-es'
+import { isValidUrl } from '@editor/util'
 import HintBlock from './HintBlock'
 
 export default {
@@ -104,7 +106,8 @@ export default {
       loading: false,
       domainLocalError: false,
       domainLocalErrorText: '',
-      domainLocalName: ''
+      domainLocalName: '',
+      prot: 'https://'
     }
   },
 
@@ -129,6 +132,13 @@ export default {
      */
     publishLanding () {
       let id = this.slug
+
+      if (!isValidUrl(this.prot + this.domainLocalName)) {
+        this.domainLocalError = true
+        this.domainLocalErrorText = 'Invalid domain'
+
+        return
+      }
 
       this.loading = true
 
@@ -167,6 +177,7 @@ export default {
 
     domain (id) {
       if (this.isDomainProvided) {
+        this.clearErrors()
         return Promise.resolve(true)
       } else {
         return this.setDomain({
