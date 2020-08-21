@@ -2,7 +2,12 @@ import * as _ from 'lodash-es'
 import * as types from './types'
 
 export function isValidUrl(url) {
-  let pattern = new RegExp(/^(^https?:\/\/|\/\/)?([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/i)
+  var pattern = new RegExp('^(https?:\\/\\/|\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ //port
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i');
 
   if (pattern.test(url)) {
     return true
