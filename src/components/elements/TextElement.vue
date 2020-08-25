@@ -1,5 +1,7 @@
 <template>
-  <div class="b-text is-editable b-border" ref="text" @click.stop.stop=""
+  <div class="b-text is-editable b-border"
+    ref="text"
+    @click.stop.stop=""
     :path="path"
     :style="[objVarsMedia, objVarsTypo]"
     @mouseleave="mouseleave"

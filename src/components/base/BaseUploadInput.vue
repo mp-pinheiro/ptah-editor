@@ -15,7 +15,7 @@
       <input
         style="display: none;"
         type="file"
-        accept="image/*,video/mp4,video/x-m4v,video/*"
+        :accept="accept"
         ref="uploadInput"
         @change="onUploadClick"/>
       <a class="b-base-upload__button" @click.prevent="upload">
@@ -46,6 +46,10 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    accept: {
+      type: String,
+      default: 'image/*,video/mp4,video/x-m4v,video/*'
     }
   },
 

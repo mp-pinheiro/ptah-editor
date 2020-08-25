@@ -1,6 +1,7 @@
 import Draggable from 'vuedraggable'
 import { mapActions } from 'vuex'
 import forEach from 'lodash-es/forEach'
+import { getPseudoTemplate, randomPoneId } from '../../editor/util'
 
 export default {
   components: {
@@ -134,6 +135,19 @@ export default {
     },
 
     changeColors () {
+      // Headers color
+      let headersColor = this.$store.state.currentLanding.settings.colors.headers
+
+      if (headersColor !== '') {
+        let textPaths = this.getElementPropertyPath('TextElement', 'color')
+
+        textPaths.forEach(el => {
+          if (el.element.text.indexOf('<h') !== -1) {
+            this.$section.set(el.path, headersColor)
+          }
+        })
+      }
+
       // Text color
       let plainTextColor = this.$store.state.currentLanding.settings.colors.text
       if (plainTextColor !== '') {
@@ -148,7 +162,11 @@ export default {
           .concat(social)
           .concat(platform)
 
-        plainText.forEach(path => this.$section.set(path, plainTextColor))
+        plainText.forEach(el => {
+          if (el.element.text.indexOf('<h') === -1) {
+            this.$section.set(el.path, plainTextColor)
+          }
+        })
       }
 
       // Buttons color
@@ -158,18 +176,38 @@ export default {
 
       if (buttonColor !== '') {
         let buttonBgPaths = this.getElementPropertyPath('Button', 'background-color')
-        buttonBgPaths.forEach(path => this.$section.set(path, buttonColor))
+        buttonBgPaths.forEach(el => this.$section.set(el.path, buttonColor))
       }
 
       if (buttonTextColor !== '') {
         let buttonColorPaths = this.getElementPropertyPath('Button', 'color')
-        buttonColorPaths.forEach(path => this.$section.set(path, buttonTextColor))
+        buttonColorPaths.forEach(el => this.$section.set(el.path, buttonTextColor))
       }
 
       if (buttonHoverColor !== '') {
         let buttonColorPaths = this.getElementPropertyPath('Button', 'pseudo.hover.background-color', true)
-        buttonColorPaths.forEach(path => this.$section.set(path, `${buttonHoverColor} !important`))
+        buttonColorPaths.forEach(el => {
+          this.$section.set(el.path, `${buttonHoverColor} !important`)
+
+          if (el.element.id === null) {
+            let id = randomPoneId()
+
+            el.element.id = id
+          }
+          this.changePseudoStyle(el.element, 'background-color', buttonHoverColor + ' !important')
+        })
       }
+    },
+
+    changePseudoStyle (element) {
+      let el = document.querySelector(`style[id=${element.id}-style]`)
+      let styleTemplate = getPseudoTemplate(element.id, element.pseudo)
+
+      if (el) {
+        el.remove()
+      }
+
+      document.head.insertAdjacentHTML('beforeend', styleTemplate)
     },
 
     getElementPropertyPath (el, prop, root = false) {
@@ -182,7 +220,10 @@ export default {
           value.forEach((element, index) => {
             // TODO: element.label !== 'link' ---> fix coloring link in header
             if (element.name === el && !element.element.customColor && element.label !== 'link') {
-              paths.push(`$sectionData.${key}[${index}]${paramPath}.${prop}`)
+              paths.push({
+                element: element.element,
+                path: `$sectionData.${key}[${index}]${paramPath}.${prop}`
+              })
             }
           })
         }

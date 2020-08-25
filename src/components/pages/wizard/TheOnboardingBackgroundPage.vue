@@ -4,16 +4,30 @@
       Instruction
     </base-caption>
     <div class="b-instruction" />
-    <div class="b-panel__control">
-      <BaseCaption>
-        Background image
-      </BaseCaption>
-      <div class="b-panel__col">
-        <base-uploader
-          :value="background"
-          label="Image"
-          @change="uploadBackground"
-        />
+    <div class="b-row">
+      <div class="b-panel__control">
+        <BaseCaption>
+          Background image
+        </BaseCaption>
+        <div class="b-panel__col">
+          <base-uploader
+            :value="background"
+            label="Image"
+            @change="uploadBackground"
+          />
+        </div>
+      </div>
+      <div class="b-panel__control">
+        <BaseCaption>
+          Background color
+        </BaseCaption>
+        <div class="b-panel__col">
+          <BaseColorPicker
+            :label="$t('s.chooseColor')"
+            :value="backgroundColor"
+            @change="chooseColor"
+          />
+        </div>
       </div>
     </div>
   </TheOnboardingStepLayout>
@@ -32,7 +46,8 @@ export default {
 
   computed: {
     ...mapState('Onboarding', [
-      'background'
+      'background',
+      'backgroundColor'
     ])
   },
 
@@ -57,20 +72,31 @@ export default {
     ]),
     ...mapMutations('Onboarding', [
       'setActiveStep',
-      'setBackground'
+      'setBackground',
+      'setBackgroundColor'
     ]),
 
     uploadBackground (value) {
       this.setBackground(value)
+      this.toogleActivate(value)
+    },
+
+    skipSteps () {
+      this.$emit('skipSteps')
+    },
+
+    chooseColor (value) {
+      const color = value.rgba ? `rgba(${Object.values(value.rgba).toString()})` : value
+      this.setBackgroundColor(color)
+      this.toogleActivate(color)
+    },
+
+    toogleActivate (value) {
       if (value === '' || value === null) {
         this.deactivateCheckListItem('background')
       } else {
         this.activateCheckListItem('background')
       }
-    },
-
-    skipSteps () {
-      this.$emit('skipSteps')
     }
   }
 }
@@ -79,4 +105,12 @@ export default {
 <style lang="sass" scoped>
   .b-instruction
     background-image: url(https://cdn.ptah.pro/tst/5ef4948bf835ea00018fb774/741209ef-e283-4fa4-a4d7-55d7b3f07353.gif)
+  .b-row
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    width: 100%
+    max-width: 100%
+    & > div
+      margin-right: 1rem
 </style>

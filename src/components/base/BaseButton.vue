@@ -148,6 +148,9 @@ export default {
     background-color: $dark-grey
   &_blue
    +active
+   &[disabled]
+     cursor: not-allowed
+     color: $white
   &_gray
     background: $white
     color: $main-green

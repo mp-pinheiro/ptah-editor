@@ -192,6 +192,7 @@ const actions = {
           },
           script: '',
           css: '',
+          libs: [''],
           cookiesPolicy: {
             enabled: false,
             pdf: 'https://cdn.ptah.pro/o_1ohKcv.pdf'

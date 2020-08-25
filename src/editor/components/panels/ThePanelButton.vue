@@ -9,6 +9,11 @@
     <base-scroll-container backgroundBar="#999">
       <div class="b-panel__inner">
 
+        <!-- Button Id -->
+        <div class="b-panel__control">
+          <control-id />
+        </div>
+
         <!-- Typography -->
         <div class="b-panel__control">
           <base-caption>
@@ -63,6 +68,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import ControlId from './../controls/TheControlId'
 import ControlTypography from './../controls/TheControlTypography'
 import ControlBackgroundColor from './../controls/TheControlBackgroundColor'
 import ControlBackgroundImage from './../controls/TheControlBackgroundImage'
@@ -85,6 +91,7 @@ export default {
   },
 
   components: {
+    ControlId,
     IndicatorPlatform,
     ControlTypography,
     ControlAlign,

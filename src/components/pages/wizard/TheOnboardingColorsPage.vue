@@ -96,9 +96,9 @@ export default {
       colorLabels: {
         headers: 'Main title',
         text: 'Plain text',
-        button: 'Button background',
+        button: 'Button color',
         buttonText: 'Button text',
-        buttonHover: 'Button hover color',
+        buttonHover: 'Button hover background',
         add1: 'Additional color'
       }
     }

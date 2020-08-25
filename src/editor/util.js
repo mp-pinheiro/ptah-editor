@@ -185,7 +185,7 @@ export function getPseudoTemplate (poneId, data) {
     }`
   })
 
-  return `<style type="text/css" id="${poneId}">${content}</style>`
+  return `<style type="text/css" id="${poneId}-style">${content}</style>`
 }
 
 /**
@@ -589,6 +589,19 @@ export function getPoneStyles (frag) {
   })
 
   return defStyles
+}
+
+/**
+ * return tags the scripts for the libs
+ */
+export function getLibs (libs) {
+  let def = ''
+
+  libs.forEach(l => {
+    def += `<script src="${l}"></script>`
+  })
+
+  return def
 }
 
 export const LIST_ICONS = [

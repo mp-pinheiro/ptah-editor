@@ -288,7 +288,13 @@ export default {
     },
 
     poneId () {
-      return randomPoneId()
+      let id = this.options.id
+
+      if (id === null && this.type !== 'section') {
+        id = randomPoneId()
+      }
+
+      return id
     }
   },
 

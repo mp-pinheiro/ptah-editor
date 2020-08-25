@@ -14,6 +14,7 @@ const DEF_MARG_PADD = {
 }
 
 const DEFAULT_OPTIONS = {
+  id: null,
   text: '',
   classes: [],
   styles: _.merge({}, DEF_MARG_PADD),

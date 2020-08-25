@@ -8,6 +8,7 @@
     <div class="b-panel__col">
       <BaseUploadInput
         v-model="vUrl"
+        :accept="'video/mp4,video/x-m4v,video/*'"
         :label="$t('c.videoUrl')"
         @upload="updateSettings('url', vUrl)"
       />

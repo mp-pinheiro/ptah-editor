@@ -1,10 +1,12 @@
 <template>
-  <a class="b-button is-editable" ref="btn"
+  <a class="b-button is-editable"
+     ref="btn"
      @click.stop.prevent
      :path="path"
      :style="[objVarsMedia, objVarsResize, objVarsTypo]"
      @mouseleave="mouseleave"
      @mouseover.stop="mouseover"
+     :id="buttonId"
   >
     <slot v-if="!isActive"></slot>
 
@@ -187,8 +189,8 @@ export default {
       return this.settingObjectOptions.text
     },
 
-    storeEl () {
-      return this.settingObjectOptions
+    buttonId () {
+      return this.settingObjectOptions.id
     },
 
     savePath () {

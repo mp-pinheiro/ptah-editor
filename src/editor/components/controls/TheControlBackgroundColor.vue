@@ -66,11 +66,16 @@ export default {
     },
 
     changePseudoStyle (attr, style, pseudoClass = 'hover') {
-      const poneId = randomPoneId()
+      const poneId = this.settingObjectElement.id || randomPoneId()
+      let el = document.querySelector(`style[id=${poneId}-style]`)
+      let styleTemplate = getPseudoTemplate(poneId, this.settingObjectOptions.pseudo)
+
       this.pseudo[pseudoClass][attr] = style
       this.settingObjectElement.dataset.pone = poneId
 
-      let styleTemplate = getPseudoTemplate(poneId, this.settingObjectOptions.pseudo)
+      if (el) {
+        el.remove()
+      }
 
       document.head.insertAdjacentHTML('beforeend', styleTemplate)
     }
