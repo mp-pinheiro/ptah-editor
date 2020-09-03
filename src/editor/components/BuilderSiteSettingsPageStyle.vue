@@ -27,9 +27,9 @@
               </BaseCaption>
               <div class="b-panel__col">
                 <base-uploader
-                  key="0"
                   v-model="pageBackgroundUrl"
                   label="Image"
+                  type="image"
                 />
               </div>
 
@@ -104,6 +104,7 @@
                   v-model="bgVideo"
                   label="Video"
                   type="video"
+                  accept="video/mp4,video/x-m4v,video/*"
                 />
               </div>
               <div class="b-panel__col">

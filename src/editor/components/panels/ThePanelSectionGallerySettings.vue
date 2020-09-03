@@ -50,7 +50,7 @@
                 :value="galleryImages"
                 @change="updateGalleryImages"
                 label="Image"
-                multiple
+                :multiple="true"
               />
             </div>
           </div>

@@ -84,6 +84,8 @@ export default {
     <!-- VideoUrl -->
     <div class="b-video-control__control" v-if="typeC">
       <BaseUploadInput
+        type="video"
+        :accept="'video/mp4,video/x-m4v,video/*'"
         v-model="videoUrl"
         label="Video URL"
         @upload="changeVideoUrl(videoUrl)"

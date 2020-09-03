@@ -1,13 +1,13 @@
 <template>
   <div class="b-builder-layout"
     :class="[
-      {'_is-show-tips': isShowTips}
+      {'_is-show-tips': isShowTips }
     ]"
   >
     <BuilderTopBar
       class="b-builder-layout__top-bar"
       :class="{
-        'b-builder-layout__top-bar_down' : isShowSettingsPage
+        'b-builder-layout__top-bar-down' : isShowImageLibrary
       }"
       @backToLandings="backToLandings"
       @preview="$emit('preview', $event)"
@@ -20,7 +20,7 @@
       <div class="b-builder-layout-content__main-left-menu"
         :class="{
           '_expanded': isExpanded,
-          '_show-modal': isShowModal || isShowModalButton
+          '_show-modal': isShowModal || isShowModalButton || isShowImageLibrary
         }"
       >
         <BuilderMainLeftMenu
@@ -33,7 +33,7 @@
         :class="{
           'b-builder-layout-content__sidebar_expanded': isExpanded,
           'b-builder-layout-content__sidebar_expanded-content': isShowSettingsPage,
-          '_show-modal': isShowModal || isShowModalButton,
+          '_show-modal': isShowModal || isShowModalButton || isShowImageLibrary,
           '_ultra-wide': isUltraWide
         }"
       >
@@ -47,7 +47,7 @@
         :class="[
           {'b-builder-layout-content__main_expanded': isExpanded && !isShowSettingsPage},
           {'b-builder-layout-content__main_expanded-setting': isExpanded && isShowSettingsPage},
-          {'b-builder-layout-content__main_show-modal': isShowModal || isShowModalButton},
+          {'b-builder-layout-content__main_show-modal': isShowModal || isShowModalButton },
           {'b-builder-layout-content__main_ultra-wide': isUltraWide }
         ]"
       >
@@ -99,7 +99,8 @@ export default {
       'isExpanded',
       'device',
       'isShowModal',
-      'isShowModalButton'
+      'isShowModalButton',
+      'isShowImageLibrary'
     ]),
 
     ...mapState('OnBoardingTips', [
@@ -153,6 +154,9 @@ $topBarHeight: 6rem
 
     transition: all .2s ease-out
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+
+    &-down
+      z-index: 0
   &._is-show-tips
     .tips-layout
       content: ''
@@ -166,7 +170,7 @@ $topBarHeight: 6rem
 
 .b-builder-layout-content
   position: absolute
-  top: 0
+  top: $topBarHeight
   right: 0
   bottom: 0
   left: 0
@@ -174,6 +178,8 @@ $topBarHeight: 6rem
   display: flex
   align-items: stretch
   justify-content: flex-start
+
+  overflow: hidden
 
   width: 100%
   z-index: 0
@@ -198,7 +204,7 @@ $topBarHeight: 6rem
     width: 0
     position: relative
     z-index: 10
-    padding: 6rem 0 0
+    padding: 0
     opacity: 0
 
     order: 2
@@ -218,7 +224,7 @@ $topBarHeight: 6rem
       width: 48rem
   &__main
     position: absolute
-    top: $topBarHeight
+    top: 0
     right: 0
     bottom: 0
     left: 5rem

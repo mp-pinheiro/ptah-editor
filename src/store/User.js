@@ -7,7 +7,13 @@ export default {
     access_token: '',
     isAuth: false,
     mcLists: [], // user mailchimp lists,
-    user: {}
+    user: {},
+    library: {
+      uploads: [],
+      count: 0,
+      totalSize: 0,
+      quoteRest: 0
+    }
   },
 
   mutations: {
@@ -25,6 +31,10 @@ export default {
 
     setUser (state, value) {
       state.user = value
+    },
+
+    setUploads (state, value) {
+      state.library = value
     }
   },
 
@@ -146,6 +156,15 @@ export default {
         this.user = response
 
         return response
+      })
+    },
+
+    getUploads ({ commit }) {
+      return api.request({
+        url: 'user/uploads',
+        method: 'get'
+      }).then((response) => {
+        commit('setUploads', response)
       })
     }
   },

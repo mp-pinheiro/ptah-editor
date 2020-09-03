@@ -1,6 +1,10 @@
 <template>
   <div class="b-base-upload">
-    <base-loading v-if="loading" class="b-base-upload__loading"></base-loading>
+    <base-loading
+      v-if="loading"
+      class="b-base-upload__loading"
+    />
+
     <base-label class="b-base-upload__label" v-if="label">
       {{label}}
     </base-label>
@@ -11,27 +15,59 @@
         v-model="url"
         @focus="$emit('focus', $event), focus = true"
         @blur="$emit('blur', $event), focus = false"
-        :placeholder="placeholder">
+        :placeholder="placeholder"
+      >
+
       <input
         style="display: none;"
         type="file"
         :accept="accept"
         ref="uploadInput"
-        @change="onUploadClick"/>
+        @change="onUploadClick"
+      />
+
       <a class="b-base-upload__button" @click.prevent="upload">
-        <icon-base name="downloadCloud" width="24" color="#436FEE" title="Upload"></icon-base>
+        <icon-base
+          name="downloadCloud"
+          width="24"
+          color="#436FEE"
+          title="Upload"
+        />
       </a>
+
+      <div
+        v-if="error !== false && error.statusText !== ''"
+        class="b-base-upload__error"
+      >
+        {{ error.statusText }}
+      </div>
     </form>
+
+    <ImagesLibrary
+      :type="type"
+      :accept="accept"
+      v-if="isShowImageLibrary && isShow"
+      @close="closeImageGallery"
+      @select="selectedImageInGallery"
+      :src="url"
+    />
   </div>
 </template>
 
 <script>
 import api from '@store/api'
+import ImagesLibrary from '../../editor/components/modals/TheImagesLibrary'
+import { ERRORS, VALID_TYPES } from '@editor/util'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   model: {
     prop: 'value',
     event: 'upload'
+  },
+
+  components: {
+    ImagesLibrary
   },
 
   props: {
@@ -47,9 +83,14 @@ export default {
       type: String,
       default: ''
     },
+    type: {
+      type: String,
+      default: VALID_TYPES[0],
+      validator: value => VALID_TYPES.includes(value)
+    },
     accept: {
       type: String,
-      default: 'image/*,video/mp4,video/x-m4v,video/*'
+      default: 'image/*'
     }
   },
 
@@ -66,28 +107,59 @@ export default {
     return {
       url: this.value,
       focus: false,
-      loading: false
+      loading: false,
+      error: false,
+      isShow: false
     }
   },
 
+  computed: {
+    ...mapState('Sidebar', ['isShowImageLibrary'])
+  },
+
   methods: {
+    ...mapActions('Sidebar', ['toggleShowImageLibrary']),
+
     onUploadClick (event) {
       this.loading = true
+      this.error = false
+
       this.uploadFile(event)
         .then((response) => {
           this.url = response.data.cdnUrl
         })
-        .catch((error) => console.warn(error))
+        .catch((xhr) => {
+          let response = xhr.response.data
+          this.error = {
+            status: response.error.code,
+            statusText: ERRORS[response.error.message] || ''
+          }
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        })
         .finally(() => { this.loading = false })
     },
 
     upload () {
-      this.url = ''
-      this.$refs.uploadInput.click()
+      // this.$refs.uploadInput.click()
+      this.isShow = true
+      this.toggleShowImageLibrary(true)
     },
 
     uploadFile (event) {
       return api.uploadFileFromInputFile(event)
+    },
+
+    selectedImageInGallery (value) {
+      this.src = value
+      this.$emit('upload', value)
+      this.closeImageGallery()
+    },
+
+    closeImageGallery () {
+      this.isShow = false
+      this.toggleShowImageLibrary(false)
     }
   }
 }
@@ -106,7 +178,7 @@ export default {
     left: 0
     background: rgba(255,255,255, .5)
   &__label
-    margin-bottom: 0.4rem
+    margin-bottom: 0.8rem
   &__inner
     display: flex
     justify-content: space-between
@@ -142,4 +214,12 @@ export default {
     height: 16px
     cursor: pointer
     text-decoration: none
+
+  &__error
+    position: absolute
+    top: 90%
+    font-size: 1rem
+    line-height: 1.4rem
+    margin-top: .5rem
+    color: #D36083
 </style>

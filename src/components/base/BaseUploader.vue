@@ -13,22 +13,28 @@
           @remove="removeFile(index)"
           @labelProgress="labelChange"
           @getInputSrcFiles="getInputSrcFiles"
+          @showLibrary="isShow = true"
+          :inputId="inputId"
+          :index="index"
+          @setIndex="setIndex"
           />
       </draggable>
     </div>
     <div class="b-base-uploader__row b-base-uploader__row_add-multiple" v-if="multiple">
       <div class="b-base-uploader__preview">
-        <base-uploader-item-new
-          v-if="src"
-          :src="src"
-          :type="type"
-          :label="labelUploader"
-          :tooltipText="tooltipText"
-          @replace="replaceSrc"
-          @remove="removeSrc"
-          @labelProgress="labelChange"
-          @getInputSrcFiles="getInputSrcFiles"
-         />
+<!--        <base-uploader-item-new-->
+<!--          v-if="src"-->
+<!--          :src="src"-->
+<!--          :type="type"-->
+<!--          :label="labelUploader"-->
+<!--          :tooltipText="tooltipText"-->
+<!--          @replace="replaceSrc"-->
+<!--          @remove="removeSrc"-->
+<!--          @labelProgress="labelChange"-->
+<!--          @getInputSrcFiles="getInputSrcFiles"-->
+<!--          @showLibrary="isShow = true"-->
+<!--          :inputId="inputId"-->
+<!--        />-->
         <base-uploader-item-new
           v-if="hasAddMore"
           :multiple="multiple"
@@ -38,6 +44,10 @@
           @add="addFile"
           @labelProgress="labelChange"
           @getInputSrcFiles="getInputSrcFiles"
+          @showLibrary="isShow = true"
+          :inputId="inputId"
+          index="0"
+          @setIndex="setIndex"
         />
       </div>
     </div>
@@ -53,7 +63,11 @@
           @remove="removeSrc"
           @labelProgress="labelChange"
           @getInputSrcFiles="getInputSrcFiles"
-          />
+          @showLibrary="isShow = true"
+          :inputId="inputId"
+          index="0"
+          @setIndex="setIndex"
+        />
         <base-uploader-item-new
           v-if="hasAddMore"
           :multiple="multiple"
@@ -63,22 +77,39 @@
           @add="addFile"
           @labelProgress="labelChange"
           @getInputSrcFiles="getInputSrcFiles"
-          />
+          @showLibrary="isShow = true"
+          :inputId="inputId"
+          index="0"
+          @setIndex="setIndex"
+        />
       </div>
     </div>
+
+    <ImagesLibrary
+      :type="type"
+      :accept="accept"
+      v-if="isShowImageLibrary && isShow"
+      @close="closeImageGallery"
+      @select="selectedImageInGallery"
+      :src="src"
+    />
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
 import { cloneDeep } from 'lodash-es'
-
-const VALID_TYPES = ['image', 'video']
+import ImagesLibrary from '../../editor/components/modals/TheImagesLibrary'
+import { VALID_TYPES } from '@editor/util'
 
 export default {
   name: 'BaseUploader',
 
-  components: { Draggable },
+  components: {
+    Draggable,
+    ImagesLibrary
+  },
 
   props: {
     value: [Array, String],
@@ -89,6 +120,14 @@ export default {
       type: String,
       default: VALID_TYPES[0],
       validator: value => VALID_TYPES.includes(value)
+    },
+    accept: {
+      type: String,
+      default: 'image/*'
+    },
+    inputId: {
+      type: String,
+      default: ''
     }
   },
 
@@ -96,11 +135,16 @@ export default {
     return {
       src: null,
       items: [],
-      labelUploader: ''
+      labelUploader: '',
+      selectedElement: null,
+      isShow: false,
+      index: 0
     }
   },
 
   computed: {
+    ...mapState('Sidebar', ['isShowImageLibrary']),
+
     hasAddMore () {
       if (this.multiple) {
         return true
@@ -133,19 +177,27 @@ export default {
   },
 
   methods: {
+    ...mapActions('Sidebar', ['toggleShowImageLibrary']),
+
     addFile (file) {
       if (this.multiple) {
-        this.items.push(file)
+        if (this.index !== '0') {
+          this.items[this.index] = file
+        } else {
+          this.items.push(file)
+        }
       } else {
         this.src = file.path
       }
     },
 
     replaceFile (newFile, index) {
+      this.index = index
       this.items = this.items.map((item, i) => (i === index) ? newFile : item)
     },
 
     removeFile (index) {
+      this.index = index
       this.items.splice(index, 1)
     },
 
@@ -163,6 +215,21 @@ export default {
 
     getInputSrcFiles (value) {
       this.$emit('getInputSrcFiles', value)
+    },
+
+    selectedImageInGallery (value) {
+      this.addFile({ name: value, path: value })
+      this.$emit('getInputSrcFiles', value)
+      this.closeImageGallery()
+    },
+
+    closeImageGallery () {
+      this.isShow = false
+      this.toggleShowImageLibrary(false)
+    },
+
+    setIndex (value) {
+      this.index = value
     }
   }
 }
