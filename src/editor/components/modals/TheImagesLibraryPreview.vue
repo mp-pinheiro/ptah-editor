@@ -18,9 +18,13 @@
           autoplay="true"
           muted="true"
           controls="true"
+          v-if="isShowVideo"
           loop>
           <source :src="list[index].url">
         </video>
+        <div class="b-images-library-preview__loading" v-if="!isShowVideo">
+          <base-loading />
+        </div>
       </template>
       <span
         class="b-images-library-preview__prev"
@@ -84,7 +88,8 @@ export default {
   data () {
     return {
       selected: null,
-      index: 0
+      index: 0,
+      isShowVideo: true
     }
   },
 
@@ -120,6 +125,8 @@ export default {
         return
       }
 
+      this.toggleShowVideo()
+
       this.index--
     },
 
@@ -128,7 +135,17 @@ export default {
         return
       }
 
+      this.toggleShowVideo()
+
       this.index++
+    },
+
+    toggleShowVideo () {
+      this.isShowVideo = false
+
+      setTimeout(() => {
+        this.isShowVideo = true
+      }, 500)
     }
   }
 }
@@ -152,6 +169,7 @@ export default {
 
     position: absolute
     top: 50%
+    z-index: 1
     margin-top: -.8rem
 
     display: flex
@@ -168,12 +186,6 @@ export default {
     left: 2rem
   &__next
     right: 2rem
-  &__video
-    position: absolute
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
   &__image
     position: absolute
     top: 6rem
@@ -189,11 +201,19 @@ export default {
     background-repeat: no-repeat
     background-position: center
     background-size: contain
+
+    & > video
+      width: 100%
+      height: 100%
+
+      position: relative
+      z-index: 0
   &__controls
     position: absolute
     right: 0
     bottom: 0
     left: 0
+    z-index: 1
 
     height: 7rem
 
