@@ -345,7 +345,7 @@ export default {
   font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
 
   display: flex
-  justify-content: space-between
+  justify-content: flex-start
   align-items: flex-start
   flex-wrap: wrap
 
@@ -415,6 +415,8 @@ export default {
     line-height: 1.7rem
     letter-spacing: -0.01em
 
+    padding-top: .5rem
+
   &__label
     color: $dark-grey
     font-weight: 500
@@ -465,6 +467,7 @@ export default {
     font-weight: 500
     font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
     margin-right: 1.5rem
+    padding: 0
     cursor: pointer
     outline: none
 

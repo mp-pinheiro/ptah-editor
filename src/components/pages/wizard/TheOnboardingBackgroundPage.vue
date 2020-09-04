@@ -112,5 +112,9 @@ export default {
     width: 100%
     max-width: 100%
     & > div
+      width: 50%
       margin-right: 1rem
+    /deep/
+      .b-uploader-item__controls
+        max-width: 8rem
 </style>
