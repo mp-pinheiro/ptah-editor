@@ -1,7 +1,7 @@
 <template>
   <figure class="b-uploader-item">
 
-    <div class="b-uploader-item__preview" @click="onClick">
+    <div :id="inputId" class="b-uploader-item__preview" @click="onClick">
       <radial-progress-bar
         v-show="progress !== 100"
         :diameter="16"
@@ -40,7 +40,7 @@
              v-else>
           <IconBase name="downloadCloud" width="32" height="22" color="#00ADB6" />
 
-          <div>Upload file</div>
+          <div>Drag and drop</div>
 
           <input
             :multiple="multiple"
@@ -112,19 +112,27 @@
     <div class="b-uploader-item__url" :class="{ 'show' : openUrl }">
       <base-text-field
         :value="path"
-        :hasError="error"
+        :hasError="error !== false"
         errorText="Invalid image url"
         @input="onInput"
       />
+    </div>
+
+    <div
+      v-if="error !== false && error.statusText !== ''"
+      class="b-uploader-item__error"
+    >
+      {{ error.statusText }}
     </div>
 
   </figure>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import RadialProgressBar from 'vue-radial-progress'
 import * as _ from 'lodash-es'
-import { getCookie } from '@editor/util'
+import { getCookie, ERRORS } from '@editor/util'
 
 function getFormData (file) {
   let formData = new FormData()
@@ -140,12 +148,24 @@ export default {
   },
 
   props: {
+    target: {
+      type: String,
+      default: 'library'
+    },
     item: Object,
     multiple: Boolean,
     src: String,
     type: String,
     label: String,
-    tooltipText: String
+    tooltipText: String,
+    inputId: {
+      type: String,
+      default: ''
+    },
+    index: {
+      type: String,
+      default: '0'
+    }
   },
 
   data () {
@@ -182,8 +202,11 @@ export default {
   },
 
   methods: {
+    ...mapActions('Sidebar', ['toggleShowImageLibrary']),
+
     async getFileData (file) {
       this.progress = 0
+      this.error = false
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest()
 
@@ -203,8 +226,15 @@ export default {
               reject(error)
             }
           } else {
-            let error = { status: xhr.status, statusText: xhr.statusText }
-            reject(error)
+            let response = JSON.parse(xhr.response)
+            this.progress = 100
+            this.error = {
+              status: response.error.code,
+              statusText: ERRORS[response.error.message] || ''
+            }
+            setTimeout(() => {
+              this.error = false
+            }, 2000)
           }
         }
       })
@@ -257,15 +287,18 @@ export default {
         return
       }
 
-      if (!/^image\//.test(files[0].type)) {
-        return
-      }
-
       this.uploadFile(files[0])
     },
 
     onClick () {
-      this.$refs.input.click()
+      if (this.target === 'library') {
+        this.toggleShowImageLibrary(true)
+        this.$emit('showLibrary')
+        this.$emit('setIndex', this.index)
+      } else {
+        this.$refs.input.click()
+      }
+      this.error = false
     },
 
     onInput (value) {
@@ -310,10 +343,13 @@ export default {
 
 .b-uploader-item
   font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
+
   display: flex
-  justify-content: space-between
+  justify-content: flex-start
   align-items: flex-start
   flex-wrap: wrap
+
+  position: relative
 
   margin: 0 0 $size-step/2
   padding: 0
@@ -379,6 +415,8 @@ export default {
     line-height: 1.7rem
     letter-spacing: -0.01em
 
+    padding-top: .5rem
+
   &__label
     color: $dark-grey
     font-weight: 500
@@ -407,10 +445,12 @@ export default {
     height: 0
     opacity: 0
     transition: all .2s ease-out
+    display: none
 
     &.show
       height: 3.5rem
       opacity: 1
+      display: inline-block
 
   &__remove
     color: #A2A5A5
@@ -427,6 +467,7 @@ export default {
     font-weight: 500
     font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif
     margin-right: 1.5rem
+    padding: 0
     cursor: pointer
     outline: none
 
@@ -435,4 +476,12 @@ export default {
 
     svg
       margin-left: .7rem
+
+  &__error
+    position: absolute
+    top: 100%
+    font-size: 1rem
+    line-height: 1.4rem
+    margin-top: .5rem
+    color: #D36083
 </style>

@@ -86,6 +86,7 @@ export default {
           v-model="bgImage"
           @change="changeImage"
           :label="label"
+          inputId="controlImageBaseUploader"
         />
         <BaseSwitcher
           v-model="isStretchImage"

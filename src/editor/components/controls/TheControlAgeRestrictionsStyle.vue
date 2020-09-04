@@ -69,6 +69,11 @@ export default {
       }
     }
   },
+
+  mounted () {
+    this.elWidthValue = this.elWidth
+  },
+
   methods: {
     ...mapActions('Sidebar', [
       'updateSettingOptions'

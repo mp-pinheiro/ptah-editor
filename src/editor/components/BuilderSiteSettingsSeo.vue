@@ -6,8 +6,9 @@
         v-model="activeTab"
         class="b-seo-tabs"
       />
-      <div class="layout" v-if="activeTab === 'seo'">
-          <form @submit.prevent="applySettings" class="layout__content">
+      <div class="layout layout__og" v-if="activeTab === 'seo'">
+        <base-scroll-container>
+          <div class="layout-padding">
             <!-- Title & Favicon -->
             <div class="b-panel__control">
               <base-caption help="Page title">
@@ -24,12 +25,15 @@
               <base-caption help="Favicon">
                 Favicon
               </base-caption>
-              <div class="b-panel__col">
-                <BaseImageUpload
-                  v-model="favicon"
-                  :label="$t('s.favicon')"
-                  description="32 x 32 px, .png"
-                />
+              <div class="b-panel__control">
+                <div class="b-panel__col">
+                  <base-uploader
+                    v-model="favicon"
+                    type="image"
+                    :label="$t('s.favicon')"
+                    tooltipText="32 x 32 px, .png"
+                  />
+                </div>
               </div>
             </div>
 
@@ -48,15 +52,17 @@
               <div class="b-panel__control">
                 <div class="b-panel__col">
                   <base-upload-input
+                    type="pdf"
                     v-model="pdfFile"
-                    :accept="'pdf/*'"
+                    :accept="'application/pdf'"
                     :label="$t('s.policyFile')"
                     placeholder="Paste URL or upload pdf file"
                   />
                 </div>
               </div>
             </div>
-          </form>
+        </div>
+        </base-scroll-container>
       </div>
 
       <!-- Open Graph -->
@@ -125,6 +131,7 @@
                     v-model="ogField.value"
                     label="Video"
                     type="video"
+                    accept="video/mp4,video/x-m4v,video/*"
                   />
                 </div>
               </div>
@@ -294,7 +301,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.updateSettings()
   },
 
@@ -310,6 +317,8 @@ export default {
 
       this.pageTitle = settings.title
       this.favicon = settings.favicon
+
+      console.log(this.favicon)
 
       _.map(settings.ogTags, ({ property, content }) => {
         const item = _.find(this.ogFields, { id: property })

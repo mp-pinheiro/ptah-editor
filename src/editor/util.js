@@ -615,3 +615,10 @@ export const LIST_ICONS = [
   'preview'
 ]
 
+export const ERRORS = {
+  'file_already_uploaded': 'The file is already in the gallery',
+  'file_size_quote_exceeded': 'File size quote exceeded'
+}
+
+export const VALID_TYPES = ['image', 'video', 'pdf']
+

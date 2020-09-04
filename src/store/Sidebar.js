@@ -21,6 +21,7 @@ export default {
     },
     isShowModal: false, // show/hide modal of elemets settings
     isShowModalButton: false, // show/hide modal of button target settings
+    isShowImageLibrary: false,
     isAddSectionExpanded: false, // show/hide add section panel
     isSectionsTreeExpanded: false, // show/hide panel of sections tree
     isProgressPanelExpanded: false, // show/hide progress panel
@@ -138,6 +139,9 @@ export default {
     },
     isShowModalButton (state, value) {
       state.isShowModalButton = value
+    },
+    setShowImageLibrary (state, value) {
+      state.isShowImageLibrary = value
     }
   },
 
@@ -343,6 +347,10 @@ export default {
 
     toggleModalButton ({ state, commit }, value) {
       commit('isShowModalButton', (typeof value !== 'undefined') ? value : !state.isShowModalButton)
+    },
+
+    toggleShowImageLibrary ({ state, commit }, value) {
+      commit('setShowImageLibrary', (typeof value !== 'undefined') ? value : !state.isShowImageLibrary)
     }
   },
 

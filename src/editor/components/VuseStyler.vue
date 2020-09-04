@@ -5,7 +5,7 @@
     v-if="$builder.isEditing"
     :class="[
       { 'is-visible': isVisible && !editText },
-      { 'is-show-modal': isShowModal || isShowModalButton}
+      { 'is-show-modal': isShowModal || isShowModalButton || isShowImageLibrary }
     ]"
     @click.stop=""
     :path="`${name}-${section.id}`"
@@ -254,6 +254,7 @@ export default {
       'stylesBuffer',
       'isShowModal',
       'isShowModalButton',
+      'isShowImageLibrary',
       'hoverBy'
     ]),
     ...mapState('Landing', [
@@ -795,8 +796,12 @@ export default {
 
     upload (e) {
       e.stopPropagation()
-      let input = this.el.querySelectorAll('input')[1]
-      input.click()
+      this.setControlPanel('Image')
+
+      this.$nextTick(() => {
+        let el = document.getElementById('controlImageBaseUploader')
+        el.click()
+      })
     }
   }
 }

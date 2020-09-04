@@ -163,7 +163,7 @@ export default {
 
 .b-main-left-menu
   $this: &
-  padding-top: 6rem
+  // padding-top: 6rem
   width: 100%
   height: 100%
 

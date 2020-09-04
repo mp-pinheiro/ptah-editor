@@ -16,6 +16,13 @@
         <span class="b-uploader__progress">{{progress}}%</span>
       </radial-progress-bar>
 
+      <div
+        v-if="error !== false && error.statusText !== ''"
+        class="b-uploader__error"
+      >
+        {{ error.statusText }}
+      </div>
+
       <form>
         <input
           class="b-uploader__input"
@@ -25,15 +32,19 @@
           v-if="$builder.isEditing && mode === 'input'"
           />
 
-        <input class="b-upload--alternative" type="file" hidden @change="uploadFile($event.target.files[0])">
+        <input
+          class="b-upload--alternative"
+          type="file"
+          hidden
+          @change="uploadFile($event.target.files[0])"
+        />
       </form>
   </div>
 </template>
 
 <script>
 import RadialProgressBar from 'vue-radial-progress'
-import { getCookie } from '@editor/util'
-const VALID_TYPES = ['image', 'video']
+import { getCookie, ERRORS, VALID_TYPES } from '@editor/util'
 
 function getFormData (file) {
   let formData = new FormData()
@@ -75,7 +86,8 @@ export default {
   data () {
     return {
       progress: 100,
-      totalSteps: 100
+      totalSteps: 100,
+      error: false
     }
   },
 
@@ -98,6 +110,8 @@ export default {
   methods: {
     getFileData (file) {
       this.progress = 0
+      this.error = false
+
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest()
 
@@ -117,8 +131,16 @@ export default {
               reject(error)
             }
           } else {
-            let error = { status: xhr.status, statusText: xhr.statusText }
-            reject(error)
+            let response = JSON.parse(xhr.response)
+            this.progress = 100
+            this.error = {
+              status: response.error.code,
+              statusText: ERRORS[response.error.message] || ''
+            }
+            setTimeout(() => {
+              this.error = false
+            }, 2000)
+            reject(response.error)
           }
         }
       })
@@ -202,4 +224,12 @@ export default {
 
   &__progress
     font-size: 1.2rem
+
+  &__error
+    position: absolute
+    top: 102%
+    font-size: 1rem
+    line-height: 1.4rem
+    margin-top: .5rem
+    color: #D36083
 </style>
