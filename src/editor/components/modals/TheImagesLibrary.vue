@@ -119,7 +119,7 @@
                   ]">{{ totalSize }}Mb</span> / {{ total }}Mb
                 </span>
               </div>
-              <div
+              <!--div
                 class="b-line-text"
                 :class="[
                   { '_yellow' : widthLimit > 50 },
@@ -127,7 +127,7 @@
                 ]"
               >
                 <span>Upgrade</span> plan to upload your media without limits
-              </div>
+              </div-->
             </div>
           </div>
           <div class="b-images-library-footer__btn">
@@ -469,8 +469,7 @@ export default {
       max-width: 34rem
 
 .b-line-limit
-  width: 100%
-  max-width: 34rem
+  width: 34rem
   height: .6rem
   margin-bottom: .8rem
   background-color: #ffffff
