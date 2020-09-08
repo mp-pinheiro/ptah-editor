@@ -617,7 +617,8 @@ export const LIST_ICONS = [
 
 export const ERRORS = {
   'file_already_uploaded': 'The file is already in the gallery',
-  'file_size_quote_exceeded': 'File size quote exceeded'
+  'file_size_quote_exceeded': 'File size quote exceeded',
+  'file_size_limit_exceeded': 'Maximum file size 30 MB'
 }
 
 export const VALID_TYPES = ['image', 'video', 'pdf']
