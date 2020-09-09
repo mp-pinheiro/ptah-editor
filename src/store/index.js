@@ -174,6 +174,7 @@ const actions = {
 
         landing.settings = _.defaultsDeep(landing.settings, {
           ogTags: [],
+          metaTags: [],
           video: '',
           videoPosition: '',
           title: '',

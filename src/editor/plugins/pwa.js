@@ -11,7 +11,8 @@ import {
   getParallaxSetup,
   getJquerySetup,
   getPoneStyles,
-  getLibs
+  getLibs,
+  getCustomMetaTags
 } from '../util'
 
 /**
@@ -137,6 +138,7 @@ function download (assets, getBlob) {
       let parallaxSetup = getParallaxSetup(this.sections)
       let stylePoneList = getPoneStyles(frag)
       let libs = getLibs(this.settings.libs)
+      let metaTags = getCustomMetaTags(this.settings.metaTags)
 
       output.file('index.html',
         `<!DOCTYPE html>
@@ -147,6 +149,7 @@ function download (assets, getBlob) {
             <title>${title}</title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            ${metaTags}
             <link rel="shortcut icon" href="${icon}"/>
             <link rel="manifest" href="/manifest.json">
             <link rel="stylesheet" href="css/styles.css">

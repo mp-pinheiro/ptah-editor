@@ -604,6 +604,21 @@ export function getLibs (libs) {
   return def
 }
 
+/**
+ * return custom meta tags
+ */
+export function getCustomMetaTags (tags) {
+  let def = ''
+
+  tags.forEach(t => {
+    if (t.name !== '') {
+      def += `<meta name="${t.name}" content="${t.content}" />`
+    }
+  })
+
+  return def
+}
+
 export const LIST_ICONS = [
   'checkMark',
   'close',
