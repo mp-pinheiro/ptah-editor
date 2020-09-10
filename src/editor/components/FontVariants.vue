@@ -1,28 +1,28 @@
 <template>
   <div
-    class="subsets"
-    :class="{ 'subsets__active': open }"
+    class="variants"
+    :class="{ 'variants__active': open }"
     @click="open = !open"
     v-click-outside="close"
   >
-    <div class="subsets__toggle">
-      Languages ({{subsetSum}})
+    <div class="variants__toggle">
+      Style: {{ styleFont }}
     </div>
-    <div class="subsets__container-list">
+    <div class="variants__container-list">
       <base-scroll-container>
-        <ul class="subsets__list">
-          <li class="subsets__item"
-              v-for="(subset, index) in subsets"
+        <ul class="variants__list">
+          <li class="variants__item"
+              v-for="(variant, index) in variants"
               :key="index"
-              @click="toggleSubsetStatus(subset)"
+              @click="toggleVariantStatus(variant)"
           >
-            <span
-              class="subsets__check"
-              v-if="subset.status"
-            >
-              <icon-base name="checkMark" width="12" height="15" />
-            </span>
-            {{ subset.name }}
+          <span
+            class="variants__check"
+            v-if="variant.status"
+          >
+            <icon-base name="checkMark" width="12" height="15" />
+          </span>
+            {{ variant.name }}
           </li>
         </ul>
       </base-scroll-container>
@@ -31,17 +31,15 @@
 </template>
 
 <script>
-import { reduce, clone, find, filter } from 'lodash-es'
-
 export default {
-  name: 'FontSubsets',
+  name: 'FontVariants',
 
   props: {
     font: {
       type: Object,
       required: true
     },
-    subsets: {
+    variants: {
       type: Array,
       required: true
     }
@@ -54,10 +52,10 @@ export default {
   },
 
   computed: {
-    subsetSum () {
-      return reduce(this.subsets, (res, subset) => {
-        return subset.status ? res + 1 : res
-      }, 0)
+    styleFont () {
+      let styles = this.variants.filter(v => v.status)
+
+      return styles[0].name
     }
   },
 
@@ -66,15 +64,13 @@ export default {
       this.open = false
     },
 
-    toggleSubsetStatus (subset) {
-      let s = clone(this.subsets)
-
-      find(s, subset).status = !find(s, subset).status
-
-      let result = filter(s, { 'status': true }).map(o => o.name)
-
-      this.$emit('input', { font: this.font, subsets: result })
+    toggleVariantStatus (variant) {
+      this.$emit('input', { font: this.font, variant: variant.name })
     }
+  },
+
+  mounted () {
+    console.log(this.variants)
   }
 }
 </script>
@@ -83,7 +79,7 @@ export default {
 $w: 100%
 $h: 4rem
 
-.subsets
+.variants
   position: relative
   width: $w
   $this: &

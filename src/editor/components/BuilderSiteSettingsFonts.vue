@@ -2,7 +2,11 @@
   <div id="settings-fonts">
     <v-style v-if="visibleFonts.length > 0">
       <template v-for="font in visibleFonts">
-        {{ `@import url("https://fonts.googleapis.com/css?family=${font.family}:${font.variant}");` }}
+        {{
+          selectFonts[checkSpace(font.family)] === undefined
+            ? `@import url("https://fonts.googleapis.com/css?family=${font.family}");`
+            : ''
+        }}
       </template>
     </v-style>
     <form id="fonts-form" @submit.prevent="saveFonts">
@@ -60,8 +64,18 @@
       <base-fieldset class="library" v-if="isChange">
 
         <!-- dirty hack -->
-        <div class="library__close" @click="isChange = false">
-          <icon-base name="arrowDown" width="12" height="15" />
+        <div class="library__close">
+          <span
+            class="b-panel__close"
+            @click="isChange = false"
+          >
+            <IconBase
+              name="close"
+              width="13"
+              height="12"
+              color="#a2a5a5"
+            />
+          </span>
         </div>
 
         <div class="b-font-filter">
@@ -109,20 +123,26 @@
                         {{ font.category  }}
                       </span>-->
                     </div>
-                    <div class="b-simple-text" :style="{
-                        'font-family': font.family
-                      }">
-                      {{ defText }}
-                    </div>
                     <div class="b-fonts-list__item-button"
                       v-if="selectFonts[checkSpace(font.family)] !== undefined"
                     >
+                      <font-variants
+                        :font="font"
+                        :variants="getVariants(font)"
+                        @input="toggleFontVariant($event)"
+                      >
+                      </font-variants>
                       <font-subsets
                         :font="font"
                         :subsets="getSubsets(font)"
                         @input="toggleFontSubset($event)"
                       >
                       </font-subsets>
+                    </div>
+                    <div class="b-simple-text" :style="{
+                        'font-family': font.family
+                      }">
+                      {{ defText }}
                     </div>
 
                     <div
@@ -157,6 +177,8 @@ import { throttle } from 'lodash-es'
 
 import Vue from 'vue'
 import FontSubsets from './FontSubsets'
+import FontVariants from './FontVariants'
+
 Vue.component('v-style', {
   render: function (createElement) {
     return createElement('style', this.$slots.default)
@@ -166,7 +188,11 @@ Vue.component('v-style', {
 export default {
   name: 'BuilderSiteSettingsFonts',
 
-  components: { FontSubsets, BuilderModalContentLayout },
+  components: {
+    FontVariants,
+    FontSubsets,
+    BuilderModalContentLayout
+  },
 
   data () {
     return {
@@ -324,13 +350,17 @@ export default {
     applyFont (font) {
       this.activateCheckListItem('fonts')
       const name = this.checkSpace(font.family)
-      const variant = font.variant
+      const findRegular = font.variants.filter(v => v === 'regular')
+      const variants = findRegular || ['regular']
+
+      if (this.selectFonts[name] === undefined) {
+        this.selectFonts[name] = {
+          variants: variants,
+          subsets: ['latin']
+        }
+      }
 
       this.editFont = font
-      this.selectFonts[name] = {
-        variants: [variant],
-        subsets: ['latin']
-      }
       this.storeFonts()
       this.storeSetupFonts(font)
 
@@ -374,6 +404,23 @@ export default {
       this.storeFonts()
     },
 
+    getVariants (font) {
+      const name = this.checkSpace(font.family)
+
+      return font.variants.map((variant) => {
+        return {
+          name: variant,
+          status: this.selectFonts[name].variants.indexOf(variant) > -1
+        }
+      })
+    },
+
+    toggleFontVariant ({ font, variant }) {
+      const name = this.checkSpace(font.family)
+      this.selectFonts[name].variants = [variant]
+      this.storeFonts()
+    },
+
     removeFont (family) {
       if (this.editFont !== null && this.editFont.family === family) {
         this.editFont = null
@@ -413,7 +460,7 @@ export default {
 
         this.visibleFonts.push({
           family: el.family,
-          variant: el.variants[0],
+          variants: el.variants,
           category: el.category,
           subsets: el.subsets
         })
@@ -543,7 +590,7 @@ export default {
   &__item
     $this: &
     width: 27rem
-    height: 17rem
+    min-height: 10rem
     padding: 0
     margin: 0 0 1.5rem
     list-style: none
@@ -552,7 +599,7 @@ export default {
     flex-direction: column
     align-items: flex-start
 
-    border: 2px solid $main-green
+    border: 2px solid #575A5F
     border-radius: 10px
 
     position: relative
@@ -563,48 +610,37 @@ export default {
     &._selected
       flex-direction: column
       align-items: flex-start
+      border: 2px solid $main-green
 
     &-family
-      height: 5.8rem
+      height: 4.5rem
       font-size: 1.6rem
-      line-height: 5.8rem
+      line-height: 4.5rem
       letter-spacing: 0.065em
+      border-bottom: 1px solid #F4F4F4
 
       width: 100%
       overflow: hidden
       white-space: nowrap
       text-overflow: ellipsis
       padding: 0 1.8rem
-      ._applied &,
-      ._selected &
-        width: 50%
-      ._applied &:hover,
-      ._selected &:hover
-        width: 100%
 
     &._applied
-      //color: #fff
       background-color: rgba($main-green, .1)
       #{$this}-category
         color: #fff
+      #{$this}-family
+        border-bottom: 1px solid $main-green
     &-category
       color: $gray300
     &-button
-      display: block
-      position: absolute
-      top: 0
-      right: 0
-      &-apply
-        width: auto
+      width: 100%
+      display: flex
     &:hover
       .add-font
         display: flex
-      #{$this}-button
-        display: block
     &-check
       @include checkMark
-    &-family:hover ~ &-button
-      display: none
 
 .b-scrolled-content
   margin: 0
@@ -718,18 +754,20 @@ export default {
           display: flex
 
     &__sample
-      min-height: 10rem
+      min-height: 6rem
       display: flex
       align-items: center
-      padding: 1.3rem
-      font-size: 2.1rem
-      line-height: 2.5rem
+      padding: 1rem 1.3rem
+      font-size: 1.8rem
+      line-height: 1.4
       letter-spacing: 0.065em
       box-sizing: border-box
     &__font
-      height: 10rem
+      display: flex
+      align-items: center
+      min-height: 6rem
       position: relative
-      padding: 2rem
+      padding: 1rem 4rem 1rem 1.4rem
       background: rgba($main-green, 0.1)
       border-top: 2px solid $main-green
       box-sizing: border-box
@@ -740,13 +778,14 @@ export default {
         width: 100%
       &-usage
         font-weight: 800
-        font-size: 1.6rem
+        font-size: 1.4rem
         line-height: 2.2rem
         letter-spacing: 0.065em
         text-transform: uppercase
         color: $main-green
         text-align: left
         margin: 0 0.8rem 0 0
+        white-space: nowrap
       &-name
         font-size: 1.6rem
         line-height: 2rem
@@ -756,9 +795,9 @@ export default {
         @include checkMark
 
 .b-simple-text
-  height: 11.5rem
+  min-height: 6rem
   box-sizing: border-box
-  padding: .8rem 1.8rem
+  padding: .8rem 4rem 1.8rem 1.8rem
   font-size: 1.8rem
   line-height: 1.4
   letter-spacing: 0.065em
@@ -780,18 +819,20 @@ export default {
 
 .library__close
   position: absolute
-  right: 2rem
-  top: -4.4rem
+  right: 1.6rem
+  top: -5rem
   background: #fff
-  width: 2rem
-  height: 2rem
+  width: 3.6rem
+  height: 3.6rem
   display: flex
   justify-content: center
   align-items: center
   z-index: 10
   cursor: pointer
 
-  svg
-    fill: #A2A5A5
-    transform: rotate(90deg)
+  .b-panel__close
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
 </style>
