@@ -185,6 +185,10 @@ export default {
       return 'btn'
     },
 
+    storeEl () {
+      return this.settingObjectOptions
+    },
+
     storeText () {
       return this.settingObjectOptions.text
     },
