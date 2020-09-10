@@ -133,9 +133,9 @@ export default {
     font-size: 1.2rem
     padding: 1.4rem 0
   &_small
-    font-size: 1.2rem
+    font-size: 1.1rem
     padding: 1.2rem
-    min-width: 8.8rem
+    min-width: 4.8rem
     height: auto
   &_circle
     width: 4rem
