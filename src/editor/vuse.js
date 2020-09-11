@@ -9,12 +9,13 @@ import {
   getFontsNameStr,
   getFontsLanguages,
   getFontsSetup,
+  getFontsSetupStyle,
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
   getPoneStyles,
   getLibs,
-  getCustomMetaTags
+  getCustomMetaTags,
 } from './util'
 import * as _ from 'lodash-es'
 
@@ -304,6 +305,7 @@ class Vuse {
     let fontsNameStr = getFontsNameStr(this.settings.fonts)
     let fontsLanguages = getFontsLanguages(this.settings.fonts)
     let fontsSetup = getFontsSetup(this.settings.setupFonts)
+    let fontsSetupStyle = getFontsSetupStyle(this.settings.setupFontsStyle)
     let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
     let parallaxSetup = getParallaxSetup(this.sections)
     let libs = getLibs(this.settings.libs)
@@ -343,7 +345,7 @@ class Vuse {
           </head>
           <body class="b-body_preview" style="${bodyStyles}">
             ${(video) ? this.getVideoBg(video) : ''}
-            <div id="main" class="main" style="${fontsSetup}">
+            <div id="main" class="main" style="${fontsSetup};${fontsSetupStyle}">
               ${artboard.innerHTML}
             </div>
             <div class="ptah-logo">

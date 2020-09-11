@@ -203,6 +203,7 @@ const actions = {
           name: data.name,
           fonts: state.Onboarding.fonts,
           setupFonts: state.Onboarding.setupFonts,
+          setupFontsStyle: state.Onboarding.setupFontsStyle,
           colors: state.Onboarding.colors,
           logo: state.Onboarding.logo,
           videoElUrl: state.Onboarding.video,
@@ -355,6 +356,20 @@ const actions = {
   storeSaveSettingsSetupFonts ({ state, commit }, setupFonts) {
     const landingData = _.merge({}, state.currentLanding.settings, {
       setupFonts: setupFonts
+    })
+
+    commit('updateCurrentLandingSettings', landingData)
+    commit('isSaved', false)
+  },
+
+  /**
+   * Stores settings setup fonts
+   *
+   * @param {Object} setup fonts of settings data
+   */
+  storeSaveSettingsSetupFontsStyle ({ state, commit }, setupFontsStyle) {
+    const landingData = _.merge({}, state.currentLanding.settings, {
+      setupFontsStyle: setupFontsStyle
     })
 
     commit('updateCurrentLandingSettings', landingData)

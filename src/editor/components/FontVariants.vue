@@ -6,7 +6,7 @@
     v-click-outside="close"
   >
     <div class="variants__toggle">
-      Style: {{ styleFont }}
+      Style: {{ `${tempStyles.weight}${tempStyles.style === 'normal' ? '' : 'italic' }` }}
     </div>
     <div class="variants__container-list">
       <base-scroll-container>
@@ -36,6 +36,10 @@ export default {
 
   props: {
     font: {
+      type: Object,
+      required: true
+    },
+    tempStyles: {
       type: Object,
       required: true
     },

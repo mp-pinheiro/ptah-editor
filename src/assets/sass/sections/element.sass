@@ -146,12 +146,18 @@ $main-font-size: 6rem
         height: auto
         fill: inherit
 
+@mixin global-font ($property)
+  font-family: var($property) !important
+  font-style: var(#{$property}-style) !important
+  font-weight: var(#{$property}-style) !important
+
 .b-button
   $self: &
+  @include global-font(--global-font-btn)
+
   position: relative
 
   font-size: 3rem
-  font-family: var(--global-font-btn)
   line-height: 1.4
   text-decoration: none
   color: $black
@@ -245,7 +251,7 @@ $main-font-size: 6rem
     margin: 0.2rem
 
     font-size: 1.6rem
-    font-family: var(--global-font-btn)
+    @include global-font(--global-font-btn)
     word-break: keep-all
     overflow: hidden
 
@@ -285,7 +291,7 @@ $main-font-size: 6rem
     flex-grow: 1
     margin-right: 3rem
     transition: all ease-out .2s
-    font-family: var(--global-font-p) !important
+    @include global-font(--global-font-p)
     .is-mobile &,
     .is-tablet &
       width: 100%
@@ -310,7 +316,7 @@ $main-font-size: 6rem
   align-items: flex-start
 
   color: inherit
-  font-family: var(--global-font-p)
+  @include global-font(--global-font-p)
   &::selection,
   & ::selection
     color: #ff0
@@ -500,13 +506,13 @@ $main-font-size: 6rem
     padding: 0 1em
   & > div,
   & p
-    font-family: var(--global-font-p) !important
+    @include global-font(--global-font-p)
   & h1
-    font-family: var(--global-font-h1) !important
+    @include global-font(--global-font-h1)
   & h2
-    font-family: var(--global-font-h1) !important
+    @include global-font(--global-font-h2)
   & h3
-    font-family: var(--global-font-h1) !important
+    @include global-font(--global-font-h3)
 
 // Timer
 
@@ -532,7 +538,7 @@ $main-font-size: 6rem
 .b-timer
   color: #fff
   font-size: $main-font-size
-  font-family: var(--global-font-p)
+  @include global-font(--global-font-p)
   text-align: center
   padding: 0.8rem
   &.is-editable:hover
@@ -640,15 +646,15 @@ $main-font-size: 6rem
             text-align: var(--text-align) !important
             line-height: var(--line-height) !important
             color: var(--color) !important
-            font-family: var(--global-font-p) !important
+            @include global-font(--global-font-p)
             & p
-              font-family: var(--global-font-p) !important
+              @include global-font(--global-font-p)
             & h1
-              font-family: var(--global-font-h1) !important
+              @include global-font(--global-font-h1)
             & h2
-              font-family: var(--global-font-h1) !important
+              @include global-font(--global-font-h1)
             & h3
-              font-family: var(--global-font-h1) !important
+              @include global-font(--global-font-h1)
             .is-mobile &
               text-align: var(--mobile-text-align) !important
               font-size: var(--mobile-font-size) !important

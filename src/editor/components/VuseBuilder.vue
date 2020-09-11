@@ -9,7 +9,7 @@
   <div
     class="b-layout"
     id="ptah-board"
-    :style="`${fontsSetup}`"
+    :style="`${fontsSetup};${fontsSetupStyle}`"
   >
     <base-loading
       v-if="loading"
@@ -166,7 +166,7 @@ import BuilderLayout from './BuilderLayout.vue'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import * as _ from 'lodash-es'
 import ModalButton from './modals/TheModalButton'
-import { getFontsSetup } from '../util'
+import { getFontsSetup, getFontsSetupStyle } from '../util'
 
 import { sectionsGroups } from '@cscripts/sectionsGroups'
 import BaseLoading from '../../components/base/BaseLoading'
@@ -253,8 +253,16 @@ export default {
       return this.currentLanding.settings.setupFonts || {}
     },
 
+    setupFontsStyle () {
+      return this.currentLanding.settings.setupFontsStyle || {}
+    },
+
     fontsSetup () {
       return getFontsSetup(this.setupFonts)
+    },
+
+    fontsSetupStyle () {
+      return getFontsSetupStyle(this.setupFontsStyle)
     },
 
     components: {

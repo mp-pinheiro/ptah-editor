@@ -448,7 +448,7 @@ export function getFontsNameStr (fonts) {
   }
 
   for (let key in fonts) {
-    str += `${key}:400,600|`
+    str += `${key}:${fonts[key].variants}|`
   }
 
   return str
@@ -489,6 +489,27 @@ export function getFontsSetup (setupFonts) {
   for (let key in setupFonts) {
     if (setupFonts[key]) {
       arr.push(`--global-font-${key}: ${setupFonts[key]}`)
+    }
+  }
+
+  return arr.join(';')
+}
+
+/**
+ * Set css global variables for default fonts
+ * @param {Object}
+ */
+export function getFontsSetupStyle (setupFontsStyle) {
+  let arr = []
+
+  if (!setupFontsStyle) {
+    return ''
+  }
+
+  for (let key in setupFontsStyle) {
+    if (setupFontsStyle[key]) {
+      arr.push(`--global-font-${key}-style: ${setupFontsStyle[key].style}`)
+      arr.push(`--global-font-${key}-weight: ${setupFontsStyle[key].weight}`)
     }
   }
 

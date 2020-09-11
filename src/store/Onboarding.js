@@ -28,6 +28,11 @@ const SETUP_FONTS = {
   'p': 'Lato',
   'btn': 'Montserrat'
 }
+const SETUP_FONTS_STYLE = {
+  'h1': { style: 'normal', weight: '400' },
+  'p': { style: 'normal', weight: '400' },
+  'btn': { style: 'normal', weight: '400' }
+}
 
 const defaultState = {
   name: '', // new project name
@@ -39,6 +44,7 @@ const defaultState = {
   colors: COLORS,
   fonts: FONTS,
   setupFonts: SETUP_FONTS,
+  setupFontsStyle: SETUP_FONTS_STYLE,
   imageForPalette: null,
   palette: null,
   checkList: CheckList, // onboarding check-list
@@ -110,6 +116,10 @@ export default {
       state.setupFonts = value
     },
 
+    setSetupFontsStyle (state, value) {
+      state.setupFontsStyle = value
+    },
+
     setGoal (state, value) {
       state.goal = value
     },
@@ -127,6 +137,7 @@ export default {
       state.palette = null
       state.fonts = FONTS
       state.setupFonts = SETUP_FONTS
+      state.setupFontsStyle = SETUP_FONTS_STYLE
     },
 
     setLoading (state, value) {

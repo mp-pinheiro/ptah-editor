@@ -27,7 +27,9 @@
             <div class="b-setup-fonts-list">
               <div v-for="(el, key) in setupFonts" :key="key" class="b-setup-fonts-list__item">
                 <div class="b-setup-fonts-list__sample" :style="{
-                  'font-family': `${setupFonts[key]}`
+                  'font-family': `${setupFonts[key]}`,
+                  'font-style': `${setupFontsStyle[key].style}`,
+                  'font-weight': `${setupFontsStyle[key].weight}`,
                 }">
                   Lorem ipsum dolor amet, consectetur adipisicing elit.
                 </div>
@@ -124,11 +126,12 @@
                       </span>-->
                     </div>
                     <div class="b-fonts-list__item-button"
-                      v-if="selectFonts[checkSpace(font.family)] !== undefined"
+                      v-if="selectedEl === font.family"
                     >
                       <font-variants
                         :font="font"
                         :variants="getVariants(font)"
+                        :tempStyles="tempStyles"
                         @input="toggleFontVariant($event)"
                       >
                       </font-variants>
@@ -139,14 +142,23 @@
                       >
                       </font-subsets>
                     </div>
-                    <div class="b-simple-text" :style="{
-                        'font-family': font.family
+                    <div class="b-simple-text"
+                      v-if="selectedEl === font.family"
+                      :style="{
+                        'font-family': `${setupFonts[selectedKey]}`,
+                        'font-style': `${tempStyles.style}`,
+                        'font-weight': `${tempStyles.weight}`,
+                      }">
+                      {{ defText }}
+                    </div>
+                    <div v-else class="b-simple-text"
+                      :style="{
+                        'font-family': `${font.family}`,
                       }">
                       {{ defText }}
                     </div>
 
                     <div
-                      v-if="selectedEl !== font.family"
                       class="add-font"
                       @click="applyFont(font)"
                     >
@@ -222,6 +234,7 @@ export default {
       visibleFonts: [],
       filteredFonts: [],
       tempFonts: [],
+      tempStyles: {},
       isLoadingFonts: false
     }
   },
@@ -241,12 +254,12 @@ export default {
       return this.fonts
     },
 
-    selectFontsLength () {
-      return Object.keys(this.selectFonts).length
-    },
-
     setupFonts () {
       return this.currentLanding.settings.setupFonts || {}
+    },
+
+    setupFontsStyle () {
+      return this.currentLanding.settings.setupFontsStyle || {}
     },
 
     status () {
@@ -275,6 +288,7 @@ export default {
       'storeSettings',
       'storeSaveSettingsFonts',
       'storeSaveSettingsSetupFonts',
+      'storeSaveSettingsSetupFontsStyle',
       'activateCheckListItem'
     ]),
 
@@ -347,15 +361,24 @@ export default {
       this.storeSaveSettingsSetupFonts(setupFonts)
     },
 
+    storeSetupFontsStyle (styles) {
+      let setupFontsStyle = {}
+
+      setupFontsStyle[this.selectedKey] = {
+        style: styles.style,
+        weight: styles.weight
+      }
+
+      this.storeSaveSettingsSetupFontsStyle(setupFontsStyle)
+    },
+
     applyFont (font) {
       this.activateCheckListItem('fonts')
       const name = this.checkSpace(font.family)
-      const findRegular = font.variants.filter(v => v === 'regular')
-      const variants = findRegular || ['regular']
 
       if (this.selectFonts[name] === undefined) {
         this.selectFonts[name] = {
-          variants: variants,
+          variants: ['regular'],
           subsets: ['latin']
         }
       }
@@ -363,6 +386,7 @@ export default {
       this.editFont = font
       this.storeFonts()
       this.storeSetupFonts(font)
+      this.storeSetupFontsStyle(this.tempStyles)
 
       this.removeFont(this.selectedEl)
 
@@ -417,8 +441,27 @@ export default {
 
     toggleFontVariant ({ font, variant }) {
       const name = this.checkSpace(font.family)
-      this.selectFonts[name].variants = [variant]
+      this.selectFonts[name].variants.push(variant)
+
+      this.setTempStyles(variant)
+
       this.storeFonts()
+    },
+
+    setTempStyles (variant) {
+      const arr = variant.split('italic')
+
+      if (arr.length === 1) {
+        this.tempStyles = {
+          style: 'normal',
+          weight: arr[0]
+        }
+      } else {
+        this.tempStyles = {
+          style: 'italic',
+          weight: arr[0]
+        }
+      }
     },
 
     removeFont (family) {
@@ -477,6 +520,7 @@ export default {
       this.selectedEl = el
       this.selectedKey = key
       this.isChange = !this.isChange
+      this.tempStyles = this.setupFontsStyle[key]
 
       this.$nextTick(() => {
         this.renderFonts()
