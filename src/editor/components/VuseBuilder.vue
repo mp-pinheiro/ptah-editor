@@ -4,7 +4,8 @@
   :builder="builder"
   @export="submit"
   @preview="preview"
-  @save="save">
+  @save="save"
+>
 
   <div
     class="b-layout"
