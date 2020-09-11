@@ -111,7 +111,7 @@ const state = {
   slug: '', // landing ID
   name: '',
   version: null, // landing version
-  defaultFavicon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/0bfcc243-e6a0-4a1c-b15d-495083344004.png'
+  defaultFavicon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ea8999d7-360b-4ad1-b9ae-cabf1de5b78a.png'
 }
 
 const getters = {
@@ -174,6 +174,7 @@ const actions = {
 
         landing.settings = _.defaultsDeep(landing.settings, {
           ogTags: [],
+          metaTags: [{ name: '', content: '' }],
           video: '',
           videoPosition: '',
           title: '',

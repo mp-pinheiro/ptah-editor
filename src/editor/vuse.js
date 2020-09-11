@@ -13,7 +13,8 @@ import {
   getParallaxSetup,
   getJquerySetup,
   getPoneStyles,
-  getLibs
+  getLibs,
+  getCustomMetaTags
 } from './util'
 import * as _ from 'lodash-es'
 
@@ -306,6 +307,7 @@ class Vuse {
     let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
     let parallaxSetup = getParallaxSetup(this.sections)
     let libs = getLibs(this.settings.libs)
+    let metaTags = getCustomMetaTags(this.settings.metaTags)
 
     printDocument.open()
     printDocument.write(
@@ -315,6 +317,7 @@ class Vuse {
             <title>${title}</title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            ${metaTags}
             <link rel="stylesheet" href="${window.location.origin}/ptah_sections.css">
             <link href="https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}" rel="stylesheet">
             ${scrollSetup.style}

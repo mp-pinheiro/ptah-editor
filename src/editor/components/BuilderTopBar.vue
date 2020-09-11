@@ -61,6 +61,14 @@
             {{ $t('nav.preview') }}
           </BaseButton>
           <BaseButton
+            @click="save"
+            color="main-green"
+            size="small"
+            :disabled="builder.sections.length === 0 || loading"
+          >
+            {{ $t('nav.save') }}
+          </BaseButton>
+          <BaseButton
             class="b-on-boarding-tips-step-9"
              @click="publish"
              color="main-green"
@@ -109,7 +117,8 @@ export default {
 
   data: () => ({
     device: null,
-    showPublish: false
+    showPublish: false,
+    loading: false
   }),
 
   computed: {
@@ -151,6 +160,10 @@ export default {
     ...mapActions('Sidebar', [
       'clearSettingObject',
       'setControlPanel'
+    ]),
+
+    ...mapActions('Landing', [
+      'saveStateHandler'
     ]),
 
     redirectToAccount () {
@@ -201,6 +214,15 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+
+    save () {
+      this.$Progress.start()
+      this.loading = true
+      this.saveStateHandler(this.builder.export('JSON')).finally(() => {
+        this.loading = false
+        this.$Progress.finish()
+      })
     }
   }
 }

@@ -139,6 +139,63 @@
           </div>
         </base-scroll-container>
       </div>
+
+      <!-- Custom meta tags -->
+      <div class="layout layout__og b-meta-tag" v-if="activeTab === 'meta'">
+        <div class="layout-padding">
+          <div class="b-panel__control">
+            <base-caption>
+              Add custom meta tag
+            </base-caption>
+            <hint-block
+              class="hintBlock"
+              text="Please add custom meta tags"
+            />
+            <div class="b-panel__col">
+              <div class="b-meta-tag-row" v-for="(tag, index) in metaTags"
+                :key="index"
+              >
+                <base-text-field
+                  class="b-meta-tag-row__input"
+                  v-model="metaTags[index].name"
+                  placeholder="Name"
+                />
+                <base-text-field
+                  class="b-meta-tag-row__input"
+                  v-model="metaTags[index].content"
+                  placeholder="Content"
+                />
+                <div class="b-meta-tag-row__buttons">
+                  <span class="del"
+                    tooltip="Remove"
+                    tooltip-position="top"
+                    v-show="metaTags.length > 1 && index > 0"
+                    @click="metaTags.splice(index, 1)"
+                  >
+                    <icon-base
+                      name="close"
+                      color="#B1B1B1"
+                      width="10" height="10"
+                    />
+                  </span>
+                  <span class="plus"
+                    tooltip="Add"
+                    tooltip-position="top"
+                    v-show="index === 0 && metaTags.length < 10"
+                    @click="metaTags.push({ name: '', content: ''})"
+                  >
+                    <icon-base
+                      name="plus"
+                      color="#B1B1B1"
+                      width="10" height="10"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div slot="controls">
@@ -154,6 +211,7 @@ import BuilderModalContentLayout from './BuilderModalContentLayout'
 import _ from 'lodash-es'
 import { isValidUrl } from '../util'
 import BaseScrollContainer from '../../components/base/BaseScrollContainer'
+import HintBlock from './HintBlock'
 
 const LIST_LANG = [
   { name: 'English', value: 'en' },
@@ -174,7 +232,8 @@ export default {
 
   components: {
     BaseScrollContainer,
-    BuilderModalContentLayout
+    BuilderModalContentLayout,
+    HintBlock
   },
 
   data () {
@@ -184,8 +243,9 @@ export default {
       useCookie: null,
       pdfFile: null,
       tabs: [
-        { value: 'seo', text: 'SEO settings' },
-        { value: 'og', text: 'Open graph' }
+        { value: 'seo', text: 'Settings' },
+        { value: 'og', text: 'Open graph' },
+        { value: 'meta', text: 'Meta tags' }
       ],
       activeTab: 'seo',
       ogFields: [
@@ -260,6 +320,7 @@ export default {
           }
         }
       },
+      metaTags: [],
       error: {
         url: false
       }
@@ -318,8 +379,6 @@ export default {
       this.pageTitle = settings.title
       this.favicon = settings.favicon
 
-      console.log(this.favicon)
-
       _.map(settings.ogTags, ({ property, content }) => {
         const item = _.find(this.ogFields, { id: property })
         if (item) {
@@ -342,6 +401,8 @@ export default {
           }
         }
       })
+
+      this.metaTags = settings.metaTags
     },
 
     applySettings () {
@@ -359,7 +420,8 @@ export default {
           enabled: this.useCookie,
           pdf: this.pdfFile
         },
-        ogTags: ogTags
+        ogTags: ogTags,
+        metaTags: this.metaTags
       }
 
       // mark if more than one tag is filled in
@@ -436,4 +498,52 @@ export default {
 .b-open-graph
   &__select
     margin-bottom: 1.6rem
+
+.b-meta-tag
+  &-row
+    display: flex
+    justify-content: flex-start
+    align-items: flex-start
+
+    margin-bottom: .5rem
+    &__input
+      max-width: 20rem
+      &:first-child
+        margin-right: .5rem
+    &__buttons
+      display: flex
+      justify-content: center
+      min-width: 4rem
+      margin: 0.8rem 0 0.5rem
+    & span
+      display: flex
+      align-items: center
+      justify-content: center
+
+      width: 2rem
+      height: 2rem
+      margin-left: .4rem
+
+      border-radius: 100%
+      border: 0.2rem solid $ligth-grey
+
+      transition: all .3s cubic-bezier(.2,.85,.4,1.275)
+      &:hover
+        cursor: pointer
+        background-color: $white
+      &.del svg
+        fill: $ligth-grey
+      &.del:hover
+        border: 0.2rem solid $orange
+        & svg
+          fill: $orange
+      &.plus svg
+        fill: $main-green
+      &.plus:hover
+        border: 0.2rem solid $main-green
+        & svg
+          fill: $main-green
+
+.hintBlock
+  margin-bottom: 2rem
 </style>

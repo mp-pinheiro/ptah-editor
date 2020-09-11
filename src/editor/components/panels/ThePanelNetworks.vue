@@ -22,7 +22,6 @@
             Style
           </base-caption>
           <control-social-networks-style />
-          <control-background-color />
         </div>
 
         <!-- Padding/Margin -->
@@ -37,7 +36,6 @@
 <script>
 import { mapState } from 'vuex'
 import ControlSocialNetworks from './../controls/TheControlSocialNetworks'
-import ControlBackgroundColor from './../controls/TheControlBackgroundColor'
 import ControlSocialNetworksStyle from './../controls/TheControlSocialNetworksStyle'
 import ControlBox from '../controls/TheControlBox'
 import IndicatorPlatform from '../IndicatorPlatform'
@@ -48,7 +46,6 @@ export default {
   components: {
     IndicatorPlatform,
     ControlSocialNetworks,
-    ControlBackgroundColor,
     ControlSocialNetworksStyle,
     ControlBox
   },
