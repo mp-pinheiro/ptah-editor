@@ -185,7 +185,7 @@
 import axios from 'axios'
 import BuilderModalContentLayout from './BuilderModalContentLayout'
 import { mapState, mapActions } from 'vuex'
-import { throttle } from 'lodash-es'
+import { throttle, uniq } from 'lodash-es'
 
 import Vue from 'vue'
 import FontSubsets from './FontSubsets'
@@ -376,23 +376,55 @@ export default {
       this.activateCheckListItem('fonts')
       const name = this.checkSpace(font.family)
 
+      this.storeSetupFontsStyle(this.tempStyles)
+
       if (this.selectFonts[name] === undefined) {
         this.selectFonts[name] = {
           variants: ['regular'],
           subsets: ['latin']
         }
+        this.tempStyles = { style: 'normal', weight: '400' }
+      } else {
+        this.setSelectFontsVariants(name)
       }
 
       this.editFont = font
       this.storeFonts()
       this.storeSetupFonts(font)
-      this.storeSetupFontsStyle(this.tempStyles)
 
       this.removeFont(this.selectedEl)
 
       this.selectedEl = font.family
       this.editFont = null
       this.isChange = false
+    },
+
+    setSelectFontsVariants (name) {
+      let style = this.tempStyles.style === 'normal' ? '' : 'italic'
+      let variant = `${this.tempStyles.weight}${style}`
+
+      this.selectFonts[name].variants.push(variant)
+      this.checkVariants(name)
+    },
+
+    checkVariants (name) {
+      let keyFont = []
+      let variants = []
+
+      for (let key in this.setupFonts) {
+        if (this.setupFonts[key] === name) {
+          keyFont.push(key)
+        }
+      }
+
+      keyFont.forEach(key => {
+        let style = this.setupFontsStyle[key].style === 'normal' ? '' : 'italic'
+        let variant = `${this.setupFontsStyle[key].weight}${style}`
+
+        variants.push(variant)
+
+        this.selectFonts[name].variants = uniq(variants)
+      })
     },
 
     checkSpace (family) {
@@ -439,12 +471,8 @@ export default {
       })
     },
 
-    toggleFontVariant ({ font, variant }) {
-      const name = this.checkSpace(font.family)
-      this.selectFonts[name].variants.push(variant)
-
+    toggleFontVariant ({ variant }) {
       this.setTempStyles(variant)
-
       this.storeFonts()
     },
 
