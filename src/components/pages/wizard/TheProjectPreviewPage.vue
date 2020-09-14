@@ -41,6 +41,7 @@ export default {
       'setPalette',
       'setLogo',
       'setFonts',
+      'setSetupFontsStyle',
       'setSetupFonts',
       'setBackground',
       'setBackgroundColor',

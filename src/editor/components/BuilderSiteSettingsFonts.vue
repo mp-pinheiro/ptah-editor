@@ -9,7 +9,7 @@
         }}
       </template>
     </v-style>
-    <form id="fonts-form" @submit.prevent="saveFonts">
+    <form id="fonts-form">
       <base-fieldset class="b-setup-fonts" v-if="!isChange">
         <div class="b-setup-fonts-header">
           <span>
@@ -335,16 +335,6 @@ export default {
       this.visibleFonts = defFonts
     },
 
-    saveFonts () {
-      this.storeSettings({
-        fonts: this.selectFonts
-      })
-
-      this.isLoaded = false
-
-      this.close()
-    },
-
     close () {
       this.$router.push(`/editor/${this.$route.params.slug}`)
     },
@@ -389,14 +379,15 @@ export default {
       }
 
       this.editFont = font
-      this.storeFonts()
-      this.storeSetupFonts(font)
-
-      this.removeFont(this.selectedEl)
-
       this.selectedEl = font.family
       this.editFont = null
       this.isChange = false
+
+      this.storeSetupFonts(font)
+
+      this.$nextTick(() => {
+        this.checkListFonts(font)
+      })
     },
 
     setSelectFontsVariants (name) {
@@ -405,6 +396,21 @@ export default {
 
       this.selectFonts[name].variants.push(variant)
       this.checkVariants(name)
+    },
+
+    checkListFonts () {
+      for (let f in this.selectFonts) {
+        let find = false
+        for (let key in this.setupFonts) {
+          if (this.checkSpace(this.setupFonts[key]) === f) {
+            find = true
+          }
+        }
+
+        if (!find) delete this.selectFonts[f]
+      }
+
+      this.storeFonts()
     },
 
     checkVariants (name) {
@@ -490,26 +496,6 @@ export default {
           weight: arr[0]
         }
       }
-    },
-
-    removeFont (family) {
-      if (this.editFont !== null && this.editFont.family === family) {
-        this.editFont = null
-      }
-
-      let isFind = false
-
-      for (let key in this.setupFonts) {
-        if (this.setupFonts[key] === family) {
-          isFind = true
-        }
-      }
-
-      if (!isFind) {
-        delete this.selectFonts[this.checkSpace(family)]
-      }
-
-      this.storeFonts()
     },
 
     renderFonts (e) {

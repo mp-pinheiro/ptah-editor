@@ -117,7 +117,9 @@ export default {
     },
 
     setSetupFontsStyle (state, value) {
-      state.setupFontsStyle = value
+      const v = value || SETUP_FONTS_STYLE
+
+      state.setupFontsStyle = v
     },
 
     setGoal (state, value) {
