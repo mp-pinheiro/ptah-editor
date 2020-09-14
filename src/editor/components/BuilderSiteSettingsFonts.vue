@@ -376,15 +376,15 @@ export default {
       this.activateCheckListItem('fonts')
       const name = this.checkSpace(font.family)
 
-      this.storeSetupFontsStyle(this.tempStyles)
-
       if (this.selectFonts[name] === undefined) {
         this.selectFonts[name] = {
           variants: ['regular'],
           subsets: ['latin']
         }
         this.tempStyles = { style: 'normal', weight: '400' }
+        this.storeSetupFontsStyle(this.tempStyles)
       } else {
+        this.storeSetupFontsStyle(this.tempStyles)
         this.setSelectFontsVariants(name)
       }
 
@@ -412,7 +412,7 @@ export default {
       let variants = []
 
       for (let key in this.setupFonts) {
-        if (this.setupFonts[key] === name) {
+        if (this.checkSpace(this.setupFonts[key]) === name) {
           keyFont.push(key)
         }
       }

@@ -296,20 +296,32 @@ class Vuse {
 
     void cleanDOM(frag)
 
-    let { video, title } = this.settings
+    let {
+      video,
+      title,
+      fullPageScroll,
+      fonts,
+      setupFonts,
+      setupFontsStyle,
+      libs,
+      metaTags
+    } = this.settings
+
+    console.log(this)
+
     let customCss = this.getCustomCss()
     let customJS = this.getJsScript()
     let bodyStyles = this.getBodyStyles()
-    let scrollSetup = getScrollSetup(this.settings.fullPageScroll)
+    let scrollSetup = getScrollSetup(fullPageScroll)
     let stylePoneList = getPoneStyles(frag)
-    let fontsNameStr = getFontsNameStr(this.settings.fonts)
-    let fontsLanguages = getFontsLanguages(this.settings.fonts)
-    let fontsSetup = getFontsSetup(this.settings.setupFonts)
-    let fontsSetupStyle = getFontsSetupStyle(this.settings.setupFontsStyle)
-    let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
+    let fontsNameStr = getFontsNameStr(fonts)
+    let fontsLanguages = getFontsLanguages(fonts)
+    let fontsSetup = getFontsSetup(setupFonts)
+    let fontsSetupStyle = getFontsSetupStyle(setupFontsStyle)
+    let getJquery = getJquerySetup(getParallaxSetup(this.sections), fullPageScroll)
     let parallaxSetup = getParallaxSetup(this.sections)
-    let libs = getLibs(this.settings.libs)
-    let metaTags = getCustomMetaTags(this.settings.metaTags)
+    let glibs = getLibs(libs)
+    let gMetaTags = getCustomMetaTags(metaTags)
 
     printDocument.open()
     printDocument.write(
@@ -319,7 +331,7 @@ class Vuse {
             <title>${title}</title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            ${metaTags}
+            ${gMetaTags}
             <link rel="stylesheet" href="${window.location.origin}/ptah_sections.css">
             <link href="https://fonts.googleapis.com/css?family=${fontsNameStr}&display=swap&subset=${fontsLanguages}" rel="stylesheet">
             ${scrollSetup.style}
@@ -358,7 +370,7 @@ class Vuse {
             ${scrollSetup.setup}
             ${parallaxSetup}
             <script src="${window.location.origin + '/js/cjs.js'}"></script>
-            ${libs}
+            ${glibs}
             <script>${customJS}</script>
           </body>
         </html>`

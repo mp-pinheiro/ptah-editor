@@ -55,14 +55,6 @@ export default {
     }
   },
 
-  computed: {
-    styleFont () {
-      let styles = this.variants.filter(v => v.status)
-
-      return styles[0].name
-    }
-  },
-
   methods: {
     close () {
       this.open = false
@@ -71,10 +63,6 @@ export default {
     toggleVariantStatus (variant) {
       this.$emit('input', { font: this.font, variant: variant.name })
     }
-  },
-
-  mounted () {
-    console.log(this.variants)
   }
 }
 </script>
