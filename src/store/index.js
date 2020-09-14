@@ -340,11 +340,11 @@ const actions = {
    * @param {Object} fonts of settings data
    */
   storeSaveSettingsFonts ({ state, commit }, fontsList) {
-    const landingData = _.merge({}, state.currentLanding.settings, {
-      fonts: fontsList
+    const landingData = _.merge({}, state.currentLanding, {
+      settings: { fonts: fontsList }
     })
 
-    commit('updateCurrentLandingSettings', landingData)
+    commit('updateCurrentLanding', landingData)
     commit('isSaved', false)
   },
 
@@ -354,11 +354,11 @@ const actions = {
    * @param {Object} setup fonts of settings data
    */
   storeSaveSettingsSetupFonts ({ state, commit }, setupFonts) {
-    const landingData = _.merge({}, state.currentLanding.settings, {
-      setupFonts: setupFonts
+    const landingData = _.merge({}, state.currentLanding, {
+      settings: { setupFonts: setupFonts }
     })
 
-    commit('updateCurrentLandingSettings', landingData)
+    commit('updateCurrentLanding', landingData)
     commit('isSaved', false)
   },
 
@@ -368,11 +368,11 @@ const actions = {
    * @param {Object} setup fonts of settings data
    */
   storeSaveSettingsSetupFontsStyle ({ state, commit }, setupFontsStyle) {
-    const landingData = _.merge({}, state.currentLanding.settings, {
-      setupFontsStyle: setupFontsStyle
+    const landingData = _.merge({}, state.currentLanding, {
+      settings: { setupFontsStyle: setupFontsStyle }
     })
 
-    commit('updateCurrentLandingSettings', landingData)
+    commit('updateCurrentLanding', landingData)
     commit('isSaved', false)
   },
 
@@ -382,23 +382,25 @@ const actions = {
    * @param {Array} colors
    */
   storeSaveSettingsPalette ({ state, commit }, { palette, image }) {
-    const landingData = _.merge({}, state.currentLanding.settings, {
-      imageForPalette: image
+    const landingData = _.merge({}, state.currentLanding, {
+      settings: {
+        imageForPalette: image,
+        palette
+      }
     })
 
-    landingData.palette = palette
-
-    commit('updateCurrentLandingSettings', landingData)
+    commit('updateCurrentLanding', landingData)
     commit('isSaved', false)
   },
 
   storeColorSettings ({ state, commit }, colors) {
-    const settings = _.merge({}, state.currentLanding.settings)
+    const landingData = _.merge({}, state.currentLanding)
 
-    Object.keys(settings.colors).forEach((key, index) => {
-      settings.colors[key] = colors[index]
+    Object.keys(landingData.settings.colors).forEach((key, index) => {
+      landingData.settings.colors[key] = colors[index]
     })
-    commit('updateCurrentLandingSettings', settings)
+
+    commit('updateCurrentLanding', landingData)
     commit('isSaved', false)
   },
 
@@ -432,10 +434,6 @@ const mutations = {
 
   updateCurrentLanding (state, data) {
     state.currentLanding = data
-  },
-
-  updateCurrentLandingSettings (state, settings) {
-    state.currentLanding.settings = settings
   },
 
   isSaved (state, value) {
