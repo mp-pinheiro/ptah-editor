@@ -15,6 +15,7 @@
 <script>
 import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
+import { uniq } from 'lodash-es'
 
 Vue.component('v-style', {
   render: function (createElement) {
@@ -43,7 +44,7 @@ export default {
       let str = ''
 
       for (let key in this.fonts) {
-        str += `${key}:400,600|`
+        str += `${key}:${this.fonts[key].variants}|`
       }
 
       return str
@@ -63,7 +64,7 @@ export default {
         }
       }
 
-      return langs.join(',')
+      return uniq(langs).join(',')
     }
   },
 

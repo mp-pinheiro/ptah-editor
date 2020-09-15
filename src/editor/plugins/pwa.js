@@ -7,6 +7,7 @@ import {
   getFontsNameStr,
   getFontsLanguages,
   getFontsSetup,
+  getFontsSetupStyle,
   getScrollSetup,
   getParallaxSetup,
   getJquerySetup,
@@ -134,6 +135,7 @@ function download (assets, getBlob) {
       let fontsNameStr = getFontsNameStr(this.settings.fonts)
       let fontsLanguages = getFontsLanguages(this.settings.fonts)
       let fontsSetup = getFontsSetup(this.settings.setupFonts)
+      let fontsSetupStyle = getFontsSetupStyle(this.settings.setupFontsStyle)
       let getJquery = getJquerySetup(getParallaxSetup(this.sections), this.settings.fullPageScroll)
       let parallaxSetup = getParallaxSetup(this.sections)
       let stylePoneList = getPoneStyles(frag)
@@ -178,7 +180,7 @@ function download (assets, getBlob) {
           </head>
           <body class="b-body_export" style="${bodyStyles}">
             ${gtm.body}
-            <div id="main" class="main" style="${fontsSetup}">
+            <div id="main" class="main" style="${fontsSetup};${fontsSetupStyle}">
               ${artboard.innerHTML}
             </div>
             <div class="ptah-logo">

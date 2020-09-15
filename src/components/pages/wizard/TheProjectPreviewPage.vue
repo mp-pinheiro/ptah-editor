@@ -41,6 +41,7 @@ export default {
       'setPalette',
       'setLogo',
       'setFonts',
+      'setSetupFontsStyle',
       'setSetupFonts',
       'setBackground',
       'setBackgroundColor',
@@ -54,6 +55,7 @@ export default {
       this.setLogo(this.preset.logo || '')
       this.setFonts(this.preset.fonts)
       this.setSetupFonts(this.preset.setupFonts)
+      this.setSetupFontsStyle(this.preset.setupFontsStyle)
       this.setBackground(this.preset.backgroundImage)
       this.setBackgroundColor(this.preset.backgroundColor)
       this.setVideo(this.preset.video)
