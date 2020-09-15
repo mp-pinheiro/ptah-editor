@@ -650,6 +650,8 @@ export default {
       let pseudoClassValue = {}
       pseudoClassValue[pseudoClass] = style
       this.el.dataset.pone = this.poneId
+      this.options.id = this.poneId
+
       _.merge(this.pseudoStyles, pseudoClassValue)
       this.options.pseudo = this.pseudoStyles
 
