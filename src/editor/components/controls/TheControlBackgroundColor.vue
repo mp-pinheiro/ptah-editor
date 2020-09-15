@@ -78,6 +78,7 @@ export default {
       }
 
       document.head.insertAdjacentHTML('beforeend', styleTemplate)
+      this.settingObjectOptions.customColor = true
     }
   }
 }
