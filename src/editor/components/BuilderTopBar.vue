@@ -219,6 +219,7 @@ export default {
     save () {
       this.$Progress.start()
       this.loading = true
+
       this.saveStateHandler(this.builder.export('JSON')).finally(() => {
         this.loading = false
         this.$Progress.finish()

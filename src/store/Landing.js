@@ -91,7 +91,6 @@ export default {
       if (state.process) {
         return false
       }
-
       commit('process', true)
 
       commit('saveState', landing)
@@ -110,6 +109,9 @@ export default {
           return dispatch('saveLanding', JSON.stringify(landObj), { root: true })
         })
         .then(() => {
+          return commit('process', false)
+        })
+        .catch(() => {
           return commit('process', false)
         })
     },

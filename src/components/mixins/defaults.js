@@ -65,8 +65,6 @@ export default {
       let bgColor = this.$store.state.currentLanding.settings.styles.backgroundColor
       let bg = this.$store.state.currentLanding.settings.firstScreen
 
-      console.log(logo)
-
       if (logo && logo.length) {
         this.changeLogos(logo)
       }
