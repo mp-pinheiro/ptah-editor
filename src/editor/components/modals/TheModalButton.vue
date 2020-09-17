@@ -181,11 +181,11 @@ export default {
     },
 
     changeScrollIntoSection ({ value }) {
-      this.updateSettingOptions(
-        merge({}, this.settingObjectOptions, {
-          link: { href: value, target: '_self' }
-        })
-      )
+      this.link.href = value
+      this.link.target = '_self'
+      this.href = ''
+
+      this.update()
     },
 
     changeScrollBehavior () {
