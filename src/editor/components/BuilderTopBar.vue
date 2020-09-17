@@ -206,14 +206,6 @@ export default {
 
     publish () {
       this.showPublish = true
-
-      try {
-        window.carrotquest.track('Publish_button_click', {
-          page: 'editor/publish'
-        })
-      } catch (e) {
-        console.log(e)
-      }
     },
 
     save () {
