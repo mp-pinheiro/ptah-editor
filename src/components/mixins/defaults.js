@@ -120,7 +120,8 @@ export default {
 
     changeLogos (url) {
       let paths = this.getElementPropertyPath('Logo', 'background-image')
-      paths.forEach(path => this.$section.set(path, `url(${url})`))
+
+      paths.forEach(path => this.$section.set(path.path, `url(${url})`))
     },
 
     changeSectionBackground (url) {

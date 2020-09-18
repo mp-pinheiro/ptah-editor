@@ -206,19 +206,12 @@ export default {
 
     publish () {
       this.showPublish = true
-
-      try {
-        window.carrotquest.track('Publish_button_click', {
-          page: 'editor/publish'
-        })
-      } catch (e) {
-        console.log(e)
-      }
     },
 
     save () {
       this.$Progress.start()
       this.loading = true
+
       this.saveStateHandler(this.builder.export('JSON')).finally(() => {
         this.loading = false
         this.$Progress.finish()

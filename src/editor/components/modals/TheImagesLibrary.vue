@@ -281,7 +281,7 @@ export default {
   background: rgba(#000, 0.6)
 
 .b-images-library
-  width: 92rem
+  width: 92.5rem
   height: 50rem
   padding: 2.8rem 3rem 2.8rem
   position: relative

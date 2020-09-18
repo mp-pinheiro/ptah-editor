@@ -93,6 +93,7 @@ export default {
       'setPalette',
       'setLogo',
       'setFonts',
+      'setSetupFontsStyle',
       'setSetupFonts',
       'setBackground',
       'setBackgroundColor',
@@ -112,6 +113,7 @@ export default {
       this.setLogo(preset.logo || '')
       this.setFonts(preset.fonts)
       this.setSetupFonts(preset.setupFonts)
+      this.setSetupFontsStyle(preset.setupFontsStyle)
       this.setBackground(preset.backgroundImage)
       this.setBackgroundColor(preset.backgroundColor)
       this.setVideo(preset.video)
