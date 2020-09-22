@@ -10,6 +10,10 @@
       <div class="layout _top-2 _pr-05">
         <base-scroll-container>
           <div class="layout-padding">
+            <!-- Button Id -->
+            <div class="b-panel__control">
+              <control-id />
+            </div>
             <!-- image -->
             <div class="b-panel__control" v-if="!isMobile">
               <base-caption>
@@ -48,6 +52,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import ControlId from './../controls/TheControlId'
 import ControlAlt from './../controls/TheControlAlt'
 import ControlImage from './../controls/TheControlImage'
 import ControlBox from '../controls/TheControlBox'
@@ -66,6 +71,7 @@ export default {
   },
 
   components: {
+    ControlId,
     IndicatorPlatform,
     ControlAlt,
     ControlImage,

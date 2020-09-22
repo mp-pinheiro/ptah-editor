@@ -302,13 +302,18 @@ export default {
   watch: {
     settingObjectOptions: {
       handler: function (val) {
+        if (!this.isVisible) {
+          return
+        }
+
         if (this.popper) {
           this.popper.update()
         }
+
         if (val.link && val.link.behavior) {
           this.el.dataset.behavior = val.link.behavior
         }
-        if (val.video && val.link.action.value === 'ptah-d-video') {
+        if (val.video && val.link.action.value === 'ptah-d-video' && this.type !== 'section') {
           this.el.classList.add('ptah-d-video')
           this.el.dataset.video = this.options.video
         } else {
@@ -367,7 +372,7 @@ export default {
       this.options.classes.push('js-element-link')
     }
 
-    // Apply animation to element
+    // Apply animation or video to element
     if (this.options.classes !== undefined && this.options.classes.length) {
       this.options.classes.forEach((name) => {
         if (name.indexOf('ptah-a-') > -1) {

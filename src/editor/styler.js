@@ -1,5 +1,5 @@
 import Styler from './components/VuseStyler.vue'
-import { getTypeFromTagName, getTypeFromSchema } from './util'
+import {getTypeFromTagName, getTypeFromSchema, randomPoneId} from './util'
 
 function installStyler ({ builder, Vue }) {
   const StylerInstance = Vue.extend(Styler).extend({
@@ -36,6 +36,10 @@ function installStyler ({ builder, Vue }) {
 
       if (binding.value.el && binding.value.el.link && binding.value.el.link.behavior) {
         el.dataset.behavior = binding.value.el.link.behavior || 'auto'
+      }
+
+      if (binding.value.el && !binding.value.el.id) {
+        binding.value.el.id = randomPoneId()
       }
 
       section.stylers.push(new StylerInstance({
