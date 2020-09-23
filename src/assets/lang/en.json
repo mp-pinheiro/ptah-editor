@@ -14,7 +14,7 @@
         "code":                         "Code injection"
     },
     "nav": {
-        "backToDashbord":               "Back to landings",
+        "backToDashbord":               "Back to Dashboard",
         "save":                         "Save",
         "preview":                      "Preview",
         "export":                       "Export",
@@ -172,5 +172,6 @@
         "p":                            "Plain text",
         "btn":                          "Buttons",
         "defText":                      "Sample text of this font"
-    }
+    },
+    "tooltipOverlay":                   "Apply a color over a background"
 }

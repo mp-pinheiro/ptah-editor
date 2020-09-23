@@ -11,7 +11,10 @@
           <div class="layout-padding">
             <!-- Title & Favicon -->
             <div class="b-panel__control">
-              <base-caption help="Page title">
+              <base-caption
+                help="The page title appears in search engines and the Web browser’s title bar"
+                tooltipPosition="rightTopWidth"
+              >
                 Page title
               </base-caption>
               <div class="b-panel__col">
@@ -22,7 +25,10 @@
             </div>
 
             <div class="b-panel__control">
-              <base-caption help="Favicon">
+              <base-caption
+                help="Add a favicon for a visual representation of your website’s brand on browser tabs and in search results."
+                tooltipPosition="rightTopWidth"
+              >
                 Favicon
               </base-caption>
               <div class="b-panel__control">
@@ -38,7 +44,10 @@
             </div>
 
             <div class="b-panel__control">
-              <base-caption help="Cookie policy">
+              <base-caption
+                help="Inform your visitors that you are using Cookies and receive their approval."
+                tooltipPosition="rightTopWidth"
+              >
                 Cookie policy
               </base-caption>
               <div class="b-panel__control">
@@ -74,7 +83,10 @@
               :key="ogField.id"
             >
               <div class="b-panel__control">
-                <BaseCaption :help="ogField.label">
+                <BaseCaption
+                  :help="ogField.tooltip"
+                  tooltipPosition="rightTopWidth"
+                >
                   {{ ogField.label }}
                 </BaseCaption>
                 <div class="b-panel__col">
@@ -252,48 +264,56 @@ export default {
         {
           id: 'og:title',
           label: 'Title',
+          tooltip: 'A title of your page for a social snippet',
           placeholder: 'Game name',
           value: ''
         },
         {
           id: 'og:description',
           label: 'Description',
+          tooltip: 'A brief description of the content for a social snippet',
           placeholder: 'Video Game',
           value: ''
         },
         {
           id: 'og:image',
           label: 'Image',
+          tooltip: 'URL of an image for the social snippet',
           placeholder: 'http://www.mydomain.com/image.png',
           value: ''
         },
         {
           id: 'og:type',
           label: 'Type',
+          tooltip: 'A type of the content',
           placeholder: 'Type',
           value: 'Game'
         },
         {
           id: 'og:url',
           label: 'URL',
+          tooltip: 'URL of an image for the social snippet',
           placeholder: 'http://www.mydomain.com/',
           value: ''
         },
         {
           id: 'og:locale',
           label: 'Locale',
+          tooltip: 'Defines the content language',
           placeholder: 'en_GB',
           value: ''
         },
         {
           id: 'og:locale:alternate',
-          label: 'Locale : Alternate',
+          label: 'Alternate',
+          tooltip: 'Defines the additional content language',
           placeholder: 'fr_FR',
           value: ''
         },
         {
           id: 'og:video',
           label: 'Video',
+          tooltip: 'A video file for a social message (if any)',
           placeholder: 'http://www.mydomain.com/video.mp4',
           value: ''
         }

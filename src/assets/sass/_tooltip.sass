@@ -35,7 +35,7 @@
   padding: 10px
   white-space: nowrap
   border-radius: 6px
-  font-size: 12px
+  font-size: 10px
   line-height: 12px
   text-transform: none
   font-weight: normal
@@ -93,6 +93,25 @@
   right: auto
   -webkit-transform: translate(-90%, 100%)
   transform: translate(-87%, 100%)
+
+[tooltip-position=rightTopWidth]:before
+  top: 50%
+  left: auto
+  right: -13px
+  -webkit-transform: translateY(-50%)
+  transform: translateY(-50%)
+  border-width: 7px 7px 7px 0
+  border-color: transparent $yellow transparent transparent
+
+[tooltip-position=rightTopWidth]:after
+  top: -.5rem
+  -webkit-transform: translate(100%, 0)
+  transform: translate(100%, 0)
+  left: auto
+  right: -12px
+
+  white-space: normal
+  width: 13rem
 
 
 

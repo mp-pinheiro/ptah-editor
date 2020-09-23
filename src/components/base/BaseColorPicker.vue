@@ -18,6 +18,8 @@
           :style="{ 'background-color': pickerValue.rgba || pickerValue }"
           :class="{ 'b-picker__preview_transparent': isTransparent }"
           :title="pickerValue.rgba || pickerValue || 'Choose color'"
+          tooltip="Pick a color"
+          tooltip-position="left"
         />
         <div slot="list">
           <Sketch

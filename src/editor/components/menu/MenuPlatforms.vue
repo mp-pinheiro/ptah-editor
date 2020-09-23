@@ -17,7 +17,8 @@ export default {
           name: 'platformMobile',
           width: 25,
           height: 25
-        }
+        },
+        tooltip: 'Mobile - 370px'
       },
       /*
       {
@@ -35,7 +36,8 @@ export default {
           name: 'platformDesktop',
           width: 28,
           height: 25
-        }
+        },
+        tooltip: 'Responsive'
       }
     ]
   }),
@@ -80,7 +82,7 @@ export default {
       class="b-menu-platforms__button"
       tooltip-position="bottom"
       :key="index"
-      :tooltip="`on ${item.name}`"
+      :tooltip="item.tooltip"
       :class="[
         `b-menu-platforms__button_${item.name}`,
         { '_active': device === item.name },

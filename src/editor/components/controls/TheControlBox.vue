@@ -234,7 +234,7 @@ export default {
 <template>
 <div>
   <div v-if="isLoading">
-    <base-caption help="Set margins and paddings">
+    <base-caption help="Customise spacing">
       {{ $t('c.editIndents') }}
     </base-caption>
     <div class="control-box">

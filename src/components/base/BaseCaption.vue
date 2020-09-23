@@ -7,7 +7,7 @@
       v-show="help !== ''"
       class="b-caption__help"
       :tooltip="help"
-      tooltip-position="bottom"
+      :tooltip-position="tooltipPosition"
     >
     <IconBase
       width="12"
@@ -26,6 +26,10 @@ export default {
     help: {
       type: String,
       default: ''
+    },
+    tooltipPosition: {
+      type: String,
+      default: 'bottom'
     }
   }
 }
@@ -39,13 +43,14 @@ export default {
   font-family: 'Open Sans', Helvetica Neue, Helvetica, Arial, sans-serif
   font-style: normal
   font-weight: bold
-  font-size: 1.3rem
-  line-height: 1.8rem
+  font-size: 1.2rem
+  line-height: 1.6rem
   letter-spacing: 0.065em
   text-transform: uppercase
   color: $main-green
 
   margin: 0 0 1.8rem 0
+  padding: .8rem 0 0
 
   width: 100%
 

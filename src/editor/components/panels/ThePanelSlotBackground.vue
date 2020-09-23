@@ -53,7 +53,7 @@
                         />
                       </span>
                       <span class="plus"
-                            tooltip="Create gradient"
+                            tooltip="Create a gradient"
                             tooltip-position="top"
                             v-show="index === 0 && backgroundPickers.length < 4"
                             @click="addBackgroundPicker"
