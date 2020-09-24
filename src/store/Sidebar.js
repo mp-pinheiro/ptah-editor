@@ -66,7 +66,12 @@ export default {
     device: 'is-desktop', // selected platform in platforms menu
     hoverBy: '', // hovering by element in editor
     isMobile: false, // detect mobile mode
-    mainGreenColor: '#00ADB6'
+    mainGreenColor: '#00ADB6',
+    stock: {
+      search: 'game',
+      color: '',
+      orientation: 'landscape'
+    }
   },
 
   mutations: {
@@ -142,6 +147,9 @@ export default {
     },
     setShowImageLibrary (state, value) {
       state.isShowImageLibrary = value
+    },
+    setStockState (state, value) {
+      state.stock = value
     }
   },
 
@@ -351,6 +359,10 @@ export default {
 
     toggleShowImageLibrary ({ state, commit }, value) {
       commit('setShowImageLibrary', (typeof value !== 'undefined') ? value : !state.isShowImageLibrary)
+    },
+
+    setStock ({ state, commit }, value) {
+      commit('setStockState', value)
     }
   },
 
