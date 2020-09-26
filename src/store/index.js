@@ -181,6 +181,7 @@ const actions = {
           fullPageScroll: 'no',
           gtmId: '',
           gtag: '',
+          fbPixel: '',
           favicon: state.defaultFavicon,
           styles: {
             backgroundImage: state.Onboarding.background,
