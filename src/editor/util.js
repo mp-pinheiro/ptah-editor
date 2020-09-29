@@ -463,6 +463,12 @@ export function elemtentList () {
       element: types.IframeElement,
       type: 'iframe',
       label: 'iframe'
+    },
+    htmlCode: {
+      name: 'HtmlCodeElement',
+      element: types.HtmlCodeElement,
+      type: 'htmlCode',
+      label: 'htmlCode'
     }
   }
 }

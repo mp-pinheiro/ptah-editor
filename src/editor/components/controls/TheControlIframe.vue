@@ -28,7 +28,7 @@ import { mapState, mapActions } from 'vuex'
 import { isValidUrl } from '@editor/util'
 
 export default {
-  name: 'TheControlVideo',
+  name: 'TheControlIframe',
 
   data () {
     return {

@@ -10,7 +10,7 @@
       <div class="layout _top-2 _pr-05">
         <base-scroll-container>
           <div class="layout-padding">
-            <!-- Settings video element -->
+            <!-- Settings Iframe element -->
             <div class="b-panel__control" v-if="!isMobile">
               <control-iframe :show-text-styles="false" />
             </div>

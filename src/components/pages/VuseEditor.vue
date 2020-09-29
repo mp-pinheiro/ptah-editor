@@ -32,6 +32,7 @@ import IframeElement from '@components/elements/IframeElement'
 import Timer from '@components/elements/Timer'
 import Form from '@components/elements/Form'
 import ToggleElement from '@components/elements/ToggleElement'
+import HtmlCodeElement from '@components/elements/HtmlCodeElement'
 
 // sections
 // --- header
@@ -205,7 +206,8 @@ const ELEMENTS = {
   IframeElement,
   Timer,
   Form,
-  ToggleElement
+  ToggleElement,
+  HtmlCodeElement
 }
 
 const COMPONENTS = {

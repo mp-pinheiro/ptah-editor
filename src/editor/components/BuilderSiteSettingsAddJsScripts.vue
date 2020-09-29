@@ -155,6 +155,8 @@ export default {
     this.css = this.currentLanding.settings.css
     this.libs = this.currentLanding.settings.libs
     this.errors = this.libs.map(() => false)
+
+    this.activeTab = this.$route.query.tab ? this.$route.query.tab : 'js'
   },
 
   methods: {

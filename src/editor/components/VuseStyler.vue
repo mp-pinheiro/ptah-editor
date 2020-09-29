@@ -109,6 +109,13 @@
         <icon-base name="editStyle" width="14" height="16" />
       </a>
 
+      <!-- Html Code -->
+      <a href="#" class="b-styler__control"
+         @click.stop="setControlPanel('HtmlCode')"
+         v-if="type === 'htmlCode'">
+        <icon-base name="editStyle" width="14" height="16" />
+      </a>
+
       <!-- Icon with text -->
       <template v-if="type === 'iconWithText'">
         <a href="#" class="b-styler__control"

@@ -104,6 +104,12 @@ export default {
           descr: this.$t('el.iframeDescr'),
           ico: 'frame',
           width: 18
+        },
+        htmlCode: {
+          name: 'Html code',
+          descr: this.$t('el.htmlCode'),
+          ico: 'htmlCode',
+          width: 22
         }
       }
     }
