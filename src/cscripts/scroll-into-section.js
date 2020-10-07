@@ -8,8 +8,12 @@ catch (error) {
 }
 
 export function initScrollIntoSection () {
-  let links = document.querySelectorAll('a[href^="#section_"]')
+  let links = document.querySelectorAll('[href^="#section_"]')
   links.forEach(link => {
+    if (link.classList.contains("js-element-link")) {
+      link.classList.remove('js-element-link')
+    }
+
     link.addEventListener('click', scrollIntoSection, false)
   })
 }
@@ -17,7 +21,7 @@ export function initScrollIntoSection () {
 export function scrollIntoSection (e) {
   e.preventDefault()
 
-  let target = e.target.closest('a')
+  let target = !!e.target.closest('a') ? e.target.closest('a') : e.target
   let section = document.querySelector(target && target.getAttribute('href'))
 
   if (section && !target.classList.contains('ptah-d-video')) {

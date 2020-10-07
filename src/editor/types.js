@@ -11,6 +11,7 @@ export class Timer { }
 export class ProductSection { }
 export class Form { }
 export class IframeElement { }
+export class HtmlCodeElement { }
 
 export class GallerySlider { }
 export class BannerSection { }

@@ -60,7 +60,7 @@
                         />
                       </span>
                       <span class="plus"
-                            tooltip="Create gradient"
+                            tooltip="Create a gradient"
                             tooltip-position="top"
                             v-show="index === 0 && backgroundPickers.length < 4"
                             @click="addBackgroundPicker"
@@ -78,7 +78,10 @@
             </div>
             <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__row">
-                <base-caption help="Layer overlaps background ">
+                <base-caption
+                  :help="$t('tooltipOverlay')"
+                  tooltipPosition="rightTopWidth"
+                >
                   Overlay layer
                 </base-caption>
                 <div class="b-panel__col b-panel__col_overlay-color">
@@ -150,7 +153,10 @@
             </div>
             <div class="b-panel__control" v-if="!isMobile">
               <div class="b-panel__row">
-                <base-caption help="Layer overlaps background ">
+                <base-caption
+                  :help="$t('tooltipOverlay')"
+                  tooltipPosition="rightTopWidth"
+                >
                   Overlay layer
                 </base-caption>
                 <div class="b-panel__col b-panel__col_overlay-color">

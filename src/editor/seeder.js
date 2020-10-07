@@ -497,6 +497,14 @@ const data = new Map([
       }
     })
   )],
+  [types.HtmlCodeElement, () => (_.merge({}, DEFAULT_OPTIONS,
+      {
+        removable: true,
+        settings: {
+          code: '<p>Custom HTML code</p>'
+        },
+      })
+  )],
   [types.Form, () => (_.merge({}, DEFAULT_OPTIONS,
     {
       resizable: false,

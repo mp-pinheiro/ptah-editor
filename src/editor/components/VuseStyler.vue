@@ -109,6 +109,13 @@
         <icon-base name="editStyle" width="14" height="16" />
       </a>
 
+      <!-- Html Code -->
+      <a href="#" class="b-styler__control"
+         @click.stop="setControlPanel('HtmlCode')"
+         v-if="type === 'htmlCode'">
+        <icon-base name="editStyle" width="14" height="16" />
+      </a>
+
       <!-- Icon with text -->
       <template v-if="type === 'iconWithText'">
         <a href="#" class="b-styler__control"
@@ -302,18 +309,26 @@ export default {
   watch: {
     settingObjectOptions: {
       handler: function (val) {
+        if (val.id !== this.options.id) {
+          return
+        }
+
         if (this.popper) {
           this.popper.update()
         }
+
         if (val.link && val.link.behavior) {
           this.el.dataset.behavior = val.link.behavior
         }
-        if (val.video && val.link.action.value === 'ptah-d-video') {
+
+        if (val.video && val.link.action.value === 'ptah-d-video' && this.type !== 'section') {
           this.el.classList.add('ptah-d-video')
-          this.el.dataset.video = this.options.video
+          this.el.dataset.video = val.video
         } else {
           this.el.classList.remove('ptah-d-video')
         }
+
+        this.setClassesEl()
       },
       deep: true
     },
@@ -349,6 +364,8 @@ export default {
 
     if (this.type === 'section') {
       this.el.id = `section_${this.section.id}`
+    } else {
+      this.el.id = this.poneId
     }
 
     // Restoring from a snapshot
@@ -367,18 +384,7 @@ export default {
       this.options.classes.push('js-element-link')
     }
 
-    // Apply animation to element
-    if (this.options.classes !== undefined && this.options.classes.length) {
-      this.options.classes.forEach((name) => {
-        if (name.indexOf('ptah-a-') > -1) {
-          this.animation = _.find(this.animationList, ['className', name])
-        }
-
-        if (name.indexOf('ptah-d-video') > -1) {
-          this.el.dataset.video = this.options.video
-        }
-      })
-    }
+    this.setClassesEl()
 
     this.proportions = Math.min(this.el.offsetWidth / this.el.offsetHeight)
   },
@@ -410,6 +416,17 @@ export default {
       'toggleModalButton',
       'setHoverBy'
     ]),
+
+    setClassesEl () {
+      // Apply animation or video to element
+      if (this.options.classes !== undefined && this.options.classes.length) {
+        this.options.classes.forEach((name) => {
+          if (name.indexOf('ptah-a-') > -1) {
+            this.animation = _.find(this.animationList, ['className', name])
+          }
+        })
+      }
+    },
 
     setPanels (panel, isEditText) {
       this.setControlPanel(panel)
@@ -650,6 +667,7 @@ export default {
       let pseudoClassValue = {}
       pseudoClassValue[pseudoClass] = style
       this.el.dataset.pone = this.poneId
+      this.el.id = this.poneId
       this.options.id = this.poneId
 
       _.merge(this.pseudoStyles, pseudoClassValue)

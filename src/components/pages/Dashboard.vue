@@ -196,7 +196,7 @@ export default {
             <a @click.stop="openSettigs(item)" class="b-dashboard__icon" tooltip="Settings">
               <icon-base name="cog" color="#00ADB6" width="18" hight="18"></icon-base>
             </a>
-            <div class="b-dashboard__icon" @click.stop="cloneItem(item)" tooltip="Duplicate landing">
+            <div class="b-dashboard__icon" @click.stop="cloneItem(item)" tooltip="Duplicate">
               <icon-base name="duplicate" color="#00ADB6" width="18" hight="18"></icon-base>
             </div>
             <div class="b-dashboard__icon" @click.stop="deleteItem(item)" tooltip="Delete">

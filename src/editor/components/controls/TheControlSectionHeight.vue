@@ -130,7 +130,7 @@ export default {
 
 <template>
   <div class="b-control-height">
-   <base-caption help="Set section height">
+   <base-caption help="Adjust the section height">
      Section height
    </base-caption>
 

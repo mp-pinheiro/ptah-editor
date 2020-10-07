@@ -139,16 +139,9 @@ export default {
     },
 
     setVideoUrl () {
-      let ytId = getYoutubeVideoIdFromUrl(this.videoId)
+      let ytId = getYoutubeVideoIdFromUrl(this.videoId) || this.videoId
 
-      if (ytId) {
-        this.videoLink = ytId
-        this.updateSettingOptions(
-          merge({}, this.settingObjectOptions, {
-            video: ytId
-          })
-        )
-      }
+      this.videoLink = ytId
     },
 
     changeAction (action) {

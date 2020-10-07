@@ -9,100 +9,51 @@
           color="#575A5F"
         />
       </div>
+
       <header>
         <h1>{{ title }}</h1>
+
+        <div class="b-images-library__tabs"
+          v-if="type === 'image'"
+        >
+          <base-switch-tabs
+            :list="tabs"
+            v-model="activeTab"
+            color="#00ADB6"
+          />
+        </div>
       </header>
 
-      <div class="b-images-library__container">
-        <div class="b-images-library__loading" v-if="loading">
-          <base-loading />
-        </div>
-        <div class="b-images-library__container-scroll" v-if="!loading">
-          <base-scroll-container>
-            <div class="b-uploads-list">
-              <div class="b-uploads-list__item _no-border">
-                <base-uploader-simple
-                  :src="src"
-                  :type="type"
-                  @add="addFile"
-                  :accept="accept"
-                />
-              </div>
-              <div
-                class="b-uploads-list__item"
-                v-for="(item, index) in list" :key="index"
-                :style="{ 'background-image': item.type === 'image' ? `url(${item.url})` : 'none' }"
-                :class="{ '_active': selected === item.url }"
-              >
-                <template v-if="item.type !== 'image'">
-                  <span class="b-uploads-list__item-name">
-                    {{ item.originalFilename }}
-                  </span>
-                </template>
-                <template v-if="selected === item.url">
-                  <span
-                    class="b-uploads-list__item-icon-check"
-                    @click.stop="select(item.url)"
-                  >
-                    <IconBase
-                      name="checkMark"
-                      color="#00ADB6"
-                      width="24"
-                      height="17"
-                    />
-                  </span>
-                  <span
-                    class="b-uploads-list__item-icon-close"
-                    @click.stop="select(item.url)"
-                  >
-                    <IconBase
-                      name="close"
-                      color="#00ADB6"
-                      width="24"
-                      height="17"
-                    />
-                  </span>
-                </template>
-
-                <template v-else>
-                  <div
-                    class="b-uploads-list__item-controls"
-                  >
-                    <div
-                      class="control"
-                      @click.stop="select(item.url)"
-                    >
-                      <icon-base
-                        name="select"
-                        width="30"
-                        height="30"
-                      />
-                    </div>
-                    <div
-                      class="control"
-                      @click.stop="preview(item)"
-                    >
-                      <icon-base
-                        name="previewTemplate"
-                        width="30"
-                        height="30"
-                      />
-                    </div>
-                    <!--div class="control" @click="">
-                      <icon-base name="deleteCircle" width="30" height="30"/>
-                    </div-->
-                  </div>
-                </template>
-              </div>
-            </div>
-          </base-scroll-container>
-        </div>
+      <div class="b-images-library__loading" v-if="loading">
+        <base-loading />
       </div>
+
+      <MyMedia
+        v-if="!loading && activeTab === 'my'"
+        :src="src"
+        :selected="selected"
+        :list="list"
+        :type="type"
+        @select="select"
+        @preview="preview"
+        @add="addFile"
+      />
+
+      <StockMedia
+        v-if="!loading && activeTab === 'stock'"
+        :src="src"
+        :selected="selected"
+        :list="list"
+        :type="type"
+        @select="select"
+        @preview="preview"
+        @add="addFile"
+      />
 
       <footer v-if="!loading">
         <div class="b-images-library-footer">
           <div class="b-images-library-footer__limit">
-            <div class="b-images-library-footer__limit-line">
+            <div class="b-images-library-footer__limit-line" v-if="activeTab === 'my'">
               <div class="b-line-limit">
                 <span
                   class="b-line-limit__line"
@@ -143,11 +94,11 @@
       </footer>
 
       <Preview
-        @close="isShowPreview = false"
         v-if="isShowPreview"
+        @close="isShowPreview = false"
+        @select="select"
         :previewItem="previewItem"
         :list="list"
-        @select="select"
         :type="type"
       />
     </div>
@@ -157,6 +108,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Preview from './TheImagesLibraryPreview'
+import MyMedia from './TheImageLibraryMyMedia'
+import StockMedia from './TheImageLibraryStockMedia'
 import { VALID_TYPES } from '@editor/util'
 
 const TITLES = {
@@ -168,7 +121,9 @@ const TITLES = {
 export default {
   name: 'TheImagesLibrary',
   components: {
-    Preview
+    Preview,
+    MyMedia,
+    StockMedia
   },
   props: {
     src: String,
@@ -192,7 +147,12 @@ export default {
       isShowPreview: false,
       previewItem: null,
       total: null,
-      totalSize: null
+      totalSize: null,
+      tabs: [
+        { value: 'my', text: 'My Media' },
+        { value: 'stock', text: 'Free Stock' }
+      ],
+      activeTab: 'my'
     }
   },
 
@@ -231,11 +191,7 @@ export default {
     },
 
     select (url) {
-      if (url !== this.selected) {
-        this.selected = url
-      } else {
-        this.selected = null
-      }
+      this.selected = url
     },
 
     setWidthLimit () {
@@ -282,7 +238,7 @@ export default {
 
 .b-images-library
   width: 92.5rem
-  height: 50rem
+  height: 60rem
   padding: 2.8rem 3rem 2.8rem
   position: relative
 
@@ -295,7 +251,7 @@ export default {
   text-align: center
 
   header
-    margin: 0 0 4.8rem
+    margin: 0 0 2rem
     padding: 0
 
   h1
@@ -305,6 +261,10 @@ export default {
     letter-spacing: 0.065em
     color: #575A5F !important
     text-transform: uppercase
+
+  &__tabs
+    width: 31.5rem
+    margin: 2.6rem auto 0
 
   &__close
     position: absolute
@@ -336,7 +296,7 @@ export default {
 
   &__container
     position: absolute
-    top: 10rem
+    top: 14rem
     right: 1rem
     bottom: 8rem
     left: 3rem

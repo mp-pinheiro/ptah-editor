@@ -5,6 +5,7 @@ import BuilderSiteSettingsAddJsScripts from '@editor/components/BuilderSiteSetti
 import BuilderSiteSettingsIntegrations from '@editor/components/BuilderSiteSettingsIntegrations'
 import BuilderSiteSettingsIntegrationsGoogleTag from '@editor/components/BuilderSiteSettingsIntegrationsGoogleTag'
 import BuilderSiteSettingsIntegrationsGoogleAnalitycs from '@editor/components/BuilderSiteSettingsIntegrationsGoogleAnalitycs'
+import BuilderSiteSettingsIntegrationsFacebookPixel from '@editor/components/BuilderSiteSettingsIntegrationsFacebookPixel'
 import BuilderSiteSettingsIntegrationsMailchimp from '@editor/components/BuilderSiteSettingsIntegrationsMailchimp'
 import BuilderSiteSettingsFonts from '@editor/components/BuilderSiteSettingsFonts'
 import TheWizardModal from '@src/components/pages/wizard/TheWizardModal'
@@ -127,6 +128,10 @@ const routes = [
               {
                 path: 'googleAnalitycs',
                 component: BuilderSiteSettingsIntegrationsGoogleAnalitycs
+              },
+              {
+                path: 'facebookPixel',
+                component: BuilderSiteSettingsIntegrationsFacebookPixel
               },
               {
                 path: 'mailchimp',

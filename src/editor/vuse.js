@@ -307,8 +307,6 @@ class Vuse {
       metaTags
     } = this.settings
 
-    console.log(this)
-
     let customCss = this.getCustomCss()
     let customJS = this.getJsScript()
     let bodyStyles = this.getBodyStyles()

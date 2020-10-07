@@ -10,7 +10,7 @@
     </div>
     <div
       class="b-images-library-preview__image"
-      :style="{ 'background-image': type === 'image' ? `url(${list[index].url})` : 'none' }"
+      :style="{ 'background-image': type === 'image' ? stock ? `url(${list[index].urls.small})`: `url(${list[index].url})` : 'none' }"
     >
       <template v-if="type === 'video'">
         <video
@@ -52,8 +52,19 @@
       </span>
     </div>
     <div class="b-images-library-preview__controls">
+      <div class="b-controls" v-if="stock">
+        <div
+          v-for="(size, key) in previewItem.urls" :key="key"
+          v-if="key !== 'full' && key !== 'raw'"
+          class="control control_column"
+          @click.stop="select(size)"
+        >
+          {{ checkWidthByKey(key) }}
+        </div>
+      </div>
       <div
-        class="b-images-library-preview__controls-control"
+        v-else
+        class="control"
         @click.stop="select"
       >
         <icon-base
@@ -82,6 +93,10 @@ export default {
       type: String,
       default: VALID_TYPES[0],
       validator: value => VALID_TYPES.includes(value)
+    },
+    stock: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -105,16 +120,21 @@ export default {
   },
 
   methods: {
-    select () {
+    select (value) {
       this.$emit('close')
-      this.$emit('select', this.list[this.index].url)
+
+      if (this.stock) {
+        this.$emit('select', value)
+      } else {
+        this.$emit('select', this.list[this.index].url)
+      }
     },
 
     findIndex () {
       let index
 
       index = this.list.findIndex(item => {
-        return item.url === this.selected.url
+        return !this.stock ? item.url === this.selected.url : this.checkSelected(item)
       })
 
       this.index = index
@@ -146,6 +166,27 @@ export default {
       setTimeout(() => {
         this.isShowVideo = true
       }, 500)
+    },
+
+    checkWidthByKey (key) {
+      if (key === 'regular') {
+        return '1080px'
+      } else if (key === 'small') {
+        return '400px'
+      } else {
+        return '200px'
+      }
+    },
+
+    checkSelected (item) {
+      const selectedArr = this.selected !== '' ? this.selected.urls.thumb.split('?') : ['']
+      const itemArr = item.urls.thumb.split('?')
+
+      if (selectedArr[0] === itemArr[0]) {
+        return true
+      }
+
+      return false
     }
   }
 }
@@ -220,9 +261,19 @@ export default {
     display: flex
     justify-content: center
     align-items: center
-    &-control
+    & .control
       opacity: .8
       cursor: pointer
+      &_column
+          opacity: .8
+          font-size: 1.2rem
+          color: #00ADB6
+          & svg
+            opacity: .5
+            margin-left: .3rem
+          &:hover
+            svg
+              opacity: 1
       &:hover
         opacity: 1
   &__close
@@ -252,4 +303,13 @@ export default {
       background: rgba(#00ADB6, 0.05)
       & svg
         fill: $main-green
+
+.b-controls
+  display: flex
+
+  & .control
+    width: 100%
+    display: flex
+    justify-content: space-between
+    margin: .4rem
 </style>

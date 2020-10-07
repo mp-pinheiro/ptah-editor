@@ -47,21 +47,27 @@ export default {
         {
           name: 'googleTag',
           label: 'Google Tag',
-          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/ba32489f-7cd3-4013-b91c-e74f217b5c1e.png'
+          icon: 'https://cdn.ptah.pro/tst/5f50a9a3ad6cc20001aaf9d2/ee4b8dfa-8174-4d84-9440-72db9fa90671.svg'
         },
         {
           name: 'googleAnalitycs',
           label: 'Google Analitycs',
-          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/9266fae1-9e4b-45b4-9ed4-a7a9f20c62b2.png'
+          icon: 'https://cdn.ptah.pro/tst/5f50a9a3ad6cc20001aaf9d2/e73fb652-a903-4821-8f2b-294a04683a76.svg'
+        },
+        {
+          name: 'facebookPixel',
+          label: 'Facebook Pixel',
+          icon: 'https://cdn.ptah.pro/tst/5f50a9a3ad6cc20001aaf9d2/167f8071-ae19-4c5c-a981-9f4b795ea037.svg'
         },
         {
           name: 'mailchimp',
           label: 'Mailchimp',
-          icon: 'https://cdn.ptah.pro/prod/5ee8d62d480c4e00018c404d/bc902030-09c2-45c6-8303-a3e28d12ba0e.png'
+          icon: 'https://cdn.ptah.pro/tst/5f50a9a3ad6cc20001aaf9d2/3b0b9440-1c32-4c45-9ac7-661d26605f2a.svg'
         }
       ],
       gtmId: '',
-      gtag: ''
+      gtag: '',
+      fbPixel: ''
     }
   },
 
@@ -93,12 +99,14 @@ export default {
 
       this.gtmId = settings.gtmId
       this.gtag = settings.gtag
+      this.fbPixel = settings.fbPixel
     },
 
     applySettings () {
       const data = {
         gtmId: this.gtmId,
-        gtag: this.gtag
+        gtag: this.gtag,
+        fbPixel: this.fbPixel
       }
 
       this.storeSettings(data)
@@ -158,7 +166,8 @@ export default {
       height: $size-step*2
 
       background-position: center center
-      background-size: cover
+      background-size: auto 100%
+      background-repeat: no-repeat
     &-label
       font-size: 1.6rem
       color: $dark-grey

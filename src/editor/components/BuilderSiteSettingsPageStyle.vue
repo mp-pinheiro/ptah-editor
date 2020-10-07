@@ -112,7 +112,7 @@
               </div>
             </div>
             <div class="b-panel__control">
-              <BaseCaption help="Create a smooth fullpage scrolling effect" >
+              <BaseCaption help="Set up a full screen for all sections">
                 Full page scroll
               </BaseCaption>
               <div class="b-panel__col">

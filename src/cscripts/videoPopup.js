@@ -24,9 +24,9 @@ export function videoPopup () {
       const TARGET_POPUP_IFRAME = 'iframe'
       const TARGET_POPUP_VIDEO = 'video'
 
-      var popup = document.querySelectorAll('[' + TARGET_POPUP + ']')[0]
-      var popupI = popup.getElementsByTagName(TARGET_POPUP_IFRAME)[0]
-      var popupV = popup.getElementsByTagName(TARGET_POPUP_VIDEO)[0]
+      let popup = document.querySelectorAll('[' + TARGET_POPUP + ']')[0]
+      let popupI = popup.getElementsByTagName(TARGET_POPUP_IFRAME)[0]
+      let popupV = popup.getElementsByTagName(TARGET_POPUP_VIDEO)[0]
 
       if (popupI) {
         popupI.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');

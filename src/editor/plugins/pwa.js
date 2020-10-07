@@ -4,6 +4,7 @@ import {
   getImageBlob,
   cleanDOM,
   gtagSetup,
+  fbPixelSetup,
   getFontsNameStr,
   getFontsLanguages,
   getFontsSetup,
@@ -131,6 +132,7 @@ function download (assets, getBlob) {
       let customCss = this.getCustomCss()
       let gtm = this.gtmSetup(this.settings.gtmId)
       let gtag = gtagSetup(this.settings.gtag)
+      let fbPixel = fbPixelSetup(this.settings.fbPixel)
       let script = this.settings.script ? this.settings.script : ''
       let fontsNameStr = getFontsNameStr(this.settings.fonts)
       let fontsLanguages = getFontsLanguages(this.settings.fonts)
@@ -177,6 +179,7 @@ function download (assets, getBlob) {
                 opacity: 1
               }
             </style>
+            ${fbPixel}
           </head>
           <body class="b-body_export" style="${bodyStyles}">
             ${gtm.body}
