@@ -61,12 +61,13 @@ export default {
      * @param token
      */
     setToken ({ commit }, token) {
-      let options = {}
+      let options = { path: '/' }
 
       if (process.env.NODE_ENV === 'production') {
         options = {
           domain: `${process.env.VUE_APP_COOKIE_DOMAIN}`,
-          secure: true
+          secure: true,
+          path: '/'
         }
       }
 
